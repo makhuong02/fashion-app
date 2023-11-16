@@ -1,11 +1,7 @@
-package com.group25.ecommercefashionapp;
-import androidx.annotation.NonNull;
-
-import org.jetbrains.annotations.Contract;
+package com.group25.ecommercefashionapp.data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ActionItem {
     private final String name;

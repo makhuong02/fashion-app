@@ -2,35 +2,77 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
-	app:startDestination="@id/membershipBotNav">
+	app:startDestination="@id/homeBotNav">
 	
 	<fragment
 		android:id="@+id/homeBotNav"
-		android:name="com.group25.ecommercefashionapp.HomeFragment"
+		android:name="com.group25.ecommercefashionapp.ui.HomeFragment"
 		android:label="Home Fragment"
-		tools:layout="@layout/home"/>
+		tools:layout="@layout/home" />
 	
 	<fragment
 		android:id="@+id/categoryBotNav"
-		android:name="com.group25.ecommercefashionapp.CategoryFragment"
+		android:name="com.group25.ecommercefashionapp.ui.category.CategoryFragment"
 		android:label="Category Fragment"
-		tools:layout="@layout/category"/>
+		tools:layout="@layout/category">
+		<action
+			android:id="@+id/action_categoryBotNav_to_filterCategory"
+			app:destination="@id/filterCategory"
+			app:enterAnim="@android:anim/fade_in"
+			app:exitAnim="@android:anim/fade_out"
+			app:popEnterAnim="@android:anim/slide_in_left"
+			app:popExitAnim="@android:anim/slide_out_right" />
+	</fragment>
 	
 	<fragment
 		android:id="@+id/favoriteBotNav"
-		android:name="com.group25.ecommercefashionapp.FavoriteFragment"
+		android:name="com.group25.ecommercefashionapp.ui.favorite.FavoriteFragment"
 		android:label="Favorite Fragment"
-		tools:layout="@layout/favorite"/>
+		tools:layout="@layout/favorite" />
 	
 	<fragment
 		android:id="@+id/membershipBotNav"
-		android:name="com.group25.ecommercefashionapp.MembershipFragment"
+		android:name="com.group25.ecommercefashionapp.ui.membership.MembershipFragment"
 		android:label="Membership Fragment"
-		tools:layout="@layout/membership"/>
+		tools:layout="@layout/membership">
+		<action
+			android:id="@+id/action_membershipBotNav_to_profileSettings"
+			app:destination="@id/profileSettings"
+			app:enterAnim="@android:anim/fade_in"
+			app:exitAnim="@android:anim/fade_out"
+			app:popEnterAnim="@android:anim/slide_in_left"
+			app:popExitAnim="@android:anim/slide_out_right" />
+		<action
+			android:id="@+id/action_membershipBotNav_to_settings"
+			app:destination="@id/settings"
+			app:enterAnim="@android:anim/fade_in"
+			app:exitAnim="@android:anim/fade_out"
+			app:popEnterAnim="@android:anim/slide_in_left"
+			app:popExitAnim="@android:anim/slide_out_right" />
+	</fragment>
 	
 	<fragment
 		android:id="@+id/notificationBotNav"
-		android:name="com.group25.ecommercefashionapp.NotificationFragment"
+		android:name="com.group25.ecommercefashionapp.ui.notification.NotificationFragment"
 		android:label="Notification Fragment"
-		tools:layout="@layout/notification"/>
+		tools:layout="@layout/notification" />
+	
+	<fragment
+		android:id="@+id/profileSettings"
+		android:name="com.group25.ecommercefashionapp.ui.membership.ProfileSettingsFragment"
+		android:label="Profile Settings Fragment"
+		tools:layout="@layout/profile_settings" />
+	
+	<fragment
+		android:id="@+id/settings"
+		android:name="com.group25.ecommercefashionapp.ui.membership.SettingsFragment"
+		android:label="Settings Fragment"
+		tools:layout="@layout/settings" />
+	
+	<fragment
+		android:id="@+id/filterCategory"
+		android:name="com.group25.ecommercefashionapp.ui.category.CategoryFilteredFragment"
+		android:label="Settings Fragment"
+		tools:layout="@layout/category_filtered" />
+
 </navigation>

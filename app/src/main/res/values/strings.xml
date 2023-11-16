@@ -21,4 +21,24 @@
 	<string name="favorite_bottom_nav_text">Favorite</string>
 	<string name="notification_bottom_nav_text">Notification</string>
 	<string name="membership_bottom_nav_text">Membership</string>
+	<string name="notification">Notification</string>
+	<string name="home">Home</string>
+	<string name="category">Category</string>
+	<string name="favorite">Favorite</string>
+	<string name="withdrawal_from_app_membership">Withdrawal from app Membership</string>
+	<string name="logout">Logout</string>
+	<string name="address_book">Address Book</string>
+	<string name="my_cards">My Cards</string>
+	<string name="change_my_password">Change my password</string>
+	<string name="edit_profile">Edit profile</string>
+	<string name="video_automatic_playback">Video Automatic Playback</string>
+	<string name="location_sharing">Location Sharing</string>
+	<string name="push_notifications_and_privacy_settings">Push notifications and privacy settings</string>
+	<string name="store_locator">Store Locator</string>
+	<string name="getting_started">Getting Started</string>
+	<string name="faqs">FAQS</string>
+	<string name="terms_of_use">Terms of use</string>
+	<string name="privacy_policy">Privacy policy</string>
+	<string name="messages">Messages</string>
+	<string name="news">News</string>
 </resources>
