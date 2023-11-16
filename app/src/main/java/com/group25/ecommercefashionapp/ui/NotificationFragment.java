@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+
+import com.group25.ecommercefashionapp.R;
 
 public class NotificationFragment extends Fragment {
 

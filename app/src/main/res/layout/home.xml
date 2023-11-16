@@ -3,11 +3,30 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
-
-	<androidx.core.widget.NestedScrollView
+	android:layout_height="match_parent"
+	android:background="#D1E5F4"
+	android:orientation="vertical">
+	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
+		
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/topAppBar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+			app:contentScrim="#D1E5F4"
+			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+			app:layout_collapseMode="pin"
+			app:title="@string/home" />
+	
+	</com.google.android.material.appbar.AppBarLayout>
+	
+	
+	<androidx.core.widget.NestedScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -20,7 +39,7 @@
 				android:layout_margin="10dp">
 
 				<LinearLayout
-					android:layout_width="match_parent"
+					android:layout_width="wrap_content"
 					android:layout_height="match_parent">
 
 					<com.google.android.material.card.MaterialCardView

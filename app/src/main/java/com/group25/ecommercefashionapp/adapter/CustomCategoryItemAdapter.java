@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,17 +8,20 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.CategoryItem;
+
 import java.util.List;
 
-public class TestProductItemAdapter extends BaseAdapter {
+public class CustomCategoryItemAdapter extends BaseAdapter {
     private Context context;
-    private List<TestProductItem> items;
+    private List<CategoryItem> items;
     private int layout;
 
-    public TestProductItemAdapter(Context context, int layout, List<TestProductItem> items) {
+    public CustomCategoryItemAdapter(Context context, int layout, List<CategoryItem> items) {
         this.context = context;
-        this.layout = layout;
         this.items = items;
+        this.layout = layout;
     }
 
     @Override
@@ -36,33 +39,29 @@ public class TestProductItemAdapter extends BaseAdapter {
         return 0;
     }
 
-    public class ViewHolder {
+    private class ViewHolder {
         ImageView img;
-        TextView txtName;
-        TextView txtPrice;
+        TextView txt;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TestProductItemAdapter.ViewHolder holder;
+        ViewHolder holder;
 
         if (convertView == null) {
-            holder = new TestProductItemAdapter.ViewHolder();
+            holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(layout, null);
-
-            holder.txtName = (TextView) convertView.findViewById(R.id.productName);
-            holder.txtPrice = (TextView) convertView.findViewById(R.id.productPrice);
-            holder.img = (ImageView) convertView.findViewById(R.id.productImage);
+            holder.txt = (TextView) convertView.findViewById(R.id.categoryName);
+            holder.img = (ImageView) convertView.findViewById(R.id.categoryImage);
             convertView.setTag(holder);
         } else {
-            holder = (TestProductItemAdapter.ViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        TestProductItem item = items.get(position);
-        holder.txtName.setText(item.getName());
-        holder.txtPrice.setText(String.format("%,d", item.getPrice()));
-        holder.img.setImageResource(item.getImage());
+        CategoryItem item = items.get(position);
+        holder.txt.setText(item.getCategory_name());
+        holder.img.setImageResource(item.getImgID());
 
         return convertView;
     }
