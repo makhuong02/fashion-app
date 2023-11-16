@@ -1,0 +1,36 @@
+<!-- nav_graph.xml -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	app:startDestination="@id/membershipBotNav">
+	
+	<fragment
+		android:id="@+id/homeBotNav"
+		android:name="com.group25.ecommercefashionapp.HomeFragment"
+		android:label="Home Fragment"
+		tools:layout="@layout/home"/>
+	
+	<fragment
+		android:id="@+id/categoryBotNav"
+		android:name="com.group25.ecommercefashionapp.CategoryFragment"
+		android:label="Category Fragment"
+		tools:layout="@layout/category"/>
+	
+	<fragment
+		android:id="@+id/favoriteBotNav"
+		android:name="com.group25.ecommercefashionapp.FavoriteFragment"
+		android:label="Favorite Fragment"
+		tools:layout="@layout/favorite"/>
+	
+	<fragment
+		android:id="@+id/membershipBotNav"
+		android:name="com.group25.ecommercefashionapp.MembershipFragment"
+		android:label="Membership Fragment"
+		tools:layout="@layout/membership"/>
+	
+	<fragment
+		android:id="@+id/notificationBotNav"
+		android:name="com.group25.ecommercefashionapp.NotificationFragment"
+		android:label="Notification Fragment"
+		tools:layout="@layout/notification"/>
+</navigation>

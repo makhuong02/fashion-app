@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item
+		android:id="@+id/homeBotNav"
+		android:enabled="true"
+		android:icon="@drawable/outline_home_24"
+		android:title="@string/home_bottom_nav_text"/>
+	<item
+		android:id="@+id/categoryBotNav"
+		android:enabled="true"
+		android:icon="@drawable/outline_category_24"
+		android:title="@string/category_bottom_nav_text"/>
+	<item
+		android:id="@+id/favoriteBotNav"
+		android:enabled="true"
+		android:icon="@drawable/outline_favorite_border_24"
+		android:title="@string/favorite_bottom_nav_text"/>
+	<item
+		android:id="@+id/notificationBotNav"
+		android:enabled="true"
+		android:icon="@drawable/outline_notifications_24"
+		android:title="@string/notification_bottom_nav_text"/>
+	<item
+		android:id="@+id/membershipBotNav"
+		android:enabled="true"
+		android:icon="@drawable/baseline_card_membership_24"
+		android:title="@string/membership_bottom_nav_text"/>
+</menu>
