@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
-
-	<GridView
-		android:id="@+id/gridViewCategory"
+	android:layout_height="match_parent"
+	android:background="#D1E5F4"
+	android:orientation="vertical">
+	<com.google.android.material.appbar.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+		
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/topAppBar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+			app:contentScrim="#D1E5F4"
+			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+			app:layout_collapseMode="pin"
+			app:title="@string/category" />
+	
+	</com.google.android.material.appbar.AppBarLayout>
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:numColumns="4"
-		android:layout_margin="5dp"
-		android:horizontalSpacing="10dp"
-		android:verticalSpacing="10dp"
-		android:descendantFocusability="blocksDescendants"/>
+		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+		<GridView
+			android:id="@+id/gridViewCategory"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:numColumns="4"
+			android:layout_margin="5dp"
+			android:horizontalSpacing="10dp"
+			android:verticalSpacing="10dp"
+			android:descendantFocusability="blocksDescendants"/>
+	</LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

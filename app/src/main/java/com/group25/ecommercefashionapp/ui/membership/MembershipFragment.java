@@ -4,22 +4,23 @@ import static com.group25.ecommercefashionapp.data.ActionItem.getActionItems;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.group25.ecommercefashionapp.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ActionItem;
-import com.group25.ecommercefashionapp.data.CustomMembershipActionAdapter;
+
 
 import java.util.List;
 
@@ -27,41 +28,53 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
     MainActivity mainActivity;
     Context context = null;
     private NestedScrollView nestedScrollView;
-    private RecyclerView recyclerView;
-    private MaterialCardView imageCardView;
+    private BottomNavigationView bottomNavigationView;
+    private MaterialCardView imageCardView, profileCardView, settingsCardView;
+    private View view = null;
     List<ActionItem> items;
+    float alpha = 1.0f;
+    private final Handler myHandler = new Handler();
 
     public MembershipFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.membership, container, false);
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (view == null) {
+            view = inflater.inflate(R.layout.membership, container, false);
+
+        }
         imageCardView = view.findViewById(R.id.imageCardView);
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
-        // Initialize views and handle logic specific to this fragment
-        recyclerView = view.findViewById(R.id.recyclerView);
+        profileCardView = view.findViewById(R.id.profileCardView);
+        settingsCardView = view.findViewById(R.id.settingsCardView);
+
+
         items = getActionItems();
 
-        context= getActivity();
+        context = getActivity();
         mainActivity = (MainActivity) getActivity();
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        bottomNavigationView = mainActivity.findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setVisibility(View.VISIBLE);
 
-        CustomMembershipActionAdapter adapter = new CustomMembershipActionAdapter(items,  this);
-//        recyclerView.addOnItemTouchListener((adapterView, view, i, l)
-//                        -> viewChose.setText(
-//                        getString(R.string.you_choose, items.get(i).getName())
-//                )
-//        );
-        recyclerView.setAdapter(adapter);
+        profileCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings));
+
+        settingsCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.settings));
 
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             // Adjust the translationY of the background view to create the parallax effect
             final int halfwayPoint = imageCardView.getHeight() / 2;
 
-            float alpha = 1.0f - (float) scrollY / halfwayPoint;
+
+//            if(scrollY > halfwayPoint) {
+//                myHandler.post(hideImageCardView);
+//            }
+//            else{
+//                myHandler.post(getHideImageCardView);
+//            }
+            alpha = 1.0f - (float) scrollY / halfwayPoint;
             alpha = Math.max(0.0f, alpha); // Ensure alpha doesn't go below 0
 
             // Set the alpha value to the background image
@@ -72,6 +85,42 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
         });
         return view;
     }
+
+    private final Runnable hideImageCardView = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if (alpha > 0.0f) {
+                    float step = 0.01f;
+                    alpha -= step;
+
+                    imageCardView.setAlpha(alpha);
+
+                    myHandler.postDelayed(this, 50);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
+    private final Runnable getHideImageCardView = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                if (alpha < 1.0f) {
+                    float step = 0.01f;
+                    alpha += step;
+
+                    imageCardView.setAlpha(alpha);
+
+                    myHandler.postDelayed(this, 50);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    };
+
     @Override
     public void onItemClick(ActionItem item) {
 
