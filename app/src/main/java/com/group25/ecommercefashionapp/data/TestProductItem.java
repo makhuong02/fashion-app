@@ -1,4 +1,6 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.data;
+
+import com.group25.ecommercefashionapp.R;
 
 import java.util.ArrayList;
 

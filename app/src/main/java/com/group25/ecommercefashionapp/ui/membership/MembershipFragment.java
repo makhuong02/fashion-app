@@ -1,6 +1,6 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.ui.membership;
 
-import static com.group25.ecommercefashionapp.ActionItem.getActionItems;
+import static com.group25.ecommercefashionapp.data.ActionItem.getActionItems;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +15,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
+import com.group25.ecommercefashionapp.MainActivity;
+import com.group25.ecommercefashionapp.OnItemClickListener;
+import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.ActionItem;
+import com.group25.ecommercefashionapp.data.CustomMembershipActionAdapter;
 
 import java.util.List;
 

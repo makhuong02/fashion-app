@@ -1,6 +1,6 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.ui.category;
 
-import static com.group25.ecommercefashionapp.TestProductItem.getProduct;
+import static com.group25.ecommercefashionapp.data.TestProductItem.getProduct;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,6 +11,10 @@ import android.widget.GridView;
 
 
 import androidx.fragment.app.Fragment;
+
+import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.TestProductItem;
+import com.group25.ecommercefashionapp.data.TestProductItemAdapter;
 
 import java.util.ArrayList;
 

@@ -1,28 +1,18 @@
 package com.group25.ecommercefashionapp;
 
-import static com.group25.ecommercefashionapp.ActionItem.getActionItems;
+import static com.group25.ecommercefashionapp.data.ActionItem.getActionItems;
 
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.imageview.ShapeableImageView;
+import com.group25.ecommercefashionapp.data.ActionItem;
 
 import java.util.List;
 
