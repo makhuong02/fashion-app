@@ -36,14 +36,18 @@ public class CategoryFragment extends Fragment {
         // Initialize views and handle logic specific to this fragment
         gridCategory = view.findViewById(R.id.gridViewCategory);
 
+        Bundle bundle = new Bundle();
         categories = getCategory();
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
-      
+
         CustomCategoryItemAdapter adapter = new CustomCategoryItemAdapter(context, R.layout.category_items, categories);
         gridCategory.setAdapter(adapter);
 
-        gridCategory.setOnItemClickListener((parent, view1, position, id) -> mainActivity.navController.navigate(R.id.action_categoryBotNav_to_filterCategory));
+        gridCategory.setOnItemClickListener((parent, view1, position, id) -> {
+            bundle.putString("category", categories.get(position).getCategory_name());
+            mainActivity.navController.navigate(R.id.action_categoryBotNav_to_filterCategory, bundle);
+        });
 
         return view;
     }
