@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.ui.membership;
+package com.group25.ecommercefashionapp.ui.fragment.membership;
 
 import static com.group25.ecommercefashionapp.data.ActionItem.getActionItems;
 
@@ -10,17 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.group25.ecommercefashionapp.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ActionItem;
-
 
 import java.util.List;
 

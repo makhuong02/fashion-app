@@ -1,31 +1,44 @@
 package com.group25.ecommercefashionapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.card.MaterialCardView;
+import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.database.ProductDbHelper;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
+
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
-    private NestedScrollView nestedScrollView;
-    private MaterialCardView imageCardView;
     private BottomNavigationView bottomNavigationView;
     public NavController navController;
 
+    ArrayList<Product> products = new ArrayList<>();
 
-    // Define variables for other widgets as needed
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ProductDbHelper productDbHelper = new ProductDbHelper(this);
+        ProductRepository productRepository = new ProductRepository(productDbHelper);
+
+        productRepository.dropProductTable();
+        productRepository.insertDbData();
+        products = productRepository.getAllProducts();
+        for (Product product : products) {
+            Log.d("Product", String.valueOf(product.getId()));
+        }
 
         // Initialize navigation components
         initializeViews();
@@ -35,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        nestedScrollView = findViewById(R.id.nestedScrollView);
-        imageCardView = findViewById(R.id.imageCardView);
         bottomNavigationView = findViewById(R.id.bottomNavigation);
     }
 
@@ -48,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void updateNavigationBarState(int actionId){
         Menu menu = bottomNavigationView.getMenu();
-
         for (int i = 0, size = menu.size(); i < size; i++) {
             MenuItem item = menu.getItem(i);
-            item.setChecked(item.getItemId() == actionId);
+            if (item.getItemId() == actionId) {
+                item.setChecked(true);
+                break;
+            }
         }
     }
-
-
 }
