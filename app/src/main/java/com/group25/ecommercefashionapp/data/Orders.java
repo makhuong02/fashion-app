@@ -42,4 +42,3 @@ public class Orders {
         this.totalPrice = totalPrice;
     }
 }
-}
