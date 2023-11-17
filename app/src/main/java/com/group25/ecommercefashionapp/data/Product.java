@@ -1,8 +1,7 @@
 package com.group25.ecommercefashionapp.data;
 
-public class Product {
+public class Product extends Item {
     private final int id;
-    private final String name;
     private final String description;
     private final Integer price;
     private final int imageId;
@@ -10,8 +9,8 @@ public class Product {
     private final Integer availableQuantity;
 
     public Product(Integer id, String name, String description, Integer price, int imageId, String category, Integer availableQuantity) {
+        super(name);
         this.id = id;
-        this.name = name;
         this.description = description;
         this.price = price;
         this.imageId = imageId;
@@ -20,11 +19,11 @@ public class Product {
     }
 
     public Product(String description, Integer price, int imageId, String category) {
+        super("");
         this.description = description;
         this.price = price;
         this.imageId = imageId;
         this.id = -1;
-        this.name = "";
         this.category = category;
         this.availableQuantity = 0;
 

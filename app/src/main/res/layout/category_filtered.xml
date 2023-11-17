@@ -4,6 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:background="#D1E5F4"
 	android:orientation="vertical">
 	
 	<com.google.android.material.appbar.AppBarLayout
@@ -16,7 +17,7 @@
 			android:layout_height="?attr/actionBarSize"
 			android:background="@color/white"
 			app:layout_collapseMode="pin"
-			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+			app:layout_scrollFlags="scroll|enterAlways"
 			app:navigationIcon="@drawable/round_arrow_back_24"
 			app:title="Áo thun" />
 	
@@ -25,6 +26,7 @@
 	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:elevation="5dp"
 		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 		
 		<LinearLayout
@@ -33,7 +35,7 @@
 			android:orientation="vertical">
 			
 			<androidx.recyclerview.widget.RecyclerView
-				android:id="@+id/productGridView"
+				android:id="@+id/productRecyclerView"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:layout_margin="5dp"

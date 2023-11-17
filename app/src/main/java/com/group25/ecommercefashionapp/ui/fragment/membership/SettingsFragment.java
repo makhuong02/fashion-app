@@ -27,10 +27,8 @@ public class SettingsFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         toolbar = view.findViewById(R.id.topAppBar);
 
-        toolbar.setNavigationOnClickListener(v -> {
-            mainActivity.navController.popBackStack();
-        });
-        mainActivity.updateNavigationBarState(R.id.membershipBotNav);
+        toolbar.setNavigationOnClickListener(v -> mainActivity.navController.popBackStack());
+        mainActivity.updateNavigationBarState(R.id.action_membershipBotNav_to_settings);
 
         return view;
     }

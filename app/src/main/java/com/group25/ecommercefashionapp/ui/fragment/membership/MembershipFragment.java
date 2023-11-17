@@ -20,6 +20,7 @@ import com.group25.ecommercefashionapp.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ActionItem;
+import com.group25.ecommercefashionapp.data.Item;
 
 import java.util.List;
 
@@ -121,8 +122,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
     };
 
     @Override
-    public void onItemClick(ActionItem item) {
-
+    public void onItemClick(Item item) {
         Log.d("MainActivity", "onItemClick: " + item.getName());
     }
 }

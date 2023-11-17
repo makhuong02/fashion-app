@@ -16,7 +16,7 @@ import com.group25.ecommercefashionapp.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
-import com.group25.ecommercefashionapp.data.ActionItem;
+import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
@@ -39,7 +39,7 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_filtered, container, false);
-        productRecyclerView = view.findViewById(R.id.productGridView);
+        productRecyclerView = view.findViewById(R.id.productRecyclerView);
         toolbar = view.findViewById(R.id.topAppBar);
 
         String category = getArguments().getString("category");
@@ -65,10 +65,9 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
         return view;
     }
 
+
     @Override
-    public void onItemClick(ActionItem item) {
-
+    public void onItemClick(Item item) {
         Log.d("MainActivity", "onItemClick: " + item.getName());
-
     }
 }
