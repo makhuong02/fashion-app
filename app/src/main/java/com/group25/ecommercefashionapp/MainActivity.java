@@ -12,7 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.database.ProductDbHelper;
+import com.group25.ecommercefashionapp.database.DatabaseHelper;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ProductDbHelper productDbHelper = new ProductDbHelper(this);
+        DatabaseHelper productDbHelper = new DatabaseHelper(this);
         productRepository = new ProductRepository(productDbHelper);
 
         productRepository.dropProductTable();

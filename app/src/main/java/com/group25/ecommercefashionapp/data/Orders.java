@@ -10,6 +10,9 @@ public class Orders {
     private int totalPrice;
     private List<Product> products;
 
+
+
+
     public int getOrdinalNumber() {
         return ordinalNumber;
     }
@@ -40,5 +43,13 @@ public class Orders {
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

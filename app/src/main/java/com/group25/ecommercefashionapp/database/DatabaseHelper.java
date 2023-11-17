@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class ProductDbHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ecommerce_db";
     private static final int DATABASE_VERSION = 1;
@@ -28,7 +28,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                     OrderContract.OrderEntry.COLUMN_DATE + " DATE, " +
                     OrderContract.OrderEntry.COLUMN_PRODUCT_ID + " INT)";
 
-    public ProductDbHelper(Context context) {
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

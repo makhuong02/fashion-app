@@ -9,15 +9,15 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.database.ProductContract;
-import com.group25.ecommercefashionapp.database.ProductDbHelper;
+import com.group25.ecommercefashionapp.database.DatabaseHelper;
 
 import java.util.ArrayList;
 
 public class ProductRepository {
     private SQLiteDatabase db;
-    private final ProductDbHelper productDbHelper;
+    private final DatabaseHelper productDbHelper;
 
-    public ProductRepository(ProductDbHelper dbHelper) {
+    public ProductRepository(DatabaseHelper dbHelper) {
         this.db = dbHelper.getWritableDatabase();
         this.productDbHelper = dbHelper;
     }
