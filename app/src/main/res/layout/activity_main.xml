@@ -1,47 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fitsSystemWindows="true"
 	android:background="#D1E5F4"
-	android:orientation="vertical">
-
-	<com.google.android.material.appbar.AppBarLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:fitsSystemWindows="true">
-
-		<com.google.android.material.appbar.MaterialToolbar
-			android:id="@+id/topAppBar"
-			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-			app:contentScrim="#D1E5F4"
-			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
-			app:layout_collapseMode="pin"
-			app:title="@string/membership" />
-
-	</com.google.android.material.appbar.AppBarLayout>
-
+	android:orientation="vertical"
+	app:layout_behavior=".ScrollingViewWithBottomNavigationBehavior">
+	
 	<androidx.fragment.app.FragmentContainerView
 		android:id="@+id/fragmentContainer"
 		android:name="androidx.navigation.fragment.NavHostFragment"
 		android:layout_width="match_parent"
-		app:layout_behavior="@string/appbar_scrolling_view_behavior"
 		android:layout_height="match_parent"
 		app:defaultNavHost="true"
-		app:navGraph="@navigation/nav_graph"/>
-
+		app:navGraph="@navigation/nav_graph" />
+	
 	<com.google.android.material.bottomnavigation.BottomNavigationView
-		android:id="@+id/bottom_navigation"
+		android:id="@+id/bottomNavigation"
 		android:layout_width="match_parent"
-		android:layout_gravity="bottom"
 		android:layout_height="wrap_content"
+		android:layout_gravity="bottom"
 		app:compatShadowEnabled="true"
 		app:menu="@menu/bottom_navigation_menu">
+	
 	</com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

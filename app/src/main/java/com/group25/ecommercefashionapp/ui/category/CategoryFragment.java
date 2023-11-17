@@ -7,20 +7,20 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.group25.ecommercefashionapp.MainActivity;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.adapter.CustomCategoryItemAdapter;
 import com.group25.ecommercefashionapp.data.CategoryItem;
-import com.group25.ecommercefashionapp.data.CustomCategoryItemAdapter;
+
 
 import java.util.ArrayList;
 
 public class CategoryFragment extends Fragment {
+    MainActivity mainActivity;
     Context context = null;
     GridView gridCategory;
     ArrayList<CategoryItem> categories;
@@ -28,8 +28,6 @@ public class CategoryFragment extends Fragment {
     public CategoryFragment() {
         // Required empty public constructor
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,20 +39,12 @@ public class CategoryFragment extends Fragment {
 
         categories = getCategory();
         context = getActivity();
-
+        mainActivity = (MainActivity) getActivity();
+      
         CustomCategoryItemAdapter adapter = new CustomCategoryItemAdapter(context, R.layout.category_items, categories);
         gridCategory.setAdapter(adapter);
 
-        gridCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                fragmentTransaction.replace(R.id.fragmentContainer, CategoryFilteredFragment.class, null);
-                fragmentTransaction.commit();
-            }
-        });
+        gridCategory.setOnItemClickListener((parent, view1, position, id) -> mainActivity.navController.navigate(R.id.action_categoryBotNav_to_filterCategory));
 
         return view;
     }

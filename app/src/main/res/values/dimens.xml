@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<dimen name="product_vertical_spacing">5dp</dimen>
+	<dimen name="product_horizontal_spacing">1dp</dimen>
+</resources>
