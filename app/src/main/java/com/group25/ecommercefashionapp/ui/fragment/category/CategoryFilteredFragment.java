@@ -1,7 +1,5 @@
 package com.group25.ecommercefashionapp.ui.fragment.category;
 
-import static com.group25.ecommercefashionapp.data.Product.getProduct;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +18,7 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
 import com.group25.ecommercefashionapp.data.ActionItem;
 import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
 
 import java.util.ArrayList;
@@ -40,13 +39,15 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_filtered, container, false);
-
-
         productRecyclerView = view.findViewById(R.id.productGridView);
+        toolbar = view.findViewById(R.id.topAppBar);
 
-        products = getProduct();
+        String category = getArguments().getString("category");
+        toolbar.setTitle(category);
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
+        ProductRepository productRepository = mainActivity.productRepository;
+        products = productRepository.getProductsByCategory(category);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);
@@ -57,8 +58,6 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
         productRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
-
-        toolbar = view.findViewById(R.id.topAppBar);
 
         toolbar.setNavigationOnClickListener(v -> mainActivity.navController.popBackStack());
 

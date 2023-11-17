@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Product> products = new ArrayList<>();
 
+    public ProductRepository productRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ProductDbHelper productDbHelper = new ProductDbHelper(this);
-        ProductRepository productRepository = new ProductRepository(productDbHelper);
+        productRepository = new ProductRepository(productDbHelper);
 
         productRepository.dropProductTable();
         productRepository.insertDbData();
