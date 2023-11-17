@@ -1,68 +1,68 @@
 package com.group25.ecommercefashionapp.adapter;
 
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.group25.ecommercefashionapp.OnListItemClick;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 
 import java.util.List;
 
-public class CustomCategoryItemAdapter extends BaseAdapter {
-    private Context context;
-    private List<CategoryItem> items;
-    private int layout;
 
-    public CustomCategoryItemAdapter(Context context, int layout, List<CategoryItem> items) {
-        this.context = context;
+public class CustomCategoryItemAdapter extends RecyclerView.Adapter<CustomCategoryItemAdapter.ViewHolder> {
+    private final List<CategoryItem> items;
+    private final OnListItemClick clickListener;
+
+    public CustomCategoryItemAdapter(List<CategoryItem> items, OnListItemClick clickListener) {
         this.items = items;
-        this.layout = layout;
+        this.clickListener = clickListener;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_items, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        CategoryItem item = items.get(position);
+
+        Log.d("CustomCategoryItemAdapter", "onBindViewHolder: " + item.getName());
+        // Bind your data to the UI components of the CardView
+        holder.txtCategoryName.setText(item.getName());
+        holder.img.setImageResource(item.getImgID());
+
+        // Set click listener on the card
+        holder.cardView.setOnClickListener(v -> clickListener.onItemClick(item, position));
+    }
+
+    @Override
+    public int getItemCount() {
         return items.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    private class ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView txt;
-    }
+        TextView txtCategoryName;
+        CardView cardView;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-
-        if (convertView == null) {
-            holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(layout, null);
-            holder.txt = (TextView) convertView.findViewById(R.id.categoryName);
-            holder.img = (ImageView) convertView.findViewById(R.id.categoryImage);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+        public ViewHolder(View view) {
+            super(view);
+            img = view.findViewById(R.id.categoryImage);
+            txtCategoryName = view.findViewById(R.id.categoryName);
+            cardView = view.findViewById(R.id.categoryCardView);
         }
-
-        CategoryItem item = items.get(position);
-        holder.txt.setText(item.getCategory_name());
-        holder.img.setImageResource(item.getImgID());
-
-        return convertView;
     }
+
 }

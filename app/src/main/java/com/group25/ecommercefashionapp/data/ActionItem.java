@@ -3,18 +3,13 @@ package com.group25.ecommercefashionapp.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActionItem {
-    private final String name;
+public class ActionItem extends Item {
 
     public ActionItem(String name) {
-        this.name = name;
+        super(name);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public static List<ActionItem> getActionItems(){
+    public static List<ActionItem> getActionItems() {
         List<ActionItem> items = new ArrayList<>();
         items.add(new ActionItem("Store Locator"));
         items.add(new ActionItem("Getting Started"));

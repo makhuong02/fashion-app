@@ -6,6 +6,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.database.ProductContract;
 import com.group25.ecommercefashionapp.database.ProductDbHelper;
@@ -93,18 +94,25 @@ public class ProductRepository {
             insertProductData(new Product("Đây là sản phẩm 1 có nhiều lượt bán nhất", 1500000, R.drawable.tshirt, "Áo thun"));
             insertProductData(new Product("Đây là sản phẩm 2 có nhiều lượt bán nhất", 580000, R.drawable.tshirt, "Áo thun"));
             insertProductData(new Product("Đây là sản phẩm 3 có nhiều lượt bán nhất", 750000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 4 có nhiều lượt bán nhất", 800000, R.drawable.tshirt, "Váy"));
+            insertProductData(new Product("Đây là sản phẩm 4 có nhiều lượt bán nhất", 800000, R.drawable.skirt, "Váy"));
             insertProductData(new Product("Đây là sản phẩm 5 có nhiều lượt bán nhất", 500000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 6 có nhiều lượt bán nhất", 300000, R.drawable.tshirt, "Quần"));
-            insertProductData(new Product("Đây là sản phẩm 7 có nhiều lượt bán nhất", 200000, R.drawable.tshirt, "Áo khoác"));
-            insertProductData(new Product("Đây là sản phẩm 8 có nhiều lượt bán nhất", 100000, R.drawable.tshirt, "Hoodie"));
-            insertProductData(new Product("Đây là sản phẩm 9 có nhiều lượt bán nhất", 860000, R.drawable.tshirt, "Túi xách"));
-            insertProductData(new Product("Đây là sản phẩm 10 có nhiều lượt bán nhất", 350000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 11 có nhiều lượt bán nhất", 4600000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 12 có nhiều lượt bán nhất", 8700000, R.drawable.tshirt, "Túi xách"));
-            insertProductData(new Product("Đây là sản phẩm 13 có nhiều lượt bán nhất", 8800000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 14 có nhiều lượt bán nhất", 1200000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 15 có nhiều lượt bán nhất", 3400000, R.drawable.tshirt, "Áo thun"));
+            insertProductData(new Product("Đây là sản phẩm 6 có nhiều lượt bán nhất", 300000, R.drawable.jeans, "Quần"));
+            insertProductData(new Product("Đây là sản phẩm 7 có nhiều lượt bán nhất", 300000, R.drawable.jeans, "Quần"));
+            insertProductData(new Product("Đây là sản phẩm 8 có nhiều lượt bán nhất", 300000, R.drawable.sneakers, "Giày"));
+            insertProductData(new Product("Đây là sản phẩm 9 có nhiều lượt bán nhất", 300000, R.drawable.wallet, "Bóp"));
+            insertProductData(new Product("Đây là sản phẩm 10 có nhiều lượt bán nhất", 200000, R.drawable.jacket, "Áo khoác"));
+            insertProductData(new Product("Đây là sản phẩm 11 có nhiều lượt bán nhất", 200000, R.drawable.jacket, "Áo khoác"));
+            insertProductData(new Product("Đây là sản phẩm 12 có nhiều lượt bán nhất", 100000, R.drawable.hoodie, "Hoodie"));
+            insertProductData(new Product("Đây là sản phẩm 13 có nhiều lượt bán nhất", 100000, R.drawable.hoodie, "Hoodie"));
+            insertProductData(new Product("Đây là sản phẩm 14 có nhiều lượt bán nhất", 860000, R.drawable.handbag, "Túi xách"));
+            insertProductData(new Product("Đây là sản phẩm 15 có nhiều lượt bán nhất", 350000, R.drawable.tshirt, "Áo thun"));
+            insertProductData(new Product("Đây là sản phẩm 16 có nhiều lượt bán nhất", 4600000, R.drawable.tshirt, "Áo thun"));
+            insertProductData(new Product("Đây là sản phẩm 17 có nhiều lượt bán nhất", 4600000, R.drawable.watch, "Đồng hồ"));
+            insertProductData(new Product("Đây là sản phẩm 18 có nhiều lượt bán nhất", 8700000, R.drawable.handbag, "Túi xách"));
+            insertProductData(new Product("Đây là sản phẩm 19 có nhiều lượt bán nhất", 8700000, R.drawable.handbag, "Túi xách"));
+            insertProductData(new Product("Đây là sản phẩm 20 có nhiều lượt bán nhất", 8800000, R.drawable.tshirt, "Áo thun"));
+            insertProductData(new Product("Đây là sản phẩm 21 có nhiều lượt bán nhất", 1200000, R.drawable.tshirt, "Áo thun"));
+            insertProductData(new Product("Đây là sản phẩm 21 có nhiều lượt bán nhất", 3400000, R.drawable.tshirt, "Áo thun"));
 
             db.setTransactionSuccessful();
         } catch (SQLException e) {
@@ -167,6 +175,20 @@ public class ProductRepository {
 
         cursor.close();
         return products;
+    }
+
+    public ArrayList<CategoryItem> getCategories() {
+        ArrayList<CategoryItem> items = new ArrayList<>();
+        items.add(new CategoryItem("Áo thun", R.drawable.tshirt));
+        items.add(new CategoryItem("Váy", R.drawable.skirt));
+        items.add(new CategoryItem("Quần", R.drawable.jeans));
+        items.add(new CategoryItem("Áo khoác", R.drawable.jacket));
+        items.add(new CategoryItem("Hoodie", R.drawable.hoodie));
+        items.add(new CategoryItem("Giày", R.drawable.sneakers));
+        items.add(new CategoryItem("Đồng hồ", R.drawable.watch));
+        items.add(new CategoryItem("Bóp", R.drawable.wallet));
+        items.add(new CategoryItem("Túi xách", R.drawable.handbag));
+        return items;
     }
 
 }

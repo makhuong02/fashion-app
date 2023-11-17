@@ -1,27 +1,31 @@
 package com.group25.ecommercefashionapp.ui.fragment.category;
 
-import static com.group25.ecommercefashionapp.data.CategoryItem.getCategory;
-
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.group25.ecommercefashionapp.MainActivity;
+import com.group25.ecommercefashionapp.OnListItemClick;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CustomCategoryItemAdapter;
 import com.group25.ecommercefashionapp.data.CategoryItem;
+import com.group25.ecommercefashionapp.data.Item;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
 
 import java.util.ArrayList;
 
-public class CategoryFragment extends Fragment {
+public class CategoryFragment extends Fragment implements OnListItemClick {
     MainActivity mainActivity;
     Context context = null;
-    GridView gridCategory;
+    RecyclerView categoryRecyclerView;
     ArrayList<CategoryItem> categories;
 
     public CategoryFragment() {
@@ -34,21 +38,34 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.category, container, false);
 
         // Initialize views and handle logic specific to this fragment
-        gridCategory = view.findViewById(R.id.gridViewCategory);
+        categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
 
-        Bundle bundle = new Bundle();
-        categories = getCategory();
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
 
-        CustomCategoryItemAdapter adapter = new CustomCategoryItemAdapter(context, R.layout.category_items, categories);
-        gridCategory.setAdapter(adapter);
+        ProductRepository productRepository = mainActivity.productRepository;
+        categories = productRepository.getCategories();
 
-        gridCategory.setOnItemClickListener((parent, view1, position, id) -> {
-            bundle.putString("category", categories.get(position).getCategory_name());
-            mainActivity.navController.navigate(R.id.action_categoryBotNav_to_filterCategory, bundle);
-        });
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 4);
+        categoryRecyclerView.setLayoutManager(gridLayoutManager);
+
+        CustomCategoryItemAdapter adapter = new CustomCategoryItemAdapter(categories, this);
+        categoryRecyclerView.setAdapter(adapter);
+
+        int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
+        int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
+        categoryRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
 
         return view;
+    }
+
+
+    @Override
+    public void onItemClick(Item item, int position) {
+        Log.d("MainActivity", "onItemClick: " + item.getName());
+        Bundle bundle = new Bundle();
+        bundle.putString("category", categories.get(position).getName());
+        mainActivity.navController.navigate(R.id.action_categoryBotNav_to_filterCategory, bundle);
+
     }
 }

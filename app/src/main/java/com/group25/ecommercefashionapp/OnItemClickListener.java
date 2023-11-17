@@ -1,8 +1,8 @@
 package com.group25.ecommercefashionapp;
 
-import com.group25.ecommercefashionapp.data.ActionItem;
+import com.group25.ecommercefashionapp.data.Item;
 
 // Interface to handle item click events
 public interface OnItemClickListener {
-    void onItemClick(ActionItem item);
+    void onItemClick(Item item);
 }

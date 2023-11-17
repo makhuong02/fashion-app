@@ -72,7 +72,7 @@
 	<fragment
 		android:id="@+id/filterCategory"
 		android:name="com.group25.ecommercefashionapp.ui.fragment.category.CategoryFilteredFragment"
-		android:label="Settings Fragment"
+		android:label="Filtered Category Fragment"
 		tools:layout="@layout/category_filtered" />
 
 </navigation>

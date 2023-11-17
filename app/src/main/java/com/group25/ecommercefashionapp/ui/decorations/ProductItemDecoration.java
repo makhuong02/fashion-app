@@ -27,7 +27,7 @@ public class ProductItemDecoration extends RecyclerView.ItemDecoration {
         int itemCount = state.getItemCount();
 
         // Apply spacing to all items except the last one
-        if (position < itemCount - 1) {
+        if (position < itemCount) {
             outRect.bottom = verticalSpacing;
         }
 
