@@ -16,6 +16,7 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CustomCategoryItemAdapter;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 
+
 import java.util.ArrayList;
 
 public class CategoryFragment extends Fragment {
@@ -28,7 +29,6 @@ public class CategoryFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -40,6 +40,7 @@ public class CategoryFragment extends Fragment {
         categories = getCategory();
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
+      
         CustomCategoryItemAdapter adapter = new CustomCategoryItemAdapter(context, R.layout.category_items, categories);
         gridCategory.setAdapter(adapter);
 

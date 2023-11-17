@@ -33,6 +33,7 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
     RecyclerView productRecyclerView;
     ArrayList<Product> products;
 
+
     public CategoryFilteredFragment() {
         // Required empty public constructor
     }
@@ -40,6 +41,7 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_filtered, container, false);
+
 
         productRecyclerView = view.findViewById(R.id.productGridView);
 

@@ -1,10 +1,8 @@
 package com.group25.ecommercefashionapp;
 
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.navigation.NavController;
@@ -13,6 +11,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
+
 
 public class MainActivity extends AppCompatActivity {
     private NestedScrollView nestedScrollView;

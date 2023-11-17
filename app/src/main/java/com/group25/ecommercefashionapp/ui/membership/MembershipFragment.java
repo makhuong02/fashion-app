@@ -10,16 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
 import com.group25.ecommercefashionapp.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ActionItem;
+
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
     }
 
     @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (view == null) {
             view = inflater.inflate(R.layout.membership, container, false);
@@ -64,6 +66,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
         nestedScrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             // Adjust the translationY of the background view to create the parallax effect
             final int halfwayPoint = imageCardView.getHeight() / 2;
+
 
 //            if(scrollY > halfwayPoint) {
 //                myHandler.post(hideImageCardView);
