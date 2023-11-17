@@ -13,11 +13,11 @@ public class ProductDbHelper extends SQLiteOpenHelper {
     // Define the Product table schema
     private static final String CREATE_PRODUCT_TABLE =
             "CREATE TABLE IF NOT EXISTS " + ProductContract.ProductEntry.TABLE_NAME + " (" +
-                    ProductContract.ProductEntry.COLUMN_ID + " INT PRIMARY KEY AUTOINCREMENT," +
+                    ProductContract.ProductEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     ProductContract.ProductEntry.COLUMN_NAME + " TEXT," +
                     ProductContract.ProductEntry.COLUMN_DESCRIPTION + " TEXT," +
                     ProductContract.ProductEntry.COLUMN_PRICE + " INT," +
-                    ProductContract.ProductEntry.COLUMN_IMAGE + " TEXT," +
+                    ProductContract.ProductEntry.COLUMN_IMAGE + " INT," +
                     ProductContract.ProductEntry.COLUMN_CATEGORY + " TEXT," +
                     ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY + " INT)";
 

@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.ui.category;
+package com.group25.ecommercefashionapp.ui.fragment.category;
 
 import static com.group25.ecommercefashionapp.data.Product.getProduct;
 
@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -63,6 +62,7 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
 
         toolbar.setNavigationOnClickListener(v -> mainActivity.navController.popBackStack());
 
+        mainActivity.updateNavigationBarState(R.id.categoryBotNav);
         return view;
     }
 

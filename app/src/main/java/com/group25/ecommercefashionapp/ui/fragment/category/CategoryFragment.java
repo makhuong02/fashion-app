@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.ui.category;
+package com.group25.ecommercefashionapp.ui.fragment.category;
 
 import static com.group25.ecommercefashionapp.data.CategoryItem.getCategory;
 
@@ -15,7 +15,6 @@ import com.group25.ecommercefashionapp.MainActivity;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CustomCategoryItemAdapter;
 import com.group25.ecommercefashionapp.data.CategoryItem;
-
 
 import java.util.ArrayList;
 

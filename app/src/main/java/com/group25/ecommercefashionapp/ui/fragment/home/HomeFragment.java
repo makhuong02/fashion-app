@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.ui;
+package com.group25.ecommercefashionapp.ui.fragment.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

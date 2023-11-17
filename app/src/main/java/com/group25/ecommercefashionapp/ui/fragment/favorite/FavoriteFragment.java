@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.ui.notification;
+package com.group25.ecommercefashionapp.ui.fragment.favorite;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,16 +9,16 @@ import androidx.fragment.app.Fragment;
 
 import com.group25.ecommercefashionapp.R;
 
-public class NotificationFragment extends Fragment {
+public class FavoriteFragment extends Fragment {
 
-    public NotificationFragment() {
+    public FavoriteFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.notification, container, false);
+        View view = inflater.inflate(R.layout.favorite, container, false);
 
         // Initialize views and handle logic specific to this fragment
 
