@@ -91,11 +91,11 @@ public class ProductRepository {
         try {
             productDbHelper.onCreate(db);
 
-            insertProductData(new Product("Đây là sản phẩm 1 có nhiều lượt bán nhất", 1500000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 2 có nhiều lượt bán nhất", 580000, R.drawable.tshirt, "Áo thun"));
-            insertProductData(new Product("Đây là sản phẩm 3 có nhiều lượt bán nhất", 750000, R.drawable.tshirt, "Áo thun"));
+            insertProductData(new Product("Beige Shirt", 1500000, R.drawable.man_beige_shirt_pants_casual_wear_fashion, "Áo thun"));
+            insertProductData(new Product("Beige Shirt", 580000, R.drawable.man_beige_shirt_pants_casual_wear_fashion, "Áo thun"));
+            insertProductData(new Product("Beige Shirt", 750000, R.drawable.man_beige_shirt_pants_casual_wear_fashion, "Áo thun"));
             insertProductData(new Product("Đây là sản phẩm 4 có nhiều lượt bán nhất", 800000, R.drawable.skirt, "Váy"));
-            insertProductData(new Product("Đây là sản phẩm 5 có nhiều lượt bán nhất", 500000, R.drawable.tshirt, "Áo thun"));
+            insertProductData(new Product("Beige Shirt", 500000, R.drawable.man_beige_shirt_pants_casual_wear_fashion, "Áo thun"));
             insertProductData(new Product("Đây là sản phẩm 6 có nhiều lượt bán nhất", 300000, R.drawable.jeans, "Quần"));
             insertProductData(new Product("Đây là sản phẩm 7 có nhiều lượt bán nhất", 300000, R.drawable.jeans, "Quần"));
             insertProductData(new Product("Đây là sản phẩm 8 có nhiều lượt bán nhất", 300000, R.drawable.sneakers, "Giày"));
