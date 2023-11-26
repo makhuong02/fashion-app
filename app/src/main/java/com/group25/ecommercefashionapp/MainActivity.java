@@ -16,6 +16,7 @@ import com.group25.ecommercefashionapp.database.DatabaseHelper;
 import com.group25.ecommercefashionapp.repository.OrdersRepository;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     public NavController navController;
 
     ArrayList<Product> products = new ArrayList<>();
-
     public ProductRepository productRepository;
     public OrdersRepository ordersRepository;
 
@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        MyApp.setMainActivityInstance(this);
-        ProductDbHelper productDbHelper = new ProductDbHelper(this);
+        DatabaseHelper productDbHelper = new DatabaseHelper(this);
         productRepository = new ProductRepository(productDbHelper);
         ordersRepository = new OrdersRepository(productDbHelper);
+        MyApp.setMainActivityInstance(this, ordersRepository, productRepository);
 
         productRepository.dropProductTable();
         productRepository.insertDbData();

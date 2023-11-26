@@ -67,6 +67,8 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
 
     @Override
     public void onItemClick(Item item) {
-        mainActivity.navController.navigate(R.id.viewProduct);
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", item.getId());
+        mainActivity.navController.navigate(R.id.viewProduct, bundle);
     }
 }

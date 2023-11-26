@@ -19,7 +19,7 @@
 			app:contentScrim="#D1E5F4"
 			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
 			app:layout_collapseMode="pin"
-			app:title="@string/favorite" />
+			app:title="@string/cart" />
 	
 	</com.google.android.material.appbar.AppBarLayout>
 

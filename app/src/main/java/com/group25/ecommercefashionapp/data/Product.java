@@ -28,6 +28,16 @@ public class Product extends Item {
         this.availableQuantity = 0;
 
     }
+    public Product(String name, String description, Integer price, int imageId, String category) {
+        super(name);
+        this.description = description;
+        this.price = price;
+        this.imageId = imageId;
+        this.id = -1;
+        this.category = category;
+        this.availableQuantity = 0;
+
+    }
 
     public String getName() {
         return name;
@@ -53,7 +63,7 @@ public class Product extends Item {
         return availableQuantity;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 }

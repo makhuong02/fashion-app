@@ -1,0 +1,16 @@
+Index: app/src/main/res/drawable/custom_color_radio_button_selected.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable/custom_color_radio_button_selected.xml b/app/src/main/res/drawable/custom_color_radio_button_selected.xml
+new file mode 100644
+--- /dev/null	(date 1700962190115)
++++ b/app/src/main/res/drawable/custom_color_radio_button_selected.xml	(date 1700962190115)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8"?>
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++	<solid android:color="@color/redColor"/>
++	<corners android:radius="5dp"/>
++</shape>
+\ No newline at end of file

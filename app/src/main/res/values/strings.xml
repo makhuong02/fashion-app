@@ -41,10 +41,13 @@
 	<string name="privacy_policy">Privacy policy</string>
 	<string name="messages">Messages</string>
 	<string name="news">News</string>
+	<string name="cart">Cart</string>
 	<string-array name="productQuantitySpinnerItems">
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
 		<item>4</item>
 	</string-array>
+	
+	<string name="product_price">%1$s₫</string>
 </resources>

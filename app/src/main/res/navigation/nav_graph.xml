@@ -25,7 +25,7 @@
 	</fragment>
 	
 	<fragment
-		android:id="@+id/favoriteBotNav"
+		android:id="@+id/cartBotNav"
 		android:name="com.group25.ecommercefashionapp.ui.fragment.order.OrderFragment"
 		android:label="Favorite Fragment"
 		tools:layout="@layout/order" />

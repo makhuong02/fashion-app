@@ -11,10 +11,10 @@
 		android:icon="@drawable/outline_category_24"
 		android:title="@string/category_bottom_nav_text"/>
 	<item
-		android:id="@+id/favoriteBotNav"
+		android:id="@+id/cartBotNav"
 		android:enabled="true"
-		android:icon="@drawable/outline_favorite_border_24"
-		android:title="@string/favorite_bottom_nav_text"/>
+		android:icon="@drawable/outline_shopping_cart_24"
+		android:title="@string/cart"/>
 	<item
 		android:id="@+id/notificationBotNav"
 		android:enabled="true"
