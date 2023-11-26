@@ -2,7 +2,6 @@ package com.group25.ecommercefashionapp.ui.fragment.category;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +67,6 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
 
     @Override
     public void onItemClick(Item item) {
-        Log.d("MainActivity", "onItemClick: " + item.getName());
+        mainActivity.navController.navigate(R.id.viewProduct);
     }
 }

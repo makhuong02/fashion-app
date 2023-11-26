@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DatabaseHelper productDbHelper = new DatabaseHelper(this);
+
+        MyApp.setMainActivityInstance(this);
+        ProductDbHelper productDbHelper = new ProductDbHelper(this);
         productRepository = new ProductRepository(productDbHelper);
         ordersRepository = new OrdersRepository(productDbHelper);
 

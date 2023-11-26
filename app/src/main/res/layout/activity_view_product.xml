@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	
+	<com.google.android.material.appbar.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/white"
+		android:elevation="10dp">
+		
+		<com.google.android.material.appbar.MaterialToolbar
+			android:id="@+id/topAppBar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:layout_collapseMode="parallax"
+			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+			app:navigationIcon="@drawable/round_arrow_back_24"
+			app:title="" />
+	
+	</com.google.android.material.appbar.AppBarLayout>
+	
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/nestedScrollView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:elevation="10dp"
+		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:padding="8dp">
+				
+				<TextView
+					android:id="@+id/productNameTextView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp"
+					android:text="Beige Shirt"
+					android:textSize="20sp">
+				
+				</TextView>
+				
+				<TextView
+					android:id="@+id/productHighlightsTextView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp"
+					android:text="Linen cotton fabric keep you warm through out the year.">
+				
+				</TextView>
+				
+				<TextView
+					android:id="@+id/productIDTextView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="end"
+					android:paddingTop="8dp"
+					android:paddingBottom="8dp"
+					android:text="Product ID:  461343">
+				
+				</TextView>
+			</LinearLayout>
+			
+			
+			<com.google.android.material.imageview.ShapeableImageView
+				android:id="@+id/productImageView"
+				android:layout_width="match_parent"
+				android:layout_height="411dp"
+				
+				android:layout_marginBottom="10dp"
+				android:adjustViewBounds="true"
+				android:alpha="1.0"
+				android:contentDescription="@string/content_description_media"
+				android:scaleType="centerCrop"
+				app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
+			
+			
+			<!--			<RelativeLayout-->
+			<!--				android:layout_width="match_parent"-->
+			<!--				android:layout_height="match_parent"-->
+			<!--				android:padding="8dp">-->
+			<!--				-->
+			<!--				<LinearLayout-->
+			<!--					android:id="@+id/colorRadioGroup"-->
+			<!--					android:layout_width="match_parent"-->
+			<!--					android:layout_height="wrap_content"-->
+			<!--					android:orientation="horizontal"-->
+			<!--					android:gravity="left">-->
+			<!--					<RadioGroup-->
+			<!--						android:layout_width="match_parent"-->
+			<!--						android:layout_height="wrap_content"-->
+			<!--						android:orientation="horizontal">-->
+			<!--					&lt;!&ndash; Define your RadioButton items with corresponding colors &ndash;&gt;-->
+			<!--						<RadioButton-->
+			<!--							android:id="@+id/radioRed"-->
+			<!--							android:layout_width="50dp"-->
+			<!--							android:layout_height="50dp"-->
+			<!--							android:buttonTint="@android:color/transparent"-->
+			<!--							android:background="@drawable/custom_color_radio_button"-->
+			<!--							android:button="@android:color/transparent"-->
+			<!--							android:layout_margin="8dp"-->
+			<!--							android:text=""-->
+			<!--							android:checked="true"/>-->
+			<!--						<RadioButton-->
+			<!--							android:id="@+id/radioBlue"-->
+			<!--							android:layout_width="50dp"-->
+			<!--							android:layout_height="50dp"-->
+			<!--							android:buttonTint="@android:color/transparent"-->
+			<!--							android:background="@drawable/custom_color_radio_button"-->
+			<!--							android:button="@android:color/transparent"-->
+			<!--							android:layout_margin="8dp"-->
+			<!--							android:text=""-->
+			<!--							android:checked="false"/>-->
+			<!--					-->
+			<!--					&lt;!&ndash; Add more RadioButtons for other colors &ndash;&gt;-->
+			<!--					</RadioGroup>-->
+			<!--				</LinearLayout>-->
+			<!--			</RelativeLayout>-->
+			
+			<TextView
+				android:id="@+id/productPriceTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-condensed"
+				android:paddingStart="8dp"
+				android:paddingTop="8dp"
+				android:paddingEnd="8dp"
+				android:paddingBottom="8dp"
+				android:text="980.000 VND"
+				android:textSize="20sp"
+				android:textStyle="bold" />
+			
+			<TextView
+				android:id="@+id/productQuantityTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-condensed"
+				android:paddingStart="8dp"
+				android:paddingTop="8dp"
+				android:paddingEnd="8dp"
+				android:paddingBottom="8dp"
+				
+				android:text="Quantity"
+				android:textSize="13sp" />
+			
+			<Spinner
+				android:id="@+id/productQuantitySpinner"
+				android:layout_width="200dp"
+				android:layout_height="50dp"
+				android:entries="@array/productQuantitySpinnerItems"
+				android:spinnerMode="dropdown">
+			
+			</Spinner>
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="8dp">
+				
+				<Button
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:backgroundTint="@android:color/holo_red_dark"
+					android:fontFamily="sans-serif-condensed"
+					android:text="ADD TO CART"
+					android:textStyle="bold">
+				
+				</Button>
+			</LinearLayout>
+		
+		
+		</LinearLayout>
+	
+	</androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -31,14 +31,20 @@
     <string name="my_cards">My Cards</string>
     <string name="change_my_password">Change my password</string>
     <string name="edit_profile">Edit profile</string>
-    <string name="video_automatic_playback">Video Automatic Playback</string>
-    <string name="location_sharing">Location Sharing</string>
-    <string name="push_notifications_and_privacy_settings">Push notifications and privacy settings</string>
-    <string name="store_locator">Store Locator</string>
-    <string name="getting_started">Getting Started</string>
-    <string name="faqs">FAQS</string>
-    <string name="terms_of_use">Terms of use</string>
-    <string name="privacy_policy">Privacy policy</string>
-    <string name="messages">Messages</string>
-    <string name="news">News</string>
+	<string name="video_automatic_playback">Video Automatic Playback</string>
+	<string name="location_sharing">Location Sharing</string>
+	<string name="push_notifications_and_privacy_settings">Push notifications and privacy settings</string>
+	<string name="store_locator">Store Locator</string>
+	<string name="getting_started">Getting Started</string>
+	<string name="faqs">FAQS</string>
+	<string name="terms_of_use">Terms of use</string>
+	<string name="privacy_policy">Privacy policy</string>
+	<string name="messages">Messages</string>
+	<string name="news">News</string>
+	<string-array name="productQuantitySpinnerItems">
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
 </resources>
