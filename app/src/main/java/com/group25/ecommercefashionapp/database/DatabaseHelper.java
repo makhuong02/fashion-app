@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class ProductDbHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ecommerce_db";
     private static final int DATABASE_VERSION = 1;
@@ -23,12 +23,16 @@ public class ProductDbHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_ORDER_TABLE =
             "CREATE TABLE IF NOT EXISTS " + OrderContract.OrderEntry.TABLE_NAME + " (" +
-                    OrderContract.OrderEntry.COLUMN_ORDINAL_NUMBER + " INT, " +
                     OrderContract.OrderEntry.COLUMN_ORDER_ID + " INT, " +
-                    OrderContract.OrderEntry.COLUMN_DATE + " DATE, " +
-                    OrderContract.OrderEntry.COLUMN_PRODUCT_ID + " INT)";
+                    OrderContract.OrderEntry.COLUMN_DATE + " TEXT)";
 
-    public ProductDbHelper(Context context) {
+    private static final String CREATE_ORDERDETAILS_TABLE =
+            "CREATE TABLE IF NOT EXISTS " + OrderDetailsContract.OrderDetailsEntry.TABLE_NAME + " (" +
+                    OrderDetailsContract.OrderDetailsEntry.COLUMN_ORDINAL_NUMBER + " INT," +
+                    OrderDetailsContract.OrderDetailsEntry.COLUMN_ORDER_ID + " INT," +
+                    OrderDetailsContract.OrderDetailsEntry.COLUMN_PRODUCT_ID + " INT)";
+
+    public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -48,6 +52,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_PRODUCT_TABLE);
         db.execSQL(CREATE_ORDER_TABLE);
+        db.execSQL(CREATE_ORDERDETAILS_TABLE);
     }
 
     @Override
