@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.database.DatabaseHelper;
+import com.group25.ecommercefashionapp.repository.OrdersRepository;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Product> products = new ArrayList<>();
 
     public ProductRepository productRepository;
+    public OrdersRepository ordersRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper productDbHelper = new DatabaseHelper(this);
         productRepository = new ProductRepository(productDbHelper);
+        ordersRepository = new OrdersRepository(productDbHelper);
 
         productRepository.dropProductTable();
         productRepository.insertDbData();
