@@ -8,26 +8,27 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.group25.ecommercefashionapp.R;
-import com.group25.ecommercefashionapp.data.Orders;
+import com.group25.ecommercefashionapp.data.Product;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import org.w3c.dom.Text;
+
 import java.util.List;
 
-public class OrdersItemAdapter extends BaseAdapter {
+public class OrderDetailsAdapter extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<Orders> ordersList;
+    private List<Product> productList;
 
-    public OrdersItemAdapter(Context context, int layout, List<Orders> ordersList) {
+
+    public OrderDetailsAdapter(Context context, int layout, List<Product> productList) {
         this.context = context;
         this.layout = layout;
-        this.ordersList = ordersList;
+        this.productList = productList;
     }
 
     @Override
     public int getCount() {
-        return ordersList.size();
+        return productList.size();
     }
 
     @Override
@@ -45,18 +46,14 @@ public class OrdersItemAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(layout, null);
 
-        TextView txtOrderID = (TextView) convertView.findViewById(R.id.orderID);
-        TextView txtOrderDate = (TextView) convertView.findViewById(R.id.orderDate);
-        TextView txtTotalPrice = (TextView) convertView.findViewById(R.id.totalPrice);
+        TextView txtID = convertView.findViewById(R.id.detailsID);
+        TextView txtName = convertView.findViewById(R.id.detailsName);
+        TextView txtPrice = convertView.findViewById(R.id.detailsPrice);
 
-        Orders order = ordersList.get(position);
-
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String strDate = dateFormat.format(order.getDate());
-
-        txtOrderID.setText(order.getOrderID());
-        txtOrderDate.setText(strDate);
-        txtTotalPrice.setText(order.getTotalPrice());
+        Product product = productList.get(position);
+        txtID.setText(String.valueOf(product.getId()));
+        txtName.setText(product.getName());
+        txtPrice.setText(String.format("%,d", product.getPrice()));
 
         return convertView;
     }

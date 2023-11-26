@@ -1,25 +1,21 @@
 package com.group25.ecommercefashionapp.data;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Orders {
-    private int ordinalNumber;
     private int orderID;
     private Date date;
     private int totalPrice;
-    private List<Product> products;
+    private ArrayList<Product> products;
 
 
-
-
-    public int getOrdinalNumber() {
-        return ordinalNumber;
+    public Orders(int orderID, Date date) {
+        this.orderID = orderID;
+        this.date = date;
     }
 
-    public void setOrdinalNumber(int ordinalNumber) {
-        this.ordinalNumber = ordinalNumber;
-    }
+
 
     public int getOrderID() {
         return orderID;
@@ -45,11 +41,11 @@ public class Orders {
         this.totalPrice = totalPrice;
     }
 
-    public List<Product> getProducts() {
+    public ArrayList<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
 }
