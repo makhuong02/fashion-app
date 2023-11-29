@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	
+	<item
+		android:id="@+id/share"
+		android:contentDescription="@string/share_content_description"
+		android:icon="@drawable/outline_share_24"
+		android:title="@string/share"
+		app:showAsAction="ifRoom" />
+	
+	<item
+		android:id="@+id/cart"
+		android:contentDescription="@string/cart_content_description"
+		android:icon="@drawable/outline_shopping_cart_24"
+		android:title="@string/cart"
+		app:showAsAction="ifRoom" />
+
+</menu>

@@ -19,6 +19,7 @@
 			app:layout_collapseMode="pin"
 			app:layout_scrollFlags="scroll|enterAlways"
 			app:navigationIcon="@drawable/round_arrow_back_24"
+			app:menu="@menu/category_action_menu"
 			app:title="Áo thun" />
 	
 	</com.google.android.material.appbar.AppBarLayout>
