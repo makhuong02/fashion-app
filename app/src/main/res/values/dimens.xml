@@ -3,4 +3,5 @@
 	
 	<dimen name="product_vertical_spacing">5dp</dimen>
 	<dimen name="product_horizontal_spacing">1dp</dimen>
+	<dimen name="toolbar_elevation">8dp</dimen>
 </resources>

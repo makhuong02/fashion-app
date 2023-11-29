@@ -3,20 +3,26 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:orientation="vertical">
+	android:orientation="vertical"
+	android:translationZ="@dimen/toolbar_elevation">
 	
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:background="@android:color/white"
-		android:elevation="10dp">
+		android:fitsSystemWindows="true"
+		android:stateListAnimator="@animator/appbar_elevation"
+		android:translationZ="10dp"
+		app:liftOnScroll="true">
 		
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/topAppBar"
+			style="Widget.MaterialComponents.Toolbar.PrimarySurface"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
+			android:elevation="10dp"
 			app:layout_collapseMode="parallax"
-			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+			app:layout_scrollFlags="scroll|enterAlways|snap"
+			app:menu="@menu/view_product_menu"
 			app:navigationIcon="@drawable/round_arrow_back_24"
 			app:title="" />
 	
@@ -46,16 +52,62 @@
 					android:layout_height="wrap_content"
 					android:paddingTop="8dp"
 					android:paddingBottom="8dp"
+					android:fontFamily="@font/quicksand_medium"
 					android:text="Beige Shirt"
 					android:textSize="20sp">
 				
 				</TextView>
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+					
+					<RatingBar
+						android:id="@+id/ratingBar"
+						style="@style/Widget.AppCompat.RatingBar.Small"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center"
+						android:isIndicator="true"
+						android:numStars="5"
+						android:rating="3.7"
+						android:scrollbarSize="10sp"
+						
+						android:stepSize="0.1" />
+					
+					<TextView
+						android:id="@+id/ratingTextView"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="@font/quicksand_medium"
+						
+						android:paddingStart="8dp"
+						android:paddingEnd="8dp"
+						android:text="3.7"
+						android:textSize="16sp"
+						android:textStyle="bold" />
+					
+					<TextView
+						android:id="@+id/seeReviewsTextView"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_gravity="center"
+						android:autoLink="all"
+						
+						android:fontFamily="@font/quicksand_medium"
+						
+						android:text="(See 5 reviews)"
+						android:textSize="14sp" />
+				
+				</LinearLayout>
 				
 				<TextView
 					android:id="@+id/productHighlightsTextView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:paddingTop="8dp"
+					
 					android:paddingBottom="8dp"
 					android:text="Linen cotton fabric keep you warm through out the year.">
 				
@@ -130,20 +182,35 @@
 			<!--			</RelativeLayout>-->
 			
 			<TextView
-				android:id="@+id/productPriceTextView"
+				android:id="@+id/productActualPriceTextView"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:fontFamily="sans-serif-condensed"
 				android:paddingStart="8dp"
 				android:paddingTop="8dp"
 				android:paddingEnd="8dp"
-				android:paddingBottom="8dp"
+				
 				android:text="980.000 VND"
 				android:textSize="20sp"
 				android:textStyle="bold" />
 			
 			<TextView
+				android:id="@+id/productDiscountPriceTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-condensed"
+				android:paddingStart="8dp"
+				
+				android:paddingEnd="8dp"
+				android:paddingBottom="8dp"
+				android:text="980.000 VND"
+				android:textColor="@color/redColor"
+				android:textSize="25sp"
+				android:textStyle="bold" />
+			
+			<TextView
 				android:id="@+id/productQuantityTextView"
+				
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:fontFamily="sans-serif-condensed"

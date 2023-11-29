@@ -1,6 +1,7 @@
 package com.group25.ecommercefashionapp.ui.fragment.category;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,6 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
         View view = inflater.inflate(R.layout.category_filtered, container, false);
         productRecyclerView = view.findViewById(R.id.productRecyclerView);
         toolbar = view.findViewById(R.id.topAppBar);
-
         String category = getArguments().getString("category");
         toolbar.setTitle(category);
         context = getActivity();
@@ -70,5 +70,15 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getId());
         mainActivity.navController.navigate(R.id.viewProduct, bundle);
+    }
+
+    private void shareContent() {
+        // Create an Intent to share content
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Your content to share");
+
+        // Start the activity for sharing
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));
     }
 }
