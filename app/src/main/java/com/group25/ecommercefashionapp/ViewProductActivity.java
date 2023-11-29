@@ -1,5 +1,6 @@
 package com.group25.ecommercefashionapp;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -7,6 +8,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.core.text.HtmlCompat;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -20,13 +22,14 @@ import java.text.DecimalFormatSymbols;
 public class ViewProductActivity extends AppCompatActivity {
     MaterialToolbar toolbar;
     MainActivity mainActivity;
-    private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview;
-
+    private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+    RatingBar ratingBar;
+    ActionMenuItemView cart;
 
     ImageView productImage;
-    RatingBar ratingBar;
     private DecimalFormat VNDFormat;
+    ActionMenuItemView share;
 
 
     ProductRepository productRepository;
@@ -55,6 +58,10 @@ public class ViewProductActivity extends AppCompatActivity {
         ratingBar = findViewById(R.id.ratingBar);
         txtId = findViewById(R.id.productIDTextView);
         productImage = findViewById(R.id.productImageView);
+        toolbar = findViewById(R.id.topAppBar);
+        share = toolbar.findViewById(R.id.share);
+        cart = toolbar.findViewById(R.id.cart);
+        share.setOnClickListener(v -> shareContent());
 
 
         txtName.setText(products.getName());
@@ -78,4 +85,14 @@ public class ViewProductActivity extends AppCompatActivity {
         });
     }
 
+    private void shareContent() {
+        // Create an Intent to share content
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        String shareBody = products.getName() + "\n" + getString(R.string.product_price, VNDFormat.format(products.getPrice() * 0.9f));
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+
+        // Start the activity for sharing
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));
+    }
 }

@@ -71,7 +71,6 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
         bundle.putInt("id", item.getId());
         mainActivity.navController.navigate(R.id.viewProduct, bundle);
     }
-
     private void shareContent() {
         // Create an Intent to share content
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
