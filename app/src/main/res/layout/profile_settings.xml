@@ -13,7 +13,7 @@
 			android:id="@+id/topAppBar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
-			android:background="@color/white"
+			android:background="@color/primary_white"
 			app:layout_collapseMode="pin"
 			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
 			app:navigationIcon="@drawable/round_arrow_back_24"
@@ -50,7 +50,7 @@
 					android:layout_height="wrap_content"
 					android:padding="16dp"
 					android:text="@string/edit_profile"
-					android:textColor="@color/black"
+					android:textColor="@color/primary_black"
 					android:textSize="15sp" />
 				
 				<com.google.android.material.divider.MaterialDivider
@@ -82,7 +82,7 @@
 					android:layout_height="wrap_content"
 					android:padding="16dp"
 					android:text="@string/change_my_password"
-					android:textColor="@color/black"
+					android:textColor="@color/primary_black"
 					android:textSize="15sp" />
 				
 				<com.google.android.material.divider.MaterialDivider
@@ -114,7 +114,7 @@
 					android:layout_height="wrap_content"
 					android:padding="16dp"
 					android:text="@string/my_cards"
-					android:textColor="@color/black"
+					android:textColor="@color/primary_black"
 					android:textSize="15sp" />
 				
 				<com.google.android.material.divider.MaterialDivider
@@ -142,7 +142,7 @@
 				android:layout_height="wrap_content"
 				android:padding="16dp"
 				android:text="@string/address_book"
-				android:textColor="@color/black"
+				android:textColor="@color/primary_black"
 				android:textSize="15sp" />
 		</androidx.cardview.widget.CardView>
 		
@@ -172,7 +172,7 @@
 					android:layout_height="wrap_content"
 					android:padding="16dp"
 					android:text="@string/logout"
-					android:textColor="@color/black"
+					android:textColor="@color/primary_black"
 					android:textSize="15sp" />
 				
 				<com.google.android.material.divider.MaterialDivider
@@ -200,7 +200,7 @@
 				android:layout_height="wrap_content"
 				android:padding="16dp"
 				android:text="@string/withdrawal_from_app_membership"
-				android:textColor="@color/black"
+				android:textColor="@color/primary_black"
 				android:textSize="15sp" />
 		
 		</androidx.cardview.widget.CardView>

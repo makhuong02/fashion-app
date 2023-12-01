@@ -13,7 +13,7 @@
 			android:id="@+id/topAppBar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
-			android:background="@color/white"
+			android:background="@color/primary_white"
 			app:layout_collapseMode="pin"
 			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
 			app:navigationIcon="@drawable/round_arrow_back_24"
@@ -50,7 +50,7 @@
 					android:layout_height="wrap_content"
 					android:padding="16dp"
 					android:text="@string/push_notifications_and_privacy_settings"
-					android:textColor="@color/black"
+					android:textColor="@color/primary_black"
 					android:textSize="15sp" />
 				
 				<com.google.android.material.divider.MaterialDivider
@@ -82,7 +82,7 @@
 					android:layout_height="wrap_content"
 					android:padding="16dp"
 					android:text="@string/location_sharing"
-					android:textColor="@color/black"
+					android:textColor="@color/primary_black"
 					android:textSize="15sp" />
 				
 				<com.google.android.material.divider.MaterialDivider
@@ -110,7 +110,7 @@
 				android:layout_height="wrap_content"
 				android:padding="16dp"
 				android:text="@string/video_automatic_playback"
-				android:textColor="@color/black"
+				android:textColor="@color/primary_black"
 				android:textSize="15sp" />
 		
 		</androidx.cardview.widget.CardView>

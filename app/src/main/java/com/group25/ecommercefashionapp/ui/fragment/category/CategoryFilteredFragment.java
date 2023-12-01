@@ -43,8 +43,10 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
         toolbar = view.findViewById(R.id.topAppBar);
         String category = getArguments().getString("category");
         toolbar.setTitle(category);
+
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
+
         ProductRepository productRepository = mainActivity.productRepository;
         products = productRepository.getProductsByCategory(category);
 
@@ -53,10 +55,6 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
 
         ProductItemAdapter adapter = new ProductItemAdapter(products, this);
         productRecyclerView.setAdapter(adapter);
-
-        int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
-        int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
-        productRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
 
         toolbar.setNavigationOnClickListener(v -> mainActivity.navController.popBackStack());
 

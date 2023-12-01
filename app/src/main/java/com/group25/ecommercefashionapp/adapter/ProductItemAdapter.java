@@ -28,7 +28,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_filtered_items, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_product, parent, false);
         return new ViewHolder(view);
     }
 
@@ -53,9 +53,9 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
         public ViewHolder(View view) {
             super(view);
-            img = view.findViewById(R.id.productImage);
+            img = view.findViewById(R.id.product_imageView);
             txtDescription = view.findViewById(R.id.productName);
-            txtPrice = view.findViewById(R.id.productPrice);
+            txtPrice = view.findViewById(R.id.price_view);
             cardView = view.findViewById(R.id.productCardView);
         }
     }

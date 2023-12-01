@@ -15,7 +15,7 @@
 			android:id="@+id/topAppBar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
-			android:background="@color/white"
+			android:background="@color/primary_white"
 			app:layout_collapseMode="pin"
 			app:layout_scrollFlags="scroll|enterAlways"
 			app:navigationIcon="@drawable/round_arrow_back_24"
