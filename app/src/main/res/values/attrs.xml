@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	
+	<declare-styleable name="chipSizeAppearance">
+		<attr name="chipSize" format="integer" />
+	</declare-styleable>
+	
+	<declare-styleable name="maxSizeAppearance">
+		<attr name="maxSize" format="integer" />
+	</declare-styleable>
+	
+	<declare-styleable name="YourCustomView">
+		<attr name="maxChipCount" format="integer" />
+	</declare-styleable>
+</resources>

@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="black">#FF000000</color>
-	<color name="white">#FFFFFFFF</color>
-	<color name="redColor">#FFC62828</color>
+    <color name="primary_white">#FFFFFF</color>
+	<color name="primary_black">#000000</color>
+	<color name="primary_red">#FF0000</color>
+	<color name="primary_green">#00FF00</color>
+	<color name="primary_blue">#0000FF</color>
+	<color name="primary_yellow">#FFFF00</color>
+	<color name="primary_cyan">#00FFFF</color>
+	<color name="primary_magenta">#FF00FF</color>
+	<color name="primary_transparent">#00000000</color>
+	<color name="primary_grey">#808080</color>
+	<color name="primary_dark_grey">#A9A9A9</color>
+	<color name="primary_light_grey">#D3D3D3</color>
+	<color name="primary_orange">#FFA500</color>
+	<color name="primary_brown">#A52A2A</color>
+	<color name="primary_purple">#800080</color>
+	<color name="primary_pink">#FFC0CB</color>
+	<color name="primary_teal">#008080</color>
+	<color name="primary_indigo">#4B0082</color>
+	<color name="primary_lime">#00FF00</color>
+	<color name="primary_amber">#FFBF00</color>
+	<color name="primary_deep_orange">#FF5722</color>
+	<color name="primary_deep_purple">#673AB7</color>
+	<color name="primary_deep_pink">#FF1493</color>
+	<color name="primary_deep_teal">#00897B</color>
+	<color name="primary_deep_indigo">#3F51B5</color>
+	<color name="tertiary_gray_050">#F4F4F4</color>
+	<color name="tertiary_gray_150">#DADADA</color>
+	<color name="tertiary_gray_500">#9E9E9E</color>
+	<color name="call_to_action_red">@color/primary_red</color>
+	<color name="divider">#1E000000</color>
+	<color name="error_red">#CC0000</color>
+
 </resources>

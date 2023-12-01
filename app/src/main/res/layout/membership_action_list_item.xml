@@ -30,7 +30,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="@string/lorem_ipsum"
-					android:textColor="@color/black"
+					android:textColor="@color/primary_black"
 					android:textSize="15sp">
 				
 				</TextView>
