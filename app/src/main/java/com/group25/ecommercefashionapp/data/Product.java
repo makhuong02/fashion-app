@@ -1,5 +1,9 @@
 package com.group25.ecommercefashionapp.data;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Product extends Item {
     private final int id;
     private final String description;
@@ -7,6 +11,7 @@ public class Product extends Item {
     private final int imageId;
     private final String category;
     private final Integer availableQuantity;
+    private final List<ProductColor> colorList = new ArrayList<>();
 
     public Product(Integer id, String name, String description, Integer price, int imageId, String category, Integer availableQuantity) {
         super(name);
@@ -28,6 +33,7 @@ public class Product extends Item {
         this.availableQuantity = 0;
 
     }
+
     public Product(String name, String description, Integer price, int imageId, String category) {
         super(name);
         this.description = description;
@@ -65,5 +71,25 @@ public class Product extends Item {
 
     public int getId() {
         return id;
+    }
+
+    public List<String> getColors() {
+        List<String> colors = new ArrayList<>();
+        for (ProductColor color : colorList) {
+            colors.add(color.getPath());
+        }
+        return colors;
+    }
+
+    public List<ProductColor> getColorList() {
+        return colorList;
+    }
+
+    public void addColor(ProductColor color) {
+        colorList.add(color);
+    }
+
+    public void addColors(List<ProductColor> colors) {
+        colorList.addAll(colors);
     }
 }

@@ -6,6 +6,10 @@ android {
     namespace = "com.group25.ecommercefashionapp"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
     defaultConfig {
         applicationId = "com.group25.ecommercefashionapp"
         minSdk = 24
@@ -32,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.databinding:databinding-runtime:8.1.4")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")

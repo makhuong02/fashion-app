@@ -1,7 +1,6 @@
 package com.group25.ecommercefashionapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,20 +10,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.database.DatabaseHelper;
 import com.group25.ecommercefashionapp.repository.OrdersRepository;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     public NavController navController;
-
-    ArrayList<Product> products = new ArrayList<>();
     public ProductRepository productRepository;
     public OrdersRepository ordersRepository;
 
@@ -41,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
         productRepository.dropProductTable();
         productRepository.insertDbData();
-        products = productRepository.getAllProducts();
-        for (Product product : products) {
-            Log.d("Product", String.valueOf(product.getId()));
-        }
 
         // Initialize navigation components
         initializeViews();
