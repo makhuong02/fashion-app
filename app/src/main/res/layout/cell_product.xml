@@ -122,7 +122,16 @@
 			app:layout_constraintHorizontal_bias="0"
 			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
 			app:layout_constraintTop_toBottomOf="@+id/productName"
-			android:orientation="vertical"/>
+			android:orientation="vertical">
+			<TextView
+				android:id="@+id/product_flag_text"
+				style="@style/FlagLarge"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:ellipsize="end"
+				android:gravity="start"
+				android:tag="layout/view_flag_0" />
+		</LinearLayout>
 		
 		<TextView
 			android:id="@+id/price_view"
@@ -145,7 +154,17 @@
 			app:layout_constraintHorizontal_bias="0"
 			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
 			app:layout_constraintTop_toBottomOf="@+id/price_view"
-			android:orientation="vertical"/>
+			android:orientation="vertical">
+			<TextView
+				android:id="@+id/price_flag_text"
+				style="@style/FlagLarge"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:ellipsize="end"
+				android:gravity="start"
+				android:tag="layout/view_flag_0" />
+		</LinearLayout>
+		
 		
 		<RatingBar
 			android:id="@+id/rating_stars_view"
@@ -153,6 +172,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="@dimen/xxs_spacing"
+			android:isIndicator="true"
+			android:numStars="5"
+			android:rating="3.8"
+			android:stepSize="0.1"
 			android:tag="binding_9"
 			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
 			app:layout_constraintTop_toBottomOf="@+id/flags_price" />
@@ -165,6 +188,8 @@
 
 			android:paddingTop="@dimen/xxs_spacing"
 			android:paddingBottom="@dimen/xxs_spacing"
+			android:paddingStart="5dp"
+			android:paddingEnd="5dp"
 			android:tag="binding_10"
 			android:text="(3)"
 			android:textColor="@color/primary_black"

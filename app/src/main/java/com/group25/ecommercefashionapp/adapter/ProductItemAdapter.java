@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.group25.ecommercefashionapp.ChipImagesView;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.Product;
@@ -43,6 +44,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
         // Set click listener on the card
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(item));
+        holder.chipImagesView.setChipImages(item.getColors());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,12 +53,15 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         TextView txtPrice;
         CardView cardView;
 
+        ChipImagesView chipImagesView;
+
         public ViewHolder(View view) {
             super(view);
             img = view.findViewById(R.id.product_imageView);
             txtDescription = view.findViewById(R.id.productName);
             txtPrice = view.findViewById(R.id.price_view);
             cardView = view.findViewById(R.id.productCardView);
+            chipImagesView = view.findViewById(R.id.chip_imagesView);
         }
     }
 

@@ -17,4 +17,11 @@ public final class ProductContract {
         public static final String COLUMN_CATEGORY = "category";
         public static final String COLUMN_AVAILABLE_QUANTITY = "available_quantity";
     }
+
+    public static class ColorEntry {
+        public static final String TABLE_NAME = "ProductColor";
+        public static final String COLUMN_PRODUCT_ID = "product_id";
+        public static final String COLUMN_COLOR_PATH = "path";
+        public static final String COLUMN_COLOR_ID = "color_id";
+    }
 }

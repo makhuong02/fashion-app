@@ -79,4 +79,6 @@
 	<string name="text_cart">Cart</string>
 	<string name="text_error_quantity_limit_item_added">The product is not added to your cart due to purchase quantity limit. Please check the quantity.</string>
 	<string name="text_store_inventory_purchase_add_to_cart_alteration_message">text_store_inventory_purchase_add_to_cart_alteration_message</string>
+	<string name="text_csoon_early">Available early %s</string>
+	<string name="text_limited_offer_until_date">%2$s until %1$s</string>
 </resources>

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.group25.ecommercefashionapp.extensions.ImageViewExtension;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -19,55 +18,56 @@ import java.util.Map;
 
 public final class ChipImagesView extends LinearLayout {
 
-    private int maxChipCount;
-    private int chipImageSize;
-    private Map<Integer, View> chipViews = new LinkedHashMap<>();
+    private static final int[] CHIP_STYLEABLE = {R.styleable.chipSizeAppearance_chipSize, R.styleable.maxSizeAppearance_maxSize};
+    private static final int DEFAULT_MAX_CHIP_COUNT = 8;
+
+    private final int maxChipCount;
+    private final int chipImageSize;
+    private final Map<Integer, View> chipViews = new LinkedHashMap<>();
 
     public ChipImagesView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet, 0);
 
-        LayoutInflater.from(context).inflate(R.layout.view_progressbar, this, true);
-        final int[] Q = {R.styleable.chipSizeAppearance_chipSize, R.styleable.maxSizeAppearance_maxSize};
-        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, Q,0,0);
-        this.maxChipCount = obtainStyledAttributes.getInteger(R.styleable.YourCustomView_maxChipCount, 8);
+        LayoutInflater.from(context).inflate(R.layout.view_chip_images, this, true);
+        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, CHIP_STYLEABLE, 0, 0);
+        this.maxChipCount = obtainStyledAttributes.getInteger(R.styleable.YourCustomView_maxChipCount, DEFAULT_MAX_CHIP_COUNT);
         this.chipImageSize = (int) obtainStyledAttributes.getDimension(0, getResources().getDimension(R.dimen.size_chip_image));
         obtainStyledAttributes.recycle();
     }
 
-    public static final void setChips(ChipImagesView chipImagesView, List<String> colorChips) {
+    public static void setChips(ChipImagesView chipImagesView, List<String> colorChips) {
         chipImagesView.setChipImages(colorChips);
     }
 
-    private void setChipImages(List<String> colorChips) {
-        List<ImageView> chipImageViews = initializeChipImageViews(
-                R.id.chip_image1, R.id.chip_image2, R.id.chip_image3,
-                R.id.chip_image4, R.id.chip_image5, R.id.chip_image6,
-                R.id.chip_image7, R.id.chip_image8
-        );
+    public void setChipImages(List<String> colorChips) {
+        List<ImageView> chipImageViews = initializeChipImageViews(R.id.chip_image1, R.id.chip_image2, R.id.chip_image3, R.id.chip_image4, R.id.chip_image5, R.id.chip_image6, R.id.chip_image7, R.id.chip_image8);
 
         int chipCount = Math.min(colorChips.size(), maxChipCount);
         for (int i = 0; i < chipImageViews.size(); i++) {
             ImageView chipImageView = chipImageViews.get(i);
-            if (i < chipCount) {
-                configureVisibleChip(chipImageView, colorChips.get(i));
-            } else if (i == chipImageViews.size() - 2 && colorChips.size() >= maxChipCount) {
-                configurePlusIcon(chipImageView);
-            } else if (i >= maxChipCount - 2) {
+            if (i >= maxChipCount - 1) {
                 chipImageView.setVisibility(View.GONE);
+            } else if (i == chipImageViews.size() - 2 && i < chipCount - 1) {
+                configurePlusIcon(chipImageView);
+            } else if (i < chipCount) {
+                configureVisibleChip(chipImageView, colorChips.get(i));
             } else {
                 configureVisibleChip(chipImageView, "#FFFFFF");
             }
+
         }
     }
 
     private List<ImageView> initializeChipImageViews(int... chipImageIds) {
         List<ImageView> chipImageViews = new ArrayList<>();
         for (int chipImageId : chipImageIds) {
-            ImageView chipImageView = (ImageView) a(chipImageId);
-            ViewGroup.LayoutParams layoutParams = chipImageView.getLayoutParams();
-            layoutParams.width = chipImageSize;
-            layoutParams.height = chipImageSize;
-            chipImageViews.add(chipImageView);
+            ImageView chipImageView = (ImageView) bindView(chipImageId);
+            if (chipImageView != null) {
+                ViewGroup.LayoutParams layoutParams = chipImageView.getLayoutParams();
+                layoutParams.width = chipImageSize;
+                layoutParams.height = chipImageSize;
+                chipImageViews.add(chipImageView);
+            }
         }
         return chipImageViews;
     }
@@ -84,11 +84,11 @@ public final class ChipImagesView extends LinearLayout {
         chipImageView.setVisibility(View.VISIBLE);
         chipImageView.setImageResource(R.drawable.ic_plus_small);
         ViewGroup.LayoutParams layoutParams = chipImageView.getLayoutParams();
-        layoutParams.width = (int) chipImageView.getResources().getDimension(R.dimen.size_chip_image_small);
-        layoutParams.height = (int) chipImageView.getResources().getDimension(R.dimen.size_chip_image_small);
+        layoutParams.width = (int) getResources().getDimension(R.dimen.size_chip_image_small);
+        layoutParams.height = (int) getResources().getDimension(R.dimen.size_chip_image_small);
     }
 
-    public View a(int viewId) {
+    public View bindView(int viewId) {
         Map<Integer, View> viewMap = chipViews;
         View view = viewMap.get(viewId);
         if (view != null) {

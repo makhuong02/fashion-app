@@ -87,4 +87,7 @@
 	<style name="Body1">
 		<item name="android:textSize">@dimen/textsize_body_1</item>
 	</style>
+	<style name="FlagLarge">
+		<item name="android:textSize">@dimen/textsize_flag_large</item>
+	</style>
 </resources>
