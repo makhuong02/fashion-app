@@ -53,7 +53,7 @@ public class CustomMembershipActionAdapter extends RecyclerView.Adapter<CustomMe
         // Set click listener on the card
         holder.cardView.setOnClickListener(v -> {
 
-            clickListener.onItemClick(item);
+            clickListener.onItemClick(v, item);
         });
     }
 

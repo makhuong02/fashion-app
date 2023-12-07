@@ -33,5 +33,15 @@
 	<dimen name="product_horizontal_spacing">1dp</dimen>
 	<dimen name="size_chip_image_small">10dp</dimen>
 	<dimen name="textsize_flag_large">13sp</dimen>
+	<dimen name="textsize_badge_ranking">20sp</dimen>
+	<dimen name="ranking_index_size">30dp</dimen>
+	<dimen name="size_chip_image_for_three_columns">11dp</dimen>
+	<dimen name="textsize_title_standard">14sp</dimen>
+	<dimen name="ranking_index_text_size">22sp</dimen>
+	<dimen name="ranking_item_margin">6dp</dimen>
+	<dimen name="textsize_label_large">16sp</dimen>
+	<dimen name="size_assistant_height">32dp</dimen>
+	<dimen name="textsize_caption_standard">13sp</dimen>
+	<dimen name="textsize_caption_small">12sp</dimen>
 
 </resources>
