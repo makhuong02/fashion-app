@@ -140,7 +140,9 @@ public class ProductRepository {
             for (Product product : products) {
                 int colorCount = new Random().nextInt(8) + 1;
                 for (int i = 0; i < colorCount; i++) {
-                    insertProductColorData(new ProductColor(product.getId(), generateRandomHexColor()));
+                    String hexColor = generateRandomHexColor();
+
+                    insertProductColorData(new ProductColor(product.getId(), hexColor, "colorName"));
                 }
             }
             db.setTransactionSuccessful();
@@ -275,7 +277,7 @@ public class ProductRepository {
         colorCursor.moveToFirst();
         while (!colorCursor.isAfterLast()) {
             String colorPath = colorCursor.getString(colorPathIndex);
-            ProductColor color = new ProductColor(productId, colorPath);
+            ProductColor color = new ProductColor(productId, colorPath, "colorName");
             colors.add(color);
 
             colorCursor.moveToNext();

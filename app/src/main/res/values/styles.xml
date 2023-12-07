@@ -90,4 +90,27 @@
 	<style name="FlagLarge">
 		<item name="android:textSize">@dimen/textsize_flag_large</item>
 	</style>
+	<style name="BadgeRanking">
+		<item name="android:textSize">@dimen/textsize_badge_ranking</item>
+		<item name="android:textAllCaps">true</item>
+		<item name="android:fontFamily">@font/uniqlopro_light</item>
+	</style>
+	<style name="TitleStandard">
+		<item name="android:textSize">@dimen/textsize_title_standard</item>
+	</style>
+	<style name="LabelLarge">
+		<item name="android:textSize">@dimen/textsize_label_large</item>
+	</style>
+	<style name="CaptionStandard">
+		<item name="android:textSize">@dimen/textsize_caption_standard</item>
+	</style>
+	<style name="CaptionSmall">
+		<item name="android:textSize">@dimen/textsize_caption_small</item>
+	</style>
+	
+	<style name="FlagStandard">
+		<item name="android:textSize">@dimen/textsize_flag_standard</item>
+	</style>
+	
+	<dimen name="textsize_flag_standard">11sp</dimen>
 </resources>

@@ -43,7 +43,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         holder.img.setImageResource(item.getImage());
 
         // Set click listener on the card
-        holder.cardView.setOnClickListener(v -> clickListener.onItemClick(item));
+        holder.cardView.setOnClickListener(v -> clickListener.onItemClick(v, item));
         holder.chipImagesView.setChipImages(item.getColors());
     }
 

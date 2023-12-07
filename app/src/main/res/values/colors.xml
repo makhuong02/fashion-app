@@ -31,5 +31,10 @@
 	<color name="call_to_action_red">@color/primary_red</color>
 	<color name="divider">#1E000000</color>
 	<color name="error_red">#CC0000</color>
+	<color name="home_title_module_black">#030303</color>
+	<color name="noticeable">#005db5</color>
+	<color name="secondary">#6a6a6a</color>
+	<color name="border_interactive_outline">#767676</color>
 
 </resources>
+

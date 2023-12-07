@@ -144,47 +144,69 @@
 				app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
 			
 			
-			<!--			<RelativeLayout-->
-			<!--				android:layout_width="match_parent"-->
-			<!--				android:layout_height="match_parent"-->
-			<!--				android:padding="8dp">-->
-			<!--				-->
-			<!--				<LinearLayout-->
-			<!--					android:id="@+id/colorRadioGroup"-->
-			<!--					android:layout_width="match_parent"-->
-			<!--					android:layout_height="wrap_content"-->
-			<!--					android:orientation="horizontal"-->
-			<!--					android:gravity="left">-->
-			<!--					<RadioGroup-->
-			<!--						android:layout_width="match_parent"-->
-			<!--						android:layout_height="wrap_content"-->
-			<!--						android:orientation="horizontal">-->
-			<!--					&lt;!&ndash; Define your RadioButton items with corresponding colors &ndash;&gt;-->
-			<!--						<RadioButton-->
-			<!--							android:id="@+id/radioRed"-->
-			<!--							android:layout_width="50dp"-->
-			<!--							android:layout_height="50dp"-->
-			<!--							android:buttonTint="@android:color/transparent"-->
-			<!--							android:background="@drawable/custom_color_radio_button"-->
-			<!--							android:button="@android:color/transparent"-->
-			<!--							android:layout_margin="8dp"-->
-			<!--							android:text=""-->
-			<!--							android:checked="true"/>-->
-			<!--						<RadioButton-->
-			<!--							android:id="@+id/radioBlue"-->
-			<!--							android:layout_width="50dp"-->
-			<!--							android:layout_height="50dp"-->
-			<!--							android:buttonTint="@android:color/transparent"-->
-			<!--							android:background="@drawable/custom_color_radio_button"-->
-			<!--							android:button="@android:color/transparent"-->
-			<!--							android:layout_margin="8dp"-->
-			<!--							android:text=""-->
-			<!--							android:checked="false"/>-->
-			<!--					-->
-			<!--					&lt;!&ndash; Add more RadioButtons for other colors &ndash;&gt;-->
-			<!--					</RadioGroup>-->
-			<!--				</LinearLayout>-->
-			<!--			</RelativeLayout>-->
+				
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/primary_white"
+				android:paddingStart="@dimen/m_spacing"
+				android:paddingTop="@dimen/m_spacing"
+				android:paddingEnd="@dimen/m_spacing"
+				android:tag="layout/cell_product_item_colors_0">
+				
+				<TextView
+					android:id="@+id/colorText"
+					style="@style/LabelLarge"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/text_color"
+					android:textColor="@color/primary_black"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toTopOf="parent" />
+				
+				<TextView
+					android:id="@+id/colorColon"
+					style="@style/LabelLarge"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/text_symbol_colon"
+					app:layout_constraintStart_toEndOf="@+id/colorText"
+					app:layout_constraintTop_toTopOf="@+id/colorText" />
+				
+				<TextView
+					android:id="@+id/selectColorText"
+					style="@style/LabelLarge"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="8dp"
+					android:tag="binding_1"
+					android:textColor="@color/primary_black"
+					app:layout_constraintBaseline_toBaselineOf="@+id/colorColon"
+					app:layout_constraintStart_toEndOf="@+id/colorColon" />
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/colorRecycler"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/xs_spacing"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/colorText" />
+				
+				<TextView
+					android:id="@+id/coming_soon_color_chip_text"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/m_spacing"
+					android:tag="binding_2"
+					android:textAlignment="viewStart"
+					android:textColor="@color/primary_black"
+					android:textSize="@dimen/textsize_body_standard"
+					app:layout_constraintBottom_toBottomOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/colorRecycler" />
+			</androidx.constraintlayout.widget.ConstraintLayout>
+
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"

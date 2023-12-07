@@ -19,7 +19,6 @@ import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
-import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
 
 import java.util.ArrayList;
 
@@ -58,13 +57,21 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
 
         toolbar.setNavigationOnClickListener(v -> mainActivity.navController.popBackStack());
 
+//        toolbar.setOnMenuItemClickListener(item -> {
+//            if (item.getItemId() == R.id.cart) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("id", 1);
+//                mainActivity.navController.navigate(R.id.autoFitChipImagesView,bundle);
+//            }
+//            return false;
+//        });
         mainActivity.updateNavigationBarState(R.id.categoryBotNav);
         return view;
     }
 
 
     @Override
-    public void onItemClick(Item item) {
+    public void onItemClick(View view, Item item) {
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getId());
         mainActivity.navController.navigate(R.id.viewProduct, bundle);

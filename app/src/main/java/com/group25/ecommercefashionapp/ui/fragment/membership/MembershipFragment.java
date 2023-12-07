@@ -122,7 +122,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
     };
 
     @Override
-    public void onItemClick(Item item) {
+    public void onItemClick(View view, Item item) {
         Log.d("MainActivity", "onItemClick: " + item.getName());
     }
 }
