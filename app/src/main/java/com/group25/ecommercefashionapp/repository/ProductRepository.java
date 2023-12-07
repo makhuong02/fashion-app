@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.group25.ecommercefashionapp.utilities.ColorUtils;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Product;
@@ -62,7 +63,7 @@ public class ProductRepository {
         int availableQuantityIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Integer productId = cursor.getInt(idIndex);
+            int productId = cursor.getInt(idIndex);
             String productName = cursor.getString(nameIndex);
             String productDescription = cursor.getString(descriptionIndex);
             Integer productPrice = cursor.getInt(priceIndex);
@@ -141,8 +142,8 @@ public class ProductRepository {
                 int colorCount = new Random().nextInt(8) + 1;
                 for (int i = 0; i < colorCount; i++) {
                     String hexColor = generateRandomHexColor();
-
-                    insertProductColorData(new ProductColor(product.getId(), hexColor, "colorName"));
+                    String colorName = ColorUtils.getColorNameFromHex(hexColorToInteger(hexColor));
+                    insertProductColorData(new ProductColor(product.getId(), hexColor, colorName));
                 }
             }
             db.setTransactionSuccessful();
@@ -153,6 +154,9 @@ public class ProductRepository {
         }
     }
 
+    private int hexColorToInteger(String hexColor) {
+        return Integer.parseInt(hexColor.substring(1), 16);
+    }
     private static String generateRandomHexColor() {
         Random random = new Random();
 
@@ -277,7 +281,8 @@ public class ProductRepository {
         colorCursor.moveToFirst();
         while (!colorCursor.isAfterLast()) {
             String colorPath = colorCursor.getString(colorPathIndex);
-            ProductColor color = new ProductColor(productId, colorPath, "colorName");
+            String colorName = ColorUtils.getColorNameFromHex(hexColorToInteger(colorPath));
+            ProductColor color = new ProductColor(productId, colorPath, colorName);
             colors.add(color);
 
             colorCursor.moveToNext();
