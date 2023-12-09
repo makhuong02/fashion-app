@@ -12,6 +12,7 @@ public class Product extends Item {
     private final String category;
     private final Integer availableQuantity;
     private final List<ProductColor> colorList = new ArrayList<>();
+    private final List<ProductSize> sizeList = new ArrayList<>();
 
     public Product(Integer id, String name, String description, Integer price, int imageId, String category, Integer availableQuantity) {
         super(name);
@@ -42,7 +43,6 @@ public class Product extends Item {
         this.id = -1;
         this.category = category;
         this.availableQuantity = 0;
-
     }
 
     public String getName() {
@@ -76,7 +76,7 @@ public class Product extends Item {
     public List<String> getColors() {
         List<String> colors = new ArrayList<>();
         for (ProductColor color : colorList) {
-            colors.add(color.getPath());
+            colors.add(color.getHexColor());
         }
         return colors;
     }
@@ -91,5 +91,25 @@ public class Product extends Item {
 
     public void addColors(List<ProductColor> colors) {
         colorList.addAll(colors);
+    }
+
+    public List<ProductSize> getSizeList() {
+        return sizeList;
+    }
+
+    public List<String> getSizes() {
+        List<String> sizes = new ArrayList<>();
+        for (ProductSize size : sizeList) {
+            sizes.add(size.getName());
+        }
+        return sizes;
+    }
+
+    public void addSize(ProductSize size) {
+        sizeList.add(size);
+    }
+
+    public void addSizes(List<ProductSize> sizes) {
+        sizeList.addAll(sizes);
     }
 }

@@ -2,21 +2,20 @@ package com.group25.ecommercefashionapp.data;
 
 public class ProductColor extends Item {
     private final int product_id;
-    private final String path;
+    private final String hexColor;
     private final int colorId;
-    private String name;
 
-    public ProductColor(int product_id, String path, int colorId) {
+    public ProductColor(int product_id, String hexColor, int colorId) {
         super("");
         this.product_id = product_id;
-        this.path = path;
+        this.hexColor = hexColor;
         this.colorId = colorId;
     }
 
-    public ProductColor(int product_id, String path, String name) {
+    public ProductColor(int product_id, String hexColor, String name) {
         super(name);
         this.colorId = -1;
-        this.path = path;
+        this.hexColor = hexColor;
         this.product_id = product_id;
     }
 
@@ -24,8 +23,8 @@ public class ProductColor extends Item {
         return product_id;
     }
 
-    public String getPath() {
-        return path;
+    public String getHexColor() {
+        return hexColor;
     }
 
     public int getColorId() {

@@ -75,7 +75,9 @@
 						android:layout_height="wrap_content"
 						android:isIndicator="true"
 						android:numStars="5"
+						android:progressTint="@color/primary_black"
 						android:rating="3.7"
+						
 						android:scrollbarSize="10sp"
 						android:layout_gravity="center"
 						android:paddingTop="2dp"
@@ -192,21 +194,94 @@
 					app:layout_constraintEnd_toEndOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toBottomOf="@+id/colorText" />
+
+			</androidx.constraintlayout.widget.ConstraintLayout>
+			<androidx.constraintlayout.widget.ConstraintLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:background="@color/primary_white"
+				android:clipToPadding="false"
+				android:paddingStart="@dimen/ex_l_spacing"
+				android:paddingTop="@dimen/l_spacing"
+				android:paddingEnd="@dimen/ex_l_spacing"
+				android:tag="layout/cell_product_item_sizes_0">
 				
 				<TextView
-					android:id="@+id/coming_soon_color_chip_text"
+					android:id="@+id/sizeLabel"
+					style="@style/LabelLarge"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="@dimen/m_spacing"
-					android:tag="binding_2"
-					android:textAlignment="viewStart"
+					android:tag="binding_1"
+					android:text="@string/text_size"
 					android:textColor="@color/primary_black"
-					android:textSize="@dimen/textsize_body_standard"
-					app:layout_constraintBottom_toBottomOf="parent"
 					app:layout_constraintStart_toStartOf="parent"
-					app:layout_constraintTop_toBottomOf="@+id/colorRecycler" />
+					app:layout_constraintTop_toTopOf="parent" />
+				
+				<TextView
+					android:id="@+id/sizeColon"
+					style="@style/LabelLarge"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/text_symbol_colon"
+					app:layout_constraintStart_toEndOf="@+id/sizeLabel"
+					app:layout_constraintTop_toTopOf="@+id/sizeLabel" />
+				
+				<TextView
+					android:id="@+id/selectSizeText"
+					style="@style/LabelLarge"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/xs_spacing"
+					android:ellipsize="end"
+					android:singleLine="true"
+					android:tag="binding_2"
+					android:textColor="@color/primary_black"
+					app:layout_constraintBaseline_toBaselineOf="@+id/sizeColon"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toEndOf="@+id/sizeColon" />
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/sizeRecycler"
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/xs_spacing"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/sizeLabel" />
+				
+				
+				
+				<androidx.appcompat.widget.AppCompatButton
+					android:id="@+id/height_length_guide"
+					style="@style/Subtitle2"
+					android:layout_width="0dp"
+					android:layout_height="32dp"
+					android:layout_marginTop="@dimen/m_spacing"
+					android:background="@drawable/bg_outline_black"
+					android:foreground="?attr/selectableItemBackgroundBorderless"
+					android:tag="binding_9"
+					android:text="@string/text_length_guide_by_height"
+					android:textColor="@color/primary_black"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintStart_toStartOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/sizeRecycler" />
+				
+				<TextView
+					android:id="@+id/sizeChartLink"
+					style="@style/BodyStandard"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/s_spacing"
+					android:drawablePadding="@dimen/xs_spacing"
+					android:foreground="?attr/selectableItemBackgroundBorderless"
+					android:gravity="center_vertical"
+					android:tag="binding_10"
+					android:text="@string/text_size_compare_with_purchase_product"
+					android:textColor="@color/noticeable"
+					app:drawableStartCompat="@drawable/ic_size_chart"
+					app:layout_constraintEnd_toEndOf="parent"
+					app:layout_constraintTop_toBottomOf="@+id/height_length_guide" />
 			</androidx.constraintlayout.widget.ConstraintLayout>
-
 			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
