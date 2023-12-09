@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
+import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
@@ -27,11 +28,11 @@ import java.text.DecimalFormatSymbols;
 public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{
     MaterialToolbar toolbar;
     MainActivity mainActivity;
-    TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView;
+    TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;
     private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     RatingBar ratingBar;
     ActionMenuItemView cart;
-    RecyclerView colorRecyclerView;
+    RecyclerView colorRecyclerView, sizeRecyclerView;
 
     ImageView productImage;
     private DecimalFormat VNDFormat;
@@ -55,20 +56,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
 
         mainActivity = MyApp.getMainActivityInstance();
 
-        txtName = findViewById(R.id.productNameTextView);
-        txtHighlight = findViewById(R.id.productHighlightsTextView);
-        txtActualPrice = findViewById(R.id.productActualPriceTextView);
-        txtDiscountPrice = findViewById(R.id.productDiscountPriceTextView);
-        txtRating = findViewById(R.id.ratingTextView);
-        txtReview = findViewById(R.id.seeReviewsTextView);
-        ratingBar = findViewById(R.id.ratingBar);
-        txtId = findViewById(R.id.productIDTextView);
-        productImage = findViewById(R.id.productImageView);
-        toolbar = findViewById(R.id.topAppBar);
-        share = toolbar.findViewById(R.id.share);
-        cart = toolbar.findViewById(R.id.cart);
-        selectedColorTextView = findViewById(R.id.selectColorText);
-        colorRecyclerView = findViewById(R.id.colorRecycler);
+        initializeViews();
 
         txtName.setText(product.getName());
         txtHighlight.setText(product.getDescription());
@@ -83,13 +71,18 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         productImage.setImageResource(product.getImage());
         share.setOnClickListener(v -> shareContent());
 
+        // Set up Color recycler view
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 8);
         colorRecyclerView.setLayoutManager(gridLayoutManager);
+        ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);
+        colorRecyclerView.setAdapter(colorAdapter);
 
-        ProductColorAdapter adapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);
-        colorRecyclerView.setAdapter(adapter);
 
-        toolbar = findViewById(R.id.topAppBar);
+        // Set up Size recycler view
+        sizeRecyclerView.setLayoutManager(new GridLayoutManager(this, 8));
+        ProductSizeAdapter sizeAdapter = new ProductSizeAdapter(product.getSizeList(), this, sizeRecyclerView);
+        sizeRecyclerView.setAdapter(sizeAdapter);
+
         toolbar.setNavigationOnClickListener(v -> {
             mainActivity.navController.popBackStack();
             onBackPressed();
@@ -110,6 +103,30 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
 
     @Override
     public void onItemClick(View view, Item item) {
-        selectedColorTextView.setText(item.getName());
+        if (view.getId() == R.id.chip_image_card) {
+            selectedColorTextView.setText( item.getName());
+        } else if (view.getId() == R.id.chip_size_card) {
+            selectedSizeTextView.setText(item.getName());
+        }
+    }
+
+    private void initializeViews() {
+        txtName = findViewById(R.id.productNameTextView);
+        txtHighlight = findViewById(R.id.productHighlightsTextView);
+        txtActualPrice = findViewById(R.id.productActualPriceTextView);
+        txtDiscountPrice = findViewById(R.id.productDiscountPriceTextView);
+        txtRating = findViewById(R.id.ratingTextView);
+        txtReview = findViewById(R.id.seeReviewsTextView);
+        ratingBar = findViewById(R.id.ratingBar);
+        txtId = findViewById(R.id.productIDTextView);
+        productImage = findViewById(R.id.productImageView);
+        toolbar = findViewById(R.id.topAppBar);
+        share = toolbar.findViewById(R.id.share);
+        cart = toolbar.findViewById(R.id.cart);
+        selectedColorTextView = findViewById(R.id.selectColorText);
+        colorRecyclerView = findViewById(R.id.colorRecycler);
+        selectedSizeTextView = findViewById(R.id.selectSizeText);
+        sizeRecyclerView = findViewById(R.id.sizeRecycler);
+        toolbar = findViewById(R.id.topAppBar);
     }
 }

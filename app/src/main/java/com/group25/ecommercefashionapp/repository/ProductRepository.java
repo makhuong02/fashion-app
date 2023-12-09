@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.utilities.ColorUtils;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CategoryItem;
@@ -45,8 +46,12 @@ public class ProductRepository {
         values.put(ProductContract.ColorEntry.COLUMN_HEX_COLOR, color.getHexColor());
 
         long colorId = db.insert(ProductContract.ColorEntry.TABLE_NAME, null, values);
-
-
+    }
+    public void insertProductSizeData(ProductSize size) {
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.SizeEntry.COLUMN_PRODUCT_ID, size.getProduct_id());
+        values.put(ProductContract.SizeEntry.COLUMN_SIZE, size.getName());
+        long sizeId = db.insert(ProductContract.SizeEntry.TABLE_NAME, null, values);
     }
 
     public ArrayList<Product> getAllProducts() {
@@ -72,8 +77,10 @@ public class ProductRepository {
             Integer productQuantity = cursor.getInt(availableQuantityIndex);
 
             List<ProductColor> colors = getColorsForProduct(productId);
+            List<ProductSize> sizes = getSizesForProduct(productId);
             Product product = new Product(productId, productName, productDescription, productPrice, productImage, productCategory, productQuantity);
             product.addColors(colors);
+            product.addSizes(sizes);
             products.add(product);
 
             cursor.moveToNext();
@@ -127,6 +134,7 @@ public class ProductRepository {
 
 
             randomInsertProductColorData();
+            randomInsertProductSizeData();
             db.setTransactionSuccessful();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -154,6 +162,40 @@ public class ProductRepository {
         } finally {
             db.endTransaction();
         }
+    }
+    private void randomInsertProductSizeData() {
+        db.beginTransaction();
+        try {
+            List<Product> products = getAllProducts();
+            for (Product product : products) {
+                int sizeCount = new Random().nextInt(5) + 1;
+                while (sizeCount > 0) {
+                    String size = generateRandomSize();
+                    insertProductSizeData(new ProductSize(size, product.getId()));
+                    sizeCount--;
+                }
+            }
+            db.setTransactionSuccessful();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    private static String generateRandomSize() {
+        Random random = new Random();
+
+        // Define an array of size labels
+        String[] sizes = {"XXL", "XL", "L", "M", "S", "XS"};
+
+        // Generate a random index to select a size label from the array
+        int index = random.nextInt(sizes.length);
+
+        // Get the random size label
+        String randomSize = sizes[index];
+
+        return randomSize;
     }
 
     private int hexColorToInteger(String hexColor) {
@@ -204,8 +246,11 @@ public class ProductRepository {
             int productQuantity = cursor.getInt(availableQuantityIndex);
 
             List<ProductColor> colors = getColorsForProduct(productId);
+            List<ProductSize> sizes = getSizesForProduct(productId);
             Product product = new Product(productId, productName, productDescription, productPrice, productImage, productCategory, productQuantity);
             product.addColors(colors);
+            product.addSizes(sizes);
+
             products.add(product);
 
             cursor.moveToNext();
@@ -245,8 +290,10 @@ public class ProductRepository {
             int productQuantity = cursor.getInt(availableQuantityIndex);
 
             List<ProductColor> colors = getColorsForProduct(productId);
+            List<ProductSize> sizes = getSizesForProduct(productId);
             product = new Product(productId, productName, productDescription, productPrice, productImage, productCategory, productQuantity);
             product.addColors(colors);
+            product.addSizes(sizes);
 
             cursor.moveToNext();
         }
@@ -294,5 +341,28 @@ public class ProductRepository {
         return colors;
     }
 
+    private List<ProductSize> getSizesForProduct(int productId) {
+        List<ProductSize> sizes = new ArrayList<>();
+        String[] sizeProjection = {ProductContract.SizeEntry.COLUMN_SIZE};
+
+        String sizeSelection = ProductContract.SizeEntry.COLUMN_PRODUCT_ID + " = ?";
+        String[] sizeSelectionArgs = {String.valueOf(productId)};
+
+        Cursor sizeCursor = db.query(ProductContract.SizeEntry.TABLE_NAME, sizeProjection, sizeSelection, sizeSelectionArgs, null, null, null);
+
+        int sizeNameIndex = sizeCursor.getColumnIndex(ProductContract.SizeEntry.COLUMN_SIZE);
+
+        sizeCursor.moveToFirst();
+        while (!sizeCursor.isAfterLast()) {
+            String sizeName = sizeCursor.getString(sizeNameIndex);
+            ProductSize size = new ProductSize(sizeName, productId);
+            sizes.add(size);
+
+            sizeCursor.moveToNext();
+        }
+
+        sizeCursor.close();
+        return sizes;
+    }
 
 }
