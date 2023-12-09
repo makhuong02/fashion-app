@@ -21,7 +21,13 @@ public final class ProductContract {
     public static class ColorEntry {
         public static final String TABLE_NAME = "ProductColor";
         public static final String COLUMN_PRODUCT_ID = "product_id";
-        public static final String COLUMN_COLOR_PATH = "path";
+        public static final String COLUMN_HEX_COLOR = "hex";
         public static final String COLUMN_COLOR_ID = "color_id";
+    }
+    public static class SizeEntry implements BaseColumns {
+        public static final String TABLE_NAME = "ProductSize";
+        public static final String COLUMN_PRODUCT_ID = "product_id";
+        public static final String COLUMN_SIZE = "size";
+        public static final String COLUMN_SIZE_ID = "size_id";
     }
 }

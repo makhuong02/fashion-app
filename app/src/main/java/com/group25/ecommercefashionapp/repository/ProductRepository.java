@@ -42,7 +42,7 @@ public class ProductRepository {
     public void insertProductColorData(ProductColor color) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ColorEntry.COLUMN_PRODUCT_ID, color.getProduct_id());
-        values.put(ProductContract.ColorEntry.COLUMN_COLOR_PATH, color.getPath());
+        values.put(ProductContract.ColorEntry.COLUMN_HEX_COLOR, color.getHexColor());
 
         long colorId = db.insert(ProductContract.ColorEntry.TABLE_NAME, null, values);
 
@@ -91,6 +91,7 @@ public class ProductRepository {
         try {
             db.execSQL("DROP TABLE IF EXISTS " + ProductContract.ProductEntry.TABLE_NAME);
             db.execSQL("DROP TABLE IF EXISTS " + ProductContract.ColorEntry.TABLE_NAME);
+            db.execSQL("DROP TABLE IF EXISTS " + ProductContract.SizeEntry.TABLE_NAME);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -140,10 +141,11 @@ public class ProductRepository {
             List<Product> products = getAllProducts();
             for (Product product : products) {
                 int colorCount = new Random().nextInt(8) + 1;
-                for (int i = 0; i < colorCount; i++) {
+                while (colorCount > 0) {
                     String hexColor = generateRandomHexColor();
                     String colorName = ColorUtils.getColorNameFromHex(hexColorToInteger(hexColor));
                     insertProductColorData(new ProductColor(product.getId(), hexColor, colorName));
+                    colorCount--;
                 }
             }
             db.setTransactionSuccessful();
@@ -269,20 +271,20 @@ public class ProductRepository {
 
     private List<ProductColor> getColorsForProduct(int productId) {
         List<ProductColor> colors = new ArrayList<>();
-        String[] colorProjection = {ProductContract.ColorEntry.COLUMN_COLOR_PATH};
+        String[] colorProjection = {ProductContract.ColorEntry.COLUMN_HEX_COLOR};
 
         String colorSelection = ProductContract.ColorEntry.COLUMN_PRODUCT_ID + " = ?";
         String[] colorSelectionArgs = {String.valueOf(productId)};
 
         Cursor colorCursor = db.query(ProductContract.ColorEntry.TABLE_NAME, colorProjection, colorSelection, colorSelectionArgs, null, null, null);
 
-        int colorPathIndex = colorCursor.getColumnIndex(ProductContract.ColorEntry.COLUMN_COLOR_PATH);
+        int colorHexIndex = colorCursor.getColumnIndex(ProductContract.ColorEntry.COLUMN_HEX_COLOR);
 
         colorCursor.moveToFirst();
         while (!colorCursor.isAfterLast()) {
-            String colorPath = colorCursor.getString(colorPathIndex);
-            String colorName = ColorUtils.getColorNameFromHex(hexColorToInteger(colorPath));
-            ProductColor color = new ProductColor(productId, colorPath, colorName);
+            String colorHex = colorCursor.getString(colorHexIndex);
+            String colorName = ColorUtils.getColorNameFromHex(hexColorToInteger(colorHex));
+            ProductColor color = new ProductColor(productId, colorHex, colorName);
             colors.add(color);
 
             colorCursor.moveToNext();

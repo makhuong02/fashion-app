@@ -42,7 +42,6 @@ public class Product extends Item {
         this.id = -1;
         this.category = category;
         this.availableQuantity = 0;
-
     }
 
     public String getName() {
@@ -76,7 +75,7 @@ public class Product extends Item {
     public List<String> getColors() {
         List<String> colors = new ArrayList<>();
         for (ProductColor color : colorList) {
-            colors.add(color.getPath());
+            colors.add(color.getHexColor());
         }
         return colors;
     }

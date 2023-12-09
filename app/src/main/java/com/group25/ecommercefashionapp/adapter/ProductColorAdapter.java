@@ -38,13 +38,14 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         ProductColor item = items.get(position);
 
-        holder.img.setBackgroundColor(Color.parseColor(item.getPath()));
+        holder.img.setBackgroundColor(Color.parseColor(item.getHexColor()));
         holder.img.setVisibility(View.VISIBLE);
-        holder.img.setOnClickListener(v ->
+        holder.cardView.setOnClickListener(v ->
         {
             uncheckAll(holder);
             holder.cardView.setChecked(true);
             holder.cardView.setStrokeWidth(4);
+
             clickListener.onItemClick(v, item);
         });
     }
