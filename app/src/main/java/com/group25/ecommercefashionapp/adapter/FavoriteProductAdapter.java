@@ -25,11 +25,13 @@ import java.util.List;
 public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProductAdapter.ViewHolder>{
     private final List<Product> items;
     private final OnItemClickListener clickListener;
-    private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-    private final DecimalFormat VNDFormat = new DecimalFormat("###,###,###,###", symbols);
+    private final DecimalFormat VNDFormat;
     public FavoriteProductAdapter(List<Product> items, OnItemClickListener clickListener) {
         this.items = items;
         this.clickListener = clickListener;
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        VNDFormat = new DecimalFormat("###,###,###,###", symbols);
     }
 
     @NonNull

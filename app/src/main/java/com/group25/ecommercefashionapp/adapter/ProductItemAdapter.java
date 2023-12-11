@@ -18,15 +18,21 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import com.group25.ecommercefashionapp.data.Product;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.ViewHolder> {
     private final List<Product> items;
     private final OnItemClickListener clickListener;
+    private final DecimalFormat VNDFormat ;
 
     public ProductItemAdapter(List<Product> items, OnItemClickListener clickListener) {
         this.items = items;
         this.clickListener = clickListener;
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        VNDFormat = new DecimalFormat("###,###,###,###", symbols);
     }
 
     @NonNull
@@ -42,7 +48,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
         // Bind your data to the UI components of the CardView
         holder.txtName.setText(item.getName());
-        holder.txtPrice.setText(String.format("%,d", item.getPrice()));
+        holder.txtPrice.setText(String.format("%s VND", VNDFormat.format(item.getPrice())));
         holder.img.setImageResource(item.getImage());
         holder.txtSizeRange.setText(item.getSizeRange());
 
