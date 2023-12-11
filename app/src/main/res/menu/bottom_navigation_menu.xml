@@ -3,26 +3,26 @@
 	<item
 		android:id="@+id/homeBotNav"
 		android:enabled="true"
-		android:icon="@drawable/outline_home_24"
+		android:icon="@drawable/ic_navbar_home"
 		android:title="@string/home_bottom_nav_text"/>
 	<item
 		android:id="@+id/categoryBotNav"
 		android:enabled="true"
-		android:icon="@drawable/outline_category_24"
+		android:icon="@drawable/ic_navbar_category"
 		android:title="@string/category_bottom_nav_text"/>
 	<item
-		android:id="@+id/cartBotNav"
+		android:id="@+id/favoriteBotNav"
 		android:enabled="true"
-		android:icon="@drawable/outline_shopping_cart_24"
-		android:title="@string/cart"/>
+		android:icon="@drawable/ic_navbar_favorite"
+		android:title="@string/favorite"/>
 	<item
 		android:id="@+id/notificationBotNav"
 		android:enabled="true"
-		android:icon="@drawable/outline_notifications_24"
+		android:icon="@drawable/ic_navbar_notification"
 		android:title="@string/notification_bottom_nav_text"/>
 	<item
 		android:id="@+id/membershipBotNav"
 		android:enabled="true"
-		android:icon="@drawable/baseline_card_membership_24"
+		android:icon="@drawable/ic_navbar_membership"
 		android:title="@string/membership_bottom_nav_text"/>
 </menu>

@@ -1,5 +1,7 @@
 package com.group25.ecommercefashionapp.adapter;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.ChipImagesView;
+import com.group25.ecommercefashionapp.ui.widget.ChipImagesView;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import com.group25.ecommercefashionapp.data.Product;
 
 import java.util.List;
@@ -45,6 +48,19 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
         // Set click listener on the card
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(v, item));
+        for(Product product : getMainActivityInstance().user.getFavoriteList()) {
+            if(product.getId() == item.getId()) {
+                holder.favoriteCheckBox.setChecked(true);
+                break;
+            }
+        }
+        holder.favoriteCheckBox.setOnClickListener(v -> {
+            if (holder.favoriteCheckBox.isChecked()) {
+                getMainActivityInstance().user.addFavorite(item);
+            } else {
+                getMainActivityInstance().user.removeFavorite(item);
+            }
+        });
         holder.chipImagesView.setChipImages(item.getColors());
     }
 
@@ -52,7 +68,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         ImageView img;
         TextView txtName, txtSizeRange, txtPrice;
         CardView cardView;
-
+        FavoriteCheckBox favoriteCheckBox;
         ChipImagesView chipImagesView;
 
         public ViewHolder(View view) {
@@ -63,6 +79,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
             txtPrice = view.findViewById(R.id.price_view);
             cardView = view.findViewById(R.id.productCardView);
             chipImagesView = view.findViewById(R.id.chip_imagesView);
+            favoriteCheckBox = view.findViewById(R.id.favorite_checkBox);
         }
     }
 

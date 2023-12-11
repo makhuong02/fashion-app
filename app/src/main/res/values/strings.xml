@@ -89,4 +89,9 @@
 	<string name="text_size_compare_with_purchase_product">Size Chart/Compare</string>
 	<string name="text_size">Size</string>
 	<string name="text_color">Color</string>
+	<string name="text_favorite_count">6 Item(s)</string>
+	<string name="text_favorite_count_item">%1$d Item(s)</string>
+	<string name="text_productid">Product ID</string>
+	<string name="text_no_favorite">There are 0 items in favorite.</string>
+	<string name="text_favorite_instruction">Press the heart mark to add items on your wish list.</string>
 </resources>

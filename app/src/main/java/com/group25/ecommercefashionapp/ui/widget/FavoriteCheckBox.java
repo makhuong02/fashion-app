@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.data;
+package com.group25.ecommercefashionapp.ui.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -130,4 +130,5 @@ public class Product extends Item {
         }
         return sizeRange;
     }
+
 }
