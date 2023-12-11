@@ -31,6 +31,12 @@
 		tools:layout="@layout/order" />
 	
 	<fragment
+		android:id="@+id/favoriteBotNav"
+		android:name="com.group25.ecommercefashionapp.ui.fragment.favorite.FavoriteFragment"
+		android:label="Favorite Fragment"
+		tools:layout="@layout/fragment_favorite" />
+	
+	<fragment
 		android:id="@+id/membershipBotNav"
 		android:name="com.group25.ecommercefashionapp.ui.fragment.membership.MembershipFragment"
 		android:label="Membership Fragment"

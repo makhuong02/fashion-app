@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.group25.ecommercefashionapp.data.User;
 import com.group25.ecommercefashionapp.database.DatabaseHelper;
 import com.group25.ecommercefashionapp.repository.OrdersRepository;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     public NavController navController;
     public ProductRepository productRepository;
     public OrdersRepository ordersRepository;
+    public User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

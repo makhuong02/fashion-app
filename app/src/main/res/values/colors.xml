@@ -35,6 +35,7 @@
 	<color name="noticeable">#005db5</color>
 	<color name="secondary">#6a6a6a</color>
 	<color name="border_interactive_outline">#767676</color>
+	<color name="colorPrimary">#fff</color>
 
 </resources>
 

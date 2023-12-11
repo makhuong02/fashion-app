@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/product_cell"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@color/primary_white"
+	android:elevation="@dimen/product_cell_elevation"
+	android:orientation="vertical"
+	android:tag="layout/cell_favorite_product_0"
+	android:clickable="true"
+	android:focusable="true"
+	android:foreground="?android:attr/selectableItemBackground">
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="@dimen/m_spacing"
+		android:layout_marginTop="@dimen/m_spacing"
+		android:layout_marginEnd="@dimen/m_spacing"
+		android:layout_marginBottom="@dimen/m_spacing"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toStartOf="parent">
+		
+		<ImageView
+			android:id="@+id/product_image"
+			android:layout_width="0dp"
+			android:layout_height="0dp"
+			android:background="@color/tertiary_gray_050"
+			android:scaleType="centerCrop"
+			android:tag="binding_1"
+			app:layout_constraintDimensionRatio="h,1:1"
+			app:layout_constraintEnd_toStartOf="@+id/guideline"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox
+			android:id="@+id/favorite_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentEnd="true"
+			android:layout_centerVertical="true"
+			android:layout_marginTop="@dimen/xs_spacing"
+			android:layout_marginEnd="@dimen/xs_spacing"
+			android:button="@drawable/check_box_button"
+			android:scaleType="center"
+			android:tag="binding_2"
+			app:layout_constraintEnd_toEndOf="@+id/product_image"
+			app:layout_constraintTop_toTopOf="@+id/product_image" />
+		
+		
+		<androidx.constraintlayout.widget.Guideline
+			android:id="@+id/guideline"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			app:layout_constraintGuide_begin="146dp" />
+		
+		<TextView
+			android:id="@+id/product_name"
+			style="@style/Subtitle2.NoCaps"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:tag="binding_5"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/guideline"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<TextView
+			android:id="@+id/product_id_title"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="0dp"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:gravity="center_vertical"
+			android:lineSpacingExtra="6sp"
+			android:tag="binding_6"
+			android:text="@string/text_productid"
+			android:textColor="@color/primary_black"
+			app:layout_constraintBottom_toTopOf="@+id/color_text_title"
+			app:layout_constraintStart_toEndOf="@+id/guideline"
+			app:layout_constraintTop_toBottomOf="@+id/product_name" />
+		
+		<TextView
+			android:id="@+id/product_id_colon"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/text_symbol_colon"
+			android:textColor="@color/primary_black"
+			app:layout_constraintBottom_toBottomOf="@+id/product_id_title"
+			app:layout_constraintStart_toEndOf="@+id/product_id_title"
+			app:layout_constraintTop_toTopOf="@+id/product_id_title" />
+		
+		<TextView
+			android:id="@+id/product_id"
+			style="@style/Caption1"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/xxs_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:lineSpacingExtra="6sp"
+			android:tag="binding_7"
+			android:textColor="@color/primary_black"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintBottom_toTopOf="@+id/color_text_title"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/product_id_colon"
+			app:layout_constraintTop_toBottomOf="@+id/product_name"
+			app:layout_constraintVertical_bias="0" />
+		
+		<TextView
+			android:id="@+id/color_text_title"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:lineSpacingExtra="@dimen/xxs_spacing"
+			android:tag="binding_8"
+			android:text="Color"
+			android:textColor="@color/primary_black"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/guideline"
+			app:layout_constraintTop_toBottomOf="@+id/product_id" />
+		
+		<TextView
+			android:id="@+id/product_color_colon"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/text_symbol_colon"
+			android:textColor="@color/primary_black"
+			app:layout_constraintBottom_toBottomOf="@+id/color_text_title"
+			app:layout_constraintStart_toEndOf="@+id/color_text_title"
+			app:layout_constraintTop_toTopOf="@+id/color_text_title" />
+		
+		<TextView
+			android:id="@+id/product_color"
+			style="@style/Caption1"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/xxs_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:lineSpacingExtra="6sp"
+			android:tag="binding_7"
+			android:textColor="@color/primary_black"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintBottom_toTopOf="@+id/color_text_title"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/product_color_colon"
+			app:layout_constraintTop_toBottomOf="@+id/product_id"
+			app:layout_constraintVertical_bias="0" />
+		
+		<LinearLayout
+			android:id="@+id/layout_product_information"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:orientation="vertical"
+			android:tag="binding_9"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/guideline"
+			app:layout_constraintTop_toBottomOf="@+id/color_text_title">
+			
+			<LinearLayout
+				android:id="@+id/flags_product"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/xxs_spacing"
+				android:orientation="horizontal"
+				android:tag="binding_10" />
+			
+			<TextView
+				android:id="@+id/productActualPriceTextView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:fontFamily="sans-serif-condensed"
+				android:text="980.000 VND"
+				android:textSize="15sp"
+				android:textStyle="bold" />
+			
+			<TextView
+				android:id="@+id/productDiscountPriceTextView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/xxs_spacing"
+				android:fontFamily="sans-serif-condensed"
+				android:tag="binding_11"
+				android:text="460.000 VND"
+				android:textColor="@color/primary_red"
+				android:textSize="17sp"
+				android:textStyle="bold" />
+			
+			<LinearLayout
+				android:id="@+id/flags_price"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/xxs_spacing"
+				android:orientation="horizontal"
+				android:tag="binding_12" />
+		</LinearLayout>
+		
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+	
+	<View
+		android:id="@+id/divider"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_marginStart="@dimen/m_spacing"
+		android:background="@color/tertiary_gray_150"
+		android:tag="binding_17" />
+</LinearLayout>
