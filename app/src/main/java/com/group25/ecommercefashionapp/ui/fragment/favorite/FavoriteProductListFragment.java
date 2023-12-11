@@ -29,6 +29,13 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
         User user = getMainActivityInstance().user;
         List<Product> favoriteList = user.getFavoriteList();
 
+        if(favoriteList.size() == 0) {
+            View view = inflater.inflate(R.layout.cell_favorite_product_empty, container, false);
+            favoriteCountTextView = view.findViewById(R.id.text_favorite_count);
+            favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
+
+            return view;
+        }
 
         View view = inflater.inflate(R.layout.fragment_favorite_product_list, container, false);
 
