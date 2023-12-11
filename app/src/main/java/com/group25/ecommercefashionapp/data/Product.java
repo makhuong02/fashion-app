@@ -112,4 +112,22 @@ public class Product extends Item {
     public void addSizes(List<ProductSize> sizes) {
         sizeList.addAll(sizes);
     }
+
+    @Override
+    public boolean equals(Object object){
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Product product = (Product) object;
+        return id == product.id;
+    }
+    public String getSizeRange() {
+        String sizeRange = "";
+        if (sizeList.size() > 0) {
+            sizeRange = sizeList.get(0).getName();
+            if (sizeList.size() > 1) {
+                sizeRange += " - " + sizeList.get(sizeList.size() - 1).getName();
+            }
+        }
+        return sizeRange;
+    }
 }

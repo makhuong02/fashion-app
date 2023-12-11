@@ -38,9 +38,10 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         Product item = items.get(position);
 
         // Bind your data to the UI components of the CardView
-        holder.txtDescription.setText(item.getDescription());
+        holder.txtName.setText(item.getName());
         holder.txtPrice.setText(String.format("%,d", item.getPrice()));
         holder.img.setImageResource(item.getImage());
+        holder.txtSizeRange.setText(item.getSizeRange());
 
         // Set click listener on the card
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(v, item));
@@ -49,8 +50,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView txtDescription;
-        TextView txtPrice;
+        TextView txtName, txtSizeRange, txtPrice;
         CardView cardView;
 
         ChipImagesView chipImagesView;
@@ -58,7 +58,8 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         public ViewHolder(View view) {
             super(view);
             img = view.findViewById(R.id.product_imageView);
-            txtDescription = view.findViewById(R.id.productName);
+            txtName = view.findViewById(R.id.productName);
+            txtSizeRange = view.findViewById(R.id.product_size_range);
             txtPrice = view.findViewById(R.id.price_view);
             cardView = view.findViewById(R.id.productCardView);
             chipImagesView = view.findViewById(R.id.chip_imagesView);
