@@ -43,5 +43,8 @@
 	<dimen name="size_assistant_height">32dp</dimen>
 	<dimen name="textsize_caption_standard">13sp</dimen>
 	<dimen name="textsize_caption_small">12sp</dimen>
+	<dimen name="spacing_16">16dp</dimen>
+	<dimen name="textsize_flag_standard">11sp</dimen>
+	<dimen name="textsize_toolbar_title">16sp</dimen>
 
 </resources>
