@@ -9,13 +9,16 @@
 		android:id="@+id/app_bar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:theme="@style/AppTheme.AppBarOverlay"
-		app:layout_scrollFlags="scroll|enterAlways|snap">
+		android:theme="@style/AppTheme.AppBarOverlay">
 		
-		
-		<androidx.constraintlayout.widget.ConstraintLayout
+		<com.google.android.material.appbar.CollapsingToolbarLayout
+			android:id="@+id/collapsing_toolbar"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			app:contentScrim="@color/primary_white"
+			app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
+			app:layout_scrollFlags="scroll|snap"
+			app:titleEnabled="false">
 			
 			<androidx.appcompat.widget.Toolbar
 				android:id="@+id/toolbar"
@@ -29,11 +32,11 @@
 				app:title="@string/favorite"
 				app:titleMarginStart="0dp"
 				app:titleTextAppearance="@style/ToolbarTitleText">
-				
+			
 			</androidx.appcompat.widget.Toolbar>
 		
 		
-		</androidx.constraintlayout.widget.ConstraintLayout>
+		</com.google.android.material.appbar.CollapsingToolbarLayout>
 	</com.google.android.material.appbar.AppBarLayout>
 	
 	<androidx.fragment.app.FragmentContainerView
@@ -42,5 +45,5 @@
 		android:name="com.group25.ecommercefashionapp.ui.fragment.favorite.FavoriteProductListFragment"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

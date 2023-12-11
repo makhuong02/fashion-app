@@ -19,6 +19,7 @@ import com.group25.ecommercefashionapp.adapter.FavoriteProductAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.User;
+import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
 
 import java.util.List;
 
@@ -40,18 +41,24 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
 
         View view = inflater.inflate(R.layout.fragment_favorite_product_list, container, false);
 
-
         favoriteCountTextView = view.findViewById(R.id.text_favorite_count);
         favoriteRecyclerView = view.findViewById(R.id.product_list);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
-        favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        LinearLayoutManagerWrapper linearLayoutManagerWrapper = new LinearLayoutManagerWrapper(getContext(), LinearLayoutManager.VERTICAL, false);
+        favoriteRecyclerView.setLayoutManager(linearLayoutManagerWrapper);
+
         FavoriteProductAdapter adapter = new FavoriteProductAdapter(favoriteList, this);
         favoriteRecyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
+            if(favoriteList.size() == 0) {
+                getMainActivityInstance().navController.popBackStack();
+                getMainActivityInstance().navController.navigate(R.id.favoriteBotNav);
+            }
             adapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });

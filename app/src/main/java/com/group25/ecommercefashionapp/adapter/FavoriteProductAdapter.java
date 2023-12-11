@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.User;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import com.group25.ecommercefashionapp.data.Product;
 
@@ -41,6 +42,7 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
 
     @Override
     public void onBindViewHolder(FavoriteProductAdapter.ViewHolder holder, int position) {
+        User user = getMainActivityInstance().user;
         Product item = items.get(position);
 
         // Bind your data to the UI components of the CardView
@@ -60,9 +62,9 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         holder.productLayout.setOnClickListener(v -> clickListener.onItemClick(v, item));
         holder.favoriteButton.setOnClickListener(v -> {
             if (holder.favoriteButton.isChecked()) {
-                getMainActivityInstance().user.addFavorite(item);
+                user.addFavorite(item);
             } else {
-                getMainActivityInstance().user.removeFavorite(item);
+                user.removeFavorite(item);
             }
         });
     }
