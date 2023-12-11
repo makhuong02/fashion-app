@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
@@ -24,6 +25,7 @@ import java.util.List;
 public class FavoriteProductListFragment extends Fragment implements OnItemClickListener {
     TextView favoriteCountTextView;
     RecyclerView favoriteRecyclerView;
+    SwipeRefreshLayout swipeRefreshLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         User user = getMainActivityInstance().user;
@@ -33,7 +35,6 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
             View view = inflater.inflate(R.layout.cell_favorite_product_empty, container, false);
             favoriteCountTextView = view.findViewById(R.id.text_favorite_count);
             favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
-
             return view;
         }
 
@@ -42,11 +43,18 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
 
         favoriteCountTextView = view.findViewById(R.id.text_favorite_count);
         favoriteRecyclerView = view.findViewById(R.id.product_list);
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
         favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        favoriteRecyclerView.setAdapter(new FavoriteProductAdapter(favoriteList, this));
+        FavoriteProductAdapter adapter = new FavoriteProductAdapter(favoriteList, this);
+        favoriteRecyclerView.setAdapter(adapter);
 
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
+            adapter.notifyDataSetChanged();
+            swipeRefreshLayout.setRefreshing(false);
+        });
         return view;
     }
 
