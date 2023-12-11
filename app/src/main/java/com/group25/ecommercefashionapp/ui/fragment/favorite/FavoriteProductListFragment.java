@@ -51,6 +51,7 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
         favoriteRecyclerView.setAdapter(adapter);
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
+            favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
             adapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });
