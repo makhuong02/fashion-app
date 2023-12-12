@@ -15,15 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.User;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import com.group25.ecommercefashionapp.data.Product;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProductAdapter.ViewHolder>{
     private final List<Product> items;
+    private boolean shouldRemoveFavorite = false;
+    private final List<Product> removedItems = new ArrayList<>();
     private final OnItemClickListener clickListener;
     private final DecimalFormat VNDFormat;
     public FavoriteProductAdapter(List<Product> items, OnItemClickListener clickListener) {
@@ -61,10 +66,11 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         holder.favoriteButton.setChecked(true);
         holder.productLayout.setOnClickListener(v -> clickListener.onItemClick(v, item));
         holder.favoriteButton.setOnClickListener(v -> {
-            if (holder.favoriteButton.isChecked()) {
-                getMainActivityInstance().user.addFavorite(item);
+            if(holder.favoriteButton.isChecked()) {
+                shouldRemoveFavorite = false;
             } else {
-                getMainActivityInstance().user.removeFavorite(item);
+                shouldRemoveFavorite = true;
+                removedItems.add(item);
             }
         });
     }
@@ -94,4 +100,17 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
     public int getItemCount() {
         return items.size();
     }
+    public void checkAndRemoveFavorite() {
+        if (shouldRemoveFavorite) {
+            User user = getMainActivityInstance().user;
+            Iterator<Product> iterator = removedItems.iterator();
+            while (iterator.hasNext()) {
+                Product itemToRemove = iterator.next();
+                user.removeFavorite(itemToRemove);
+                iterator.remove();
+            }
+            shouldRemoveFavorite = false; // Reset the flag
+        }
+    }
+
 }

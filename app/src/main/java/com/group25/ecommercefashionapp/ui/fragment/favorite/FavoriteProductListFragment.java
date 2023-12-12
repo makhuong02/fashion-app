@@ -19,6 +19,7 @@ import com.group25.ecommercefashionapp.adapter.FavoriteProductAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.User;
+import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
 
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
     TextView favoriteCountTextView;
     RecyclerView favoriteRecyclerView;
     SwipeRefreshLayout swipeRefreshLayout;
+    FavoriteProductAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         User user = getMainActivityInstance().user;
@@ -40,18 +42,26 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
 
         View view = inflater.inflate(R.layout.fragment_favorite_product_list, container, false);
 
-
         favoriteCountTextView = view.findViewById(R.id.text_favorite_count);
         favoriteRecyclerView = view.findViewById(R.id.product_list);
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
 
         favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
-        favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        FavoriteProductAdapter adapter = new FavoriteProductAdapter(favoriteList, this);
+
+        LinearLayoutManagerWrapper linearLayoutManagerWrapper = new LinearLayoutManagerWrapper(getContext(), LinearLayoutManager.VERTICAL, false);
+        favoriteRecyclerView.setLayoutManager(linearLayoutManagerWrapper);
+
+        adapter = new FavoriteProductAdapter(favoriteList, this);
         favoriteRecyclerView.setAdapter(adapter);
 
+        favoriteRecyclerView.setHasFixedSize(true);
         swipeRefreshLayout.setOnRefreshListener(() -> {
+            adapter.checkAndRemoveFavorite();
             favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
+            if(favoriteList.size() == 0) {
+                getMainActivityInstance().navController.popBackStack();
+                getMainActivityInstance().navController.navigate(R.id.favoriteBotNav);
+            }
             adapter.notifyDataSetChanged();
             swipeRefreshLayout.setRefreshing(false);
         });
@@ -63,5 +73,12 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getId());
         getMainActivityInstance().navController.navigate(R.id.viewProduct, bundle);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (adapter != null)
+            adapter.checkAndRemoveFavorite();
     }
 }
