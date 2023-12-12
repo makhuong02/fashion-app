@@ -151,9 +151,9 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:background="@color/primary_white"
-				android:paddingStart="@dimen/m_spacing"
+				android:paddingStart="@dimen/ex_l_spacing"
 				android:paddingTop="@dimen/m_spacing"
-				android:paddingEnd="@dimen/m_spacing"
+				android:paddingEnd="@dimen/ex_l_spacing"
 				android:tag="layout/cell_product_item_colors_0">
 				
 				<TextView

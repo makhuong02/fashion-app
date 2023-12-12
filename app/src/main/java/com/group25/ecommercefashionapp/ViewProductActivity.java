@@ -19,6 +19,7 @@ import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
 import java.text.DecimalFormat;
@@ -72,14 +73,15 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         share.setOnClickListener(v -> shareContent());
 
         // Set up Color recycler view
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 8);
-        colorRecyclerView.setLayoutManager(gridLayoutManager);
+        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
+        colorRecyclerView.setLayoutManager(colorGridLayoutManager);
         ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);
         colorRecyclerView.setAdapter(colorAdapter);
 
 
         // Set up Size recycler view
-        sizeRecyclerView.setLayoutManager(new GridLayoutManager(this, 8));
+        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
+        sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);
         ProductSizeAdapter sizeAdapter = new ProductSizeAdapter(product.getSizeList(), this, sizeRecyclerView);
         sizeRecyclerView.setAdapter(sizeAdapter);
 
