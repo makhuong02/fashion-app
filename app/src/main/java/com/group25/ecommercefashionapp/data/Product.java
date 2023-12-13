@@ -120,4 +120,15 @@ public class Product extends Item {
         Product product = (Product) object;
         return id == product.id;
     }
+    public String getSizeRange() {
+        String sizeRange = "";
+        if (sizeList.size() > 0) {
+            sizeRange = sizeList.get(0).getName();
+            if (sizeList.size() > 1) {
+                sizeRange += " - " + sizeList.get(sizeList.size() - 1).getName();
+            }
+        }
+        return sizeRange;
+    }
+
 }

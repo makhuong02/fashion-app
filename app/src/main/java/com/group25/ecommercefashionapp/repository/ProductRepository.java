@@ -198,6 +198,18 @@ public class ProductRepository {
         return randomSize;
     }
 
+    private static List<ProductSize> sortSizes(List<ProductSize> sizes) {
+        List<ProductSize> sortedSizes = new ArrayList<>();
+        for (String size : new String[]{"XS", "S", "M", "L", "XL", "XXL"}) {
+            for (ProductSize productSize : sizes) {
+                if (productSize.getName().equals(size)) {
+                    sortedSizes.add(productSize);
+                }
+            }
+        }
+        return sortedSizes;
+    }
+
     private int hexColorToInteger(String hexColor) {
         return Integer.parseInt(hexColor.substring(1), 16);
     }
@@ -249,7 +261,7 @@ public class ProductRepository {
             List<ProductSize> sizes = getSizesForProduct(productId);
             Product product = new Product(productId, productName, productDescription, productPrice, productImage, productCategory, productQuantity);
             product.addColors(colors);
-            product.addSizes(sizes);
+            product.addSizes(sortSizes(sizes));
 
             products.add(product);
 
@@ -293,7 +305,7 @@ public class ProductRepository {
             List<ProductSize> sizes = getSizesForProduct(productId);
             product = new Product(productId, productName, productDescription, productPrice, productImage, productCategory, productQuantity);
             product.addColors(colors);
-            product.addSizes(sizes);
+            product.addSizes(sortSizes(sizes));
 
             cursor.moveToNext();
         }
