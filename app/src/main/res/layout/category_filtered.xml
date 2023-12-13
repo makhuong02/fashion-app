@@ -46,11 +46,6 @@
 				tools:layout_editor_absoluteX="4dp"
 				tools:layout_editor_absoluteY="-130dp" />
 			
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="80dp">
-			
-			</View>
 		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 

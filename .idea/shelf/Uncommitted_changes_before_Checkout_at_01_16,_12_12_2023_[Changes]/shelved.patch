@@ -1,0 +1,267 @@
+Index: app/src/main/res/layout/fragment_favorite.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n\txmlns:app=\"http://schemas.android.com/apk/res-auto\"\n\tandroid:layout_width=\"match_parent\"\n\tandroid:layout_height=\"match_parent\"\n\tandroid:tag=\"layout/fragment_favorite_0\">\n\t\n\t<com.google.android.material.appbar.AppBarLayout\n\t\tandroid:id=\"@+id/app_bar\"\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"wrap_content\"\n\t\tandroid:theme=\"@style/AppTheme.AppBarOverlay\"\n\t\tapp:layout_scrollFlags=\"scroll|enterAlways|snap\">\n\t\t\n\t\t\n\t\t<androidx.constraintlayout.widget.ConstraintLayout\n\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\tandroid:layout_height=\"wrap_content\">\n\t\t\t\n\t\t\t<androidx.appcompat.widget.Toolbar\n\t\t\t\tandroid:id=\"@+id/toolbar\"\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"?attr/actionBarSize\"\n\t\t\t\tandroid:minHeight=\"@dimen/abc_action_bar_default_height_material\"\n\t\t\t\tapp:layout_collapseMode=\"parallax\"\n\t\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\t\tapp:layout_constraintTop_toTopOf=\"parent\"\n\t\t\t\tapp:menu=\"@menu/favorite_menu\"\n\t\t\t\tapp:title=\"@string/favorite\"\n\t\t\t\tapp:titleMarginStart=\"0dp\"\n\t\t\t\tapp:titleTextAppearance=\"@style/ToolbarTitleText\">\n\t\t\t\t\n\t\t\t</androidx.appcompat.widget.Toolbar>\n\t\t\n\t\t\n\t\t</androidx.constraintlayout.widget.ConstraintLayout>\n\t</com.google.android.material.appbar.AppBarLayout>\n\t\n\t<androidx.fragment.app.FragmentContainerView\n\t\tandroid:id=\"@+id/fragmentContainer\"\n\t\t\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.favorite.FavoriteProductListFragment\"\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"match_parent\"\n\t\tapp:layout_behavior=\"com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior\"/>\n</androidx.coordinatorlayout.widget.CoordinatorLayout>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_favorite.xml b/app/src/main/res/layout/fragment_favorite.xml
+--- a/app/src/main/res/layout/fragment_favorite.xml	(revision 6e9e52605f28e82723e16b6c7780c29e93c32b40)
++++ b/app/src/main/res/layout/fragment_favorite.xml	(date 1702318545281)
+@@ -9,13 +9,16 @@
+ 		android:id="@+id/app_bar"
+ 		android:layout_width="match_parent"
+ 		android:layout_height="wrap_content"
+-		android:theme="@style/AppTheme.AppBarOverlay"
+-		app:layout_scrollFlags="scroll|enterAlways|snap">
++		android:theme="@style/AppTheme.AppBarOverlay">
+ 		
+-		
+-		<androidx.constraintlayout.widget.ConstraintLayout
++		<com.google.android.material.appbar.CollapsingToolbarLayout
++			android:id="@+id/collapsing_toolbar"
+ 			android:layout_width="match_parent"
+-			android:layout_height="wrap_content">
++			android:layout_height="wrap_content"
++			app:contentScrim="@color/primary_white"
++			app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Title"
++			app:layout_scrollFlags="scroll|snap"
++			app:titleEnabled="false">
+ 			
+ 			<androidx.appcompat.widget.Toolbar
+ 				android:id="@+id/toolbar"
+@@ -29,11 +32,11 @@
+ 				app:title="@string/favorite"
+ 				app:titleMarginStart="0dp"
+ 				app:titleTextAppearance="@style/ToolbarTitleText">
+-				
++			
+ 			</androidx.appcompat.widget.Toolbar>
+ 		
+ 		
+-		</androidx.constraintlayout.widget.ConstraintLayout>
++		</com.google.android.material.appbar.CollapsingToolbarLayout>
+ 	</com.google.android.material.appbar.AppBarLayout>
+ 	
+ 	<androidx.fragment.app.FragmentContainerView
+@@ -42,5 +45,5 @@
+ 		android:name="com.group25.ecommercefashionapp.ui.fragment.favorite.FavoriteProductListFragment"
+ 		android:layout_width="match_parent"
+ 		android:layout_height="match_parent"
+-		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
++		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+ </androidx.coordinatorlayout.widget.CoordinatorLayout>
+Index: app/src/main/res/layout/cell_favorite_product_empty.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n\txmlns:aapt=\"http://schemas.android.com/aapt\"\n\txmlns:app=\"http://schemas.android.com/apk/res-auto\"\n\tandroid:layout_width=\"match_parent\"\n\tandroid:layout_height=\"wrap_content\"\n\tandroid:orientation=\"vertical\"\n\tandroid:tag=\"layout/fragment_favorite_product_list_0\">\n\t\n\t<androidx.constraintlayout.widget.ConstraintLayout\n\t\tandroid:id=\"@+id/layout_tools\"\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"wrap_content\"\n\t\tandroid:background=\"@color/primary_white\"\n\t\tandroid:elevation=\"4dp\"\n\t\tandroid:tag=\"binding_1\">\n\t\t\n\t\t<TextView\n\t\t\tandroid:id=\"@+id/text_favorite_count\"\n\t\t\tstyle=\"@style/Body2\"\n\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\tandroid:layout_marginStart=\"16dp\"\n\t\t\tandroid:tag=\"binding_2\"\n\t\t\tandroid:text=\"@string/text_favorite_count\"\n\t\t\tandroid:textAllCaps=\"true\"\n\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\tapp:layout_constraintBottom_toBottomOf=\"parent\"\n\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\tapp:layout_constraintTop_toTopOf=\"parent\" />\n\t\t\n\t\t<include\n\t\t\tandroid:id=\"@+id/app_toolbar\"\n\t\t\tlayout=\"@layout/view_progressbar\"\n\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\tapp:layout_constraintTop_toBottomOf=\"@+id/text_favorite_count\" />\n\t</androidx.constraintlayout.widget.ConstraintLayout>\n\t\n\t<androidx.swiperefreshlayout.widget.SwipeRefreshLayout\n\t\tandroid:id=\"@+id/swipeRefreshLayout\"\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"wrap_content\"\n\t\tandroid:background=\"@color/colorPrimary\"\n\t\tandroid:tag=\"binding_3\">\n\t\t\n\t\t<LinearLayout\n\t\t\tandroid:id=\"@+id/view\"\n\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\tandroid:layout_height=\"match_parent\"\n\t\t\tandroid:background=\"@color/tertiary_gray_050\"\n\t\t\tandroid:gravity=\"center\"\n\t\t\tandroid:orientation=\"vertical\"\n\t\t\tandroid:tag=\"layout/cell_favorite_product_empty_0\">\n\t\t\t\n\t\t\t<ImageView\n\t\t\t\tandroid:id=\"@+id/imageView\"\n\t\t\t\tandroid:layout_width=\"200dp\"\n\t\t\t\tandroid:layout_height=\"200dp\"\n\t\t\t\tandroid:tag=\"binding_1\"\n\t\t\t\tapp:srcCompat=\"@drawable/empty_cart\" />\n\t\t\t\n\t\t\t<TextView\n\t\t\t\tandroid:id=\"@+id/textView3\"\n\t\t\t\tstyle=\"@style/Subtitle1\"\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:layout_marginTop=\"@dimen/l_spacing\"\n\t\t\t\tandroid:gravity=\"center\"\n\t\t\t\tandroid:text=\"@string/text_no_favorite\"\n\t\t\t\tandroid:textColor=\"@color/primary_black\" />\n\t\t\t\n\t\t\t<TextView\n\t\t\t\tandroid:id=\"@+id/textView4\"\n\t\t\t\tstyle=\"@style/Body2\"\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:gravity=\"center\"\n\t\t\t\tandroid:tag=\"binding_2\"\n\t\t\t\tandroid:text=\"@string/text_favorite_instruction\" />\n\t\t</LinearLayout>\n\t</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>\n</LinearLayout>\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/cell_favorite_product_empty.xml b/app/src/main/res/layout/cell_favorite_product_empty.xml
+--- a/app/src/main/res/layout/cell_favorite_product_empty.xml	(revision 6e9e52605f28e82723e16b6c7780c29e93c32b40)
++++ b/app/src/main/res/layout/cell_favorite_product_empty.xml	(date 1702318545281)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-	xmlns:aapt="http://schemas.android.com/aapt"
+ 	xmlns:app="http://schemas.android.com/apk/res-auto"
+ 	android:layout_width="match_parent"
+ 	android:layout_height="wrap_content"
+@@ -37,12 +36,9 @@
+ 			app:layout_constraintTop_toBottomOf="@+id/text_favorite_count" />
+ 	</androidx.constraintlayout.widget.ConstraintLayout>
+ 	
+-	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+-		android:id="@+id/swipeRefreshLayout"
++	<androidx.core.widget.NestedScrollView
+ 		android:layout_width="match_parent"
+-		android:layout_height="wrap_content"
+-		android:background="@color/colorPrimary"
+-		android:tag="binding_3">
++		android:layout_height="wrap_content">
+ 		
+ 		<LinearLayout
+ 			android:id="@+id/view"
+@@ -53,32 +49,40 @@
+ 			android:orientation="vertical"
+ 			android:tag="layout/cell_favorite_product_empty_0">
+ 			
+-			<ImageView
+-				android:id="@+id/imageView"
+-				android:layout_width="200dp"
+-				android:layout_height="200dp"
+-				android:tag="binding_1"
+-				app:srcCompat="@drawable/empty_cart" />
+-			
+-			<TextView
+-				android:id="@+id/textView3"
+-				style="@style/Subtitle1"
+-				android:layout_width="match_parent"
+-				android:layout_height="wrap_content"
+-				android:layout_marginTop="@dimen/l_spacing"
+-				android:gravity="center"
+-				android:text="@string/text_no_favorite"
+-				android:textColor="@color/primary_black" />
+-			
+-			<TextView
+-				android:id="@+id/textView4"
+-				style="@style/Body2"
+-				android:layout_width="match_parent"
+-				android:layout_height="wrap_content"
+-				android:gravity="center"
+-				android:tag="binding_2"
+-				android:text="@string/text_favorite_instruction" />
++			<LinearLayout
++				android:layout_width="match_parent"
++				android:layout_height="match_parent"
++				android:layout_marginTop="120dp"
++				android:layout_marginBottom="240dp"
++				android:gravity="center"
++				android:orientation="vertical">
++				
++				<ImageView
++					android:id="@+id/imageView"
++					android:layout_width="200dp"
++					android:layout_height="250dp"
++					android:tag="binding_1"
++					app:srcCompat="@drawable/empty_cart" />
++				
++				<TextView
++					android:id="@+id/textView3"
++					style="@style/Subtitle1"
++					android:layout_width="match_parent"
++					android:layout_height="wrap_content"
++					android:gravity="center"
++					android:text="@string/text_no_favorite"
++					android:textColor="@color/primary_black" />
++				
++				<TextView
++					android:id="@+id/textView4"
++					style="@style/Body2"
++					android:layout_width="match_parent"
++					android:layout_height="wrap_content"
++					android:gravity="center"
++					android:tag="binding_2"
++					android:text="@string/text_favorite_instruction" />
++			</LinearLayout>
+ 		</LinearLayout>
+-	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
++	</androidx.core.widget.NestedScrollView>
+ </LinearLayout>
+ 
+Index: app/src/main/java/com/group25/ecommercefashionapp/ui/fragment/favorite/FavoriteProductListFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group25.ecommercefashionapp.ui.fragment.favorite;\n\nimport static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;\n\nimport android.os.Bundle;\nimport android.view.LayoutInflater;\nimport android.view.View;\nimport android.view.ViewGroup;\nimport android.widget.TextView;\n\nimport androidx.fragment.app.Fragment;\nimport androidx.recyclerview.widget.LinearLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\nimport androidx.swiperefreshlayout.widget.SwipeRefreshLayout;\n\nimport com.group25.ecommercefashionapp.OnItemClickListener;\nimport com.group25.ecommercefashionapp.R;\nimport com.group25.ecommercefashionapp.adapter.FavoriteProductAdapter;\nimport com.group25.ecommercefashionapp.data.Item;\nimport com.group25.ecommercefashionapp.data.Product;\nimport com.group25.ecommercefashionapp.data.User;\n\nimport java.util.List;\n\npublic class FavoriteProductListFragment extends Fragment implements OnItemClickListener {\n    TextView favoriteCountTextView;\n    RecyclerView favoriteRecyclerView;\n    SwipeRefreshLayout swipeRefreshLayout;\n    @Override\n    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {\n        User user = getMainActivityInstance().user;\n        List<Product> favoriteList = user.getFavoriteList();\n\n        if(favoriteList.size() == 0) {\n            View view = inflater.inflate(R.layout.cell_favorite_product_empty, container, false);\n            favoriteCountTextView = view.findViewById(R.id.text_favorite_count);\n            favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));\n            return view;\n        }\n\n        View view = inflater.inflate(R.layout.fragment_favorite_product_list, container, false);\n\n\n        favoriteCountTextView = view.findViewById(R.id.text_favorite_count);\n        favoriteRecyclerView = view.findViewById(R.id.product_list);\n        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);\n\n        favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));\n        favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));\n        FavoriteProductAdapter adapter = new FavoriteProductAdapter(favoriteList, this);\n        favoriteRecyclerView.setAdapter(adapter);\n\n        swipeRefreshLayout.setOnRefreshListener(() -> {\n            favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));\n            adapter.notifyDataSetChanged();\n            swipeRefreshLayout.setRefreshing(false);\n        });\n        return view;\n    }\n\n    @Override\n    public void onItemClick(View view, Item item) {\n        Bundle bundle = new Bundle();\n        bundle.putInt(\"id\", item.getId());\n        getMainActivityInstance().navController.navigate(R.id.viewProduct, bundle);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/ui/fragment/favorite/FavoriteProductListFragment.java b/app/src/main/java/com/group25/ecommercefashionapp/ui/fragment/favorite/FavoriteProductListFragment.java
+--- a/app/src/main/java/com/group25/ecommercefashionapp/ui/fragment/favorite/FavoriteProductListFragment.java	(revision 6e9e52605f28e82723e16b6c7780c29e93c32b40)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/ui/fragment/favorite/FavoriteProductListFragment.java	(date 1702318545281)
+@@ -19,6 +19,7 @@
+ import com.group25.ecommercefashionapp.data.Item;
+ import com.group25.ecommercefashionapp.data.Product;
+ import com.group25.ecommercefashionapp.data.User;
++import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
+ 
+ import java.util.List;
+ 
+@@ -40,18 +41,24 @@
+ 
+         View view = inflater.inflate(R.layout.fragment_favorite_product_list, container, false);
+ 
+-
+         favoriteCountTextView = view.findViewById(R.id.text_favorite_count);
+         favoriteRecyclerView = view.findViewById(R.id.product_list);
+         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout);
+ 
+         favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
+-        favoriteRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
++
++        LinearLayoutManagerWrapper linearLayoutManagerWrapper = new LinearLayoutManagerWrapper(getContext(), LinearLayoutManager.VERTICAL, false);
++        favoriteRecyclerView.setLayoutManager(linearLayoutManagerWrapper);
++
+         FavoriteProductAdapter adapter = new FavoriteProductAdapter(favoriteList, this);
+         favoriteRecyclerView.setAdapter(adapter);
+ 
+         swipeRefreshLayout.setOnRefreshListener(() -> {
+             favoriteCountTextView.setText(getString(R.string.text_favorite_count_item, favoriteList.size()));
++            if(favoriteList.size() == 0) {
++                getMainActivityInstance().navController.popBackStack();
++                getMainActivityInstance().navController.navigate(R.id.favoriteBotNav);
++            }
+             adapter.notifyDataSetChanged();
+             swipeRefreshLayout.setRefreshing(false);
+         });
+Index: app/src/main/java/com/group25/ecommercefashionapp/adapter/FavoriteProductAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group25.ecommercefashionapp.adapter;\n\nimport static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;\n\nimport android.graphics.Paint;\nimport android.view.LayoutInflater;\nimport android.view.View;\nimport android.view.ViewGroup;\nimport android.widget.ImageView;\nimport android.widget.LinearLayout;\nimport android.widget.TextView;\n\nimport androidx.annotation.NonNull;\nimport androidx.recyclerview.widget.RecyclerView;\n\nimport com.group25.ecommercefashionapp.OnItemClickListener;\nimport com.group25.ecommercefashionapp.R;\nimport com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;\nimport com.group25.ecommercefashionapp.data.Product;\n\nimport java.text.DecimalFormat;\nimport java.text.DecimalFormatSymbols;\nimport java.util.List;\n\npublic class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProductAdapter.ViewHolder>{\n    private final List<Product> items;\n    private final OnItemClickListener clickListener;\n    private final DecimalFormat VNDFormat;\n    public FavoriteProductAdapter(List<Product> items, OnItemClickListener clickListener) {\n        this.items = items;\n        this.clickListener = clickListener;\n        DecimalFormatSymbols symbols = new DecimalFormatSymbols();\n        symbols.setGroupingSeparator('.');\n        VNDFormat = new DecimalFormat(\"###,###,###,###\", symbols);\n    }\n\n    @NonNull\n    @Override\n    public FavoriteProductAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {\n        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_favorite_product, parent, false);\n        return new FavoriteProductAdapter.ViewHolder(view);\n    }\n\n    @Override\n    public void onBindViewHolder(FavoriteProductAdapter.ViewHolder holder, int position) {\n        Product item = items.get(position);\n\n        // Bind your data to the UI components of the CardView\n        holder.txtName.setText(item.getName());\n        holder.txtProductID.setText(String.valueOf(item.getId()));\n        holder.txtColor.setText(item.getColorList().get(0).getName());\n        holder.txtActualPrice.setText(String.format(\"%s VND\",VNDFormat.format(item.getPrice())));\n        holder.txtActualPrice.setPaintFlags(holder.txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);\n        holder.txtDiscountPrice.setText(String.format(\"%s VND\", VNDFormat.format(item.getPrice() * 0.9f)));\n        holder.img.setImageResource(item.getImage());\n\n        // Set click listener on the card\n        if(position == items.size() - 1) {\n            holder.divider.setVisibility(View.GONE);\n        }\n        holder.favoriteButton.setChecked(true);\n        holder.productLayout.setOnClickListener(v -> clickListener.onItemClick(v, item));\n        holder.favoriteButton.setOnClickListener(v -> {\n            if (holder.favoriteButton.isChecked()) {\n                getMainActivityInstance().user.addFavorite(item);\n            } else {\n                getMainActivityInstance().user.removeFavorite(item);\n            }\n        });\n    }\n\n    public static class ViewHolder extends RecyclerView.ViewHolder {\n        LinearLayout productLayout;\n        ImageView img;\n        TextView txtName, txtProductID, txtColor, txtActualPrice, txtDiscountPrice;\n        FavoriteCheckBox favoriteButton;\n        View divider;\n\n        public ViewHolder(View view) {\n            super(view);\n            productLayout = view.findViewById(R.id.product_cell);\n            img = view.findViewById(R.id.product_image);\n            txtName = view.findViewById(R.id.product_name);\n            txtProductID = view.findViewById(R.id.product_id);\n            txtColor = view.findViewById(R.id.product_color);\n            txtActualPrice = view.findViewById(R.id.productActualPriceTextView);\n            txtDiscountPrice = view.findViewById(R.id.productDiscountPriceTextView);\n            favoriteButton = view.findViewById(R.id.favorite_button);\n            divider = view.findViewById(R.id.divider);\n        }\n    }\n\n    @Override\n    public int getItemCount() {\n        return items.size();\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/adapter/FavoriteProductAdapter.java b/app/src/main/java/com/group25/ecommercefashionapp/adapter/FavoriteProductAdapter.java
+--- a/app/src/main/java/com/group25/ecommercefashionapp/adapter/FavoriteProductAdapter.java	(revision 6e9e52605f28e82723e16b6c7780c29e93c32b40)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/adapter/FavoriteProductAdapter.java	(date 1702318545281)
+@@ -15,6 +15,7 @@
+ 
+ import com.group25.ecommercefashionapp.OnItemClickListener;
+ import com.group25.ecommercefashionapp.R;
++import com.group25.ecommercefashionapp.data.User;
+ import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
+ import com.group25.ecommercefashionapp.data.Product;
+ 
+@@ -43,6 +44,7 @@
+ 
+     @Override
+     public void onBindViewHolder(FavoriteProductAdapter.ViewHolder holder, int position) {
++        User user = getMainActivityInstance().user;
+         Product item = items.get(position);
+ 
+         // Bind your data to the UI components of the CardView
+@@ -62,9 +64,9 @@
+         holder.productLayout.setOnClickListener(v -> clickListener.onItemClick(v, item));
+         holder.favoriteButton.setOnClickListener(v -> {
+             if (holder.favoriteButton.isChecked()) {
+-                getMainActivityInstance().user.addFavorite(item);
++                user.addFavorite(item);
+             } else {
+-                getMainActivityInstance().user.removeFavorite(item);
++                user.removeFavorite(item);
+             }
+         });
+     }
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"testRunner\" value=\"GRADLE\" />\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"gradleJvm\" value=\"jbr-17\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n          </set>\n        </option>\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 6e9e52605f28e82723e16b6c7780c29e93c32b40)
++++ b/.idea/gradle.xml	(date 1702318545281)
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"jbr-17\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n  <component name=\"ProjectType\">\n    <option name=\"id\" value=\"Android\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 6e9e52605f28e82723e16b6c7780c29e93c32b40)
++++ b/.idea/misc.xml	(date 1702318545281)
+@@ -1,4 +1,3 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
