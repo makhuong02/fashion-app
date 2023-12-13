@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -13,9 +12,11 @@ import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
+import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
@@ -24,6 +25,8 @@ import com.group25.ecommercefashionapp.repository.ProductRepository;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{
@@ -35,7 +38,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     ActionMenuItemView cart;
     RecyclerView colorRecyclerView, sizeRecyclerView;
 
-    ImageView productImage;
+    ViewPager productCarousel;
     private DecimalFormat VNDFormat;
     ActionMenuItemView share;
 
@@ -69,7 +72,14 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         ratingBar.setRating(rating);
         txtRating.setText(String.valueOf(rating));
         txtReview.setText(HtmlCompat.fromHtml("<font color=\"blue\"><u>(See 5 reviews)</u></font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
-        productImage.setImageResource(product.getImage());
+        List<Integer> imageList = new ArrayList<>();
+        imageList.add(product.getImage());
+        imageList.add(product.getImage());
+        imageList.add(product.getImage());
+        imageList.add(product.getImage());
+
+        ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, imageList, this);
+        productCarousel.setAdapter(productImageCarouselAdapter);
         share.setOnClickListener(v -> shareContent());
 
         // Set up Color recycler view
@@ -121,7 +131,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         txtReview = findViewById(R.id.seeReviewsTextView);
         ratingBar = findViewById(R.id.ratingBar);
         txtId = findViewById(R.id.productIDTextView);
-        productImage = findViewById(R.id.productImageView);
+        productCarousel = findViewById(R.id.carousel);
         toolbar = findViewById(R.id.topAppBar);
         share = toolbar.findViewById(R.id.share);
         cart = toolbar.findViewById(R.id.cart);
