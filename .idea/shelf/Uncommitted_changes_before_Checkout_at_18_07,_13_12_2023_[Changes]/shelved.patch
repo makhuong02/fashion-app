@@ -1,0 +1,604 @@
+Index: app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group25.ecommercefashionapp;\n\nimport android.content.Intent;\nimport android.graphics.Paint;\nimport android.os.Bundle;\nimport android.view.View;\nimport android.widget.RatingBar;\nimport android.widget.TextView;\n\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.appcompat.view.menu.ActionMenuItemView;\nimport androidx.core.text.HtmlCompat;\nimport androidx.recyclerview.widget.GridLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\nimport androidx.viewpager.widget.ViewPager;\n\nimport com.google.android.material.appbar.MaterialToolbar;\nimport com.group25.ecommercefashionapp.adapter.ProductColorAdapter;\nimport com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;\nimport com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;\nimport com.group25.ecommercefashionapp.data.Item;\nimport com.group25.ecommercefashionapp.data.Product;\nimport com.group25.ecommercefashionapp.data.ProductImage;\nimport com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;\nimport com.group25.ecommercefashionapp.repository.ProductRepository;\n\nimport java.text.DecimalFormat;\nimport java.text.DecimalFormatSymbols;\nimport java.util.List;\n\n\npublic class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{\n    MaterialToolbar toolbar;\n    MainActivity mainActivity;\n    TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;\n    private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();\n    RatingBar ratingBar;\n    ActionMenuItemView cart;\n    RecyclerView colorRecyclerView, sizeRecyclerView;\n\n    ViewPager productCarousel;\n    private DecimalFormat VNDFormat;\n    ActionMenuItemView share;\n\n\n    ProductRepository productRepository;\n    Product product;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_view_product);\n        symbols.setGroupingSeparator('.');\n        VNDFormat = new DecimalFormat(\"###,###,###,###\", symbols);\n\n        productRepository = MyApp.getMainActivityInstance().productRepository;\n        Bundle bundle = getIntent().getExtras();\n        int id = bundle.getInt(\"id\");\n        product = productRepository.getProductById(id);\n\n        mainActivity = MyApp.getMainActivityInstance();\n\n        initializeViews();\n\n        txtName.setText(product.getName());\n        txtHighlight.setText(product.getDescription());\n        txtActualPrice.setText(getString(R.string.product_price, VNDFormat.format(product.getPrice())));\n        txtActualPrice.setPaintFlags(txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);\n        txtDiscountPrice.setText(getString(R.string.product_price, VNDFormat.format(product.getPrice() * 0.9f)));\n        txtId.setText(getString(R.string.product_id, String.valueOf(bundle.getInt(\"id\"))));\n        float rating = 3.8f;\n        ratingBar.setRating(rating);\n        txtRating.setText(String.valueOf(rating));\n        txtReview.setText(HtmlCompat.fromHtml(\"<font color=\\\"blue\\\"><u>(See 5 reviews)</u></font>\", HtmlCompat.FROM_HTML_MODE_LEGACY));\n        List<ProductImage> imageList = mainActivity.productRepository.getProductById(id).getImageList();\n\n        ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, imageList, this);\n        productCarousel.setAdapter(productImageCarouselAdapter);\n        share.setOnClickListener(v -> shareContent());\n\n        // Set up Color recycler view\n        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);\n        colorRecyclerView.setLayoutManager(colorGridLayoutManager);\n        ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);\n        colorRecyclerView.setAdapter(colorAdapter);\n\n\n        // Set up Size recycler view\n        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);\n        sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);\n        ProductSizeAdapter sizeAdapter = new ProductSizeAdapter(product.getSizeList(), this, sizeRecyclerView);\n        sizeRecyclerView.setAdapter(sizeAdapter);\n\n        toolbar.setNavigationOnClickListener(v -> {\n            mainActivity.navController.popBackStack();\n            onBackPressed();\n\n        });\n    }\n\n    private void shareContent() {\n        // Create an Intent to share content\n        Intent shareIntent = new Intent(Intent.ACTION_SEND);\n        shareIntent.setType(\"text/plain\");\n        String shareBody = product.getName() + \"\\n\" + getString(R.string.product_price, VNDFormat.format(product.getPrice() * 0.9f));\n        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);\n\n        // Start the activity for sharing\n        startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));\n    }\n\n    @Override\n    public void onItemClick(View view, Item item) {\n        if (view.getId() == R.id.chip_image_card) {\n            selectedColorTextView.setText( item.getName());\n        } else if (view.getId() == R.id.chip_size_card) {\n            selectedSizeTextView.setText(item.getName());\n        }\n    }\n\n    private void initializeViews() {\n        txtName = findViewById(R.id.productNameTextView);\n        txtHighlight = findViewById(R.id.productHighlightsTextView);\n        txtActualPrice = findViewById(R.id.productActualPriceTextView);\n        txtDiscountPrice = findViewById(R.id.productDiscountPriceTextView);\n        txtRating = findViewById(R.id.ratingTextView);\n        txtReview = findViewById(R.id.seeReviewsTextView);\n        ratingBar = findViewById(R.id.ratingBar);\n        txtId = findViewById(R.id.productIDTextView);\n        productCarousel = findViewById(R.id.carousel);\n        toolbar = findViewById(R.id.topAppBar);\n        share = toolbar.findViewById(R.id.share);\n        cart = toolbar.findViewById(R.id.cart);\n        selectedColorTextView = findViewById(R.id.selectColorText);\n        colorRecyclerView = findViewById(R.id.colorRecycler);\n        selectedSizeTextView = findViewById(R.id.selectSizeText);\n        sizeRecyclerView = findViewById(R.id.sizeRecycler);\n        toolbar = findViewById(R.id.topAppBar);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java
+--- a/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java	(revision 13f9415b6596bdbea056d35809fa3011dd20418e)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java	(date 1702465644917)
+@@ -42,6 +42,7 @@
+     private DecimalFormat VNDFormat;
+     ActionMenuItemView share;
+ 
++    private static final int VIEW_PRODUCT_IMAGES_REQUEST_CODE = 1;
+ 
+     ProductRepository productRepository;
+     Product product;
+@@ -115,6 +116,28 @@
+             selectedColorTextView.setText( item.getName());
+         } else if (view.getId() == R.id.chip_size_card) {
+             selectedSizeTextView.setText(item.getName());
++        }else if(view.getId() == R.id.carousel_image_view){
++            Bundle bundle = new Bundle();
++            bundle.putInt("product_id", product.getId());
++            bundle.putInt("position", productCarousel.getCurrentItem());
++            Intent intent = new Intent(this, ViewProductImages.class);
++            intent.putExtras(bundle);
++            startActivityForResult(intent, VIEW_PRODUCT_IMAGES_REQUEST_CODE);
++        }
++    }
++    @Override
++    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
++        super.onActivityResult(requestCode, resultCode, data);
++        if (requestCode == VIEW_PRODUCT_IMAGES_REQUEST_CODE) {
++            if (resultCode == RESULT_OK) {
++                Bundle bundle = data.getExtras();
++                int id = bundle.getInt("product_id");
++                int position = bundle.getInt("position");
++                Product product = mainActivity.productRepository.getProductById(id);
++                ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, product.getImageList(), this);
++                productCarousel.setAdapter(productImageCarouselAdapter);
++                productCarousel.setCurrentItem(position);
++            }
+         }
+     }
+ 
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <application\n        android:name=\".MyApp\"\n        android:allowBackup=\"true\"\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\n\t\tandroid:fullBackupContent=\"@xml/backup_rules\"\n\t\tandroid:icon=\"@mipmap/ic_launcher\"\n\t\tandroid:label=\"@string/app_name\"\n\t\tandroid:roundIcon=\"@mipmap/ic_launcher_round\"\n\t\tandroid:supportsRtl=\"true\"\n\t\tandroid:theme=\"@style/Theme.EcommerceFashionApp\"\n\t\ttools:targetApi=\"31\">\n\t\n\t\t<activity\n\t\t\tandroid:name=\".MainActivity\"\n\t\t\tandroid:exported=\"true\">\n\t\t\t<intent-filter>\n\t\t\t\t<action android:name=\"android.intent.action.MAIN\" />\n\t\t\t\n\t\t\t\t<category android:name=\"android.intent.category.LAUNCHER\" />\n\t\t\t</intent-filter>\n\t\t</activity>\n\t\t<activity android:name=\".ViewProductActivity\"\n\t\t\tandroid:exported=\"false\">\n\t\t\t\n\t\t</activity>\n\t\t<meta-data\n\t\t\tandroid:name=\"preloaded_fonts\"\n\t\t\tandroid:resource=\"@array/preloaded_fonts\" />\n\t</application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 13f9415b6596bdbea056d35809fa3011dd20418e)
++++ b/app/src/main/AndroidManifest.xml	(date 1702465187196)
+@@ -26,6 +26,9 @@
+ 		<activity android:name=".ViewProductActivity"
+ 			android:exported="false">
+ 			
++		</activity>
++		<activity android:name=".ViewProductImages"
++			android:exported="false">
+ 		</activity>
+ 		<meta-data
+ 			android:name="preloaded_fonts"
+Index: app/src/main/res/values/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n\t<dimen name=\"textsize_body_1\">16sp</dimen>\n\t<dimen name=\"textsize_body_2\">13sp</dimen>\n\t<dimen name=\"textsize_body_standard\">14sp</dimen>\n\t<dimen name=\"textsize_caption_1\">12sp</dimen>\n\t<dimen name=\"textsize_h3\">19sp</dimen>\n\t<dimen name=\"textsize_subtitle_1\">16sp</dimen>\n\t<dimen name=\"textsize_subtitle_2\">14sp</dimen>\n\t<dimen name=\"m_spacing\">16dp</dimen>\n\t<dimen name=\"app_bar_icon_size\">30dp</dimen>\n\t<dimen name=\"xs_spacing\">8dp</dimen>\n\t<dimen name=\"l_spacing\">24dp</dimen>\n\t<dimen name=\"s_spacing\">12dp</dimen>\n\t<dimen name=\"xl_spacing\">32dp</dimen>\n\t<dimen name=\"xxs_spacing\">4dp</dimen>\n\t<dimen name=\"xxl_spacing\">48dp</dimen>\n\t<dimen name=\"spacer_11dp\">11dp</dimen>\n\t<dimen name=\"ex_xl_spacing\">26dp</dimen>\n\t<dimen name=\"product_cell_elevation\">2dp</dimen>\n\t<dimen name=\"add_to_cart_dialog_scroll_view_bottom_margin\">162dp</dimen>\n\t<dimen name=\"add_to_cart_dialog_scroll_view_top_margin\">52dp</dimen>\n\t<dimen name=\"ex_l_spacing\">20dp</dimen>\n\t<dimen name=\"checkbox_width\">20dp</dimen>\n\t<dimen name=\"checkbox_height\">20dp</dimen>\n\t<dimen name=\"bottom_sheet_loading_indicator_size\">24dp</dimen>\n\t<dimen name=\"menu_item_width\">48dp</dimen>\n\t<dimen name=\"menu_item_height\">48dp</dimen>\n\t<dimen name=\"cart_badge_height\">16dp</dimen>\n\t<dimen name=\"size_chip_image\">16dp</dimen>\n\t<dimen name=\"ex_xs_spacing\">6dp</dimen>\n\t<dimen name=\"product_vertical_spacing\">5dp</dimen>\n\t<dimen name=\"product_horizontal_spacing\">1dp</dimen>\n\t<dimen name=\"size_chip_image_small\">10dp</dimen>\n\t<dimen name=\"textsize_flag_large\">13sp</dimen>\n\t<dimen name=\"textsize_badge_ranking\">20sp</dimen>\n\t<dimen name=\"ranking_index_size\">30dp</dimen>\n\t<dimen name=\"size_chip_image_for_three_columns\">11dp</dimen>\n\t<dimen name=\"textsize_title_standard\">14sp</dimen>\n\t<dimen name=\"ranking_index_text_size\">22sp</dimen>\n\t<dimen name=\"ranking_item_margin\">6dp</dimen>\n\t<dimen name=\"textsize_label_large\">16sp</dimen>\n\t<dimen name=\"size_assistant_height\">32dp</dimen>\n\t<dimen name=\"textsize_caption_standard\">13sp</dimen>\n\t<dimen name=\"textsize_caption_small\">12sp</dimen>\n\t<dimen name=\"spacing_16\">16dp</dimen>\n\t<dimen name=\"textsize_flag_standard\">11sp</dimen>\n\t<dimen name=\"textsize_toolbar_title\">16sp</dimen>\n\t<dimen name=\"product_image_size\">400dp</dimen>\n\t<dimen name=\"product_image_indicator_bottom_margin\">3dp</dimen>\n\t<dimen name=\"product_image_indicator_height\">20dp</dimen>\n\t<dimen name=\"product_image_indicator_text_padding\">2dp</dimen>\n\t<dimen name=\"product_image_indicator_text_size\">10sp</dimen>\n\t<dimen name=\"product_image_indicator_vertical_bar_margin\">3dp</dimen>\n\t<dimen name=\"product_image_indicator_vertical_bar_width\">0.7dp</dimen>\n\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/dimens.xml b/app/src/main/res/values/dimens.xml
+--- a/app/src/main/res/values/dimens.xml	(revision 13f9415b6596bdbea056d35809fa3011dd20418e)
++++ b/app/src/main/res/values/dimens.xml	(date 1702465187202)
+@@ -49,7 +49,7 @@
+ 	<dimen name="product_image_size">400dp</dimen>
+ 	<dimen name="product_image_indicator_bottom_margin">3dp</dimen>
+ 	<dimen name="product_image_indicator_height">20dp</dimen>
+-	<dimen name="product_image_indicator_text_padding">2dp</dimen>
++	<dimen name="product_image_indicator_text_padding">3dp</dimen>
+ 	<dimen name="product_image_indicator_text_size">10sp</dimen>
+ 	<dimen name="product_image_indicator_vertical_bar_margin">3dp</dimen>
+ 	<dimen name="product_image_indicator_vertical_bar_width">0.7dp</dimen>
+Index: app/src/main/res/anim/move_down.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/anim/move_down.xml b/app/src/main/res/anim/move_down.xml
+new file mode 100644
+--- /dev/null	(date 1702465187226)
++++ b/app/src/main/res/anim/move_down.xml	(date 1702465187226)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<set xmlns:android="http://schemas.android.com/apk/res/android">
++
++	<translate
++		android:duration="200"
++		android:fromYDelta="0%"
++		android:toYDelta="100%" />
++</set>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_view_product_images.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_view_product_images.xml b/app/src/main/res/layout/activity_view_product_images.xml
+new file mode 100644
+--- /dev/null	(date 1702465187189)
++++ b/app/src/main/res/layout/activity_view_product_images.xml	(date 1702465187189)
+@@ -0,0 +1,55 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
++	xmlns:app="http://schemas.android.com/apk/res-auto"
++	android:layout_width="match_parent"
++	android:layout_height="match_parent"
++	android:orientation="vertical">
++	
++	<com.google.android.material.appbar.AppBarLayout
++		android:layout_width="match_parent"
++		android:layout_height="wrap_content"
++		android:fitsSystemWindows="true"
++		android:stateListAnimator="@animator/appbar_elevation">
++		
++		<com.google.android.material.appbar.MaterialToolbar
++			android:id="@+id/topAppBar"
++			style="Widget.MaterialComponents.Toolbar.PrimarySurface"
++			android:layout_width="match_parent"
++			android:layout_height="?attr/actionBarSize"
++			app:navigationIcon="@drawable/round_arrow_back_24"
++			app:title="" />
++	
++	</com.google.android.material.appbar.AppBarLayout>
++	
++	<androidx.core.widget.NestedScrollView
++		android:id="@+id/nestedScrollView"
++		android:layout_width="match_parent"
++		android:layout_height="match_parent"
++		android:fillViewport="true"
++		android:fitsSystemWindows="true"
++		android:overScrollMode="never"
++		android:scrollbars="none"
++		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
++		
++		<LinearLayout
++			android:layout_width="match_parent"
++			android:layout_height="match_parent"
++			android:orientation="vertical">
++			
++			<View
++				android:layout_width="match_parent"
++				android:layout_height="100dp">
++			
++			</View>
++			
++			<androidx.viewpager.widget.ViewPager
++				android:id="@+id/carousel"
++				android:layout_width="match_parent"
++				android:layout_height="match_parent"
++				android:orientation="horizontal"
++				app:layout_constraintBottom_toBottomOf="parent">
++			
++			</androidx.viewpager.widget.ViewPager>
++		</LinearLayout>
++	</androidx.core.widget.NestedScrollView>
++</androidx.coordinatorlayout.widget.CoordinatorLayout>
+Index: app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java b/app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java
+new file mode 100644
+--- /dev/null	(date 1702465187209)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java	(date 1702465187209)
+@@ -0,0 +1,101 @@
++package com.group25.ecommercefashionapp.utilities;
++
++import android.content.Context;
++import android.view.GestureDetector;
++import android.view.MotionEvent;
++import android.view.View;
++import android.view.animation.Animation;
++import android.view.animation.AnimationUtils;
++
++import com.group25.ecommercefashionapp.R;
++
++public class TranslateAnimationUtil implements View.OnTouchListener {
++    private final GestureDetector gestureDetector;
++
++    public TranslateAnimationUtil(Context context, View viewAnimation) {
++        gestureDetector = new GestureDetector(context, new SimpleGestureListener(viewAnimation));
++    }
++    @Override
++    public boolean onTouch(View v, MotionEvent event) {
++        return gestureDetector.onTouchEvent(event);
++    }
++
++    public static class SimpleGestureListener extends GestureDetector.SimpleOnGestureListener {
++        private static final int SCROLL_THRESHOLD = 10;
++        private final View viewAnimation;
++        private boolean isFinishAnimation = true;
++
++        public SimpleGestureListener(View viewAnimation) {
++            this.viewAnimation = viewAnimation;
++        }
++
++        @Override
++        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
++            if (Math.abs(distanceY) > SCROLL_THRESHOLD) {
++                try {
++                    if (e2.getY() - e1.getY() < 0) {
++                        hiddenView();
++                    } else {
++                        showView();
++                    }
++                } catch (Exception ignored) {
++                }
++            }
++            return super.onScroll(e1, e2, distanceX, distanceY);
++        }
++
++        private void hiddenView() {
++            if (viewAnimation == null || viewAnimation.getVisibility() == View.GONE) {
++                return;
++            }
++            Animation animationDown = AnimationUtils.loadAnimation(viewAnimation.getContext(), R.anim.move_down);
++            animationDown.setAnimationListener(new Animation.AnimationListener() {
++                @Override
++                public void onAnimationStart(Animation animation) {
++                    viewAnimation.setVisibility(View.VISIBLE);
++                    isFinishAnimation = false;
++                }
++
++                @Override
++                public void onAnimationEnd(Animation animation) {
++                    viewAnimation.setVisibility(View.GONE);
++                    isFinishAnimation = true;
++                }
++
++                @Override
++                public void onAnimationRepeat(Animation animation) {
++                }
++            });
++            if (isFinishAnimation) {
++                viewAnimation.startAnimation(animationDown);
++            }
++        }
++
++        private void showView() {
++            if (viewAnimation == null || viewAnimation.getVisibility() == View.VISIBLE) {
++                return;
++            }
++            Animation animationUp = AnimationUtils.loadAnimation(viewAnimation.getContext(), R.anim.move_up);
++            animationUp.setAnimationListener(new Animation.AnimationListener() {
++                @Override
++                public void onAnimationStart(Animation animation) {
++                    viewAnimation.setVisibility(View.VISIBLE);
++                    isFinishAnimation = false;
++                }
++
++                @Override
++                public void onAnimationEnd(Animation animation) {
++                    isFinishAnimation = true;
++                }
++
++                @Override
++                public void onAnimationRepeat(Animation animation) {
++                }
++            });
++            if (isFinishAnimation) {
++                viewAnimation.startAnimation(animationUp);
++            }
++        }
++    }
++
++}
+Index: app/src/main/java/com/group25/ecommercefashionapp/ViewProductImages.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/ViewProductImages.java b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductImages.java
+new file mode 100644
+--- /dev/null	(date 1702465187206)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductImages.java	(date 1702465187206)
+@@ -0,0 +1,65 @@
++package com.group25.ecommercefashionapp;
++
++import android.content.Intent;
++import android.os.Bundle;
++
++import androidx.appcompat.app.AppCompatActivity;
++import androidx.viewpager.widget.ViewPager;
++
++import com.google.android.material.appbar.MaterialToolbar;
++import com.group25.ecommercefashionapp.adapter.ProductViewImageCarouselAdapter;
++import com.group25.ecommercefashionapp.data.Product;
++
++public class ViewProductImages extends AppCompatActivity {
++    ViewPager productCarousel;
++    MaterialToolbar toolbar;
++    MainActivity mainActivity;
++    int positionFinal = 0;
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_view_product_images);
++
++        mainActivity = MyApp.getMainActivityInstance();
++
++        productCarousel = findViewById(R.id.carousel);
++        toolbar = findViewById(R.id.topAppBar);
++
++
++        Bundle bundle = getIntent().getExtras();
++        int id = bundle.getInt("product_id");
++        int position = bundle.getInt("position");
++        Product product = mainActivity.productRepository.getProductById(id);
++
++        ProductViewImageCarouselAdapter productImageCarouselAdapter = new ProductViewImageCarouselAdapter(this, product.getImageList());
++        productCarousel.setAdapter(productImageCarouselAdapter);
++        productCarousel.setCurrentItem(position);
++        productCarousel.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
++            @Override
++            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
++            }
++
++            @Override
++            public void onPageSelected(int position) {
++                // Update positionFinal when the page is selected
++                positionFinal = position;
++            }
++
++            @Override
++            public void onPageScrollStateChanged(int state) {
++            }
++        });
++        toolbar.setNavigationOnClickListener(v -> {
++            Bundle bundle1 = new Bundle();
++            bundle1.putInt("product_id", id);
++            bundle1.putInt("position", positionFinal);
++
++            Intent intent = new Intent();
++            intent.putExtras(bundle1);
++
++            setResult(RESULT_OK, intent);
++            finish();
++        });
++    }
++
++}
+Index: app/src/main/res/anim/move_up.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/anim/move_up.xml b/app/src/main/res/anim/move_up.xml
+new file mode 100644
+--- /dev/null	(date 1702465187192)
++++ b/app/src/main/res/anim/move_up.xml	(date 1702465187192)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<set xmlns:android="http://schemas.android.com/apk/res/android">
++
++	<translate
++		android:duration="200"
++		android:fromYDelta="100%"
++		android:toYDelta="0%" />
++</set>
+\ No newline at end of file
+Index: app/src/main/res/navigation/nav_graph.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!-- nav_graph.xml -->\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\n\txmlns:app=\"http://schemas.android.com/apk/res-auto\"\n\txmlns:tools=\"http://schemas.android.com/tools\"\n\tapp:startDestination=\"@id/homeBotNav\">\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/homeBotNav\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.home.HomeFragment\"\n\t\tandroid:label=\"Home Fragment\"\n\t\ttools:layout=\"@layout/home\" />\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/categoryBotNav\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.category.CategoryFragment\"\n\t\tandroid:label=\"Category Fragment\"\n\t\ttools:layout=\"@layout/category\">\n\t\t<action\n\t\t\tandroid:id=\"@+id/action_categoryBotNav_to_filterCategory\"\n\t\t\tapp:destination=\"@id/filterCategory\"\n\t\t\tapp:enterAnim=\"@android:anim/fade_in\"\n\t\t\tapp:exitAnim=\"@android:anim/fade_out\"\n\t\t\tapp:popEnterAnim=\"@android:anim/slide_in_left\"\n\t\t\tapp:popExitAnim=\"@android:anim/slide_out_right\" />\n\t</fragment>\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/cartBotNav\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.order.OrderFragment\"\n\t\tandroid:label=\"Favorite Fragment\"\n\t\ttools:layout=\"@layout/order\" />\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/favoriteBotNav\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.favorite.FavoriteFragment\"\n\t\tandroid:label=\"Favorite Fragment\"\n\t\ttools:layout=\"@layout/fragment_favorite\" />\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/membershipBotNav\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.membership.MembershipFragment\"\n\t\tandroid:label=\"Membership Fragment\"\n\t\ttools:layout=\"@layout/membership\">\n\t\t<action\n\t\t\tandroid:id=\"@+id/action_membershipBotNav_to_profileSettings\"\n\t\t\tapp:destination=\"@id/profileSettings\"\n\t\t\tapp:enterAnim=\"@android:anim/fade_in\"\n\t\t\tapp:exitAnim=\"@android:anim/fade_out\"\n\t\t\tapp:popEnterAnim=\"@android:anim/slide_in_left\"\n\t\t\tapp:popExitAnim=\"@android:anim/slide_out_right\" />\n\t\t<action\n\t\t\tandroid:id=\"@+id/action_membershipBotNav_to_settings\"\n\t\t\tapp:destination=\"@id/settings\"\n\t\t\tapp:enterAnim=\"@android:anim/fade_in\"\n\t\t\tapp:exitAnim=\"@android:anim/fade_out\"\n\t\t\tapp:popEnterAnim=\"@android:anim/slide_in_left\"\n\t\t\tapp:popExitAnim=\"@android:anim/slide_out_right\" />\n\t</fragment>\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/notificationBotNav\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.notification.NotificationFragment\"\n\t\tandroid:label=\"Notification Fragment\"\n\t\ttools:layout=\"@layout/notification\" />\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/profileSettings\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.membership.ProfileSettingsFragment\"\n\t\tandroid:label=\"Profile Settings Fragment\"\n\t\ttools:layout=\"@layout/profile_settings\" />\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/settings\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.membership.SettingsFragment\"\n\t\tandroid:label=\"Settings Fragment\"\n\t\ttools:layout=\"@layout/settings\" />\n\t\n\t<fragment\n\t\tandroid:id=\"@+id/filterCategory\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ui.fragment.category.CategoryFilteredFragment\"\n\t\tandroid:label=\"Filtered Category Fragment\"\n\t\ttools:layout=\"@layout/category_filtered\">\n\t\t<action\n\t\t\tandroid:id=\"@+id/action_filterCategory_to_viewProduct\"\n\t\t\tapp:destination=\"@id/viewProduct\"\n\t\t\tapp:enterAnim=\"@android:anim/fade_in\"\n\t\t\tapp:exitAnim=\"@android:anim/fade_out\"\n\t\t\tapp:popEnterAnim=\"@android:anim/slide_in_left\"\n\t\t\tapp:popExitAnim=\"@android:anim/slide_out_right\" />\n\t</fragment>\n\t<activity\n\t\tandroid:id=\"@+id/viewProduct\"\n\t\tandroid:name=\"com.group25.ecommercefashionapp.ViewProductActivity\"\n\t\tandroid:label=\"View Product Activity\"\n\t\ttools:layout=\"@layout/activity_view_product\" />\n\n</navigation>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/navigation/nav_graph.xml b/app/src/main/res/navigation/nav_graph.xml
+--- a/app/src/main/res/navigation/nav_graph.xml	(revision 13f9415b6596bdbea056d35809fa3011dd20418e)
++++ b/app/src/main/res/navigation/nav_graph.xml	(date 1702465187216)
+@@ -94,4 +94,9 @@
+ 		android:label="View Product Activity"
+ 		tools:layout="@layout/activity_view_product" />
+ 
++	<activity
++		android:id="@+id/viewProductImages"
++		android:name="com.group25.ecommercefashionapp.ViewProductImages"
++		android:label="View Product Images"
++		tools:layout="@layout/activity_view_product_images" />
+ </navigation>
+Index: app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java b/app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java
+new file mode 100644
+--- /dev/null	(date 1702465187222)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java	(date 1702465187222)
+@@ -0,0 +1,51 @@
++package com.group25.ecommercefashionapp.ui.behavior;
++
++import android.content.Context;
++
++import android.util.AttributeSet;
++import android.view.View;
++import android.widget.FrameLayout;
++
++import androidx.annotation.NonNull;
++import androidx.coordinatorlayout.widget.CoordinatorLayout;
++import androidx.core.view.ViewCompat;
++
++import com.google.android.material.bottomnavigation.BottomNavigationView;
++
++public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
++
++    public BottomNavigationBehavior() {
++        super();
++    }
++
++    public BottomNavigationBehavior(Context context, AttributeSet attrs) {
++        super(context, attrs);
++    }
++
++    @Override
++    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull BottomNavigationView child, @NonNull View dependency) {
++        return dependency instanceof FrameLayout;
++    }
++
++    @Override
++    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View directTargetChild, @NonNull View target, int nestedScrollAxes) {
++        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
++    }
++
++    @Override
++    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View target, int dx, int dy, @NonNull int[] consumed) {
++        if (dy < 0) {
++            showBottomNavigationView(child);
++        } else if (dy > 0) {
++            hideBottomNavigationView(child);
++        }
++    }
++
++    private void hideBottomNavigationView(BottomNavigationView view) {
++        view.animate().translationY(view.getHeight());
++    }
++
++    private void showBottomNavigationView(BottomNavigationView view) {
++        view.animate().translationY(0);
++    }
++}
+Index: app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductViewImageCarouselAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductViewImageCarouselAdapter.java b/app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductViewImageCarouselAdapter.java
+new file mode 100644
+--- /dev/null	(date 1702465187219)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductViewImageCarouselAdapter.java	(date 1702465187219)
+@@ -0,0 +1,65 @@
++package com.group25.ecommercefashionapp.adapter;
++
++import android.content.Context;
++import android.view.ViewGroup;
++
++import androidx.annotation.NonNull;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.widget.ImageView;
++import android.widget.TextView;
++import androidx.viewpager.widget.PagerAdapter;
++
++import com.group25.ecommercefashionapp.OnItemClickListener;
++import com.group25.ecommercefashionapp.R;
++import com.group25.ecommercefashionapp.data.ProductImage;
++
++import java.util.List;
++
++public class ProductViewImageCarouselAdapter extends PagerAdapter {
++
++    private final Context context;
++    private final List<ProductImage> imageList;
++
++
++    public ProductViewImageCarouselAdapter(Context context, List<ProductImage> imageList) {
++        this.context = context;
++        this.imageList = imageList;
++    }
++
++    @NonNull
++    @Override
++    public Object instantiateItem(@NonNull ViewGroup container, int position) {
++        LayoutInflater inflater = LayoutInflater.from(context);
++        View itemView = inflater.inflate(R.layout.view_product_carousel_item, container, false);
++
++        // Customize the item view based on your requirements
++        // For example, you can set text or images here
++        ImageView image = itemView.findViewById(R.id.carousel_image_view);
++        TextView currentImageTextView = itemView.findViewById(R.id.current_image_indicator_text_view);
++        TextView totalImageTextView = itemView.findViewById(R.id.image_size_indicator_text_view);
++
++        currentImageTextView.setText(String.valueOf(position + 1));
++        totalImageTextView.setText(String.valueOf(imageList.size()));
++        image.setImageResource(imageList.get(position).getImage_int_id());
++
++        container.addView(itemView);
++        return itemView;
++    }
++
++    @Override
++    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
++        container.removeView((View) object);
++    }
++
++    @Override
++    public int getCount() {
++        return imageList.size();
++    }
++
++    @Override
++    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
++        return view == object;
++    }
++}
+Index: app/src/main/res/layout/view_product_carousel_item.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/view_product_carousel_item.xml b/app/src/main/res/layout/view_product_carousel_item.xml
+new file mode 100644
+--- /dev/null	(date 1702465187212)
++++ b/app/src/main/res/layout/view_product_carousel_item.xml	(date 1702465187212)
+@@ -0,0 +1,63 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++	xmlns:app="http://schemas.android.com/apk/res-auto"
++	android:id="@+id/carousel_item_container"
++	android:layout_width="match_parent"
++	android:layout_height="wrap_content"
++	android:foreground="?attr/selectableItemBackground"
++	android:orientation="vertical"
++	app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
++	
++	<com.google.android.material.imageview.ShapeableImageView
++		android:id="@+id/carousel_image_view"
++		android:layout_width="match_parent"
++		android:layout_height="@dimen/product_image_size"
++		android:scaleType="centerCrop"
++		app:layout_constraintEnd_toEndOf="parent"
++		app:layout_constraintStart_toStartOf="parent"
++		app:layout_constraintTop_toTopOf="parent"
++		app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
++	
++	<LinearLayout
++		android:layout_width="wrap_content"
++		android:layout_height="@dimen/product_image_indicator_height"
++		android:layout_margin="40dp"
++		android:background="@color/carousel_indicator_selected"
++		android:gravity="center"
++		android:orientation="horizontal"
++		app:layout_constraintBottom_toBottomOf="parent"
++		app:layout_constraintEnd_toEndOf="parent"
++		app:layout_constraintStart_toStartOf="parent"
++		app:layout_constraintTop_toBottomOf="@id/carousel_image_view">
++		
++		<TextView
++			android:id="@+id/current_image_indicator_text_view"
++			android:layout_width="wrap_content"
++			android:layout_height="wrap_content"
++			android:layout_gravity="center"
++			android:paddingStart="@dimen/product_image_indicator_text_padding"
++			android:paddingEnd="@dimen/product_image_indicator_text_padding"
++			android:textColor="@color/primary_white"
++			android:textSize="@dimen/product_image_indicator_text_size" />
++		
++		<View
++			android:id="@+id/vertical_bar"
++			android:layout_width="@dimen/product_image_indicator_vertical_bar_width"
++			android:layout_height="match_parent"
++			android:layout_gravity="center"
++			android:layout_marginTop="@dimen/product_image_indicator_vertical_bar_margin"
++			android:layout_marginBottom="@dimen/product_image_indicator_vertical_bar_margin"
++			android:background="@color/primary_white" />
++		
++		<TextView
++			android:id="@+id/image_size_indicator_text_view"
++			android:layout_width="wrap_content"
++			android:layout_height="wrap_content"
++			android:layout_gravity="center"
++			android:paddingStart="@dimen/product_image_indicator_text_padding"
++			android:paddingEnd="@dimen/product_image_indicator_text_padding"
++			android:textColor="@color/primary_white"
++			android:textSize="@dimen/product_image_indicator_text_size" />
++	</LinearLayout>
++
++</androidx.constraintlayout.widget.ConstraintLayout>

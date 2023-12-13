@@ -48,6 +48,9 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
 
             clickListener.onItemClick(v, item);
         });
+        if(position == 0) {
+            holder.cardView.performClick();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

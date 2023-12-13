@@ -49,6 +49,9 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
             holder.cardView.setStrokeWidth(4);
             clickListener.onItemClick(v, item);
         });
+        if(position == 0) {
+            holder.cardView.performClick();
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

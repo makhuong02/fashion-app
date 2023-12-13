@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/carousel_item_container"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:foreground="?attr/selectableItemBackground"
+	android:orientation="vertical"
+	app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
+	
+	<com.google.android.material.imageview.ShapeableImageView
+		android:id="@+id/carousel_image_view"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/product_image_size"
+		android:scaleType="centerCrop"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
+	
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="@dimen/product_image_indicator_height"
+		android:layout_margin="40dp"
+		android:background="@color/carousel_indicator_selected"
+		android:gravity="center"
+		android:orientation="horizontal"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/carousel_image_view">
+		
+		<TextView
+			android:id="@+id/current_image_indicator_text_view"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:paddingStart="@dimen/product_image_indicator_text_padding"
+			android:paddingEnd="@dimen/product_image_indicator_text_padding"
+			android:textColor="@color/primary_white"
+			android:textSize="@dimen/product_image_indicator_text_size" />
+		
+		<View
+			android:id="@+id/vertical_bar"
+			android:layout_width="@dimen/product_image_indicator_vertical_bar_width"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"
+			android:layout_marginTop="@dimen/product_image_indicator_vertical_bar_margin"
+			android:layout_marginBottom="@dimen/product_image_indicator_vertical_bar_margin"
+			android:background="@color/primary_white" />
+		
+		<TextView
+			android:id="@+id/image_size_indicator_text_view"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:paddingStart="@dimen/product_image_indicator_text_padding"
+			android:paddingEnd="@dimen/product_image_indicator_text_padding"
+			android:textColor="@color/primary_white"
+			android:textSize="@dimen/product_image_indicator_text_size" />
+	</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
