@@ -36,6 +36,6 @@
 	<color name="secondary">#6a6a6a</color>
 	<color name="border_interactive_outline">#767676</color>
 	<color name="colorPrimary">#fff</color>
-
+	<color name="carousel_indicator_selected">#85000000</color>
 </resources>
 

@@ -133,17 +133,13 @@
 			</LinearLayout>
 			
 			
-			<com.google.android.material.imageview.ShapeableImageView
-				android:id="@+id/productImageView"
+			<androidx.viewpager.widget.ViewPager
+				android:id="@+id/carousel"
 				android:layout_width="match_parent"
-				android:layout_height="411dp"
+				android:layout_height="@dimen/product_image_size"
+				android:orientation="horizontal">
 				
-				android:layout_marginBottom="10dp"
-				android:adjustViewBounds="true"
-				android:alpha="1.0"
-				android:contentDescription="@string/content_description_media"
-				android:scaleType="centerCrop"
-				app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
+			</androidx.viewpager.widget.ViewPager>
 			
 			
 				
