@@ -49,7 +49,7 @@
 	<dimen name="product_image_size">400dp</dimen>
 	<dimen name="product_image_indicator_bottom_margin">3dp</dimen>
 	<dimen name="product_image_indicator_height">20dp</dimen>
-	<dimen name="product_image_indicator_text_padding">2dp</dimen>
+	<dimen name="product_image_indicator_text_padding">3dp</dimen>
 	<dimen name="product_image_indicator_text_size">10sp</dimen>
 	<dimen name="product_image_indicator_vertical_bar_margin">3dp</dimen>
 	<dimen name="product_image_indicator_vertical_bar_width">0.7dp</dimen>

@@ -115,6 +115,11 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             selectedColorTextView.setText( item.getName());
         } else if (view.getId() == R.id.chip_size_card) {
             selectedSizeTextView.setText(item.getName());
+        }else if(view.getId() == R.id.carousel_image_view){
+            Bundle bundle = new Bundle();
+            bundle.putInt("product_id", product.getId());
+            bundle.putInt("position", productCarousel.getCurrentItem());
+            mainActivity.navController.navigate(R.id.viewProductImages, bundle);
         }
     }
 
