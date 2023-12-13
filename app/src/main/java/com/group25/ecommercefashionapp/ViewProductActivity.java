@@ -28,7 +28,6 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
-
 public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{
     MaterialToolbar toolbar;
     MainActivity mainActivity;
@@ -37,12 +36,10 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     RatingBar ratingBar;
     ActionMenuItemView cart;
     RecyclerView colorRecyclerView, sizeRecyclerView;
-
     ViewPager productCarousel;
     private DecimalFormat VNDFormat;
     ActionMenuItemView share;
-
-
+    private static final int VIEW_PRODUCT_IMAGES_REQUEST_CODE = 1;
     ProductRepository productRepository;
     Product product;
 
@@ -84,7 +81,6 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);
         colorRecyclerView.setAdapter(colorAdapter);
 
-
         // Set up Size recycler view
         GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
         sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);
@@ -94,7 +90,6 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         toolbar.setNavigationOnClickListener(v -> {
             mainActivity.navController.popBackStack();
             onBackPressed();
-
         });
     }
 
@@ -119,7 +114,24 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             Bundle bundle = new Bundle();
             bundle.putInt("product_id", product.getId());
             bundle.putInt("position", productCarousel.getCurrentItem());
-            mainActivity.navController.navigate(R.id.viewProductImages, bundle);
+            Intent intent = new Intent(this, ViewProductImages.class);
+            intent.putExtras(bundle);
+            startActivityForResult(intent, VIEW_PRODUCT_IMAGES_REQUEST_CODE);
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == VIEW_PRODUCT_IMAGES_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Bundle bundle = data.getExtras();
+                int id = bundle.getInt("product_id");
+                int position = bundle.getInt("position");
+                Product product = mainActivity.productRepository.getProductById(id);
+                ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, product.getImageList(), this);
+                productCarousel.setAdapter(productImageCarouselAdapter);
+                productCarousel.setCurrentItem(position);
+            }
         }
     }
 
