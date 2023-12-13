@@ -17,7 +17,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ProductContract.ProductEntry.COLUMN_NAME + " TEXT," +
                     ProductContract.ProductEntry.COLUMN_DESCRIPTION + " TEXT," +
                     ProductContract.ProductEntry.COLUMN_PRICE + " INT," +
-                    ProductContract.ProductEntry.COLUMN_IMAGE + " INT," +
                     ProductContract.ProductEntry.COLUMN_CATEGORY + " TEXT," +
                     ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY + " INT)";
 
@@ -36,6 +35,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ProductContract.SizeEntry.COLUMN_SIZE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "UNIQUE (" + ProductContract.SizeEntry.COLUMN_PRODUCT_ID + ", " + ProductContract.SizeEntry.COLUMN_SIZE + ")," +
                     "FOREIGN KEY (" + ProductContract.SizeEntry.COLUMN_PRODUCT_ID + ") REFERENCES " + ProductContract.ProductEntry.TABLE_NAME + "(" + ProductContract.ProductEntry.COLUMN_ID + "))";
+
+    private static final String CREATE_PRODUCT_IMAGES_TABLE=
+            "CREATE TABLE IF NOT EXISTS " + ProductContract.ImageEntry.TABLE_NAME + " (" +
+                    ProductContract.ImageEntry.COLUMN_PRODUCT_ID + " INTEGER," +
+                    ProductContract.ImageEntry.COLUMN_IMAGE + " INT," +
+                    ProductContract.ImageEntry.COLUMN_IMAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "UNIQUE (" + ProductContract.ImageEntry.COLUMN_PRODUCT_ID + ", " + ProductContract.ImageEntry.COLUMN_IMAGE + ")," +
+                    "FOREIGN KEY (" + ProductContract.ImageEntry.COLUMN_PRODUCT_ID + ") REFERENCES " + ProductContract.ProductEntry.TABLE_NAME + "(" + ProductContract.ProductEntry.COLUMN_ID + "))";
 
     private static final String CREATE_ORDER_TABLE =
             "CREATE TABLE IF NOT EXISTS " + OrderContract.OrderEntry.TABLE_NAME + " (" +
@@ -71,6 +78,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_ORDERDETAILS_TABLE);
         db.execSQL(CREATE_COLOR_TABLE);
         db.execSQL(CREATE_SIZE_TABLE);
+        db.execSQL(CREATE_PRODUCT_IMAGES_TABLE);
     }
 
     @Override

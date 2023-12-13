@@ -8,38 +8,35 @@ public class Product extends Item {
     private final int id;
     private final String description;
     private final Integer price;
-    private final int imageId;
     private final String category;
     private final Integer availableQuantity;
+    private final List<ProductImage> imageList = new ArrayList<>();
     private final List<ProductColor> colorList = new ArrayList<>();
     private final List<ProductSize> sizeList = new ArrayList<>();
 
-    public Product(Integer id, String name, String description, Integer price, int imageId, String category, Integer availableQuantity) {
+    public Product(Integer id, String name, String description, Integer price, String category, Integer availableQuantity) {
         super(name);
         this.id = id;
         this.description = description;
         this.price = price;
-        this.imageId = imageId;
         this.category = category;
         this.availableQuantity = availableQuantity;
     }
 
-    public Product(String description, Integer price, int imageId, String category) {
+    public Product(String description, Integer price, String category) {
         super("");
         this.description = description;
         this.price = price;
-        this.imageId = imageId;
         this.id = -1;
         this.category = category;
         this.availableQuantity = 0;
 
     }
 
-    public Product(String name, String description, Integer price, int imageId, String category) {
+    public Product(String name, String description, Integer price, String category) {
         super(name);
         this.description = description;
         this.price = price;
-        this.imageId = imageId;
         this.id = -1;
         this.category = category;
         this.availableQuantity = 0;
@@ -57,8 +54,8 @@ public class Product extends Item {
         return price;
     }
 
-    public Integer getImage() {
-        return imageId;
+    public List<ProductImage> getImageList() {
+        return imageList;
     }
 
     public String getCategory() {
@@ -129,6 +126,9 @@ public class Product extends Item {
             }
         }
         return sizeRange;
+    }
+    public void addImages(List<ProductImage> images) {
+        imageList.addAll(images);
     }
 
 }

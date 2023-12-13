@@ -49,7 +49,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         // Bind your data to the UI components of the CardView
         holder.txtName.setText(item.getName());
         holder.txtPrice.setText(String.format("%s VND", VNDFormat.format(item.getPrice())));
-        holder.img.setImageResource(item.getImage());
+        holder.img.setImageResource(item.getImageList().get(0).getImage_int_id());
         holder.txtSizeRange.setText(item.getSizeRange());
 
         // Set click listener on the card
