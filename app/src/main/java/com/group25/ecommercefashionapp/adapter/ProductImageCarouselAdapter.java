@@ -13,16 +13,17 @@ import androidx.viewpager.widget.PagerAdapter;
 
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.ProductImage;
 
 import java.util.List;
 
 public class ProductImageCarouselAdapter extends PagerAdapter {
 
     private final Context context;
-    private final List<Integer> imageList;
+    private final List<ProductImage> imageList;
     OnItemClickListener clickListener;
 
-    public ProductImageCarouselAdapter(Context context, List<Integer> imageList, OnItemClickListener clickListener) {
+    public ProductImageCarouselAdapter(Context context, List<ProductImage> imageList, OnItemClickListener clickListener) {
         this.context = context;
         this.imageList = imageList;
         this.clickListener = clickListener;
@@ -42,7 +43,8 @@ public class ProductImageCarouselAdapter extends PagerAdapter {
 
         currentImageTextView.setText(String.valueOf(position + 1));
         totalImageTextView.setText(String.valueOf(imageList.size()));
-        image.setImageResource(imageList.get(position));
+        image.setImageResource(imageList.get(position).getImage_int_id());
+        image.setOnClickListener(v -> clickListener.onItemClick(v, imageList.get(position)));
 
         container.addView(itemView);
         return itemView;

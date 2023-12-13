@@ -20,12 +20,12 @@ import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -72,11 +72,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         ratingBar.setRating(rating);
         txtRating.setText(String.valueOf(rating));
         txtReview.setText(HtmlCompat.fromHtml("<font color=\"blue\"><u>(See 5 reviews)</u></font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
-        List<Integer> imageList = new ArrayList<>();
-        imageList.add(product.getImage());
-        imageList.add(product.getImage());
-        imageList.add(product.getImage());
-        imageList.add(product.getImage());
+        List<ProductImage> imageList = mainActivity.productRepository.getProductById(id).getImageList();
 
         ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, imageList, this);
         productCarousel.setAdapter(productImageCarouselAdapter);
