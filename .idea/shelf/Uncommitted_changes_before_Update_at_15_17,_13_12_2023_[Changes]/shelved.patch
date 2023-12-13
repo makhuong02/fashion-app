@@ -1,0 +1,497 @@
+Index: app/src/main/res/layout/activity_view_product.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.coordinatorlayout.widget.CoordinatorLayout\n\txmlns:android=\"http://schemas.android.com/apk/res/android\"\n\txmlns:app=\"http://schemas.android.com/apk/res-auto\"\n\tandroid:layout_width=\"match_parent\"\n\tandroid:layout_height=\"match_parent\"\n\tandroid:orientation=\"vertical\">\n\t\n\t<com.google.android.material.appbar.AppBarLayout\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"wrap_content\"\n\t\tandroid:fitsSystemWindows=\"true\"\n\t\tandroid:stateListAnimator=\"@animator/appbar_elevation\"\n\t\tandroid:elevation=\"2dp\">\n\t\t\n\t\t<com.google.android.material.appbar.MaterialToolbar\n\t\t\tandroid:id=\"@+id/topAppBar\"\n\t\t\tstyle=\"Widget.MaterialComponents.Toolbar.PrimarySurface\"\n\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\tandroid:layout_height=\"?attr/actionBarSize\"\n\t\t\tapp:layout_collapseMode=\"parallax\"\n\t\t\tapp:layout_scrollFlags=\"scroll|enterAlways|snap\"\n\t\t\tapp:menu=\"@menu/view_product_menu\"\n\t\t\tapp:navigationIcon=\"@drawable/round_arrow_back_24\"\n\t\t\tandroid:elevation=\"2dp\"\n\t\t\t\n\t\t\tapp:title=\"\" />\n\t\n\t</com.google.android.material.appbar.AppBarLayout>\n\t\n\t<androidx.core.widget.NestedScrollView\n\t\tandroid:id=\"@+id/nestedScrollView\"\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"match_parent\"\n\t\tandroid:fillViewport=\"true\"\n\t\tandroid:fitsSystemWindows=\"true\"\n\t\tandroid:overScrollMode=\"never\"\n\t\tandroid:scrollbars=\"none\"\n\t\t\n\t\tapp:layout_behavior=\"com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior\">\n\t\t\n\t\t<LinearLayout\n\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\tandroid:layout_height=\"wrap_content\"\n\n\t\t\tandroid:orientation=\"vertical\">\n\t\t\t\n\t\t\t<LinearLayout\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:orientation=\"vertical\"\n\t\t\t\tandroid:paddingStart=\"10dp\"\n\t\t\t\tandroid:paddingEnd=\"10dp\">\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/productNameTextView\"\n\t\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:paddingTop=\"8dp\"\n\t\t\t\t\tandroid:paddingBottom=\"8dp\"\n\t\t\t\t\tandroid:fontFamily=\"@font/uniqlopro_light\"\n\t\t\t\t\tandroid:text=\"Beige Shirt\"\n\t\t\t\t\tandroid:textSize=\"20sp\">\n\t\t\t\t\n\t\t\t\t</TextView>\n\t\t\t\t<LinearLayout\n\t\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:orientation=\"horizontal\">\n\t\t\t\t\t\n\t\t\t\t\t<RatingBar\n\t\t\t\t\t\tandroid:id=\"@+id/ratingBar\"\n\t\t\t\t\t\tstyle=\"@style/Widget.AppCompat.RatingBar.Small\"\n\t\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\t\tandroid:isIndicator=\"true\"\n\t\t\t\t\t\tandroid:numStars=\"5\"\n\t\t\t\t\t\tandroid:progressTint=\"@color/primary_black\"\n\t\t\t\t\t\tandroid:rating=\"3.7\"\n\t\t\t\t\t\t\n\t\t\t\t\t\tandroid:scrollbarSize=\"10sp\"\n\t\t\t\t\t\tandroid:layout_gravity=\"center\"\n\t\t\t\t\t\tandroid:paddingTop=\"2dp\"\n\t\t\t\t\t\tandroid:stepSize=\"0.1\" />\n\t\t\t\t\t\n\t\t\t\t\t<TextView\n\t\t\t\t\t\tandroid:id=\"@+id/ratingTextView\"\n\t\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\t\tandroid:fontFamily=\"@font/roboto_medium_numbers\"\n\t\t\t\t\t\t\n\t\t\t\t\t\tandroid:paddingStart=\"8dp\"\n\t\t\t\t\t\tandroid:paddingEnd=\"8dp\"\n\t\t\t\t\t\tandroid:text=\"4.7\"\n\t\t\t\t\t\tandroid:textSize=\"16sp\"\n\t\t\t\t\t\tandroid:textStyle=\"bold\" />\n\t\t\t\t\t\n\t\t\t\t\t<TextView\n\t\t\t\t\t\tandroid:id=\"@+id/seeReviewsTextView\"\n\t\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\t\tandroid:text=\"(See 5 reviews)\"\n\t\t\t\t\t\tandroid:layout_gravity=\"center\"\n\t\t\t\t\t\t\n\t\t\t\t\t\tandroid:autoLink=\"all\"\n\t\t\t\t\t\t\n\t\t\t\t\t\tandroid:fontFamily=\"@font/quicksand_medium\"\n\t\t\t\t\t\tandroid:textSize=\"14sp\" />\n\t\t\t\t\n\t\t\t\t</LinearLayout>\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/productHighlightsTextView\"\n\t\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:paddingTop=\"8dp\"\n\t\t\t\t\t\n\t\t\t\t\tandroid:paddingBottom=\"8dp\"\n\t\t\t\t\tandroid:text=\"Linen cotton fabric keep you warm through out the year.\">\n\t\t\t\t\n\t\t\t\t</TextView>\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/productIDTextView\"\n\t\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:gravity=\"end\"\n\t\t\t\t\tandroid:paddingTop=\"8dp\"\n\t\t\t\t\tandroid:paddingBottom=\"8dp\"\n\t\t\t\t\tandroid:text=\"Product ID:  461343\">\n\t\t\t\t\n\t\t\t\t</TextView>\n\t\t\t</LinearLayout>\n\t\t\t\n\t\t\t\n\t\t\t<com.google.android.material.imageview.ShapeableImageView\n\t\t\t\tandroid:id=\"@+id/productImageView\"\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"411dp\"\n\t\t\t\t\n\t\t\t\tandroid:layout_marginBottom=\"10dp\"\n\t\t\t\tandroid:adjustViewBounds=\"true\"\n\t\t\t\tandroid:alpha=\"1.0\"\n\t\t\t\tandroid:contentDescription=\"@string/content_description_media\"\n\t\t\t\tandroid:scaleType=\"centerCrop\"\n\t\t\t\tapp:srcCompat=\"@drawable/man_beige_shirt_pants_casual_wear_fashion\" />\n\t\t\t\n\t\t\t\n\t\t\t\t\n\t\t\t<androidx.constraintlayout.widget.ConstraintLayout\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:background=\"@color/primary_white\"\n\t\t\t\tandroid:paddingStart=\"@dimen/ex_l_spacing\"\n\t\t\t\tandroid:paddingTop=\"@dimen/m_spacing\"\n\t\t\t\tandroid:paddingEnd=\"@dimen/ex_l_spacing\"\n\t\t\t\tandroid:tag=\"layout/cell_product_item_colors_0\">\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/colorText\"\n\t\t\t\t\tstyle=\"@style/LabelLarge\"\n\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:text=\"@string/text_color\"\n\t\t\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintTop_toTopOf=\"parent\" />\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/colorColon\"\n\t\t\t\t\tstyle=\"@style/LabelLarge\"\n\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:text=\"@string/text_symbol_colon\"\n\t\t\t\t\tapp:layout_constraintStart_toEndOf=\"@+id/colorText\"\n\t\t\t\t\tapp:layout_constraintTop_toTopOf=\"@+id/colorText\" />\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/selectColorText\"\n\t\t\t\t\tstyle=\"@style/LabelLarge\"\n\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:layout_marginStart=\"8dp\"\n\t\t\t\t\tandroid:tag=\"binding_1\"\n\t\t\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\t\t\tapp:layout_constraintBaseline_toBaselineOf=\"@+id/colorColon\"\n\t\t\t\t\tapp:layout_constraintStart_toEndOf=\"@+id/colorColon\" />\n\t\t\t\t\n\t\t\t\t<androidx.recyclerview.widget.RecyclerView\n\t\t\t\t\tandroid:id=\"@+id/colorRecycler\"\n\t\t\t\t\tandroid:layout_width=\"0dp\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:layout_marginTop=\"@dimen/xs_spacing\"\n\t\t\t\t\tapp:layout_constraintEnd_toEndOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintTop_toBottomOf=\"@+id/colorText\" />\n\n\t\t\t</androidx.constraintlayout.widget.ConstraintLayout>\n\t\t\t<androidx.constraintlayout.widget.ConstraintLayout\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:background=\"@color/primary_white\"\n\t\t\t\tandroid:clipToPadding=\"false\"\n\t\t\t\tandroid:paddingStart=\"@dimen/ex_l_spacing\"\n\t\t\t\tandroid:paddingTop=\"@dimen/l_spacing\"\n\t\t\t\tandroid:paddingEnd=\"@dimen/ex_l_spacing\"\n\t\t\t\tandroid:tag=\"layout/cell_product_item_sizes_0\">\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/sizeLabel\"\n\t\t\t\t\tstyle=\"@style/LabelLarge\"\n\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:tag=\"binding_1\"\n\t\t\t\t\tandroid:text=\"@string/text_size\"\n\t\t\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintTop_toTopOf=\"parent\" />\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/sizeColon\"\n\t\t\t\t\tstyle=\"@style/LabelLarge\"\n\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:text=\"@string/text_symbol_colon\"\n\t\t\t\t\tapp:layout_constraintStart_toEndOf=\"@+id/sizeLabel\"\n\t\t\t\t\tapp:layout_constraintTop_toTopOf=\"@+id/sizeLabel\" />\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/selectSizeText\"\n\t\t\t\t\tstyle=\"@style/LabelLarge\"\n\t\t\t\t\tandroid:layout_width=\"0dp\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:layout_marginStart=\"@dimen/xs_spacing\"\n\t\t\t\t\tandroid:ellipsize=\"end\"\n\t\t\t\t\tandroid:singleLine=\"true\"\n\t\t\t\t\tandroid:tag=\"binding_2\"\n\t\t\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\t\t\tapp:layout_constraintBaseline_toBaselineOf=\"@+id/sizeColon\"\n\t\t\t\t\tapp:layout_constraintEnd_toEndOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintStart_toEndOf=\"@+id/sizeColon\" />\n\t\t\t\t\n\t\t\t\t<androidx.recyclerview.widget.RecyclerView\n\t\t\t\t\tandroid:id=\"@+id/sizeRecycler\"\n\t\t\t\t\tandroid:layout_width=\"0dp\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:layout_marginTop=\"@dimen/xs_spacing\"\n\t\t\t\t\tapp:layout_constraintEnd_toEndOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintTop_toBottomOf=\"@+id/sizeLabel\" />\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t<androidx.appcompat.widget.AppCompatButton\n\t\t\t\t\tandroid:id=\"@+id/height_length_guide\"\n\t\t\t\t\tstyle=\"@style/Subtitle2\"\n\t\t\t\t\tandroid:layout_width=\"0dp\"\n\t\t\t\t\tandroid:layout_height=\"32dp\"\n\t\t\t\t\tandroid:layout_marginTop=\"@dimen/m_spacing\"\n\t\t\t\t\tandroid:background=\"@drawable/bg_outline_black\"\n\t\t\t\t\tandroid:foreground=\"?attr/selectableItemBackgroundBorderless\"\n\t\t\t\t\tandroid:tag=\"binding_9\"\n\t\t\t\t\tandroid:text=\"@string/text_length_guide_by_height\"\n\t\t\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\t\t\tapp:layout_constraintEnd_toEndOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintTop_toBottomOf=\"@+id/sizeRecycler\" />\n\t\t\t\t\n\t\t\t\t<TextView\n\t\t\t\t\tandroid:id=\"@+id/sizeChartLink\"\n\t\t\t\t\tstyle=\"@style/BodyStandard\"\n\t\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\t\tandroid:layout_marginTop=\"@dimen/s_spacing\"\n\t\t\t\t\tandroid:drawablePadding=\"@dimen/xs_spacing\"\n\t\t\t\t\tandroid:foreground=\"?attr/selectableItemBackgroundBorderless\"\n\t\t\t\t\tandroid:gravity=\"center_vertical\"\n\t\t\t\t\tandroid:tag=\"binding_10\"\n\t\t\t\t\tandroid:text=\"@string/text_size_compare_with_purchase_product\"\n\t\t\t\t\tandroid:textColor=\"@color/noticeable\"\n\t\t\t\t\tapp:drawableStartCompat=\"@drawable/ic_size_chart\"\n\t\t\t\t\tapp:layout_constraintEnd_toEndOf=\"parent\"\n\t\t\t\t\tapp:layout_constraintTop_toBottomOf=\"@+id/height_length_guide\" />\n\t\t\t</androidx.constraintlayout.widget.ConstraintLayout>\n\t\t\t<LinearLayout\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:paddingStart=\"10dp\"\n\t\t\t\tandroid:paddingEnd=\"10dp\"\n\t\t\t\tandroid:orientation=\"vertical\">\n\t\t\t<TextView\n\t\t\t\tandroid:id=\"@+id/productActualPriceTextView\"\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:fontFamily=\"sans-serif-condensed\"\n\t\t\t\tandroid:paddingStart=\"8dp\"\n\t\t\t\tandroid:paddingTop=\"8dp\"\n\t\t\t\tandroid:paddingEnd=\"8dp\"\n\t\t\t\t\n\t\t\t\tandroid:text=\"980.000 VND\"\n\t\t\t\tandroid:textSize=\"20sp\"\n\t\t\t\tandroid:textStyle=\"bold\" />\n\t\t\t\n\t\t\t<TextView\n\t\t\t\tandroid:id=\"@+id/productDiscountPriceTextView\"\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:fontFamily=\"sans-serif-condensed\"\n\t\t\t\tandroid:paddingStart=\"8dp\"\n\t\t\t\t\n\t\t\t\tandroid:paddingEnd=\"8dp\"\n\t\t\t\tandroid:paddingBottom=\"8dp\"\n\t\t\t\tandroid:text=\"980.000 VND\"\n\t\t\t\tandroid:textColor=\"@color/primary_red\"\n\t\t\t\tandroid:textSize=\"25sp\"\n\t\t\t\tandroid:textStyle=\"bold\" />\n\t\t\t\n\t\t\t<TextView\n\t\t\t\tandroid:id=\"@+id/productQuantityTextView\"\n\t\t\t\t\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:fontFamily=\"sans-serif-condensed\"\n\t\t\t\tandroid:paddingStart=\"8dp\"\n\t\t\t\tandroid:paddingTop=\"8dp\"\n\t\t\t\tandroid:paddingEnd=\"8dp\"\n\t\t\t\tandroid:paddingBottom=\"8dp\"\n\t\t\t\t\n\t\t\t\tandroid:text=\"Quantity\"\n\t\t\t\tandroid:textSize=\"13sp\" />\n\t\t\t\n\t\t\t<Spinner\n\t\t\t\tandroid:id=\"@+id/productQuantitySpinner\"\n\t\t\t\tandroid:layout_width=\"200dp\"\n\t\t\t\tandroid:layout_height=\"50dp\"\n\t\t\t\tandroid:entries=\"@array/productQuantitySpinnerItems\"\n\t\t\t\tandroid:spinnerMode=\"dropdown\">\n\t\t\t\n\t\t\t</Spinner>\n\t\t\t\n\t\t\t<LinearLayout\n\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:padding=\"8dp\">\n\t\t\t\t\n\t\t\t\t<Button\n\t\t\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\t\t\tandroid:layout_height=\"match_parent\"\n\t\t\t\t\tandroid:backgroundTint=\"@android:color/holo_red_dark\"\n\t\t\t\t\tandroid:fontFamily=\"sans-serif-condensed\"\n\t\t\t\t\tandroid:text=\"ADD TO CART\"\n\t\t\t\t\tandroid:textStyle=\"bold\">\n\t\t\t\t\n\t\t\t\t</Button>\n\t\t\t</LinearLayout>\n\t\t\t</LinearLayout>\n\t\t\n\t\t</LinearLayout>\n\t\n\t</androidx.core.widget.NestedScrollView>\n</androidx.coordinatorlayout.widget.CoordinatorLayout>\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_view_product.xml b/app/src/main/res/layout/activity_view_product.xml
+--- a/app/src/main/res/layout/activity_view_product.xml	(revision 6dee3c1ce9eb60f9fcdf063ca9127676b4d0121e)
++++ b/app/src/main/res/layout/activity_view_product.xml	(date 1702454524726)
+@@ -133,17 +133,13 @@
+ 			</LinearLayout>
+ 			
+ 			
+-			<com.google.android.material.imageview.ShapeableImageView
+-				android:id="@+id/productImageView"
++			<androidx.viewpager.widget.ViewPager
++				android:id="@+id/carousel"
+ 				android:layout_width="match_parent"
+-				android:layout_height="411dp"
++				android:layout_height="@dimen/product_image_size"
++				android:orientation="horizontal">
+ 				
+-				android:layout_marginBottom="10dp"
+-				android:adjustViewBounds="true"
+-				android:alpha="1.0"
+-				android:contentDescription="@string/content_description_media"
+-				android:scaleType="centerCrop"
+-				app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
++			</androidx.viewpager.widget.ViewPager>
+ 			
+ 			
+ 				
+Index: app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java b/app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java
+new file mode 100644
+--- /dev/null	(date 1702444054043)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/utilities/TranslateAnimationUtil.java	(date 1702444054043)
+@@ -0,0 +1,101 @@
++package com.group25.ecommercefashionapp.utilities;
++
++import android.content.Context;
++import android.view.GestureDetector;
++import android.view.MotionEvent;
++import android.view.View;
++import android.view.animation.Animation;
++import android.view.animation.AnimationUtils;
++
++import com.group25.ecommercefashionapp.R;
++
++public class TranslateAnimationUtil implements View.OnTouchListener {
++    private final GestureDetector gestureDetector;
++
++    public TranslateAnimationUtil(Context context, View viewAnimation) {
++        gestureDetector = new GestureDetector(context, new SimpleGestureListener(viewAnimation));
++    }
++    @Override
++    public boolean onTouch(View v, MotionEvent event) {
++        return gestureDetector.onTouchEvent(event);
++    }
++
++    public static class SimpleGestureListener extends GestureDetector.SimpleOnGestureListener {
++        private static final int SCROLL_THRESHOLD = 10;
++        private final View viewAnimation;
++        private boolean isFinishAnimation = true;
++
++        public SimpleGestureListener(View viewAnimation) {
++            this.viewAnimation = viewAnimation;
++        }
++
++        @Override
++        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
++            if (Math.abs(distanceY) > SCROLL_THRESHOLD) {
++                try {
++                    if (e2.getY() - e1.getY() < 0) {
++                        hiddenView();
++                    } else {
++                        showView();
++                    }
++                } catch (Exception ignored) {
++                }
++            }
++            return super.onScroll(e1, e2, distanceX, distanceY);
++        }
++
++        private void hiddenView() {
++            if (viewAnimation == null || viewAnimation.getVisibility() == View.GONE) {
++                return;
++            }
++            Animation animationDown = AnimationUtils.loadAnimation(viewAnimation.getContext(), R.anim.move_down);
++            animationDown.setAnimationListener(new Animation.AnimationListener() {
++                @Override
++                public void onAnimationStart(Animation animation) {
++                    viewAnimation.setVisibility(View.VISIBLE);
++                    isFinishAnimation = false;
++                }
++
++                @Override
++                public void onAnimationEnd(Animation animation) {
++                    viewAnimation.setVisibility(View.GONE);
++                    isFinishAnimation = true;
++                }
++
++                @Override
++                public void onAnimationRepeat(Animation animation) {
++                }
++            });
++            if (isFinishAnimation) {
++                viewAnimation.startAnimation(animationDown);
++            }
++        }
++
++        private void showView() {
++            if (viewAnimation == null || viewAnimation.getVisibility() == View.VISIBLE) {
++                return;
++            }
++            Animation animationUp = AnimationUtils.loadAnimation(viewAnimation.getContext(), R.anim.move_up);
++            animationUp.setAnimationListener(new Animation.AnimationListener() {
++                @Override
++                public void onAnimationStart(Animation animation) {
++                    viewAnimation.setVisibility(View.VISIBLE);
++                    isFinishAnimation = false;
++                }
++
++                @Override
++                public void onAnimationEnd(Animation animation) {
++                    isFinishAnimation = true;
++                }
++
++                @Override
++                public void onAnimationRepeat(Animation animation) {
++                }
++            });
++            if (isFinishAnimation) {
++                viewAnimation.startAnimation(animationUp);
++            }
++        }
++    }
++
++}
+Index: app/src/main/res/values/colors.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n    <color name=\"primary_white\">#FFFFFF</color>\n\t<color name=\"primary_black\">#000000</color>\n\t<color name=\"primary_red\">#FF0000</color>\n\t<color name=\"primary_green\">#00FF00</color>\n\t<color name=\"primary_blue\">#0000FF</color>\n\t<color name=\"primary_yellow\">#FFFF00</color>\n\t<color name=\"primary_cyan\">#00FFFF</color>\n\t<color name=\"primary_magenta\">#FF00FF</color>\n\t<color name=\"primary_transparent\">#00000000</color>\n\t<color name=\"primary_grey\">#808080</color>\n\t<color name=\"primary_dark_grey\">#A9A9A9</color>\n\t<color name=\"primary_light_grey\">#D3D3D3</color>\n\t<color name=\"primary_orange\">#FFA500</color>\n\t<color name=\"primary_brown\">#A52A2A</color>\n\t<color name=\"primary_purple\">#800080</color>\n\t<color name=\"primary_pink\">#FFC0CB</color>\n\t<color name=\"primary_teal\">#008080</color>\n\t<color name=\"primary_indigo\">#4B0082</color>\n\t<color name=\"primary_lime\">#00FF00</color>\n\t<color name=\"primary_amber\">#FFBF00</color>\n\t<color name=\"primary_deep_orange\">#FF5722</color>\n\t<color name=\"primary_deep_purple\">#673AB7</color>\n\t<color name=\"primary_deep_pink\">#FF1493</color>\n\t<color name=\"primary_deep_teal\">#00897B</color>\n\t<color name=\"primary_deep_indigo\">#3F51B5</color>\n\t<color name=\"tertiary_gray_050\">#F4F4F4</color>\n\t<color name=\"tertiary_gray_150\">#DADADA</color>\n\t<color name=\"tertiary_gray_500\">#9E9E9E</color>\n\t<color name=\"call_to_action_red\">@color/primary_red</color>\n\t<color name=\"divider\">#1E000000</color>\n\t<color name=\"error_red\">#CC0000</color>\n\t<color name=\"home_title_module_black\">#030303</color>\n\t<color name=\"noticeable\">#005db5</color>\n\t<color name=\"secondary\">#6a6a6a</color>\n\t<color name=\"border_interactive_outline\">#767676</color>\n\t<color name=\"colorPrimary\">#fff</color>\n\n</resources>\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+--- a/app/src/main/res/values/colors.xml	(revision 6dee3c1ce9eb60f9fcdf063ca9127676b4d0121e)
++++ b/app/src/main/res/values/colors.xml	(date 1702454292397)
+@@ -36,6 +36,6 @@
+ 	<color name="secondary">#6a6a6a</color>
+ 	<color name="border_interactive_outline">#767676</color>
+ 	<color name="colorPrimary">#fff</color>
+-
++	<color name="carousel_indicator_selected">#85000000</color>
+ </resources>
+ 
+Index: app/src/main/res/anim/move_down.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/anim/move_down.xml b/app/src/main/res/anim/move_down.xml
+new file mode 100644
+--- /dev/null	(date 1702406539719)
++++ b/app/src/main/res/anim/move_down.xml	(date 1702406539719)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<set xmlns:android="http://schemas.android.com/apk/res/android">
++
++	<translate
++		android:duration="200"
++		android:fromYDelta="0%"
++		android:toYDelta="100%" />
++</set>
+\ No newline at end of file
+Index: app/src/main/res/values/dimens.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<resources>\n\t<dimen name=\"textsize_body_1\">16sp</dimen>\n\t<dimen name=\"textsize_body_2\">13sp</dimen>\n\t<dimen name=\"textsize_body_standard\">14sp</dimen>\n\t<dimen name=\"textsize_caption_1\">12sp</dimen>\n\t<dimen name=\"textsize_h3\">19sp</dimen>\n\t<dimen name=\"textsize_subtitle_1\">16sp</dimen>\n\t<dimen name=\"textsize_subtitle_2\">14sp</dimen>\n\t<dimen name=\"m_spacing\">16dp</dimen>\n\t<dimen name=\"app_bar_icon_size\">30dp</dimen>\n\t<dimen name=\"xs_spacing\">8dp</dimen>\n\t<dimen name=\"l_spacing\">24dp</dimen>\n\t<dimen name=\"s_spacing\">12dp</dimen>\n\t<dimen name=\"xl_spacing\">32dp</dimen>\n\t<dimen name=\"xxs_spacing\">4dp</dimen>\n\t<dimen name=\"xxl_spacing\">48dp</dimen>\n\t<dimen name=\"spacer_11dp\">11dp</dimen>\n\t<dimen name=\"ex_xl_spacing\">26dp</dimen>\n\t<dimen name=\"product_cell_elevation\">2dp</dimen>\n\t<dimen name=\"add_to_cart_dialog_scroll_view_bottom_margin\">162dp</dimen>\n\t<dimen name=\"add_to_cart_dialog_scroll_view_top_margin\">52dp</dimen>\n\t<dimen name=\"ex_l_spacing\">20dp</dimen>\n\t<dimen name=\"checkbox_width\">20dp</dimen>\n\t<dimen name=\"checkbox_height\">20dp</dimen>\n\t<dimen name=\"bottom_sheet_loading_indicator_size\">24dp</dimen>\n\t<dimen name=\"menu_item_width\">48dp</dimen>\n\t<dimen name=\"menu_item_height\">48dp</dimen>\n\t<dimen name=\"cart_badge_height\">16dp</dimen>\n\t<dimen name=\"size_chip_image\">16dp</dimen>\n\t<dimen name=\"ex_xs_spacing\">6dp</dimen>\n\t<dimen name=\"product_vertical_spacing\">5dp</dimen>\n\t<dimen name=\"product_horizontal_spacing\">1dp</dimen>\n\t<dimen name=\"size_chip_image_small\">10dp</dimen>\n\t<dimen name=\"textsize_flag_large\">13sp</dimen>\n\t<dimen name=\"textsize_badge_ranking\">20sp</dimen>\n\t<dimen name=\"ranking_index_size\">30dp</dimen>\n\t<dimen name=\"size_chip_image_for_three_columns\">11dp</dimen>\n\t<dimen name=\"textsize_title_standard\">14sp</dimen>\n\t<dimen name=\"ranking_index_text_size\">22sp</dimen>\n\t<dimen name=\"ranking_item_margin\">6dp</dimen>\n\t<dimen name=\"textsize_label_large\">16sp</dimen>\n\t<dimen name=\"size_assistant_height\">32dp</dimen>\n\t<dimen name=\"textsize_caption_standard\">13sp</dimen>\n\t<dimen name=\"textsize_caption_small\">12sp</dimen>\n\t<dimen name=\"spacing_16\">16dp</dimen>\n\t<dimen name=\"textsize_flag_standard\">11sp</dimen>\n\t<dimen name=\"textsize_toolbar_title\">16sp</dimen>\n\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/dimens.xml b/app/src/main/res/values/dimens.xml
+--- a/app/src/main/res/values/dimens.xml	(revision 6dee3c1ce9eb60f9fcdf063ca9127676b4d0121e)
++++ b/app/src/main/res/values/dimens.xml	(date 1702454856660)
+@@ -46,5 +46,12 @@
+ 	<dimen name="spacing_16">16dp</dimen>
+ 	<dimen name="textsize_flag_standard">11sp</dimen>
+ 	<dimen name="textsize_toolbar_title">16sp</dimen>
++	<dimen name="product_image_size">400dp</dimen>
++	<dimen name="product_image_indicator_bottom_margin">3dp</dimen>
++	<dimen name="product_image_indicator_height">20dp</dimen>
++	<dimen name="product_image_indicator_text_padding">2dp</dimen>
++	<dimen name="product_image_indicator_text_size">10sp</dimen>
++	<dimen name="product_image_indicator_vertical_bar_margin">3dp</dimen>
++	<dimen name="product_image_indicator_vertical_bar_width">0.7dp</dimen>
+ 
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group25.ecommercefashionapp;\n\nimport android.content.Intent;\nimport android.graphics.Paint;\nimport android.os.Bundle;\nimport android.view.View;\nimport android.widget.ImageView;\nimport android.widget.RatingBar;\nimport android.widget.TextView;\n\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.appcompat.view.menu.ActionMenuItemView;\nimport androidx.core.text.HtmlCompat;\nimport androidx.recyclerview.widget.GridLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\n\nimport com.google.android.material.appbar.MaterialToolbar;\nimport com.group25.ecommercefashionapp.adapter.ProductColorAdapter;\nimport com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;\nimport com.group25.ecommercefashionapp.data.Item;\nimport com.group25.ecommercefashionapp.data.Product;\nimport com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;\nimport com.group25.ecommercefashionapp.repository.ProductRepository;\n\nimport java.text.DecimalFormat;\nimport java.text.DecimalFormatSymbols;\n\n\npublic class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{\n    MaterialToolbar toolbar;\n    MainActivity mainActivity;\n    TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;\n    private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();\n    RatingBar ratingBar;\n    ActionMenuItemView cart;\n    RecyclerView colorRecyclerView, sizeRecyclerView;\n\n    ImageView productImage;\n    private DecimalFormat VNDFormat;\n    ActionMenuItemView share;\n\n\n    ProductRepository productRepository;\n    Product product;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_view_product);\n        symbols.setGroupingSeparator('.');\n        VNDFormat = new DecimalFormat(\"###,###,###,###\", symbols);\n\n        productRepository = MyApp.getMainActivityInstance().productRepository;\n        Bundle bundle = getIntent().getExtras();\n        int id = bundle.getInt(\"id\");\n        product = productRepository.getProductById(id);\n\n        mainActivity = MyApp.getMainActivityInstance();\n\n        initializeViews();\n\n        txtName.setText(product.getName());\n        txtHighlight.setText(product.getDescription());\n        txtActualPrice.setText(getString(R.string.product_price, VNDFormat.format(product.getPrice())));\n        txtActualPrice.setPaintFlags(txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);\n        txtDiscountPrice.setText(getString(R.string.product_price, VNDFormat.format(product.getPrice() * 0.9f)));\n        txtId.setText(getString(R.string.product_id, String.valueOf(bundle.getInt(\"id\"))));\n        float rating = 3.8f;\n        ratingBar.setRating(rating);\n        txtRating.setText(String.valueOf(rating));\n        txtReview.setText(HtmlCompat.fromHtml(\"<font color=\\\"blue\\\"><u>(See 5 reviews)</u></font>\", HtmlCompat.FROM_HTML_MODE_LEGACY));\n        productImage.setImageResource(product.getImage());\n        share.setOnClickListener(v -> shareContent());\n\n        // Set up Color recycler view\n        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);\n        colorRecyclerView.setLayoutManager(colorGridLayoutManager);\n        ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);\n        colorRecyclerView.setAdapter(colorAdapter);\n\n\n        // Set up Size recycler view\n        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);\n        sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);\n        ProductSizeAdapter sizeAdapter = new ProductSizeAdapter(product.getSizeList(), this, sizeRecyclerView);\n        sizeRecyclerView.setAdapter(sizeAdapter);\n\n        toolbar.setNavigationOnClickListener(v -> {\n            mainActivity.navController.popBackStack();\n            onBackPressed();\n\n        });\n    }\n\n    private void shareContent() {\n        // Create an Intent to share content\n        Intent shareIntent = new Intent(Intent.ACTION_SEND);\n        shareIntent.setType(\"text/plain\");\n        String shareBody = product.getName() + \"\\n\" + getString(R.string.product_price, VNDFormat.format(product.getPrice() * 0.9f));\n        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);\n\n        // Start the activity for sharing\n        startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));\n    }\n\n    @Override\n    public void onItemClick(View view, Item item) {\n        if (view.getId() == R.id.chip_image_card) {\n            selectedColorTextView.setText( item.getName());\n        } else if (view.getId() == R.id.chip_size_card) {\n            selectedSizeTextView.setText(item.getName());\n        }\n    }\n\n    private void initializeViews() {\n        txtName = findViewById(R.id.productNameTextView);\n        txtHighlight = findViewById(R.id.productHighlightsTextView);\n        txtActualPrice = findViewById(R.id.productActualPriceTextView);\n        txtDiscountPrice = findViewById(R.id.productDiscountPriceTextView);\n        txtRating = findViewById(R.id.ratingTextView);\n        txtReview = findViewById(R.id.seeReviewsTextView);\n        ratingBar = findViewById(R.id.ratingBar);\n        txtId = findViewById(R.id.productIDTextView);\n        productImage = findViewById(R.id.productImageView);\n        toolbar = findViewById(R.id.topAppBar);\n        share = toolbar.findViewById(R.id.share);\n        cart = toolbar.findViewById(R.id.cart);\n        selectedColorTextView = findViewById(R.id.selectColorText);\n        colorRecyclerView = findViewById(R.id.colorRecycler);\n        selectedSizeTextView = findViewById(R.id.selectSizeText);\n        sizeRecyclerView = findViewById(R.id.sizeRecycler);\n        toolbar = findViewById(R.id.topAppBar);\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java
+--- a/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java	(revision 6dee3c1ce9eb60f9fcdf063ca9127676b4d0121e)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java	(date 1702455313488)
+@@ -13,9 +13,11 @@
+ import androidx.core.text.HtmlCompat;
+ import androidx.recyclerview.widget.GridLayoutManager;
+ import androidx.recyclerview.widget.RecyclerView;
++import androidx.viewpager.widget.ViewPager;
+ 
+ import com.google.android.material.appbar.MaterialToolbar;
+ import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
++import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
+ import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
+ import com.group25.ecommercefashionapp.data.Item;
+ import com.group25.ecommercefashionapp.data.Product;
+@@ -24,6 +26,8 @@
+ 
+ import java.text.DecimalFormat;
+ import java.text.DecimalFormatSymbols;
++import java.util.ArrayList;
++import java.util.List;
+ 
+ 
+ public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{
+@@ -35,7 +39,7 @@
+     ActionMenuItemView cart;
+     RecyclerView colorRecyclerView, sizeRecyclerView;
+ 
+-    ImageView productImage;
++    ViewPager productCarousel;
+     private DecimalFormat VNDFormat;
+     ActionMenuItemView share;
+ 
+@@ -69,7 +73,14 @@
+         ratingBar.setRating(rating);
+         txtRating.setText(String.valueOf(rating));
+         txtReview.setText(HtmlCompat.fromHtml("<font color=\"blue\"><u>(See 5 reviews)</u></font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
+-        productImage.setImageResource(product.getImage());
++        List<Integer> imageList = new ArrayList<>();
++        imageList.add(product.getImage());
++        imageList.add(product.getImage());
++        imageList.add(product.getImage());
++        imageList.add(product.getImage());
++
++        ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, imageList, this);
++        productCarousel.setAdapter(productImageCarouselAdapter);
+         share.setOnClickListener(v -> shareContent());
+ 
+         // Set up Color recycler view
+@@ -121,7 +132,7 @@
+         txtReview = findViewById(R.id.seeReviewsTextView);
+         ratingBar = findViewById(R.id.ratingBar);
+         txtId = findViewById(R.id.productIDTextView);
+-        productImage = findViewById(R.id.productImageView);
++        productCarousel = findViewById(R.id.carousel);
+         toolbar = findViewById(R.id.topAppBar);
+         share = toolbar.findViewById(R.id.share);
+         cart = toolbar.findViewById(R.id.cart);
+Index: app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java b/app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java
+new file mode 100644
+--- /dev/null	(date 1702403945536)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/ui/behavior/BottomNavigationBehavior.java	(date 1702403945536)
+@@ -0,0 +1,51 @@
++package com.group25.ecommercefashionapp.ui.behavior;
++
++import android.content.Context;
++
++import android.util.AttributeSet;
++import android.view.View;
++import android.widget.FrameLayout;
++
++import androidx.annotation.NonNull;
++import androidx.coordinatorlayout.widget.CoordinatorLayout;
++import androidx.core.view.ViewCompat;
++
++import com.google.android.material.bottomnavigation.BottomNavigationView;
++
++public class BottomNavigationBehavior extends CoordinatorLayout.Behavior<BottomNavigationView> {
++
++    public BottomNavigationBehavior() {
++        super();
++    }
++
++    public BottomNavigationBehavior(Context context, AttributeSet attrs) {
++        super(context, attrs);
++    }
++
++    @Override
++    public boolean layoutDependsOn(@NonNull CoordinatorLayout parent, @NonNull BottomNavigationView child, @NonNull View dependency) {
++        return dependency instanceof FrameLayout;
++    }
++
++    @Override
++    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View directTargetChild, @NonNull View target, int nestedScrollAxes) {
++        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
++    }
++
++    @Override
++    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child, @NonNull View target, int dx, int dy, @NonNull int[] consumed) {
++        if (dy < 0) {
++            showBottomNavigationView(child);
++        } else if (dy > 0) {
++            hideBottomNavigationView(child);
++        }
++    }
++
++    private void hideBottomNavigationView(BottomNavigationView view) {
++        view.animate().translationY(view.getHeight());
++    }
++
++    private void showBottomNavigationView(BottomNavigationView view) {
++        view.animate().translationY(0);
++    }
++}
+Index: app/src/main/res/layout/product_carousel_item.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/product_carousel_item.xml b/app/src/main/res/layout/product_carousel_item.xml
+new file mode 100644
+--- /dev/null	(date 1702454925667)
++++ b/app/src/main/res/layout/product_carousel_item.xml	(date 1702454925667)
+@@ -0,0 +1,62 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++	xmlns:app="http://schemas.android.com/apk/res-auto"
++	android:id="@+id/carousel_item_container"
++	android:layout_width="match_parent"
++	android:layout_height="wrap_content"
++	android:foreground="?attr/selectableItemBackground"
++	android:orientation="vertical"
++	app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
++	
++	<com.google.android.material.imageview.ShapeableImageView
++		android:id="@+id/carousel_image_view"
++		android:layout_width="match_parent"
++		android:layout_height="@dimen/product_image_size"
++		android:scaleType="centerCrop"
++		app:layout_constraintEnd_toEndOf="parent"
++		app:layout_constraintStart_toStartOf="parent"
++		app:layout_constraintTop_toTopOf="parent"
++		app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
++	
++	<LinearLayout
++		android:layout_width="wrap_content"
++		android:layout_height="@dimen/product_image_indicator_height"
++		android:layout_margin="@dimen/product_image_indicator_bottom_margin"
++		android:background="@color/carousel_indicator_selected"
++		android:gravity="center"
++		android:orientation="horizontal"
++		app:layout_constraintBottom_toBottomOf="parent"
++		app:layout_constraintEnd_toEndOf="parent"
++		app:layout_constraintStart_toStartOf="parent">
++		
++		<TextView
++			android:id="@+id/current_image_indicator_text_view"
++			android:layout_width="wrap_content"
++			android:layout_height="wrap_content"
++			android:layout_gravity="center"
++			android:paddingStart="@dimen/product_image_indicator_text_padding"
++			android:paddingEnd="@dimen/product_image_indicator_text_padding"
++			android:textColor="@color/primary_white"
++			android:textSize="@dimen/product_image_indicator_text_size" />
++		
++		<View
++			android:id="@+id/vertical_bar"
++			android:layout_width="@dimen/product_image_indicator_vertical_bar_width"
++			android:layout_height="match_parent"
++			android:layout_gravity="center"
++			android:layout_marginTop="@dimen/product_image_indicator_vertical_bar_margin"
++			android:layout_marginBottom="@dimen/product_image_indicator_vertical_bar_margin"
++			android:background="@color/primary_white" />
++		
++		<TextView
++			android:id="@+id/image_size_indicator_text_view"
++			android:layout_width="wrap_content"
++			android:layout_height="wrap_content"
++			android:layout_gravity="center"
++			android:paddingStart="@dimen/product_image_indicator_text_padding"
++			android:paddingEnd="@dimen/product_image_indicator_text_padding"
++			android:textColor="@color/primary_white"
++			android:textSize="@dimen/product_image_indicator_text_size" />
++	</LinearLayout>
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+Index: app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductImageCarouselAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductImageCarouselAdapter.java b/app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductImageCarouselAdapter.java
+new file mode 100644
+--- /dev/null	(date 1702454925677)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/adapter/ProductImageCarouselAdapter.java	(date 1702454925677)
+@@ -0,0 +1,65 @@
++package com.group25.ecommercefashionapp.adapter;
++
++import android.content.Context;
++import android.view.ViewGroup;
++
++import androidx.annotation.NonNull;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.widget.ImageView;
++import android.widget.TextView;
++import androidx.viewpager.widget.PagerAdapter;
++
++import com.group25.ecommercefashionapp.OnItemClickListener;
++import com.group25.ecommercefashionapp.R;
++
++import java.util.List;
++
++public class ProductImageCarouselAdapter extends PagerAdapter {
++
++    private final Context context;
++    private final List<Integer> imageList;
++    OnItemClickListener clickListener;
++
++    public ProductImageCarouselAdapter(Context context, List<Integer> imageList, OnItemClickListener clickListener) {
++        this.context = context;
++        this.imageList = imageList;
++        this.clickListener = clickListener;
++    }
++
++    @NonNull
++    @Override
++    public Object instantiateItem(@NonNull ViewGroup container, int position) {
++        LayoutInflater inflater = LayoutInflater.from(context);
++        View itemView = inflater.inflate(R.layout.product_carousel_item, container, false);
++
++        // Customize the item view based on your requirements
++        // For example, you can set text or images here
++        ImageView image = itemView.findViewById(R.id.carousel_image_view);
++        TextView currentImageTextView = itemView.findViewById(R.id.current_image_indicator_text_view);
++        TextView totalImageTextView = itemView.findViewById(R.id.image_size_indicator_text_view);
++
++        currentImageTextView.setText(String.format("%d", position + 1));
++        totalImageTextView.setText(String.format("%d", imageList.size()));
++        image.setImageResource(imageList.get(position));
++
++        container.addView(itemView);
++        return itemView;
++    }
++
++    @Override
++    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
++        container.removeView((View) object);
++    }
++
++    @Override
++    public int getCount() {
++        return imageList.size();
++    }
++
++    @Override
++    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
++        return view == object;
++    }
++}
+Index: app/src/main/res/anim/move_up.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/anim/move_up.xml b/app/src/main/res/anim/move_up.xml
+new file mode 100644
+--- /dev/null	(date 1702406539713)
++++ b/app/src/main/res/anim/move_up.xml	(date 1702406539713)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="utf-8"?>
++<set xmlns:android="http://schemas.android.com/apk/res/android">
++
++	<translate
++		android:duration="200"
++		android:fromYDelta="100%"
++		android:toYDelta="0%" />
++</set>
+\ No newline at end of file
