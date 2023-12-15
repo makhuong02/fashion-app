@@ -18,6 +18,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.MyApp;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.ViewProductImages;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
