@@ -73,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
                     UserStatus._isLoggedIn = true;
                     UserStatus.currentUser = result.data.user;
                     UserStatus.access_token = result.data.access_token;
-
-                    sharedPreferences.updateUserLoginStatus();
-                    sharedPreferences.putUserLoginInfo(loginInfo);
                 }
             }
 
