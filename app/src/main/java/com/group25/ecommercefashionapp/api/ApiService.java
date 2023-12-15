@@ -13,8 +13,10 @@ import retrofit2.http.POST;
 
 public interface ApiService {
     // Link API: http://localhost:8080/api/v1/
+    String LOCALHOST = "192.168.1.189";
+    String PORT = "8080";
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.189:8080/api/v1/")
+            .baseUrl("http://" + LOCALHOST + ":" + PORT + "/api/v1/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService.class);
