@@ -54,7 +54,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
 
         // Set click listener on the card
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(v, item));
-        for(Product product : getMainActivityInstance().user.getFavoriteList()) {
+        for(Product product : getMainActivityInstance().userInteraction.getFavoriteList()) {
             if(product.getId() == item.getId()) {
                 holder.favoriteCheckBox.setChecked(true);
                 break;
@@ -62,9 +62,9 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         }
         holder.favoriteCheckBox.setOnClickListener(v -> {
             if (holder.favoriteCheckBox.isChecked()) {
-                getMainActivityInstance().user.addFavorite(item);
+                getMainActivityInstance().userInteraction.addFavorite(item);
             } else {
-                getMainActivityInstance().user.removeFavorite(item);
+                getMainActivityInstance().userInteraction.removeFavorite(item);
             }
         });
         holder.chipImagesView.setChipImages(item.getColors());

@@ -3,6 +3,7 @@ package com.group25.ecommercefashionapp.ui.fragment.membership;
 import static com.group25.ecommercefashionapp.data.ActionItem.getActionItems;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -16,11 +17,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
-import com.group25.ecommercefashionapp.MainActivity;
+import com.group25.ecommercefashionapp.ui.Activity.LoginActivity;
+import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ActionItem;
 import com.group25.ecommercefashionapp.data.Item;
+import com.group25.ecommercefashionapp.status.UserStatus;
 
 import java.util.List;
 
@@ -59,7 +62,19 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
         bottomNavigationView = mainActivity.findViewById(R.id.bottomNavigation);
         bottomNavigationView.setVisibility(View.VISIBLE);
 
-        profileCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings));
+        // profileCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings));
+        profileCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserStatus._isLoggedIn){
+                    mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings);
+                }
+                else {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         settingsCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.settings));
 

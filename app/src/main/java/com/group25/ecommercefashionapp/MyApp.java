@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.group25.ecommercefashionapp.repository.OrdersRepository;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
 
 public class MyApp extends Application {
     private static MainActivity mainActivityInstance;

@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.MainActivity;
+import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
 import com.group25.ecommercefashionapp.OnListItemClick;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CustomCategoryItemAdapter;
