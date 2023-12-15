@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
-import com.group25.ecommercefashionapp.ui.Activity.LoginActivity;
-import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
+import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
+import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ActionItem;

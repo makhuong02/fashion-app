@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.group25.ecommercefashionapp.status.UserStatus;
-import com.group25.ecommercefashionapp.ui.Activity.LoginActivity;
+import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 
 public class MySharedPreferences {
     private static final String MY_SHARED_PREFERENCES = "MY_SHARED_PREFERENCES";

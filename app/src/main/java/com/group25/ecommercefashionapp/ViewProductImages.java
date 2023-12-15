@@ -9,7 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.adapter.ProductViewImageCarouselAdapter;
 import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
+import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
 public class ViewProductImages extends AppCompatActivity {
     ViewPager productCarousel;

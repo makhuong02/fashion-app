@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.ui.Activity;
+package com.group25.ecommercefashionapp.ui.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 

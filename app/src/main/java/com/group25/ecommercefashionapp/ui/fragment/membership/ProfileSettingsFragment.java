@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.status.UserStatus;
-import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
+import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.R;
 
 public class ProfileSettingsFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp.ui.Activity;
+package com.group25.ecommercefashionapp.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -27,7 +27,6 @@ import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
-import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;

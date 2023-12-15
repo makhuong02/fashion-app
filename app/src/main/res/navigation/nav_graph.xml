@@ -90,7 +90,7 @@
 	</fragment>
 	<activity
 		android:id="@+id/viewProduct"
-		android:name="com.group25.ecommercefashionapp.ui.Activity.ViewProductActivity"
+		android:name="com.group25.ecommercefashionapp.ui.activity.ViewProductActivity"
 		android:label="View Product Activity"
 		tools:layout="@layout/activity_view_product" />
 

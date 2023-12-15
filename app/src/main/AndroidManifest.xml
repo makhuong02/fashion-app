@@ -18,16 +18,16 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".ui.Activity.SignupActivity"
+            android:name=".ui.activity.SignupActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"/>
 
         <activity
-            android:name=".ui.Activity.LoginActivity"
+            android:name=".ui.activity.LoginActivity"
             android:exported="false"></activity>
 
         <activity
-            android:name=".ui.Activity.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +37,7 @@
         </activity>
 
         <activity
-            android:name=".ui.Activity.ViewProductActivity"
+            android:name=".ui.activity.ViewProductActivity"
             android:exported="false" />
 
         <meta-data
