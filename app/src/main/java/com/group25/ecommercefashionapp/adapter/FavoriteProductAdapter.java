@@ -62,9 +62,9 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         holder.productLayout.setOnClickListener(v -> clickListener.onItemClick(v, item));
         holder.favoriteButton.setOnClickListener(v -> {
             if (holder.favoriteButton.isChecked()) {
-                getMainActivityInstance().user.addFavorite(item);
+                getMainActivityInstance().userInteraction.addFavorite(item);
             } else {
-                getMainActivityInstance().user.removeFavorite(item);
+                getMainActivityInstance().userInteraction.removeFavorite(item);
             }
         });
     }

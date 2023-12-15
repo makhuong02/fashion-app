@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.ui.Activity;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -15,17 +15,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.group25.ecommercefashionapp.MyApp;
+import com.group25.ecommercefashionapp.OnItemClickListener;
+import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.ui.Activity.MainActivity;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 
-public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{
+public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener {
     MaterialToolbar toolbar;
     MainActivity mainActivity;
     TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;
