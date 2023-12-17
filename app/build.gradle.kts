@@ -36,6 +36,7 @@ android {
 }
 
 dependencies {
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.databinding:databinding-runtime:8.1.4")
     implementation("androidx.appcompat:appcompat:1.6.1")

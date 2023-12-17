@@ -3,7 +3,6 @@ package com.group25.ecommercefashionapp.ui.fragment.membership;
 import static com.group25.ecommercefashionapp.data.ActionItem.getActionItems;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -17,7 +16,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
-import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
@@ -70,8 +68,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
                     mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings);
                 }
                 else {
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    startActivity(intent);
+                    mainActivity.navController.navigate(R.id.loginActivity);
                 }
             }
         });

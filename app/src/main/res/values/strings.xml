@@ -94,4 +94,10 @@
     <string name="text_productid">Product ID</string>
     <string name="text_no_favorite">There are 0 items in favorite.</string>
     <string name="text_favorite_instruction">Press the heart mark to add items on your wish list.</string>
+	<string name="sign_up">Sign Up</string>
+    <string name="username">Username</string>
+	<string name="password">Password</string>
+	<string name="forgot_pass">Forgot Password?</string>
+    <string name="create_account">Create An Account</string>
+    <string name="email">Email</string>
 </resources>
