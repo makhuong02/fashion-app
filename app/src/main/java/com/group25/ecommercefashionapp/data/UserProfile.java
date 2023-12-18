@@ -7,16 +7,12 @@ public class UserProfile {
     @SerializedName("Email") private String email;
     @SerializedName("Username") private String username;
     private String password;
-    @SerializedName("FirstName") private  String firstName;
-    @SerializedName("LastName") private  String lastName;
     @SerializedName("Phone") private String phoneNumber;
 
-    public UserProfile(String email, String username, String password, String firstName, String lastName, String phoneNumber) {
+    public UserProfile(String email, String username, String password, String phoneNumber) {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.phoneNumber = phoneNumber;
     }
 

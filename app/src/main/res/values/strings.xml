@@ -100,4 +100,6 @@
 	<string name="forgot_pass">Forgot Password?</string>
     <string name="create_account">Create An Account</string>
     <string name="email">Email</string>
+	<string name="confirm_password">Confirm Password</string>
+	<string name="phone_number">Phone Number</string>
 </resources>
