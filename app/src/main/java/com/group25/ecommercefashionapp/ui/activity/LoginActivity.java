@@ -1,9 +1,11 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+import static com.group25.ecommercefashionapp.utilities.InputValidator.isValidEmail;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,8 +59,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        emailEditLayout= findViewById(R.id.usernameInputLayout);
-        emailEditText = findViewById(R.id.usernameEditText);
+        emailEditLayout= findViewById(R.id.emailInputLayout);
+        emailEditText = findViewById(R.id.emailEditText);
         passwordEditLayout = findViewById(R.id.passwordInputLayout);
         passwordEditText = findViewById(R.id.passwordEditText);
         loadingGif = findViewById(R.id.gifButton);
@@ -66,11 +68,16 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         view = findViewById(R.id.arrow_left_container);
 
-
+        signup.setPaintFlags(signup.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         emailEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
         emailEditText.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         emailEditText.setOnEditorActionListener((v, actionId, event) -> {
-            passwordEditText.requestFocus();
+            if (isValidEmail(emailEditText.getText().toString())) {
+                passwordEditText.requestFocus();
+            }
+            else{
+                emailEditLayout.setHelperText("invalid email*");
+            }
             return false;
         });
         passwordEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -81,22 +88,30 @@ public class LoginActivity extends AppCompatActivity {
         emailEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                emailEditLayout.setHelperText("");
-                passwordEditLayout.setHelperText("");
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                emailEditLayout.setHelperText("");
-                passwordEditLayout.setHelperText("");
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 emailEditLayout.setHelperText("");
-                passwordEditLayout.setHelperText("");
 
+            }
+        });
+        passwordEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                passwordEditLayout.setHelperText("");
             }
         });
 
@@ -113,7 +128,6 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-
                 checkValidEmail(email, password);
             }
         });
@@ -123,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                getMainActivityInstance().navController.navigate(R.id.signupActivity);
             }
         });
     }
@@ -131,8 +146,8 @@ public class LoginActivity extends AppCompatActivity {
         if(email.isEmpty()){
             emailEditLayout.setHelperText("required*");
         }
-        if(emailEditText.getText().toString().contains("@") && emailEditText.getText().toString().contains(".")){
-            emailEditLayout.setHelperText("");
+        else if (!isValidEmail(email)) {
+            emailEditLayout.setHelperText("invalid email*");
         }
         else {
             emailEditLayout.setHelperText("invalid email*");
@@ -183,14 +198,12 @@ public class LoginActivity extends AppCompatActivity {
                         emailEditText.setEnabled(true);
                         passwordEditText.setEnabled(true);
                     }
-                }, 0); // Minimum display time: 2 seconds
+                }, 0);
             } else {
                 // The background task is still running, progressDialog will be dismissed in onPreExecute
                 // You may want to handle this case based on your specific requirements
             }
         }
-
-
     }
 
     private void login(LoginInfo loginInfo) {
@@ -233,8 +246,8 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<LoginStatus> call, Throwable t) {
-                new BackgroundTask().execute();
                 Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                new BackgroundTask().execute();
             }
         });
     }

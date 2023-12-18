@@ -48,7 +48,7 @@
         android:layout_marginEnd="20dp"
         android:text="Welcome!"
         android:textAppearance="@style/Login"
-        android:textSize="25sp"
+        android:textSize="30sp"
         app:layout_constraintLeft_toLeftOf="parent"
         
         app:layout_constraintTop_toBottomOf="@id/iconImageView" />
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/login_text" />
     
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/usernameInputLayout"
+        android:id="@+id/emailInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -82,7 +82,7 @@
         app:startIconDrawable="@drawable/baseline_person_24">
         
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/usernameEditText"
+            android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -100,7 +100,7 @@
         style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/usernameInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
         app:startIconDrawable="@drawable/baseline_lock_24">
         
         <com.google.android.material.textfield.TextInputEditText

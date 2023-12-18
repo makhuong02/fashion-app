@@ -19,12 +19,13 @@
         
         <activity
             android:name=".ui.activity.SignupActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:exported="false" />
         
         <activity
             android:name=".ui.activity.LoginActivity"
-            android:exported="false"></activity>
+            android:exported="false">
+            
+        </activity>
         
         <activity
             android:name=".ui.activity.MainActivity"
