@@ -1,19 +1,23 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
-
-import androidx.appcompat.app.AppCompatActivity;
+import static com.group25.ecommercefashionapp.utilities.InputValidator.isValidEmail;
+import static com.group25.ecommercefashionapp.utilities.InputValidator.isValidPassword;
+import static com.group25.ecommercefashionapp.utilities.InputValidator.isValidPhoneNumber;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -22,6 +26,7 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.RegisterStatus;
+import com.group25.ecommercefashionapp.utilities.PhoneNumberFormatter;
 
 import java.io.IOException;
 import java.util.Map;
@@ -47,11 +52,14 @@ public class SignupActivity extends AppCompatActivity {
         initializeView();
 
         login.setPaintFlags(login.getPaintFlags() |   android.graphics.Paint.UNDERLINE_TEXT_FLAG);
+        usernameET.setOnFocusChangeListener((v, hasFocus) -> {
+            usernameEditLayout.setCounterEnabled(hasFocus);
+        });
         addTextChanged(usernameET, usernameEditLayout);
         addTextChanged(emailET, emailEditLayout);
         addTextChanged(passwordET, passwordEditLayout);
         addTextChanged(confirmPasswordET, confirmPasswordEditLayout);
-        addTextChanged(phoneNumberET, phoneNumberEditLayout);
+        phoneNumberET.addTextChangedListener(new PhoneNumberFormatter(phoneNumberEditLayout));
 
         usernameET.setImeOptions(EditorInfo.IME_ACTION_NEXT);
         usernameET.setOnEditorActionListener((v, actionId, event) -> {
@@ -65,6 +73,9 @@ public class SignupActivity extends AppCompatActivity {
             if (emailET.getText().toString().isEmpty()) {
                 emailEditLayout.setHelperText("required*");
             }
+            else if(isValidEmail(emailET.getText().toString())){
+                emailEditLayout.setHelperText("");
+            }
             else {
                 emailEditLayout.setHelperText("invalid email*");
             }
@@ -75,6 +86,9 @@ public class SignupActivity extends AppCompatActivity {
             if (phoneNumberET.getText().toString().isEmpty()) {
                 phoneNumberEditLayout.setHelperText("required*");
             }
+            else if(isValidPhoneNumber(phoneNumberET.getText().toString())){
+                phoneNumberEditLayout.setHelperText("");
+            }
             else {
                 phoneNumberEditLayout.setHelperText("invalid phone number*");
             }
@@ -84,6 +98,9 @@ public class SignupActivity extends AppCompatActivity {
         passwordET.setOnEditorActionListener((v, actionId, event) -> {
             if (passwordET.getText().toString().isEmpty()) {
                 passwordEditLayout.setHelperText("required*");
+            }
+            else if(isValidPassword(passwordET.getText().toString())){
+                passwordEditLayout.setHelperText("");
             }
             else {
                 passwordEditLayout.setHelperText("at least 8 characters, 1 uppercase*");
@@ -167,10 +184,7 @@ public class SignupActivity extends AppCompatActivity {
             emailET.requestFocus();
             return false;
         }
-        if(emailET.getText().toString().contains("@") && emailET.getText().toString().contains(".")){
-            emailEditLayout.setHelperText("");
-        }
-        else {
+        else if(!isValidEmail(emailET.getText().toString())){
             emailEditLayout.setHelperText("invalid email*");
             emailET.requestFocus();
             return false;
@@ -195,6 +209,16 @@ public class SignupActivity extends AppCompatActivity {
             passwordEditLayout.setHelperText("password not match*");
             confirmPasswordEditLayout.setHelperText("password not match*");
             confirmPasswordET.requestFocus();
+            return false;
+        }
+        if(!isValidPassword(passwordET.getText().toString())){
+            passwordEditLayout.setHelperText("at least 8 characters, 1 uppercase*");
+            passwordET.requestFocus();
+            return false;
+        }
+        if(!isValidPhoneNumber(phoneNumberET.getText().toString())){
+            phoneNumberEditLayout.setHelperText("invalid phone number*");
+            phoneNumberET.requestFocus();
             return false;
         }
         return true;
@@ -299,6 +323,7 @@ public class SignupActivity extends AppCompatActivity {
                     try {
                         text = response.errorBody().string();
                         text = text.substring(0, 1).toUpperCase() + text.substring(1);
+                        Log.d("error", text);
                         Gson gson = new Gson();
                         errorMap = gson.fromJson(text, Map.class);
                     } catch (IOException e) {
