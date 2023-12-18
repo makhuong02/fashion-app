@@ -360,6 +360,10 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void switchToLoginActivity() {
+        Bundle bundle = new Bundle();
+        bundle.putString("message", "registered");
+        bundle.putString("button", "Login");
+        getMainActivityInstance().navController.navigate(R.id.successActivity, bundle);
         getMainActivityInstance().navController.popBackStack();
         onBackPressed();
     }

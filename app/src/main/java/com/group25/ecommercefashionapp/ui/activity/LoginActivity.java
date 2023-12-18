@@ -128,7 +128,10 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                checkValidEmail(email, password);
+                if(checkValidEmail(email, password)){
+                    LoginInfo loginInfo = new LoginInfo(email, password);
+                    login(loginInfo);
+                }
             }
         });
 
@@ -136,29 +139,25 @@ public class LoginActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 getMainActivityInstance().navController.navigate(R.id.signupActivity);
             }
         });
     }
 
-    private void checkValidEmail(String email, String password) {
+    private boolean checkValidEmail(String email, String password) {
         if(email.isEmpty()){
             emailEditLayout.setHelperText("required*");
+            return false;
         }
         else if (!isValidEmail(email)) {
             emailEditLayout.setHelperText("invalid email*");
-        }
-        else {
-            emailEditLayout.setHelperText("invalid email*");
+            return false;
         }
         if(password.isEmpty()){
             passwordEditLayout.setHelperText("required*");
+            return false;
         }
-        if (!email.isEmpty() && !password.isEmpty()) {
-            LoginInfo loginInfo = new LoginInfo(email, password);
-            login(loginInfo);
-        }
+        return true;
     }
 
     private class BackgroundTask extends AsyncTask<Void, Void, Void> {
@@ -253,6 +252,10 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void launchMainActivity() {
         // For example, start the MainActivity after the background processing.
+        Bundle bundle = new Bundle();
+        bundle.putString("message", "logged");
+        bundle.putString("button", "Continue");
+        getMainActivityInstance().navController.navigate(R.id.successActivity, bundle);
         getMainActivityInstance().navController.popBackStack();
         onBackPressed();
     }
