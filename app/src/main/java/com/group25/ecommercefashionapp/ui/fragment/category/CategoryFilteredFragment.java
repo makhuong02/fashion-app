@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +28,7 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
     Context context = null;
     MaterialToolbar toolbar;
 
+    ActionMenuItemView cart;
     RecyclerView productRecyclerView;
     ArrayList<Product> products;
 
@@ -38,15 +40,18 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_filtered, container, false);
 
-
-
         productRecyclerView = view.findViewById(R.id.productRecyclerView);
         toolbar = view.findViewById(R.id.topAppBar);
+        cart = view.findViewById(R.id.cart);
         String category = getArguments().getString("category");
         toolbar.setTitle(category);
 
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
+
+        cart.setOnClickListener(v -> {
+            mainActivity.navController.navigate(R.id.cartActivity);
+        });
 
         ProductRepository productRepository = mainActivity.productRepository;
         products = productRepository.getProductsByCategory(category);

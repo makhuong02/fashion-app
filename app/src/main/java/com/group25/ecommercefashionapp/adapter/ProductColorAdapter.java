@@ -45,7 +45,6 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
             uncheckAll(holder);
             holder.cardView.setChecked(true);
             holder.cardView.setStrokeWidth(4);
-
             clickListener.onItemClick(v, item);
         });
         if(position == 0) {

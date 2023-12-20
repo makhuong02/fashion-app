@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:tag="layout/fragment_cart_0">
+	
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+		android:id="@+id/coordinatorLayout"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toTopOf="@+id/footer"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/app_bar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:theme="@style/ThemeOverlay.AppCompat"
+			app:liftOnScroll="true">
+			
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				app:layout_scrollFlags="scroll|enterAlways"
+				app:navigationIcon="@drawable/round_arrow_back_24"
+				app:popupTheme="@style/ThemeOverlay.AppCompat"
+				app:title="@string/cart" />
+			
+			<View
+				android:id="@+id/toolbar_shadow"
+				android:layout_width="match_parent"
+				android:layout_height="2dp"
+				android:background="@drawable/toolbar_dropshadow" />
+			
+			<include
+				android:id="@+id/app_toolbar"
+				layout="@layout/view_progressbar" />
+		</com.google.android.material.appbar.AppBarLayout>
+		
+		<androidx.core.widget.NestedScrollView
+			android:id="@+id/cart_nested_scroll_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@color/primary_white"
+				android:elevation="4dp"
+				android:orientation="vertical">
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					style="@style/Headline3"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/m_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					android:text="Shopping cart"
+					android:textSize="20sp"
+					android:textColor="@color/primary_black"
+					/>
+				<TextView
+					android:id="@+id/item_out_of_stock_text"
+					style="@style/Caption1"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text="There ís an unavailable item in your cart. Please change your cart contents."
+					android:visibility="visible"
+					android:textColor="@color/primary_red"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/m_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					/>
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/cart_list"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/m_spacing"
+					app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+					app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+				
+				<com.google.android.material.card.MaterialCardView
+					android:id="@+id/order_summary_card_view"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/xl_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					android:clickable="true"
+					android:focusable="true"
+					android:foreground="?android:attr/selectableItemBackground"
+					app:cardBackgroundColor="@color/primary_white"
+					app:cardCornerRadius="0dp"
+					app:cardElevation="4dp"
+					app:strokeWidth="0dp">
+					
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:paddingTop="@dimen/m_spacing"
+						android:paddingBottom="@dimen/m_spacing">
+						
+						<TextView
+							android:id="@+id/order_summary"
+							style="@style/Headline3"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:text="Order Summary"
+							android:textAllCaps="true"
+							android:textColor="@color/primary_black"
+							android:textSize="18sp"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent" />
+						
+						<View
+							android:id="@+id/vertical_bar"
+							android:layout_width="0.3dp"
+							android:layout_height="0dp"
+							
+							android:layout_marginStart="@dimen/xs_spacing"
+							android:layout_marginTop="@dimen/product_image_indicator_vertical_bar_margin"
+							android:layout_marginBottom="@dimen/product_image_indicator_vertical_bar_margin"
+							android:background="@color/primary_black"
+							app:layout_constraintBottom_toBottomOf="@id/order_summary"
+							app:layout_constraintStart_toEndOf="@id/order_summary"
+							app:layout_constraintTop_toTopOf="@id/order_summary" />
+						
+						<TextView
+							android:id="@+id/item_count"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/xs_spacing"
+							android:text="2"
+							android:textAllCaps="true"
+							android:textColor="@color/primary_black"
+							app:layout_constraintBottom_toBottomOf="@id/order_summary"
+							app:layout_constraintStart_toEndOf="@id/vertical_bar"
+							app:layout_constraintTop_toTopOf="@id/order_summary" />
+						
+						<TextView
+							android:id="@+id/itemsText"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/xxs_spacing"
+							android:text="item(s)"
+							android:textAllCaps="true"
+							android:textColor="@color/primary_black"
+							app:layout_constraintBottom_toBottomOf="@id/order_summary"
+							app:layout_constraintStart_toEndOf="@id/item_count"
+							app:layout_constraintTop_toTopOf="@id/order_summary" />
+						
+						<androidx.appcompat.widget.AppCompatButton
+							android:id="@+id/order_summary_expand_button"
+							android:layout_width="24dp"
+							android:layout_height="24dp"
+							android:layout_alignParentEnd="true"
+							android:layout_centerVertical="true"
+							android:layout_marginEnd="@dimen/xs_spacing"
+							android:background="@drawable/round_expand_more_24"
+							android:backgroundTint="@color/primary_black"
+							app:layout_constraintBottom_toBottomOf="@id/order_summary"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintTop_toTopOf="@id/order_summary" />
+						
+						
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:id="@+id/order_summary_detail_layout"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:visibility="gone"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/order_summary">
+							
+							
+							<TextView
+								android:id="@+id/totalText"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/m_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								android:text="Item(s) subtotal"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintVertical_bias="0.0" />
+							
+							<TextView
+								android:id="@+id/totalPrice"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/m_spacing"
+								android:layout_marginEnd="@dimen/m_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								android:fontFamily="@font/uniqlopro_light"
+								android:text="1.568.000 VND"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								app:layout_constraintVertical_bias="0.0" />
+							
+							
+							<com.google.android.material.divider.MaterialDivider
+								android:id="@+id/item_subtotal_divider"
+								android:layout_width="match_parent"
+								android:layout_height="1dp"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:layout_marginEnd="@dimen/m_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/totalText" />
+							
+							<TextView
+								android:id="@+id/VATText"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								android:text="VAT (10%) included"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								app:layout_constraintBottom_toBottomOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+								app:layout_constraintVertical_bias="0.0" />
+							
+							<TextView
+								android:id="@+id/VATPrice"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:layout_marginEnd="@dimen/m_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								android:fontFamily="@font/uniqlopro_light"
+								android:text="156.800 VND"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								app:layout_constraintBottom_toBottomOf="parent"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+								app:layout_constraintVertical_bias="0.0" />
+							
+							
+							<com.google.android.material.divider.MaterialDivider
+								android:id="@+id/VAT_divider"
+								android:layout_width="match_parent"
+								android:layout_height="1dp"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:layout_marginEnd="@dimen/m_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/VATText" />
+							
+							<TextView
+								android:id="@+id/orderTotalText"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:layout_marginBottom="@dimen/xs_spacing"
+								android:text="Order Total"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								app:layout_constraintBottom_toBottomOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/VAT_divider"
+								app:layout_constraintVertical_bias="0.0" />
+							
+							<TextView
+								android:id="@+id/orderTotalPrice"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginEnd="@dimen/m_spacing"
+								android:text="1.568.000 VND"
+								android:textColor="@color/primary_black"
+								android:textSize="18sp"
+								app:layout_constraintBottom_toBottomOf="@id/orderTotalText"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintVertical_bias="0.0" />
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					
+					</androidx.constraintlayout.widget.ConstraintLayout>
+				
+				</com.google.android.material.card.MaterialCardView>
+				
+				<com.google.android.material.card.MaterialCardView
+					android:id="@+id/check_out_card_view"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/xl_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					android:clickable="true"
+					android:focusable="true"
+					android:foreground="?android:attr/selectableItemBackground"
+					app:cardBackgroundColor="@color/primary_white"
+					app:cardCornerRadius="0dp"
+					app:cardElevation="4dp"
+					app:strokeWidth="0dp">
+					
+					<androidx.constraintlayout.widget.ConstraintLayout
+						android:id="@+id/checkout_layout"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:paddingTop="@dimen/m_spacing"
+						android:paddingBottom="@dimen/m_spacing">
+						
+						<TextView
+							android:id="@+id/free_shipping_text"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginEnd="@dimen/m_spacing"
+							android:text="Free shipping applies for home delivery orders above 999.000 VND and all in store pick up (Click &amp; Collect) orders."
+							android:textColor="@color/primary_black"
+							android:textSize="12sp"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toTopOf="parent" />
+						
+						<androidx.appcompat.widget.AppCompatButton
+							android:id="@+id/checkout_button"
+							style="@style/H3"
+							android:layout_width="0dp"
+							android:layout_height="match_parent"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginTop="@dimen/s_spacing"
+							android:layout_marginEnd="@dimen/m_spacing"
+							android:background="@color/primary_red"
+							android:foreground="?android:attr/selectableItemBackground"
+							android:text="@string/cart_checkout_min"
+							android:textColor="@color/primary_white"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/free_shipping_text" />
+						
+						<androidx.appcompat.widget.AppCompatButton
+							android:id="@+id/continue_shopping_button"
+							style="@style/H3"
+							android:layout_width="0dp"
+							android:layout_height="match_parent"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginEnd="@dimen/m_spacing"
+							android:background="@android:color/transparent"
+							android:text="Continue Shopping"
+							android:textColor="@color/primary_black"
+							app:layout_constraintEnd_toEndOf="parent"
+							app:layout_constraintStart_toStartOf="parent"
+							app:layout_constraintTop_toBottomOf="@id/checkout_button" />
+					
+					</androidx.constraintlayout.widget.ConstraintLayout>
+				
+				</com.google.android.material.card.MaterialCardView>
+				
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="20dp">
+				
+				</View>
+			</LinearLayout>
+		</androidx.core.widget.NestedScrollView>
+	
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+	
+	<LinearLayout
+		android:id="@+id/footer"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:background="@color/primary_white"
+		android:elevation="8dp"
+		android:orientation="horizontal"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent">
+		
+		<LinearLayout
+			android:id="@+id/price"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:gravity="start|center_vertical"
+			android:orientation="horizontal">
+			
+			<TextView
+				style="@style/H3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:layout_marginTop="1dp"
+				android:text="@string/cart_total"
+				android:textSize="16sp" />
+			
+			<TextView
+				style="@style/H3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="8dp"
+				android:text="1.568.000 VND"
+				android:textColor="@color/primary_black"
+				android:textSize="18sp" />
+		
+		</LinearLayout>
+		
+		<androidx.appcompat.widget.AppCompatButton
+			android:id="@+id/footer_checkout_button"
+			style="@style/H3"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:background="@color/primary_red"
+			android:foreground="?android:attr/selectableItemBackground"
+			android:text="@string/cart_checkout_min"
+			android:textColor="@color/primary_white" />
+	
+	</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

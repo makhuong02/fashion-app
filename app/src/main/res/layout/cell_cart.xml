@@ -218,7 +218,7 @@
 		<Spinner
 			android:id="@+id/spinner"
 			android:layout_width="0dp"
-			android:layout_height="wrap_content"
+			android:layout_height="50dp"
 			style="@style/Widget.AppCompat.Spinner.Underlined"
 			android:layout_marginStart="@dimen/m_spacing"
 			android:layout_marginTop="@dimen/xs_spacing"

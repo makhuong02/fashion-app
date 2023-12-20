@@ -340,6 +340,7 @@
 				android:padding="8dp">
 				
 				<Button
+					android:id="@+id/addToCartButton"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:backgroundTint="@android:color/holo_red_dark"
