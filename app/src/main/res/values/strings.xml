@@ -112,4 +112,6 @@
     <string name="decoy_price">784.000 VND</string>
     <string name="decoy_product_name">A shirt</string>
     <string name="cart_total">Total</string>
+	<string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
 </resources>

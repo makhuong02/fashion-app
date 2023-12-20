@@ -1,11 +1,15 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +57,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     private static final int VIEW_PRODUCT_IMAGES_REQUEST_CODE = 1;
     ProductRepository productRepository;
     Product product;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,19 +92,27 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         share.setOnClickListener(v -> shareContent());
 
         // Set up Color recycler view
-        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
+        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.VERTICAL, false);
         colorRecyclerView.setLayoutManager(colorGridLayoutManager);
         ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);
         colorRecyclerView.setAdapter(colorAdapter);
 
         // Set up Size recycler view
-        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
+        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.VERTICAL, false);
         sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);
         ProductSizeAdapter sizeAdapter = new ProductSizeAdapter(product.getSizeList(), this, sizeRecyclerView);
         sizeRecyclerView.setAdapter(sizeAdapter);
 
+        ArrayAdapter<CharSequence> spinnerEntries = new ArrayAdapter<>(getMainActivityInstance(), android.R.layout.simple_spinner_item);
+        spinnerEntries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for (int i = 1; i <= product.getAvailableQuantity() && i <= 5; i++) {
+            spinnerEntries.add(String.valueOf(i));
+        }
+        spinner.setAdapter(spinnerEntries);
+
         addToCartButton.setOnClickListener(v -> {
-            CartItem cartItem = new CartItem(id, 1, selectedColor, selectedSize);
+            int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
+            CartItem cartItem = new CartItem(id, quantity, selectedColor, selectedSize);
             mainActivity.userInteraction.addCart(cartItem);
         });
 
@@ -175,5 +188,6 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         sizeRecyclerView = findViewById(R.id.sizeRecycler);
         toolbar = findViewById(R.id.topAppBar);
         addToCartButton = findViewById(R.id.addToCartButton);
+        spinner = findViewById(R.id.productQuantitySpinner);
     }
 }

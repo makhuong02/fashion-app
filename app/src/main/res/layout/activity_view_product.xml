@@ -23,8 +23,12 @@
 			app:menu="@menu/view_product_menu"
 			app:navigationIcon="@drawable/round_arrow_back_24"
 			android:elevation="2dp"
-			
 			app:title="" />
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="3dp"
+			android:background="@drawable/toolbar_dropshadow"
+			/>
 	
 	</com.google.android.material.appbar.AppBarLayout>
 	
@@ -58,7 +62,8 @@
 					android:layout_height="wrap_content"
 					android:paddingTop="8dp"
 					android:paddingBottom="8dp"
-					android:fontFamily="@font/uniqlopro_light"
+					android:textColor="@color/primary_black"
+					android:fontFamily="@font/uniqlopro_bold"
 					android:text="Beige Shirt"
 					android:textSize="20sp">
 				
@@ -245,8 +250,6 @@
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toBottomOf="@+id/sizeLabel" />
 				
-				
-				
 				<androidx.appcompat.widget.AppCompatButton
 					android:id="@+id/height_length_guide"
 					style="@style/Subtitle2"
@@ -288,7 +291,7 @@
 				android:id="@+id/productActualPriceTextView"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:fontFamily="sans-serif-condensed"
+				android:fontFamily="@font/uniqlopro_bold"
 				android:paddingStart="8dp"
 				android:paddingTop="8dp"
 				android:paddingEnd="8dp"
@@ -301,15 +304,14 @@
 				android:id="@+id/productDiscountPriceTextView"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:fontFamily="sans-serif-condensed"
+				android:fontFamily="@font/uniqlopro_bold"
 				android:paddingStart="8dp"
 				
 				android:paddingEnd="8dp"
 				android:paddingBottom="8dp"
 				android:text="980.000 VND"
 				android:textColor="@color/primary_red"
-				android:textSize="25sp"
-				android:textStyle="bold" />
+				android:textSize="25sp" />
 			
 			<TextView
 				android:id="@+id/productQuantityTextView"

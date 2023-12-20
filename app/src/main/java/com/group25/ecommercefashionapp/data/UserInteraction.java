@@ -1,5 +1,7 @@
 package com.group25.ecommercefashionapp.data;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +46,11 @@ public class UserInteraction {
     public List<CartItem> getCartList() {
         return cartList;
     }
-
+    public int getCartTotalPrice() {
+        int totalPrice = 0;
+        for(CartItem cartItem : cartList) {
+            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice();
+        }
+        return totalPrice;
+    }
 }

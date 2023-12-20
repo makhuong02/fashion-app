@@ -78,7 +78,11 @@
 		<item name="android:textAllCaps">true</item>
 		<item name="android:fontFamily">@font/uniqlopro_bold</item>
 	</style>
-	
+	<style name="H3.NoCaps">
+		<item name="android:textSize">@dimen/textsize_h3</item>
+		<item name="android:textAllCaps">false</item>
+		<item name="android:fontFamily">@font/uniqlopro_bold</item>
+	</style>
 	<style name="NumberBadgeFontLight">
 		<item name="android:textSize">12sp</item>
 		<item name="android:textColor">@color/primary_white</item>
