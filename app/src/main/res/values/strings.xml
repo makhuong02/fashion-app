@@ -107,4 +107,13 @@
     <string name="phone_number_regEx">^0[0-9]{2} [0-9]{3} [0-9]{4}$</string>
     <string name="_84_phone_number_regEx">^[0-9]{2} [0-9]{3} [0-9]{4}$</string>
 	<string name="successfulDescription">You have successfully %1$s in our app and start working in it.</string>
+    <string name="text_cart_outofstock">This item is currently out of stock. Please remove this item from your cart.</string>
+    <string name="text_subtotal">Subtotal</string>
+    <string name="decoy_price">784.000 VND</string>
+    <string name="decoy_product_name">A shirt</string>
+    <string name="cart_total">Total</string>
+	<string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
+	<string name="remove_item">Remove item</string>
+    <string name="remove_item_dialog_message">Are you sure you want to remove this item from your cart?</string>
 </resources>

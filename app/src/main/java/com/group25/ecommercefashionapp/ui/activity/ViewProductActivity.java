@@ -1,10 +1,15 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,9 +27,12 @@ import com.group25.ecommercefashionapp.ViewProductImages;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
+import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.ProductColor;
 import com.group25.ecommercefashionapp.data.ProductImage;
+import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
@@ -35,9 +43,12 @@ import java.util.List;
 public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener {
     MaterialToolbar toolbar;
     MainActivity mainActivity;
+    Button addToCartButton;
     TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;
     private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     RatingBar ratingBar;
+    private ProductColor selectedColor = null;
+    private ProductSize selectedSize = null;
     ActionMenuItemView cart;
     RecyclerView colorRecyclerView, sizeRecyclerView;
     ViewPager productCarousel;
@@ -46,6 +57,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     private static final int VIEW_PRODUCT_IMAGES_REQUEST_CODE = 1;
     ProductRepository productRepository;
     Product product;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,20 +92,36 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         share.setOnClickListener(v -> shareContent());
 
         // Set up Color recycler view
-        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
+        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.VERTICAL, false);
         colorRecyclerView.setLayoutManager(colorGridLayoutManager);
         ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);
         colorRecyclerView.setAdapter(colorAdapter);
 
         // Set up Size recycler view
-        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
+        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.VERTICAL, false);
         sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);
         ProductSizeAdapter sizeAdapter = new ProductSizeAdapter(product.getSizeList(), this, sizeRecyclerView);
         sizeRecyclerView.setAdapter(sizeAdapter);
 
+        ArrayAdapter<CharSequence> spinnerEntries = new ArrayAdapter<>(getMainActivityInstance(), android.R.layout.simple_spinner_item);
+        spinnerEntries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        for (int i = 1; i <= product.getAvailableQuantity() && i <= 5; i++) {
+            spinnerEntries.add(String.valueOf(i));
+        }
+        spinner.setAdapter(spinnerEntries);
+
+        addToCartButton.setOnClickListener(v -> {
+            int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
+            CartItem cartItem = new CartItem(id, quantity, selectedColor, selectedSize);
+            mainActivity.userInteraction.addCart(cartItem);
+        });
+
         toolbar.setNavigationOnClickListener(v -> {
             mainActivity.navController.popBackStack();
             onBackPressed();
+        });
+        cart.setOnClickListener(v -> {
+            mainActivity.navController.navigate(R.id.cartActivity);
         });
     }
 
@@ -112,8 +140,10 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     public void onItemClick(View view, Item item) {
         if (view.getId() == R.id.chip_image_card) {
             selectedColorTextView.setText( item.getName());
+            selectedColor = (ProductColor) item;
         } else if (view.getId() == R.id.chip_size_card) {
             selectedSizeTextView.setText(item.getName());
+            selectedSize = (ProductSize) item;
         }else if(view.getId() == R.id.carousel_image_view){
             Bundle bundle = new Bundle();
             bundle.putInt("product_id", product.getId());
@@ -157,5 +187,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         selectedSizeTextView = findViewById(R.id.selectSizeText);
         sizeRecyclerView = findViewById(R.id.sizeRecycler);
         toolbar = findViewById(R.id.topAppBar);
+        addToCartButton = findViewById(R.id.addToCartButton);
+        spinner = findViewById(R.id.productQuantitySpinner);
     }
 }

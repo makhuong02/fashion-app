@@ -29,7 +29,7 @@ public class Product extends Item {
         this.price = price;
         this.id = -1;
         this.category = category;
-        this.availableQuantity = 0;
+        this.availableQuantity = 100;
 
     }
 
@@ -39,7 +39,7 @@ public class Product extends Item {
         this.price = price;
         this.id = -1;
         this.category = category;
-        this.availableQuantity = 0;
+        this.availableQuantity = 100;
     }
 
     public String getName() {

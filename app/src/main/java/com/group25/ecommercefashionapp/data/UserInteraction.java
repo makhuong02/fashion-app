@@ -1,11 +1,13 @@
 package com.group25.ecommercefashionapp.data;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserInteraction {
     private List<Product> favoriteList;
-    private List<Product> cartList;
+    private List<CartItem> cartList;
     private List<Product> orderList;
     private List<Product> productList;
 
@@ -15,7 +17,7 @@ public class UserInteraction {
         this.orderList = new ArrayList<>();
         this.productList = new ArrayList<>();
     }
-    public UserInteraction(List<Product> favoriteList) {
+    public void setFavoriteList(List<Product> favoriteList) {
         this.favoriteList = favoriteList;
     }
     public void addFavorite(Product product) {
@@ -28,4 +30,27 @@ public class UserInteraction {
         return favoriteList;
     }
 
+    public void setCartList(List<CartItem> cartList) {
+        this.cartList = cartList;
+    }
+    public void addCart(CartItem cartItem) {
+        if(cartList.contains(cartItem)) {
+            cartList.get(cartList.indexOf(cartItem)).setQuantity(cartItem.getQuantity());
+        }
+        else
+            cartList.add(cartItem);
+    }
+    public void removeCart(CartItem cartItem) {
+        cartList.remove(cartItem);
+    }
+    public List<CartItem> getCartList() {
+        return cartList;
+    }
+    public int getCartTotalPrice() {
+        int totalPrice = 0;
+        for(CartItem cartItem : cartList) {
+            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice();
+        }
+        return totalPrice;
+    }
 }

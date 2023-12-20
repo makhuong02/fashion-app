@@ -24,6 +24,7 @@
 			android:gravity="center_vertical"
 			android:text="@string/text_cart_outofstock"
 			android:visibility="gone"
+			android:textSize="16sp"
 			android:layout_marginTop="@dimen/m_spacing"
 			android:layout_marginEnd="@dimen/l_spacing"
 			app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +48,7 @@
 		<ImageView
 			android:id="@+id/item_image"
 			android:layout_width="0dp"
-			android:layout_height="96dp"
+			android:layout_height="130dp"
 			android:layout_marginTop="@dimen/m_spacing"
 			android:scaleType="centerCrop"
 
@@ -67,7 +68,7 @@
 			android:layout_marginEnd="@dimen/m_spacing"
 			android:text="@string/decoy_product_name"
 			android:textColor="@color/primary_black"
-			android:textSize="16sp"
+			android:textSize="18sp"
 			android:fontFamily="@font/uniqlopro_bold"
 			app:layout_constraintLeft_toRightOf="@id/item_image"
 			app:layout_constraintRight_toLeftOf="@id/cancel_button"
@@ -84,6 +85,7 @@
 			android:gravity="center_vertical"
 			android:lineSpacingExtra="6sp"
 			android:text="@string/text_productid"
+			android:textSize="14sp"
 			app:layout_constraintBottom_toTopOf="@+id/color_text_title"
 			app:layout_constraintLeft_toRightOf="@+id/item_image"
 			app:layout_constraintTop_toBottomOf="@+id/item_name" />
@@ -94,6 +96,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/text_symbol_colon"
+			android:textSize="14sp"
+			
 			app:layout_constraintBottom_toBottomOf="@+id/product_id_title"
 			app:layout_constraintStart_toEndOf="@+id/product_id_title"
 			app:layout_constraintTop_toTopOf="@+id/product_id_title" />
@@ -104,14 +108,15 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/xxs_spacing"
-			android:layout_marginTop="@dimen/xs_spacing"
+
 			android:lineSpacingExtra="6sp"
+			android:textSize="14sp"
 			app:layout_constrainedWidth="true"
-			app:layout_constraintBottom_toTopOf="@+id/color_text_title"
+
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintHorizontal_bias="0"
 			app:layout_constraintStart_toEndOf="@+id/product_id_colon"
-			app:layout_constraintTop_toBottomOf="@+id/item_name"
+			app:layout_constraintBottom_toBottomOf="@+id/product_id_title"
 />
 		
 		<TextView
@@ -120,9 +125,10 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/m_spacing"
-			android:layout_marginTop="@dimen/xs_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
 			android:layout_marginEnd="@dimen/m_spacing"
 			android:text="@string/text_color"
+			android:textSize="14sp"
 			android:textColor="@color/primary_black"
 			app:layout_constrainedWidth="true"
 			app:layout_constraintEnd_toEndOf="parent"
@@ -136,6 +142,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/text_symbol_colon"
+			android:textSize="14sp"
 			android:textColor="@color/primary_black"
 			app:layout_constraintBottom_toBottomOf="@+id/color_text_title"
 			app:layout_constraintStart_toEndOf="@+id/color_text_title"
@@ -149,12 +156,12 @@
 			android:layout_marginStart="@dimen/xxs_spacing"
 			android:layout_marginTop="@dimen/l_spacing"
 			android:lineSpacingExtra="6sp"
+			android:textSize="14sp"
 			android:textColor="@color/primary_black"
 			app:layout_constrainedWidth="true"
-			app:layout_constraintBottom_toTopOf="@+id/color_text_title"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toEndOf="@+id/product_color_colon"
-			app:layout_constraintTop_toBottomOf="@+id/product_id" />
+			app:layout_constraintBottom_toBottomOf="@id/color_text_title"/>
 		
 		<TextView
 			android:id="@+id/item_size_title"
@@ -162,7 +169,8 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/m_spacing"
-			android:layout_marginTop="@dimen/xs_spacing"
+			android:textSize="14sp"
+			android:layout_marginTop="@dimen/xxs_spacing"
 			android:layout_marginEnd="@dimen/m_spacing"
 			android:text="@string/text_size"
 			android:textColor="@color/primary_black"
@@ -179,6 +187,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/text_symbol_colon"
+			android:textSize="14sp"
 			android:textColor="@color/primary_black"
 			app:layout_constraintBottom_toBottomOf="@+id/item_size_title"
 			app:layout_constraintStart_toEndOf="@+id/item_size_title"
@@ -193,11 +202,11 @@
 			android:layout_marginTop="@dimen/l_spacing"
 			android:lineSpacingExtra="6sp"
 			android:textColor="@color/primary_black"
+			android:textSize="14sp"
 			app:layout_constrainedWidth="true"
 			app:layout_constraintHorizontal_bias="0"
-			app:layout_constraintBottom_toTopOf="@+id/item_size_title"
 			app:layout_constraintStart_toEndOf="@+id/product_size_colon"
-			app:layout_constraintTop_toBottomOf="@+id/product_color"
+			app:layout_constraintBottom_toBottomOf="@id/item_size_title"
 			app:layout_constraintEnd_toEndOf="parent"
 			/>
 		
@@ -206,10 +215,11 @@
 			android:layout_width="0dp"
 			android:layout_height="wrap_content"
 			android:layout_marginStart="@dimen/m_spacing"
-			android:layout_marginTop="@dimen/xs_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
 			android:layout_marginEnd="@dimen/m_spacing"
 			android:fontFamily="@font/uniqlopro_bold"
 			android:textColor="@color/primary_black"
+			android:textSize="16sp"
 			android:text="@string/decoy_price"
 			app:layout_constraintLeft_toRightOf="@+id/item_image"
 			app:layout_constraintRight_toRightOf="parent"
@@ -217,12 +227,13 @@
 		
 		<Spinner
 			android:id="@+id/spinner"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_height="50dp"
 			style="@style/Widget.AppCompat.Spinner.Underlined"
 			android:layout_marginStart="@dimen/m_spacing"
 			android:layout_marginTop="@dimen/xs_spacing"
 			android:layout_marginEnd="@dimen/s_spacing"
+			android:spinnerMode="dialog"
 			app:layout_constraintLeft_toRightOf="@+id/item_image"
 			app:layout_constraintTop_toBottomOf="@+id/item_price" />
 		

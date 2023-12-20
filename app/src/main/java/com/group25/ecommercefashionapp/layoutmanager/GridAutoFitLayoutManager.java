@@ -11,9 +11,6 @@ public class GridAutoFitLayoutManager extends GridLayoutManager
 {
     private int columnWidth;
     private boolean isColumnWidthChanged = true;
-    private int lastWidth;
-    private int lastHeight;
-
     public GridAutoFitLayoutManager(@NonNull final Context context, final int columnWidth) {
         /* Initially set spanCount to 1, will be changed automatically later. */
         super(context, 1);
@@ -50,22 +47,23 @@ public class GridAutoFitLayoutManager extends GridLayoutManager
     }
 
     @Override
-    public void onLayoutChildren(@NonNull final RecyclerView.Recycler recycler, @NonNull final RecyclerView.State state) {
-        final int width = getWidth();
-        final int height = getHeight();
-        if (columnWidth > 0 && width > 0 && height > 0 && (isColumnWidthChanged || lastWidth != width || lastHeight != height)) {
-            final int totalSpace;
-            if (getOrientation() == VERTICAL) {
-                totalSpace = width - getPaddingRight() - getPaddingLeft();
-            } else {
-                totalSpace = height - getPaddingTop() - getPaddingBottom();
+    public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state)
+    {
+        if (isColumnWidthChanged && columnWidth > 0)
+        {
+            int totalSpace;
+            if (getOrientation() == VERTICAL)
+            {
+                totalSpace = getWidth() - getPaddingRight() - getPaddingLeft();
             }
-            final int spanCount = Math.max(1, totalSpace / columnWidth);
+            else
+            {
+                totalSpace = getHeight() - getPaddingTop() - getPaddingBottom();
+            }
+            int spanCount = Math.max(1, totalSpace / columnWidth);
             setSpanCount(spanCount);
             isColumnWidthChanged = false;
         }
-        lastWidth = width;
-        lastHeight = height;
         super.onLayoutChildren(recycler, state);
     }
 }
