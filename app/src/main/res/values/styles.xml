@@ -120,4 +120,38 @@
 		<item name="android:fontFamily">@font/uniqlopro_bold</item>
 		<item name="android:textColor">@color/primary_black</item>
 	</style>
+	<style name="Login">
+		<item name="android:textSize">31sp</item>
+		<item name="android:fontFamily">@font/montserrat_bold</item>
+		<item name="android:letterSpacing">-0.01</item>
+		<item name="android:textColor">#1D1E20</item>
+	</style>
+	<style name="username">
+		<item name="android:textSize">14sp</item>
+		<item name="android:fontFamily">@font/inter</item>
+		<item name="android:textColor">#8F959E</item>
+	</style>
+	<style name="LoginDescription">
+		<item name="android:textSize">11sp</item>
+		<item name="android:fontFamily">@font/montserrat_light</item>
+		<item name="android:textColor">#74777B</item>
+	</style>
+	<style name="ForgotPassword">
+		<item name="android:textSize">12sp</item>
+		<item name="android:fontFamily">@font/montserrat_light</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">#F83758</item>
+	</style>
+	<style name="CreateAnAccount">
+		<item name="android:textSize">12sp</item>
+		<item name="android:fontFamily">@font/montserrat_light</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">#74777B</item>
+	</style>
+	<style name="SignUp">
+		<item name="android:textSize">12sp</item>
+		<item name="android:fontFamily">@font/montserrat_light</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">#FF1F46</item>
+	</style>
 </resources>

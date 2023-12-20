@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Paint;
@@ -15,6 +15,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.group25.ecommercefashionapp.MyApp;
+import com.group25.ecommercefashionapp.OnItemClickListener;
+import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.ViewProductImages;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
@@ -28,7 +32,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
-public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{
+public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener {
     MaterialToolbar toolbar;
     MainActivity mainActivity;
     TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;

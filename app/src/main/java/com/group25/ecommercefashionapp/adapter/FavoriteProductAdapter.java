@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
-import com.group25.ecommercefashionapp.data.User;
+import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import com.group25.ecommercefashionapp.data.Product;
 
@@ -102,11 +102,11 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
     }
     public void checkAndRemoveFavorite() {
         if (shouldRemoveFavorite) {
-            User user = getMainActivityInstance().user;
+            UserInteraction userInteraction = getMainActivityInstance().userInteraction;
             Iterator<Product> iterator = removedItems.iterator();
             while (iterator.hasNext()) {
                 Product itemToRemove = iterator.next();
-                user.removeFavorite(itemToRemove);
+                userInteraction.removeFavorite(itemToRemove);
                 iterator.remove();
             }
             shouldRemoveFavorite = false; // Reset the flag

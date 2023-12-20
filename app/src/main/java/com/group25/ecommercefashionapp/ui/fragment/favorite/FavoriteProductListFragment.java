@@ -18,7 +18,7 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.FavoriteProductAdapter;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.data.User;
+import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
 
 import java.util.List;
@@ -30,8 +30,8 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
     FavoriteProductAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        User user = getMainActivityInstance().user;
-        List<Product> favoriteList = user.getFavoriteList();
+        UserInteraction UserInteraction = getMainActivityInstance().userInteraction;
+        List<Product> favoriteList = UserInteraction.getFavoriteList();
 
         if(favoriteList.size() == 0) {
             View view = inflater.inflate(R.layout.cell_favorite_product_empty, container, false);

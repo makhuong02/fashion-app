@@ -13,12 +13,11 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.group25.ecommercefashionapp.MainActivity;
+import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.OrderDetailsAdapter;
 import com.group25.ecommercefashionapp.adapter.OrderItemAdapter;
 import com.group25.ecommercefashionapp.data.Orders;
-import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.OrdersRepository;
 
 import java.util.ArrayList;

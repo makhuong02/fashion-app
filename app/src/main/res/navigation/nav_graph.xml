@@ -90,13 +90,28 @@
 	</fragment>
 	<activity
 		android:id="@+id/viewProduct"
-		android:name="com.group25.ecommercefashionapp.ViewProductActivity"
+		android:name="com.group25.ecommercefashionapp.ui.activity.ViewProductActivity"
 		android:label="View Product Activity"
 		tools:layout="@layout/activity_view_product" />
-
+	
 	<activity
 		android:id="@+id/viewProductImages"
 		android:name="com.group25.ecommercefashionapp.ViewProductImages"
 		android:label="View Product Images"
 		tools:layout="@layout/activity_view_product_images" />
+	<activity
+		android:id="@+id/loginActivity"
+		android:name="com.group25.ecommercefashionapp.ui.activity.LoginActivity"
+		android:label="Login Activity"
+		tools:layout="@layout/activity_login" />
+	<activity
+		android:id="@+id/signupActivity"
+		android:name="com.group25.ecommercefashionapp.ui.activity.SignupActivity"
+		android:label="Signup Activity"
+		tools:layout="@layout/activity_signup" />
+	<activity
+		android:id="@+id/successActivity"
+		android:name="com.group25.ecommercefashionapp.ui.activity.SuccessActivity"
+		android:label="Success Activity"
+		tools:layout="@layout/activity_success" />
 </navigation>

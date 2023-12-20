@@ -16,11 +16,12 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
-import com.group25.ecommercefashionapp.MainActivity;
+import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ActionItem;
 import com.group25.ecommercefashionapp.data.Item;
+import com.group25.ecommercefashionapp.status.UserStatus;
 
 import java.util.List;
 
@@ -59,7 +60,18 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
         bottomNavigationView = mainActivity.findViewById(R.id.bottomNavigation);
         bottomNavigationView.setVisibility(View.VISIBLE);
 
-        profileCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings));
+        // profileCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings));
+        profileCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UserStatus._isLoggedIn){
+                    mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings);
+                }
+                else {
+                    mainActivity.navController.navigate(R.id.loginActivity);
+                }
+            }
+        });
 
         settingsCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.settings));
 
