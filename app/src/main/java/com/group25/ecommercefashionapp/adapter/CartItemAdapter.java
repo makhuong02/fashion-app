@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.ui.activity.CartActivity;
+import com.group25.ecommercefashionapp.ui.fragment.bottomsheet.RemoveItemBottomSheetFragment;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -89,8 +91,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(v, product));
         holder.removeButton.setOnClickListener(v ->
         {
-            getMainActivityInstance().userInteraction.removeCart(item);
-            notifyDataChanged();
+            RemoveItemBottomSheetFragment removeItemBottomSheetFragment = new RemoveItemBottomSheetFragment(item, this);
+            removeItemBottomSheetFragment.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), removeItemBottomSheetFragment.getTag());
         });
     }
 
