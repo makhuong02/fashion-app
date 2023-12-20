@@ -7,14 +7,10 @@
 	
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:elevation="2dp"
-		android:fitsSystemWindows="true"
-		android:stateListAnimator="@animator/appbar_elevation">
+		android:layout_height="wrap_content">
 		
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/topAppBar"
-			style="Widget.MaterialComponents.Toolbar.PrimarySurface"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			android:elevation="2dp"
@@ -23,11 +19,10 @@
 			app:menu="@menu/view_product_menu"
 			app:navigationIcon="@drawable/round_arrow_back_24"
 			app:title="" />
-		
 		<View
 			android:layout_width="match_parent"
-			android:layout_height="3dp"
-			android:background="@drawable/toolbar_dropshadow" />
+			android:layout_height="2dp"
+			android:background="@drawable/toolbar_dropshadow"/>
 	
 	</com.google.android.material.appbar.AppBarLayout>
 	
@@ -59,11 +54,10 @@
 					android:id="@+id/productNameTextView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:fontFamily="@font/uniqlopro_bold"
+					android:fontFamily="@font/uniqlopro_light"
 					android:paddingTop="8dp"
 					android:paddingBottom="8dp"
 					android:text="@string/decoy_product_name"
-					android:textColor="@color/primary_black"
 					android:textSize="20sp">
 				
 				</TextView>
@@ -96,7 +90,7 @@
 						
 						android:paddingStart="8dp"
 						android:paddingEnd="8dp"
-						android:text="4.7"
+						android:text="@string/decoy_rating"
 						android:textSize="16sp"
 						android:textStyle="bold" />
 					
@@ -109,7 +103,7 @@
 						
 						android:fontFamily="@font/quicksand_medium"
 						
-						android:text="(See 5 reviews)"
+						android:text="@string/decoy_reviews_num"
 						android:textSize="14sp" />
 				
 				</LinearLayout>
@@ -121,7 +115,7 @@
 					android:paddingTop="8dp"
 					
 					android:paddingBottom="8dp"
-					android:text="Linen cotton fabric keep you warm through out the year.">
+					android:text="@string/decoy_product_description">
 				
 				</TextView>
 				
@@ -132,11 +126,10 @@
 					android:gravity="end"
 					android:paddingTop="8dp"
 					android:paddingBottom="8dp"
-					android:text="Product ID:  461343">
+					android:text="@string/decoy_product_id">
 				
 				</TextView>
 			</LinearLayout>
-			
 			
 			<androidx.viewpager.widget.ViewPager
 				android:id="@+id/carousel"
@@ -250,6 +243,7 @@
 					app:layout_constraintStart_toStartOf="parent"
 					app:layout_constraintTop_toBottomOf="@+id/sizeLabel" />
 				
+				
 				<androidx.appcompat.widget.AppCompatButton
 					android:id="@+id/height_length_guide"
 					style="@style/Subtitle2"
@@ -293,12 +287,12 @@
 					android:id="@+id/productActualPriceTextView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:fontFamily="@font/uniqlopro_bold"
+					android:fontFamily="sans-serif-condensed"
 					android:paddingStart="8dp"
 					android:paddingTop="8dp"
 					android:paddingEnd="8dp"
 					
-					android:text="980.000 VND"
+					android:text="@string/decoy_price"
 					android:textSize="20sp"
 					android:textStyle="bold" />
 				
@@ -306,14 +300,15 @@
 					android:id="@+id/productDiscountPriceTextView"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:fontFamily="@font/uniqlopro_bold"
+					android:fontFamily="sans-serif-condensed"
 					android:paddingStart="8dp"
 					
 					android:paddingEnd="8dp"
 					android:paddingBottom="8dp"
 					android:text="@string/decoy_price"
 					android:textColor="@color/primary_red"
-					android:textSize="25sp" />
+					android:textSize="25sp"
+					android:textStyle="bold" />
 				
 				<TextView
 					android:id="@+id/productQuantityTextView"
@@ -326,37 +321,127 @@
 					android:paddingEnd="8dp"
 					android:paddingBottom="8dp"
 					
-					android:text="Quantity"
+					android:text="@string/quantity"
 					android:textSize="13sp" />
 				
-				<Spinner
+				<androidx.appcompat.widget.AppCompatSpinner
 					android:id="@+id/productQuantitySpinner"
 					android:layout_width="200dp"
 					android:layout_height="50dp"
+					style="@style/Widget.AppCompat.Spinner.Underlined"
 					android:entries="@array/productQuantitySpinnerItems"
 					android:spinnerMode="dropdown">
 				
-				</Spinner>
+				</androidx.appcompat.widget.AppCompatSpinner>
+				<androidx.constraintlayout.widget.ConstraintLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					>
+					
+					<androidx.appcompat.widget.AppCompatButton
+						android:id="@+id/addToCartButton"
+						android:layout_width="0dp"
+						android:layout_height="60dp"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:backgroundTint="@android:color/holo_red_dark"
+						android:fontFamily="sans-serif-condensed"
+						android:text="@string/add_to_cart"
+						android:foreground="?attr/selectableItemBackgroundBorderless"
+						android:textColor="@android:color/white"
+						android:textSize="16sp"
+						android:textStyle="bold"
+						app:layout_constraintLeft_toLeftOf="parent"
+						app:layout_constraintRight_toLeftOf="@+id/favorite_button_container"
+						app:layout_constraintTop_toTopOf="parent">
+					
+					</androidx.appcompat.widget.AppCompatButton>
+					
+					<LinearLayout
+						android:id="@+id/favorite_button_container"
+						android:layout_width="47dp"
+						android:layout_height="47dp"
+						android:layout_marginTop="6dp"
+						android:layout_marginEnd="@dimen/xs_spacing"
+						android:foreground="?attr/selectableItemBackgroundBorderless"
+						app:layout_constraintEnd_toEndOf="parent"
+						app:layout_constraintTop_toTopOf="parent"
+						android:clickable="true"
+						android:background="@drawable/bg_outline_black"
+						android:onClick="onFavoriteButtonClicked"
+						android:focusable="true">
+						
+						<com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox
+							android:id="@+id/favorite_button"
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:button="@drawable/check_box_favorite_product"
+							android:layout_marginStart="11dp"
+							android:foreground="?attr/selectableItemBackgroundBorderless"
+							android:clickable="false"
+							android:gravity="center"
+							android:padding="@dimen/l_spacing" />
+					</LinearLayout>
 				
+				</androidx.constraintlayout.widget.ConstraintLayout>
+			
+			</LinearLayout>
+			
+			<androidx.cardview.widget.CardView
+				android:id="@+id/membershipCardView"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:clickable="true"
+				android:focusable="true"
+				android:layout_marginTop="30dp"
+				android:layout_marginBottom="10dp"
+				android:foreground="?android:attr/selectableItemBackground"
+				app:cardCornerRadius="0dp">
+				
+				<com.google.android.material.divider.MaterialDivider
+					android:id="@+id/itemDivider"
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					app:dividerInsetEnd="16dp"
+					app:dividerInsetStart="16dp" />
 				<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:padding="8dp">
+					android:orientation="horizontal"
+					android:padding="16dp">
 					
-					<Button
-						android:id="@+id/addToCartButton"
-						android:layout_width="match_parent"
-						android:layout_height="match_parent"
-						android:backgroundTint="@android:color/holo_red_dark"
-						android:fontFamily="sans-serif-condensed"
-						android:text="ADD TO CART"
-						android:textStyle="bold">
+					<TextView
+						android:id="@+id/actionNameTxt"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="@string/view_size_chart"
+						android:textColor="@color/primary_black"
+						android:textSize="15sp">
 					
-					</Button>
+					</TextView>
+					
+					<View
+						android:layout_width="0dp"
+						android:layout_height="0dp"
+						android:layout_weight="1" />
+					
+					<com.google.android.material.imageview.ShapeableImageView
+						android:layout_width="wrap_content"
+						android:layout_height="18dp"
+						android:contentDescription="@string/content_description_media"
+						app:srcCompat="@drawable/round_keyboard_arrow_right_24" />
+				
 				</LinearLayout>
-			</LinearLayout>
+				
+				<com.google.android.material.divider.MaterialDivider
+					android:id="@+id/actionItemDivider"
+					android:layout_width="match_parent"
+					android:layout_height="1dp"
+					app:dividerInsetEnd="16dp"
+					app:dividerInsetStart="16dp" />
+			</androidx.cardview.widget.CardView>
 		
 		</LinearLayout>
+	
 	
 	</androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -20,10 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.group25.ecommercefashionapp.MyApp;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
-import com.group25.ecommercefashionapp.ViewProductImages;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
@@ -33,9 +31,11 @@ import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.ProductColor;
 import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.data.ProductSize;
+import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.CartAddedDialogFragment;
+import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -59,6 +59,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     ProductRepository productRepository;
     Product product;
     Spinner spinner;
+    FavoriteCheckBox favoriteCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +68,35 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         symbols.setGroupingSeparator('.');
         VNDFormat = new DecimalFormat("###,###,###,###", symbols);
 
-        productRepository = MyApp.getMainActivityInstance().productRepository;
+        mainActivity = getMainActivityInstance();
+
+        UserInteraction UserInteraction = mainActivity.userInteraction;
+        List<Product> favoriteList = UserInteraction.getFavoriteList();
+
+        productRepository = mainActivity.productRepository;
         Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt("id");
         product = productRepository.getProductById(id);
 
-        mainActivity = MyApp.getMainActivityInstance();
 
         initializeViews();
+
+        favoriteCheckBox.setOnClickListener(v -> {
+            if (favoriteCheckBox.isChecked()) {
+                UserInteraction.addFavorite(product);
+            } else {
+                UserInteraction.removeFavorite(product);
+            }
+        });
+
+        if(favoriteList.size() != 0) {
+            for (Product product : favoriteList) {
+                if (product.getId() == id) {
+                    favoriteCheckBox.setChecked(true);
+                    break;
+                }
+            }
+        }
 
         txtName.setText(product.getName());
         txtHighlight.setText(product.getDescription());
@@ -123,9 +145,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             mainActivity.navController.popBackStack();
             onBackPressed();
         });
-        cart.setOnClickListener(v -> {
-            mainActivity.navController.navigate(R.id.cartActivity);
-        });
+        cart.setOnClickListener(v -> mainActivity.navController.navigate(R.id.cartActivity));
     }
 
     private void shareContent() {
@@ -151,7 +171,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             Bundle bundle = new Bundle();
             bundle.putInt("product_id", product.getId());
             bundle.putInt("position", productCarousel.getCurrentItem());
-            Intent intent = new Intent(this, ViewProductImages.class);
+            Intent intent = new Intent(this, ViewProductImagesActivity.class);
             intent.putExtras(bundle);
             startActivityForResult(intent, VIEW_PRODUCT_IMAGES_REQUEST_CODE);
         }
@@ -192,5 +212,9 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         toolbar = findViewById(R.id.topAppBar);
         addToCartButton = findViewById(R.id.addToCartButton);
         spinner = findViewById(R.id.productQuantitySpinner);
+        favoriteCheckBox = findViewById(R.id.favorite_button);
+    }
+    public void onFavoriteButtonClicked(View view) {
+        favoriteCheckBox.performClick(); // This will simulate a click on the FavoriteCheckBox
     }
 }
