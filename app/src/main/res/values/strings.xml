@@ -116,4 +116,5 @@
     <string name="cancel">Cancel</string>
 	<string name="remove_item">Remove item</string>
     <string name="remove_item_dialog_message">Are you sure you want to remove this item from your cart?</string>
+	<string name="d_item_s">%d item(s)</string>
 </resources>

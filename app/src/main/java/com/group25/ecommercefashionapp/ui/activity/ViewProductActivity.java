@@ -35,6 +35,7 @@ import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.ui.fragment.dialog.CartAddedDialogFragment;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -114,6 +115,8 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
             CartItem cartItem = new CartItem(id, quantity, selectedColor, selectedSize);
             mainActivity.userInteraction.addCart(cartItem);
+            CartAddedDialogFragment cartAddedDialogFragment = new CartAddedDialogFragment(quantity, (long) (product.getPrice() * 0.9f * quantity));
+            cartAddedDialogFragment.show(getSupportFragmentManager(), "cart_added");
         });
 
         toolbar.setNavigationOnClickListener(v -> {
