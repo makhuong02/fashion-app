@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.group25.ecommercefashionapp.MyApp;
+import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductViewImageCarouselAdapter;
 import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
-public class ViewProductImages extends AppCompatActivity {
+public class ViewProductImagesActivity extends AppCompatActivity {
     ViewPager productCarousel;
     MaterialToolbar toolbar;
     MainActivity mainActivity;

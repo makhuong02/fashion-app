@@ -27,7 +27,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
 public class CartActivity extends AppCompatActivity implements OnItemClickListener {
-    AppCompatButton footerCheckoutButton, checkoutButton, orderSummaryExpandButton;
+    AppCompatButton footerCheckoutButton, checkoutButton, orderSummaryExpandButton, continueShoppingButton;
     MaterialCardView orderSummaryCardView, checkoutCardView;
     ConstraintLayout orderSummaryLayout, checkoutLayout;
     NestedScrollView nestedScrollView;
@@ -55,6 +55,11 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                 setupInitialVisibility();
                 setupScrollListener();
             }
+        });
+
+        continueShoppingButton.setOnClickListener(v -> {
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
         });
 
         CartItemAdapter cartItemAdapter = new CartItemAdapter(getMainActivityInstance().userInteraction.getCartList(), this, this);
@@ -145,6 +150,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         orderTotalTextView = findViewById(R.id.orderTotalPrice);
         footerTotalPriceTextView = findViewById(R.id.footer_total_price);
         checkoutCardView = findViewById(R.id.check_out_card_view);
+        continueShoppingButton = findViewById(R.id.continue_shopping_button);
     }
     public void updateCartSummaryView() {
         itemCounterTextView.setText(String.valueOf(userInteraction.getCartList().size()));

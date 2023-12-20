@@ -116,4 +116,12 @@
     <string name="cancel">Cancel</string>
 	<string name="remove_item">Remove item</string>
     <string name="remove_item_dialog_message">Are you sure you want to remove this item from your cart?</string>
+	<string name="d_item_s">%d item(s)</string>
+	<string name="decoy_rating">4.7</string>
+    <string name="decoy_reviews_num">(See 5 reviews)</string>
+    <string name="decoy_product_description">Linen cotton fabric keep you warm through out the year.</string>
+    <string name="decoy_product_id">Product ID: 461343</string>
+    <string name="quantity">Quantity</string>
+	<string name="add_to_cart">ADD TO CART</string>
+    <string name="view_size_chart">View size chart</string>
 </resources>

@@ -96,7 +96,7 @@
 	
 	<activity
 		android:id="@+id/viewProductImages"
-		android:name="com.group25.ecommercefashionapp.ViewProductImages"
+		android:name="com.group25.ecommercefashionapp.ui.activity.ViewProductImagesActivity"
 		android:label="View Product Images"
 		tools:layout="@layout/activity_view_product_images" />
 	<activity
