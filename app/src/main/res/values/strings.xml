@@ -114,4 +114,6 @@
     <string name="cart_total">Total</string>
 	<string name="remove">Remove</string>
     <string name="cancel">Cancel</string>
+	<string name="remove_item">Remove item</string>
+    <string name="remove_item_dialog_message">Are you sure you want to remove this item from your cart?</string>
 </resources>
