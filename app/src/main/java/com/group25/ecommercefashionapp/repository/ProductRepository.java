@@ -1,10 +1,13 @@
 package com.group25.ecommercefashionapp.repository;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.utilities.ColorUtils;
@@ -40,6 +43,32 @@ public class ProductRepository {
 
     }
 
+    public void updateProductAfterCheckout(List<CartItem> cartItems) {
+        for (CartItem cartItem : cartItems) {
+            Product product = getMainActivityInstance().productRepository.getProductById(cartItem.getProductId());
+            product.setAvailableQuantity(product.getAvailableQuantity() - cartItem.getQuantity());
+            updateProductData(product);
+        }
+    }
+
+    private void updateProductData(Product product) {
+        ContentValues values = new ContentValues();
+        values.put(ProductContract.ProductEntry.COLUMN_NAME, product.getName());
+        values.put(ProductContract.ProductEntry.COLUMN_DESCRIPTION, product.getDescription());
+        values.put(ProductContract.ProductEntry.COLUMN_PRICE, product.getPrice());
+        values.put(ProductContract.ProductEntry.COLUMN_CATEGORY, product.getCategory());
+        values.put(ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY, product.getAvailableQuantity());
+
+        String selection = ProductContract.ProductEntry.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(product.getId())};
+
+        db.update(
+                ProductContract.ProductEntry.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs);
+    }
+
     public void insertProductColorData(ProductColor color) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ColorEntry.COLUMN_PRODUCT_ID, color.getProduct_id());
@@ -53,7 +82,6 @@ public class ProductRepository {
         values.put(ProductContract.SizeEntry.COLUMN_SIZE, size.getName());
         long sizeId = db.insert(ProductContract.SizeEntry.TABLE_NAME, null, values);
     }
-
     public void insertProductImageData(ProductImage image) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ImageEntry.COLUMN_PRODUCT_ID, image.getProduct_id());

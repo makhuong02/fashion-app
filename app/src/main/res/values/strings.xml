@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ecommerce Fashion App</string>
+    <string name="app_name">ChicCloth .Co</string>
     <string name="content_description_media">Media content description</string>
     <string name="profile">Profile</string>
     <string name="secondary_text">Secondary Text</string>
@@ -124,4 +124,5 @@
     <string name="quantity">Quantity</string>
 	<string name="add_to_cart">ADD TO CART</string>
     <string name="view_size_chart">View size chart</string>
+    <string name="google_maps_key">AIzaSyDuaOUxgO2p1P0KR9YL_Wwfz8Au1n56dhQ</string>
 </resources>

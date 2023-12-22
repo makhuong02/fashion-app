@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/primary_white"
+		android:elevation="8dp"
+		>
+		
+		
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/app_bar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:background="@color/primary_white"
+			
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+			
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				app:layout_scrollFlags="scroll|enterAlways"
+				app:navigationIcon="@drawable/round_arrow_back_24"
+				app:popupTheme="@style/ThemeOverlay.AppCompat"
+				app:title="@string/cart" />
+		
+		
+		</com.google.android.material.appbar.AppBarLayout>
+	
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+	
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:background="@color/primary_white"
+		android:elevation="4dp"
+		android:orientation="vertical"
+		android:paddingTop="10dp"
+		android:paddingBottom="10dp">
+		
+		
+		<TextView
+			style="@style/Headline3"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/m_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:text="Shopping cart"
+			android:textColor="@color/primary_black"
+			android:textSize="20sp" />
+		
+		<TextView
+			android:id="@+id/item_out_of_stock_text"
+			style="@style/Caption1"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/m_spacing"
+			android:layout_marginBottom="@dimen/l_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:text="Your cart is currently empty."
+			android:textColor="@color/primary_black"
+			android:textSize="14sp" />
+		
+		
+		<androidx.appcompat.widget.AppCompatButton
+			android:id="@+id/continue_shopping_button"
+			style="@style/H3"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/s_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:background="@color/primary_black"
+			android:foreground="?android:attr/selectableItemBackground"
+			android:text="@string/text_continue_shopping"
+			android:textColor="@color/primary_white" />
+		
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="20dp">
+		
+		</View>
+	
+	
+	</LinearLayout>
+</LinearLayout>

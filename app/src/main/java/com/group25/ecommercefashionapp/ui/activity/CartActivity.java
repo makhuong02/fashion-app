@@ -2,25 +2,35 @@ package com.group25.ecommercefashionapp.ui.activity;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CartItemAdapter;
+import com.group25.ecommercefashionapp.adapter.CheckOutItemAdapter;
 import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.UserInteraction;
+import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 
 import java.text.DecimalFormat;
@@ -30,6 +40,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     AppCompatButton footerCheckoutButton, checkoutButton, orderSummaryExpandButton, continueShoppingButton;
     MaterialCardView orderSummaryCardView, checkoutCardView;
     ConstraintLayout orderSummaryLayout, checkoutLayout;
+    TextInputEditText addressEditText, addressEditText2;
     NestedScrollView nestedScrollView;
     LinearLayout footerLayout;
     RecyclerView cartRecyclerView;
@@ -39,9 +50,27 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     ProductRepository productRepository = getMainActivityInstance().productRepository;
     private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     private int rotationAngle = 0;
+    SwipeRefreshLayout swipeRefreshLayout;
+    private static final int MAP_REQUEST_CODE = 2;
+
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(userInteraction.getCartList().size() == 0){
+            setContentView(R.layout.activity_empty_cart);
+            toolbar = findViewById(R.id.toolbar);
+            toolbar.setNavigationOnClickListener(v -> {
+                getMainActivityInstance().navController.popBackStack();
+                onBackPressed();
+            });
+            continueShoppingButton = findViewById(R.id.continue_shopping_button);
+            continueShoppingButton.setOnClickListener(v -> {
+                getMainActivityInstance().navController.popBackStack();
+                onBackPressed();
+            });
+            return;
+        }
         setContentView(R.layout.activity_cart);
         symbols.setGroupingSeparator('.');
         VNDFormat = new DecimalFormat("###,###,###,###", symbols);
@@ -81,6 +110,33 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                 break;
             }
         }
+
+        toolbar.setNavigationOnClickListener(v -> {
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
+        });
+
+        checkoutButton.setOnClickListener(v -> checkout());
+        footerCheckoutButton.setOnClickListener(v -> checkout());
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+            if(userInteraction.getCartList().size() == 0){
+                setContentView(R.layout.activity_empty_cart);
+                toolbar = findViewById(R.id.toolbar);
+                toolbar.setNavigationOnClickListener(v -> {
+                    getMainActivityInstance().navController.popBackStack();
+                    onBackPressed();
+                });
+                continueShoppingButton = findViewById(R.id.continue_shopping_button);
+                continueShoppingButton.setOnClickListener(v -> {
+                    getMainActivityInstance().navController.popBackStack();
+                    onBackPressed();
+                });
+                return;
+            }
+            cartItemAdapter.notifyDataSetChanged();
+        });
 
         updateCartSummaryView();
     }
@@ -151,6 +207,8 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         footerTotalPriceTextView = findViewById(R.id.footer_total_price);
         checkoutCardView = findViewById(R.id.check_out_card_view);
         continueShoppingButton = findViewById(R.id.continue_shopping_button);
+        toolbar = findViewById(R.id.toolbar);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
     }
     public void updateCartSummaryView() {
         itemCounterTextView.setText(String.valueOf(userInteraction.getCartList().size()));
@@ -158,5 +216,200 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         taxTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
         orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 1.1)));
         footerTotalPriceTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 1.1)));
+    }
+
+    private void checkout() {
+        setContentView(R.layout.activity_checkout);
+        toolbar = findViewById(R.id.toolbar);
+        TextView freeShip = findViewById(R.id.free_shipping_text);
+        AppCompatCheckBox shipToAddressCheckBox = findViewById(R.id.ship_to_address_check_box);
+        ConstraintLayout shipToAddressLayout = findViewById(R.id.ship_to_address_layout);
+        AppCompatCheckBox clickAndCollectCheckBox = findViewById(R.id.click_and_collect_check_box);
+        ConstraintLayout clickAndCollectLayout = findViewById(R.id.click_and_collect_layout);
+        MaterialCardView checkoutCardView = findViewById(R.id.ship_to_address_card_view);
+        MaterialCardView clickAndCollectCardView = findViewById(R.id.click_and_collect_card_view);
+
+        TextInputEditText firstNameEditText = findViewById(R.id.firstNameEditText);
+        TextInputEditText lastNameEditText = findViewById(R.id.lastNameEditText);
+        addressEditText = findViewById(R.id.addressDetailsEditText);
+        ImageView mapImageView = findViewById(R.id.map_button);
+
+        TextInputEditText firstNameEditText2 = findViewById(R.id.firstNameEditText2);
+        TextInputEditText lastNameEditText2 = findViewById(R.id.lastNameEditText2);
+        addressEditText2 = findViewById(R.id.addressDetailsEditText2);
+        ImageView mapImageView2 = findViewById(R.id.map_button2);
+
+        AppCompatButton placeOrderButton = findViewById(R.id.place_order_button);
+
+        RecyclerView orderItemsRecyclerView = findViewById(R.id.order_items_recycler_view);
+        itemCounterTextView = findViewById(R.id.item_count);
+        subTotalTextView = findViewById(R.id.totalPrice);
+        taxTextView = findViewById(R.id.VATPrice);
+        orderTotalTextView = findViewById(R.id.orderTotalPrice);
+
+
+        checkoutCardView.setOnClickListener(v -> shipToAddressCheckBox.performClick());
+        clickAndCollectCardView.setOnClickListener(v -> clickAndCollectCheckBox.performClick());
+
+        itemCounterTextView.setText(String.valueOf(userInteraction.getCartList().size()));
+        subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
+        taxTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
+        orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 1.1)));
+
+        AppCompatCheckBox cashOnDeliveryCheckBox = findViewById(R.id.cash_on_delivery_check_box);
+
+        addressEditText.setOnClickListener(v -> mapImageView.performClick());
+
+        addressEditText2.setOnClickListener(v -> mapImageView2.performClick());
+
+        toolbar.setNavigationOnClickListener(v1 -> {
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
+        });
+
+        int columnWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70,
+                getResources().getDisplayMetrics());
+        toolbar.setTitle("Checkout");
+        GridAutoFitLayoutManager gridAutoFitLayoutManager = new GridAutoFitLayoutManager(this, columnWidth,LinearLayoutManager.VERTICAL,  false);
+        orderItemsRecyclerView.setAdapter(new CheckOutItemAdapter(userInteraction.getCartList()));
+        orderItemsRecyclerView.setLayoutManager(gridAutoFitLayoutManager);
+        mapImageView2.setOnClickListener(v -> {
+            Intent intent = new Intent(CartActivity.this, MapsActivity.class);
+            startActivityForResult(intent, MAP_REQUEST_CODE);
+        });
+
+        mapImageView.setOnClickListener(v -> {
+            Intent intent = new Intent(CartActivity.this, MapsActivity.class);
+            startActivityForResult(intent, MAP_REQUEST_CODE);
+        });
+
+        placeOrderButton.setOnClickListener(v -> {
+            if (shipToAddressCheckBox.isChecked()) {
+                if (firstNameEditText.getText().toString().isEmpty()) {
+                    firstNameEditText.setError("Please enter your first name");
+                    firstNameEditText.requestFocus();
+                    return;
+                }
+                if (lastNameEditText.getText().toString().isEmpty()) {
+                    lastNameEditText.setError("Please enter your last name");
+                    lastNameEditText.requestFocus();
+                    return;
+                }
+                if (addressEditText.getText().toString().isEmpty()) {
+                    addressEditText.setError("Please enter your address");
+                    addressEditText.requestFocus();
+                    return;
+                }
+            }
+            if (clickAndCollectCheckBox.isChecked()) {
+                if (firstNameEditText2.getText().toString().isEmpty()) {
+                    firstNameEditText2.setError("Please enter your first name");
+                    firstNameEditText2.requestFocus();
+                    return;
+                }
+                if (lastNameEditText2.getText().toString().isEmpty()) {
+                    lastNameEditText2.setError("Please enter your last name");
+                    lastNameEditText2.requestFocus();
+                    return;
+                }
+                if (addressEditText2.getText().toString().isEmpty()) {
+                    addressEditText2.setError("Please enter your address");
+                    addressEditText2.requestFocus();
+                    return;
+                }
+            }
+            if (!cashOnDeliveryCheckBox.isChecked()) {
+                cashOnDeliveryCheckBox.setError("Please select a payment method");
+                cashOnDeliveryCheckBox.requestFocus();
+            }
+            Bundle bundle = new Bundle();
+            bundle.putString("message", "ordered");
+            bundle.putString("button", "Continue Shopping");
+            getMainActivityInstance().productRepository.updateProductAfterCheckout(userInteraction.getCartList());
+            getMainActivityInstance().navController.navigate(R.id.successActivity, bundle);
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
+            getMainActivityInstance().userInteraction.clearCart();
+        });
+
+        shipToAddressCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                shipToAddressLayout.setVisibility(View.VISIBLE);
+                clickAndCollectCheckBox.setChecked(false);
+                clickAndCollectLayout.setVisibility(View.GONE);
+            } else {
+                shipToAddressLayout.setVisibility(View.GONE);
+            }
+        });
+
+        clickAndCollectCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                clickAndCollectLayout.setVisibility(View.VISIBLE);
+                shipToAddressCheckBox.setChecked(false);
+                shipToAddressLayout.setVisibility(View.GONE);
+            } else {
+                clickAndCollectLayout.setVisibility(View.GONE);
+            }
+        });
+
+        MainActivity mainActivity = getMainActivityInstance();
+        if (mainActivity.userInteraction.getCartTotalPrice() < 999000) {
+            freeShip.setVisibility(View.VISIBLE);
+        } else {
+            freeShip.setVisibility(View.GONE);
+        }
+
+        checkoutButton.setOnClickListener(v -> {
+            if (shipToAddressCheckBox.isChecked()) {
+                if (firstNameEditText.getText().toString().isEmpty()) {
+                    firstNameEditText.setError("Please enter your first name");
+                    firstNameEditText.requestFocus();
+                    return;
+                }
+                if (lastNameEditText.getText().toString().isEmpty()) {
+                    lastNameEditText.setError("Please enter your last name");
+                    lastNameEditText.requestFocus();
+                    return;
+                }
+                if (addressEditText.getText().toString().isEmpty()) {
+                    addressEditText.setError("Please enter your address");
+                    addressEditText.requestFocus();
+                    return;
+                }
+            }
+            if (clickAndCollectCheckBox.isChecked()) {
+                if (firstNameEditText2.getText().toString().isEmpty()) {
+                    firstNameEditText2.setError("Please enter your first name");
+                    firstNameEditText2.requestFocus();
+                    return;
+                }
+                if (lastNameEditText2.getText().toString().isEmpty()) {
+                    lastNameEditText2.setError("Please enter your last name");
+                    lastNameEditText2.requestFocus();
+                    return;
+                }
+                if (addressEditText2.getText().toString().isEmpty()) {
+                    addressEditText2.setError("Please enter your address");
+                    addressEditText2.requestFocus();
+                    return;
+                }
+            }
+            if (!cashOnDeliveryCheckBox.isChecked()) {
+                cashOnDeliveryCheckBox.setError("Please select a payment method");
+                cashOnDeliveryCheckBox.requestFocus();
+            }
+        });
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MAP_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String address = data.getStringExtra("address");
+                addressEditText.setText(address);
+                addressEditText2.setText(address);
+            }
+        }
     }
 }

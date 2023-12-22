@@ -9,7 +9,7 @@ public class Product extends Item {
     private final String description;
     private final Integer price;
     private final String category;
-    private final Integer availableQuantity;
+    private Integer availableQuantity;
     private final List<ProductImage> imageList = new ArrayList<>();
     private final List<ProductColor> colorList = new ArrayList<>();
     private final List<ProductSize> sizeList = new ArrayList<>();
@@ -64,6 +64,9 @@ public class Product extends Item {
 
     public Integer getAvailableQuantity() {
         return availableQuantity;
+    }
+    public void setAvailableQuantity(Integer quantity) {
+        availableQuantity = quantity;
     }
 
     public int getId() {
