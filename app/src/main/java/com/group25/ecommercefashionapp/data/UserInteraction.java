@@ -53,4 +53,7 @@ public class UserInteraction {
         }
         return totalPrice;
     }
+    public void clearCart() {
+        cartList.clear();
+    }
 }

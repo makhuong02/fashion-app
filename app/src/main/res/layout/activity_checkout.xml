@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:tag="layout/fragment_cart_0">
+	
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+		android:id="@+id/coordinatorLayout"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintBottom_toTopOf="@+id/footer"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/app_bar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				app:layout_scrollFlags="scroll|enterAlways"
+				app:navigationIcon="@drawable/round_arrow_back_24"
+				app:popupTheme="@style/ThemeOverlay.AppCompat"
+				app:title="@string/cart" />
+			
+			<View
+				android:id="@+id/toolbar_shadow"
+				android:layout_width="match_parent"
+				android:layout_height="2dp"
+				android:background="@drawable/toolbar_dropshadow" />
+		
+		</com.google.android.material.appbar.AppBarLayout>
+		
+		
+		<androidx.core.widget.NestedScrollView
+			android:id="@+id/cart_nested_scroll_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@color/colorPrimary"
+			
+			app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+			
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="@color/primary_white"
+				android:orientation="vertical">
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@color/primary_white"
+					android:elevation="4dp"
+					android:orientation="vertical">
+					
+					<TextView
+						style="@style/Headline3"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/m_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:text="1.Delivery option"
+						android:textColor="@color/primary_black"
+						android:textSize="20sp" />
+					
+					<TextView
+						android:id="@+id/free_shipping_text"
+						style="@style/Caption1"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/m_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:text="Free shipping applies for home delivery orders above 999.000 VND and all in store pick up (Click &amp; Collect) orders."
+						android:textColor="@color/primary_black"
+						android:textSize="14sp"
+						android:visibility="visible" />
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/ship_to_address_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/xl_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingTop="@dimen/m_spacing"
+							android:paddingBottom="@dimen/m_spacing">
+							
+							<androidx.appcompat.widget.AppCompatCheckBox
+								android:id="@+id/ship_to_address_check_box"
+								android:layout_width="30dp"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:button="@drawable/check_box_checkout"
+								android:clickable="true"
+								android:focusable="true"
+								app:layout_constraintBottom_toBottomOf="@id/ship_to_address_text"
+								app:layout_constraintEnd_toStartOf="@id/ship_to_address_text"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="@id/ship_to_address_text" />
+							
+							<TextView
+								android:id="@+id/ship_to_address_text"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:text="Ship to address"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								android:textSize="18sp"
+								app:layout_constraintStart_toEndOf="@id/ship_to_address_check_box"
+								app:layout_constraintTop_toTopOf="parent" />
+							
+							<TextView
+								android:id="@+id/shipping_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:layout_marginTop="@dimen/xxs_spacing"
+								android:text="Shipping:"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								app:layout_constraintStart_toEndOf="@id/ship_to_address_check_box"
+								app:layout_constraintTop_toBottomOf="@id/ship_to_address_text" />
+							
+							<TextView
+								android:id="@+id/itemsText"
+								style="@style/H3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xxs_spacing"
+								android:text="50.000 VND"
+								android:textSize="17sp"
+								app:layout_constraintBottom_toBottomOf="@id/shipping_text"
+								app:layout_constraintStart_toEndOf="@id/shipping_text" />
+							
+							<androidx.constraintlayout.widget.ConstraintLayout
+								android:id="@+id/ship_to_address_layout"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:visibility="gone"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/shipping_text">
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/ship_to_address_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginTop="10dp"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toTopOf="parent" />
+								
+								<TextView
+									android:id="@+id/edit_shipping_address"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Edit shipping address"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="18sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toTopOf="@id/ship_to_address_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/required_text"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Required*"
+									android:textSize="13sp"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/edit_shipping_address"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/first_name_text"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="First Name*"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/required_text"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<com.google.android.material.textfield.TextInputLayout
+									android:id="@+id/firstNameInputLayout"
+									style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+									android:layout_width="0dp"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									app:endIconMode="clear_text"
+									app:helperTextTextColor="@color/error_red"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/first_name_text">
+									
+									<com.google.android.material.textfield.TextInputEditText
+										android:id="@+id/firstNameEditText"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:hint="Please enter your first name" />
+								</com.google.android.material.textfield.TextInputLayout>
+								
+								<TextView
+									android:id="@+id/last_name_text"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Last Name*"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/firstNameInputLayout"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<com.google.android.material.textfield.TextInputLayout
+									android:id="@+id/lastNameInputLayout"
+									style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+									android:layout_width="0dp"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									app:endIconMode="clear_text"
+									app:helperTextTextColor="@color/error_red"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/last_name_text">
+									
+									<com.google.android.material.textfield.TextInputEditText
+										android:id="@+id/lastNameEditText"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:hint="Please enter your last name" />
+								</com.google.android.material.textfield.TextInputLayout>
+								
+								<TextView
+									android:id="@+id/address_details_text"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Address Details*"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/lastNameInputLayout"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<com.google.android.material.textfield.TextInputLayout
+									android:id="@+id/addressDetailsInputLayout"
+									style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+									android:layout_width="0dp"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									app:endIconMode="clear_text"
+									android:foreground="?attr/selectableItemBackground"
+									app:helperTextTextColor="@color/error_red"
+									app:layout_constraintEnd_toStartOf="@id/map_button"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/address_details_text">
+									
+									<com.google.android.material.textfield.TextInputEditText
+										android:id="@+id/addressDetailsEditText"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:editable="false"
+										android:hint="Please select from map" />
+								</com.google.android.material.textfield.TextInputLayout>
+								
+								<ImageView
+									android:id="@+id/map_button"
+									android:layout_width="30dp"
+									android:layout_height="30dp"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:clickable="true"
+									android:focusable="true"
+									android:foreground="?attr/selectableItemBackground"
+									android:src="@drawable/google_maps"
+									app:layout_constraintBottom_toBottomOf="@+id/addressDetailsInputLayout"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toEndOf="@+id/addressDetailsInputLayout"
+									app:layout_constraintTop_toTopOf="@+id/addressDetailsInputLayout">
+								
+								</ImageView>
+								
+								<LinearLayout
+									android:id="@+id/current_location_layout"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:clickable="true"
+									android:focusable="true"
+									android:foreground="?attr/selectableItemBackground"
+									android:orientation="horizontal"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@+id/addressDetailsInputLayout">
+									
+									<ImageView
+										android:id="@+id/current_location_image"
+										android:layout_width="wrap_content"
+										android:layout_height="wrap_content"
+										android:src="@drawable/baseline_my_location_24">
+									
+									</ImageView>
+									
+									<TextView
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:layout_marginStart="@dimen/s_spacing"
+										android:text="Use current location">
+									
+									</TextView>
+								
+								</LinearLayout>
+								
+								<TextView
+									android:id="@+id/question_text"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:text="You may be contacted via phone or email if we have questions about your order and delivery."
+									android:textColor="@color/primary_black"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@+id/current_location_layout" />
+							
+							</androidx.constraintlayout.widget.ConstraintLayout>
+						
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					
+					</com.google.android.material.card.MaterialCardView>
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/click_and_collect_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/xl_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingTop="@dimen/m_spacing">
+							
+							<androidx.appcompat.widget.AppCompatCheckBox
+								android:id="@+id/click_and_collect_check_box"
+								android:layout_width="30dp"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:button="@drawable/check_box_checkout"
+								android:clickable="true"
+								android:focusable="true"
+								app:layout_constraintBottom_toBottomOf="@id/click_and_collect_text"
+								app:layout_constraintEnd_toStartOf="@id/click_and_collect_text"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="@id/click_and_collect_text" />
+							
+							<TextView
+								android:id="@+id/click_and_collect_text"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:text="Click &amp; Collect"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								android:textSize="18sp"
+								app:layout_constraintStart_toEndOf="@id/click_and_collect_check_box"
+								app:layout_constraintTop_toTopOf="parent" />
+							
+							<androidx.constraintlayout.widget.ConstraintLayout
+								android:id="@+id/click_and_collect_layout"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:visibility="gone"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/click_and_collect_text">
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/click_and_collect_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginTop="10dp"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toTopOf="parent" />
+								
+								<TextView
+									android:id="@+id/shop_name_text"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="ChicCloth .Co"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="18sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toTopOf="@id/click_and_collect_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/shop_address_text"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:text="227 Đ. Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh, Việt Nam"
+									android:textColor="@color/primary_black"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shop_name_text"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/billing_address_text"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Billing address"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="18sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shop_address_text"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/required2_text"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Required*"
+									android:textSize="13sp"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/billing_address_text"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/first_name_text2"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="First Name*"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/required2_text"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<com.google.android.material.textfield.TextInputLayout
+									android:id="@+id/firstNameInputLayout2"
+									style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+									android:layout_width="0dp"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									app:endIconMode="clear_text"
+									app:helperTextTextColor="@color/error_red"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/first_name_text2">
+									
+									<com.google.android.material.textfield.TextInputEditText
+										android:id="@+id/firstNameEditText2"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:hint="Please enter your first name" />
+								</com.google.android.material.textfield.TextInputLayout>
+								
+								<TextView
+									android:id="@+id/last_name_text2"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Last Name*"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/firstNameInputLayout2"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<com.google.android.material.textfield.TextInputLayout
+									android:id="@+id/lastNameInputLayout2"
+									style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+									android:layout_width="0dp"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									app:endIconMode="clear_text"
+									app:helperTextTextColor="@color/error_red"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/last_name_text2">
+									
+									<com.google.android.material.textfield.TextInputEditText
+										android:id="@+id/lastNameEditText2"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:hint="Please enter your last name" />
+								</com.google.android.material.textfield.TextInputLayout>
+								
+								<TextView
+									android:id="@+id/address_details_text2"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Address Details*"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/lastNameInputLayout2"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<com.google.android.material.textfield.TextInputLayout
+									android:id="@+id/addressDetailsInputLayout2"
+									style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
+									android:layout_width="0dp"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									app:endIconMode="clear_text"
+									android:foreground="?attr/selectableItemBackground"
+									app:helperTextTextColor="@color/error_red"
+									app:layout_constraintEnd_toStartOf="@id/map_button2"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/address_details_text2">
+									
+									<com.google.android.material.textfield.TextInputEditText
+										android:id="@+id/addressDetailsEditText2"
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:editable="false"
+										android:hint="Please select from map" />
+								</com.google.android.material.textfield.TextInputLayout>
+								
+								<ImageView
+									android:id="@+id/map_button2"
+									android:layout_width="30dp"
+									android:layout_height="30dp"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:clickable="true"
+									android:focusable="true"
+									android:foreground="?attr/selectableItemBackground"
+									android:src="@drawable/google_maps"
+									app:layout_constraintBottom_toBottomOf="@+id/addressDetailsInputLayout2"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toEndOf="@+id/addressDetailsInputLayout2"
+									app:layout_constraintTop_toTopOf="@+id/addressDetailsInputLayout2">
+								
+								</ImageView>
+								
+								<LinearLayout
+									android:id="@+id/current_location_layout2"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:clickable="true"
+									android:focusable="true"
+									android:foreground="?attr/selectableItemBackground"
+									android:orientation="horizontal"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@+id/addressDetailsInputLayout2">
+									
+									<ImageView
+										android:id="@+id/current_location_image2"
+										android:layout_width="wrap_content"
+										android:layout_height="wrap_content"
+										android:src="@drawable/baseline_my_location_24">
+									
+									</ImageView>
+									
+									<TextView
+										android:layout_width="match_parent"
+										android:layout_height="wrap_content"
+										android:layout_marginStart="@dimen/s_spacing"
+										android:text="Use current location">
+									
+									</TextView>
+								
+								</LinearLayout>
+								
+								<TextView
+									android:id="@+id/question_text2"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:text="You may be contacted via phone or email if we have questions about your order and delivery."
+									android:textColor="@color/primary_black"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@+id/current_location_layout2" />
+								
+								<View
+									android:layout_width="match_parent"
+									android:layout_height="20dp"
+									
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/question_text2" />
+							
+							</androidx.constraintlayout.widget.ConstraintLayout>
+						
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					
+					</com.google.android.material.card.MaterialCardView>
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/order_items_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/xl_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingTop="@dimen/m_spacing">
+							
+							
+							<TextView
+								android:id="@+id/order_items_text"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:text="Order items"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								android:textSize="18sp"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent" />
+							
+							<androidx.recyclerview.widget.RecyclerView
+								android:id="@+id/order_items_recycler_view"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:layout_marginTop="@dimen/m_spacing"
+								android:layout_marginEnd="@dimen/m_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								app:layout_constraintBottom_toBottomOf="parent"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/order_items_text"
+								app:layout_constraintVertical_bias="0.0">
+							
+							</androidx.recyclerview.widget.RecyclerView>
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					
+					</com.google.android.material.card.MaterialCardView>
+					
+					<View
+						android:layout_width="match_parent"
+						android:layout_height="20dp">
+					
+					</View>
+					
+					<TextView
+						style="@style/Headline3"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/m_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:text="2.Payment Option"
+						android:textColor="@color/primary_black"
+						android:textSize="20sp" />
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/cash_on_delivery_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/xl_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingTop="@dimen/m_spacing">
+							
+							<androidx.appcompat.widget.AppCompatCheckBox
+								android:id="@+id/cash_on_delivery_check_box"
+								android:layout_width="30dp"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:button="@drawable/check_box_checkout"
+								android:clickable="true"
+								android:focusable="true"
+								android:checked="true"
+								app:layout_constraintBottom_toBottomOf="@id/cash_on_delivery_text"
+								app:layout_constraintEnd_toStartOf="@id/cash_on_delivery_text"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="@id/cash_on_delivery_text" />
+							
+							<TextView
+								android:id="@+id/cash_on_delivery_text"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:text="Cash on delivery"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								android:textSize="18sp"
+								app:layout_constraintStart_toEndOf="@id/cash_on_delivery_check_box"
+								app:layout_constraintTop_toTopOf="parent" />
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					</com.google.android.material.card.MaterialCardView>
+					
+					<TextView
+						style="@style/Headline3"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/xxl_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:text="3.Order Summary"
+						android:textColor="@color/primary_black"
+						android:textSize="20sp" />
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/order_summary_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/xl_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:paddingTop="@dimen/m_spacing"
+							android:paddingBottom="@dimen/m_spacing">
+							
+							<TextView
+								android:id="@+id/order_summary"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/m_spacing"
+								android:text="Order Summary"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								android:textSize="18sp"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent" />
+							
+							<View
+								android:id="@+id/vertical_bar"
+								android:layout_width="0.3dp"
+								android:layout_height="0dp"
+								
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:layout_marginTop="@dimen/product_image_indicator_vertical_bar_margin"
+								android:layout_marginBottom="@dimen/product_image_indicator_vertical_bar_margin"
+								android:background="@color/primary_black"
+								app:layout_constraintBottom_toBottomOf="@id/order_summary"
+								app:layout_constraintStart_toEndOf="@id/order_summary"
+								app:layout_constraintTop_toTopOf="@id/order_summary" />
+							
+							<TextView
+								android:id="@+id/item_count"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:text="2"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								app:layout_constraintBottom_toBottomOf="@id/order_summary"
+								app:layout_constraintStart_toEndOf="@id/vertical_bar"
+								app:layout_constraintTop_toTopOf="@id/order_summary" />
+							
+							<TextView
+								android:id="@+id/item_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xxs_spacing"
+								android:text="item(s)"
+								android:textAllCaps="true"
+								android:textColor="@color/primary_black"
+								app:layout_constraintBottom_toBottomOf="@id/order_summary"
+								app:layout_constraintStart_toEndOf="@id/item_count"
+								app:layout_constraintTop_toTopOf="@id/order_summary" />
+							
+							
+							<androidx.constraintlayout.widget.ConstraintLayout
+								android:id="@+id/order_summary_detail_layout"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:visibility="visible"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/order_summary">
+								
+								
+								<TextView
+									android:id="@+id/totalText"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Item(s) subtotal"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toTopOf="parent"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/totalPrice"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:fontFamily="@font/uniqlopro_light"
+									android:text="1.568.000 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toTopOf="parent"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/item_subtotal_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/totalText" />
+								
+								<TextView
+									android:id="@+id/VATText"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="VAT (10%) included"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/VATPrice"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:fontFamily="@font/uniqlopro_light"
+									android:text="156.800 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/VAT_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/VATText" />
+								
+								<TextView
+									android:id="@+id/orderTotalText"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/xs_spacing"
+									android:text="Order Total"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/VAT_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/orderTotalPrice"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:text="1.568.000 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="18sp"
+									app:layout_constraintBottom_toBottomOf="@id/orderTotalText"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintVertical_bias="0.0" />
+							</androidx.constraintlayout.widget.ConstraintLayout>
+						
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					
+					</com.google.android.material.card.MaterialCardView>
+					
+					<androidx.appcompat.widget.AppCompatButton
+						android:id="@+id/place_order_button"
+						style="@style/H3"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/s_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:background="@color/primary_red"
+						android:foreground="?android:attr/selectableItemBackground"
+						android:text="Place Order"
+						android:textColor="@color/primary_white" />
+					
+					<View
+						android:layout_width="match_parent"
+						android:layout_height="20dp">
+					
+					</View>
+				</LinearLayout>
+				
+				<View
+					android:layout_width="match_parent"
+					android:layout_height="200dp">
+				
+				</View>
+			</LinearLayout>
+		</androidx.core.widget.NestedScrollView>
+	
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

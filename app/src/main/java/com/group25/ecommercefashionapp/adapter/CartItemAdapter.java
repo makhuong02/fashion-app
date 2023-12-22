@@ -69,8 +69,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         holder.productName.setText(product.getName());
         holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice())));
         holder.productId.setText(String.valueOf(product.getId()));
-        holder.productSize.setText(item.getSelectedColor().getName());
-        holder.productColor.setText(item.getSelectedSize().getName());
+        holder.productSize.setText(item.getSelectedSize().getName());
+        holder.productColor.setText(item.getSelectedColor().getName());
         holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice() * item.getQuantity())));
         holder.quantitySpinner.setAdapter(spinnerEntries);
         holder.quantitySpinner.setSelection(item.getQuantity() - 1);

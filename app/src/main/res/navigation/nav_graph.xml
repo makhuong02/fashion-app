@@ -119,4 +119,9 @@
 		android:name="com.group25.ecommercefashionapp.ui.activity.CartActivity"
 		android:label="Cart Activity"
 		tools:layout="@layout/activity_cart" />
+	<activity
+		android:id="@+id/mapsActivity"
+		android:name="com.group25.ecommercefashionapp.ui.activity.MapsActivity"
+		android:label="Maps Activity"
+		tools:layout="@layout/activity_maps" />
 </navigation>
