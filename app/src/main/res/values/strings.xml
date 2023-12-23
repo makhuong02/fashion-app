@@ -125,4 +125,12 @@
 	<string name="add_to_cart">ADD TO CART</string>
     <string name="view_size_chart">View size chart</string>
     <string name="google_maps_key">AIzaSyDuaOUxgO2p1P0KR9YL_Wwfz8Au1n56dhQ</string>
+    <string name="order_history_1_line">Order History</string>
+    <string name="return_to_membership">Return to Membership</string>
+	<string name="text_order_history_count_item">%1$d ITEM(S)</string>
+	<string name="cancel_order">Cancel Order</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+	<string name="order_history_details">Order History Details</string>
+	<string name="return_to_order_history">Return to Order History</string>
 </resources>

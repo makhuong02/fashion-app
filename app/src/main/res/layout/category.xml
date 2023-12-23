@@ -4,7 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="#D1E5F4"
+	android:background="@color/tertiary_gray_050"
 	android:orientation="vertical">
 	
 	<com.google.android.material.appbar.AppBarLayout
@@ -15,11 +15,17 @@
 			android:id="@+id/topAppBar"
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
-			app:contentScrim="#D1E5F4"
+			android:background="@color/primary_white"
 			app:layout_collapseMode="pin"
 			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
+			app:titleTextAppearance="@style/ToolbarTitleText"
+			app:titleTextColor="@color/primary_black"
 			app:title="@string/category" />
-	
+		<View
+			android:id="@+id/toolbar_shadow"
+			android:layout_width="match_parent"
+			android:layout_height="2dp"
+			android:background="@drawable/toolbar_dropshadow" />
 	</com.google.android.material.appbar.AppBarLayout>
 	
 	<androidx.core.widget.NestedScrollView

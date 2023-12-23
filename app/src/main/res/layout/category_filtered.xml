@@ -4,7 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:background="#D1E5F4"
+	android:background="@color/tertiary_gray_050"
 	android:orientation="vertical">
 	
 	<com.google.android.material.appbar.AppBarLayout
@@ -21,7 +21,11 @@
 			app:navigationIcon="@drawable/round_arrow_back_24"
 			app:menu="@menu/category_action_menu"
 			app:title="Áo thun" />
-	
+		<View
+			android:id="@+id/toolbar_shadow"
+			android:layout_width="match_parent"
+			android:layout_height="2dp"
+			android:background="@drawable/toolbar_dropshadow" />
 	</com.google.android.material.appbar.AppBarLayout>
 	
 	<androidx.core.widget.NestedScrollView
@@ -30,23 +34,13 @@
 		android:elevation="5dp"
 		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 		
-		<LinearLayout
+			
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/productRecyclerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:orientation="vertical">
-			
-			<androidx.recyclerview.widget.RecyclerView
-				android:id="@+id/productRecyclerView"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_margin="5dp"
-				android:horizontalSpacing="10dp"
-				android:numColumns="2"
-				android:verticalSpacing="10dp"
-				tools:layout_editor_absoluteX="4dp"
-				tools:layout_editor_absoluteY="-130dp" />
-			
-		</LinearLayout>
+			/>
+		
 	</androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

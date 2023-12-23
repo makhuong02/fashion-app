@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:tag="layout/fragment_favorite_product_list_0">
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/layout_tools"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/primary_white"
+		android:elevation="4dp"
+		android:tag="binding_1">
+		
+		<TextView
+			android:id="@+id/text_order_history_count"
+			style="@style/Body2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:tag="binding_2"
+			android:text="@string/text_favorite_count"
+			android:textAllCaps="true"
+			android:textColor="@color/primary_black"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<include
+			android:id="@+id/app_toolbar"
+			layout="@layout/view_progressbar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintTop_toBottomOf="@+id/text_order_history_count" />
+	</androidx.constraintlayout.widget.ConstraintLayout>
+	
+	<androidx.core.widget.NestedScrollView
+		android:id="@+id/cart_nested_scroll_view"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+		
+		
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:elevation="4dp"
+				android:orientation="vertical">
+				
+				<TextView
+					style="@style/Headline3"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/m_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					android:text="@string/order_history_1_line"
+					android:textColor="@color/primary_black"
+					android:textSize="20sp" />
+				
+				
+				<TextView
+					android:id="@+id/cancel_order_message"
+					style="@style/Caption1"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/m_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					android:text="You can cancel your order within 30 minutes by clicking on the &quot;Cancel Order&quot; button after your order has been placed."
+					android:textColor="@color/primary_black"
+					android:textSize="14sp"
+					android:visibility="visible" />
+				
+				<com.google.android.material.card.MaterialCardView
+					android:id="@+id/no_order_card_view"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="@dimen/l_spacing"
+					android:clickable="true"
+					android:focusable="true"
+					android:foreground="?android:attr/selectableItemBackground"
+					app:cardBackgroundColor="@color/primary_white"
+					app:cardCornerRadius="0dp"
+					app:cardElevation="4dp"
+					app:strokeWidth="0dp">
+					
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/m_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:layout_marginBottom="@dimen/m_spacing"
+						android:text="We have no orders for this account."
+						android:textColor="@color/primary_black"
+						android:textSize="14sp"/>
+				</com.google.android.material.card.MaterialCardView>
+				
+				
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/order_history_recycler_view"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:layout_marginTop="@dimen/m_spacing"
+					
+					app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+					app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+			
+			
+			
+			
+			</LinearLayout>
+			<androidx.appcompat.widget.AppCompatButton
+				android:id="@+id/return_to_membership_button"
+				style="@style/H3"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="@dimen/m_spacing"
+				android:layout_marginTop="@dimen/m_spacing"
+				android:layout_marginEnd="@dimen/m_spacing"
+				android:layout_marginBottom="@dimen/m_spacing"
+				android:background="@color/primary_black"
+				android:foreground="?android:attr/selectableItemBackground"
+				android:text="@string/return_to_membership"
+				android:textColor="@color/primary_white" />
+		</LinearLayout>
+	</androidx.core.widget.NestedScrollView>
+</LinearLayout>
+

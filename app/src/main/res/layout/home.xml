@@ -15,11 +15,16 @@
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-			app:contentScrim="#D1E5F4"
+			app:titleTextAppearance="@style/ToolbarTitleText"
+			app:titleTextColor="@color/primary_black"
 			app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
 			app:layout_collapseMode="pin"
 			app:title="@string/home" />
-	
+		<View
+			android:id="@+id/toolbar_shadow"
+			android:layout_width="match_parent"
+			android:layout_height="2dp"
+			android:background="@drawable/toolbar_dropshadow" />
 	</com.google.android.material.appbar.AppBarLayout>
 	
 	

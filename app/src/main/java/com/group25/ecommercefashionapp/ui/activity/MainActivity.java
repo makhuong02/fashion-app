@@ -64,6 +64,10 @@ public class MainActivity extends AppCompatActivity {
         if(sharedPreferences.getUserCartList() != null) {
             userInteraction.setCartList(sharedPreferences.getUserCartList());
         }
+        if(sharedPreferences.getUserOrderList() != null) {
+            userInteraction.setOrderList(sharedPreferences.getUserOrderList());
+        }
+
     }
 
     private void login(LoginActivity.LoginInfo loginInfo) {
