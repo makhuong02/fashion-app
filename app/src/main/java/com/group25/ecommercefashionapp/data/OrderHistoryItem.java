@@ -1,5 +1,7 @@
 package com.group25.ecommercefashionapp.data;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import java.util.List;
 
 public class OrderHistoryItem extends Item {
@@ -72,6 +74,14 @@ public class OrderHistoryItem extends Item {
     }
 
     public int getTotalPrice() {
+        return totalPrice;
+    }
+
+    public int getCartTotalPrice() {
+        int totalPrice = 0;
+        for(CartItem cartItem : cartList) {
+            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice();
+        }
         return totalPrice;
     }
 

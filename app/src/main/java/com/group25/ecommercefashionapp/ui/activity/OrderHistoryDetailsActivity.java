@@ -95,29 +95,29 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         cartRecyclerView.setAdapter(orderHistorySummaryItemAdapter);
 
         if (!orderHistoryItem.getAddress().equals("")) {
-            if (userInteraction.getCartTotalPrice() < 999000) {
-                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
+            if (orderHistoryItem.getCartTotalPrice() < 999000) {
+                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
                 shippingFee.setText(getString(R.string.product_price, VNDFormat.format(50000)));
-                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() + 50000)));
-                VATPrice.setText(getString(R.string.product_price, VNDFormat.format((userInteraction.getCartTotalPrice() + 50000) * 0.1)));
-                totalOrderPrice = (int) ((userInteraction.getCartTotalPrice() + 50000) * 1.1);
+                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() + 50000)));
+                VATPrice.setText(getString(R.string.product_price, VNDFormat.format((orderHistoryItem.getCartTotalPrice() + 50000) * 0.1)));
+                totalOrderPrice = (int) ((orderHistoryItem.getCartTotalPrice() + 50000) * 1.1);
                 orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
             } else {
-                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
+                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
                 shippingFee.setVisibility(View.GONE);
                 shippingFeeTextView.setVisibility(View.GONE);
                 shippingFeeDivider.setVisibility(View.GONE);
-                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-                VATPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
+                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
+                VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() * 0.1)));
                 orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
             }
         } else {
-            totalPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
+            totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
             shippingFeeTextView.setVisibility(View.GONE);
             shippingFee.setVisibility(View.GONE);
             shippingFeeDivider.setVisibility(View.GONE);
-            subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-            VATPrice.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
+            subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
+            VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() * 0.1)));
             orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
 
         }
