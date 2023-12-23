@@ -1,6 +1,7 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+import static com.group25.ecommercefashionapp.ui.activity.MapsActivity.getCurrentAddress;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.group25.ecommercefashionapp.AddressCallback;
+import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CartItemAdapter;
@@ -32,6 +35,7 @@ import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -226,20 +230,22 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         ConstraintLayout shipToAddressLayout = findViewById(R.id.ship_to_address_layout);
         AppCompatCheckBox clickAndCollectCheckBox = findViewById(R.id.click_and_collect_check_box);
         ConstraintLayout clickAndCollectLayout = findViewById(R.id.click_and_collect_layout);
-        MaterialCardView checkoutCardView = findViewById(R.id.ship_to_address_card_view);
-        MaterialCardView clickAndCollectCardView = findViewById(R.id.click_and_collect_card_view);
 
+        MaterialCardView ship_to_address_card_view = findViewById(R.id.ship_to_address_card_view);
         TextInputEditText firstNameEditText = findViewById(R.id.firstNameEditText);
         TextInputEditText lastNameEditText = findViewById(R.id.lastNameEditText);
         addressEditText = findViewById(R.id.addressDetailsEditText);
         ImageView mapImageView = findViewById(R.id.map_button);
+        TextView setCurrentLocationTextView = findViewById(R.id.current_location_text);
 
         TextInputEditText firstNameEditText2 = findViewById(R.id.firstNameEditText2);
         TextInputEditText lastNameEditText2 = findViewById(R.id.lastNameEditText2);
         addressEditText2 = findViewById(R.id.addressDetailsEditText2);
         ImageView mapImageView2 = findViewById(R.id.map_button2);
+        TextView setCurrentLocationTextView2 = findViewById(R.id.current_location_text2);
 
         AppCompatButton placeOrderButton = findViewById(R.id.place_order_button);
+        AppCompatCheckBox cashOnDeliveryCheckBox = findViewById(R.id.cash_on_delivery_check_box);
 
         RecyclerView orderItemsRecyclerView = findViewById(R.id.order_items_recycler_view);
         itemCounterTextView = findViewById(R.id.item_count);
@@ -247,17 +253,23 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         taxTextView = findViewById(R.id.VATPrice);
         orderTotalTextView = findViewById(R.id.orderTotalPrice);
 
-
-        checkoutCardView.setOnClickListener(v -> shipToAddressCheckBox.performClick());
-        clickAndCollectCardView.setOnClickListener(v -> clickAndCollectCheckBox.performClick());
-
         itemCounterTextView.setText(String.valueOf(userInteraction.getCartList().size()));
         subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
         taxTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
         orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 1.1)));
 
-        AppCompatCheckBox cashOnDeliveryCheckBox = findViewById(R.id.cash_on_delivery_check_box);
-
+        setCurrentLocationTextView.setOnClickListener(v -> getCurrentAddress(this, new AddressCallback() {
+            @Override
+            public void onAddressReceived(String address) {
+                addressEditText.setText(address);
+            }
+        }));
+        setCurrentLocationTextView2.setOnClickListener(v -> getCurrentAddress(this, new AddressCallback() {
+            @Override
+            public void onAddressReceived(String address) {
+                addressEditText2.setText(address);
+            }
+        }));
         addressEditText.setOnClickListener(v -> mapImageView.performClick());
 
         addressEditText2.setOnClickListener(v -> mapImageView2.performClick());
@@ -274,16 +286,35 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         orderItemsRecyclerView.setAdapter(new CheckOutItemAdapter(userInteraction.getCartList()));
         orderItemsRecyclerView.setLayoutManager(gridAutoFitLayoutManager);
         mapImageView2.setOnClickListener(v -> {
+            mapImageView.setEnabled(false);
             Intent intent = new Intent(CartActivity.this, MapsActivity.class);
+            MapsActivity.OnMapLoadCompleteListener onMapLoadCompleteListener = new MapsActivity.OnMapLoadCompleteListener() {
+                @Override
+                public void onMapLoadComplete() {
+                    mapImageView.setEnabled(true);
+                }
+            };
             startActivityForResult(intent, MAP_REQUEST_CODE);
         });
 
         mapImageView.setOnClickListener(v -> {
+            mapImageView.setEnabled(false);
             Intent intent = new Intent(CartActivity.this, MapsActivity.class);
+            MapsActivity.OnMapLoadCompleteListener onMapLoadCompleteListener = new MapsActivity.OnMapLoadCompleteListener() {
+                @Override
+                public void onMapLoadComplete() {
+                    mapImageView.setEnabled(true);
+                }
+            };
             startActivityForResult(intent, MAP_REQUEST_CODE);
         });
 
         placeOrderButton.setOnClickListener(v -> {
+            if(!clickAndCollectCheckBox.isChecked() && !shipToAddressCheckBox.isChecked()){
+                ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Checkout Failed","Please select a delivery method");
+                errorDialogFragment.show(getSupportFragmentManager(), "error");
+                return;
+            }
             if (shipToAddressCheckBox.isChecked()) {
                 if (firstNameEditText.getText().toString().isEmpty()) {
                     firstNameEditText.setError("Please enter your first name");
@@ -358,48 +389,6 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         } else {
             freeShip.setVisibility(View.GONE);
         }
-
-        checkoutButton.setOnClickListener(v -> {
-            if (shipToAddressCheckBox.isChecked()) {
-                if (firstNameEditText.getText().toString().isEmpty()) {
-                    firstNameEditText.setError("Please enter your first name");
-                    firstNameEditText.requestFocus();
-                    return;
-                }
-                if (lastNameEditText.getText().toString().isEmpty()) {
-                    lastNameEditText.setError("Please enter your last name");
-                    lastNameEditText.requestFocus();
-                    return;
-                }
-                if (addressEditText.getText().toString().isEmpty()) {
-                    addressEditText.setError("Please enter your address");
-                    addressEditText.requestFocus();
-                    return;
-                }
-            }
-            if (clickAndCollectCheckBox.isChecked()) {
-                if (firstNameEditText2.getText().toString().isEmpty()) {
-                    firstNameEditText2.setError("Please enter your first name");
-                    firstNameEditText2.requestFocus();
-                    return;
-                }
-                if (lastNameEditText2.getText().toString().isEmpty()) {
-                    lastNameEditText2.setError("Please enter your last name");
-                    lastNameEditText2.requestFocus();
-                    return;
-                }
-                if (addressEditText2.getText().toString().isEmpty()) {
-                    addressEditText2.setError("Please enter your address");
-                    addressEditText2.requestFocus();
-                    return;
-                }
-            }
-            if (!cashOnDeliveryCheckBox.isChecked()) {
-                cashOnDeliveryCheckBox.setError("Please select a payment method");
-                cashOnDeliveryCheckBox.requestFocus();
-            }
-        });
-
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -411,5 +400,11 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                 addressEditText2.setText(address);
             }
         }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MySharedPreferences sharedPreferences = new MySharedPreferences(this);
+        sharedPreferences.putUserCartList(getMainActivityInstance().userInteraction.getCartList());
     }
 }

@@ -1,5 +1,7 @@
 package com.group25.ecommercefashionapp.ui.fragment.category;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.group25.ecommercefashionapp.MySharedPreferences;
+import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
@@ -50,7 +54,12 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
         mainActivity = (MainActivity) getActivity();
 
         cart.setOnClickListener(v -> {
-            mainActivity.navController.navigate(R.id.cartActivity);
+            if (UserStatus._isLoggedIn){
+                getMainActivityInstance().navController.navigate(R.id.cartActivity);
+            }
+            else {
+                getMainActivityInstance().navController.navigate(R.id.loginActivity);
+            }
         });
 
         ProductRepository productRepository = mainActivity.productRepository;
@@ -72,6 +81,7 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
 //            }
 //            return false;
 //        });
+        adapter.notifyDataSetChanged();
         mainActivity.updateNavigationBarState(R.id.categoryBotNav);
         return view;
     }
@@ -91,5 +101,11 @@ public class CategoryFilteredFragment extends Fragment implements OnItemClickLis
 
         // Start the activity for sharing
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MySharedPreferences sharedPreferences = new MySharedPreferences(requireContext());
+        sharedPreferences.putUserFavoriteList(getMainActivityInstance().userInteraction.getFavoriteList());
     }
 }

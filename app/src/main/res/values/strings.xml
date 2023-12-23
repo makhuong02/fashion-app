@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ChicCloth .Co</string>
+    <string name="app_name">ChicCloth</string>
     <string name="content_description_media">Media content description</string>
     <string name="profile">Profile</string>
     <string name="secondary_text">Secondary Text</string>

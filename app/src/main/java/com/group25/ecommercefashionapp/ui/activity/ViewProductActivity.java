@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
@@ -34,6 +35,7 @@ import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.CartAddedDialogFragment;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 
@@ -145,7 +147,14 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             mainActivity.navController.popBackStack();
             onBackPressed();
         });
-        cart.setOnClickListener(v -> mainActivity.navController.navigate(R.id.cartActivity));
+        cart.setOnClickListener(v ->
+        {
+            if (UserStatus._isLoggedIn) {
+                getMainActivityInstance().navController.navigate(R.id.cartActivity);
+            } else {
+                getMainActivityInstance().navController.navigate(R.id.loginActivity);
+            }
+        });
     }
 
     private void shareContent() {
@@ -216,5 +225,12 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     }
     public void onFavoriteButtonClicked(View view) {
         favoriteCheckBox.performClick(); // This will simulate a click on the FavoriteCheckBox
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        MySharedPreferences sharedPreferences = new MySharedPreferences(this);
+        sharedPreferences.putUserFavoriteList(getMainActivityInstance().userInteraction.getFavoriteList());
+        sharedPreferences.putUserCartList(getMainActivityInstance().userInteraction.getCartList());
     }
 }

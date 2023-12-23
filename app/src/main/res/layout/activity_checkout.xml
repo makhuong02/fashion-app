@@ -9,7 +9,6 @@
 		android:id="@+id/coordinatorLayout"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		app:layout_constraintBottom_toTopOf="@+id/footer"
 		app:layout_constraintTop_toTopOf="parent">
 		
 		<com.google.android.material.appbar.AppBarLayout
@@ -89,9 +88,6 @@
 						android:layout_marginStart="@dimen/m_spacing"
 						android:layout_marginTop="@dimen/xl_spacing"
 						android:layout_marginEnd="@dimen/m_spacing"
-						android:clickable="true"
-						android:focusable="true"
-						android:foreground="?android:attr/selectableItemBackground"
 						app:cardBackgroundColor="@color/primary_white"
 						app:cardCornerRadius="0dp"
 						app:cardElevation="4dp"
@@ -329,7 +325,7 @@
 								
 								</ImageView>
 								
-								<LinearLayout
+								<androidx.constraintlayout.widget.ConstraintLayout
 									android:id="@+id/current_location_layout"
 									android:layout_width="wrap_content"
 									android:layout_height="wrap_content"
@@ -347,19 +343,26 @@
 										android:id="@+id/current_location_image"
 										android:layout_width="wrap_content"
 										android:layout_height="wrap_content"
-										android:src="@drawable/baseline_my_location_24">
+										android:src="@drawable/baseline_my_location_24"
+										app:layout_constraintStart_toStartOf="parent"
+										app:layout_constraintTop_toTopOf="parent">
 									
 									</ImageView>
 									
 									<TextView
+										android:id="@+id/current_location_text"
 										android:layout_width="match_parent"
 										android:layout_height="wrap_content"
 										android:layout_marginStart="@dimen/s_spacing"
-										android:text="Use current location">
+										android:text="Use current location"
+										android:textColor="@color/noticeable"
+										app:layout_constraintStart_toEndOf="@+id/current_location_image"
+										app:layout_constraintTop_toTopOf="@+id/current_location_image"
+										app:layout_constraintBottom_toBottomOf="@+id/current_location_image">
 									
 									</TextView>
 								
-								</LinearLayout>
+								</androidx.constraintlayout.widget.ConstraintLayout>
 								
 								<TextView
 									android:id="@+id/question_text"
@@ -386,9 +389,6 @@
 						android:layout_marginStart="@dimen/m_spacing"
 						android:layout_marginTop="@dimen/xl_spacing"
 						android:layout_marginEnd="@dimen/m_spacing"
-						android:clickable="true"
-						android:focusable="true"
-						android:foreground="?android:attr/selectableItemBackground"
 						app:cardBackgroundColor="@color/primary_white"
 						app:cardCornerRadius="0dp"
 						app:cardElevation="4dp"
@@ -631,7 +631,7 @@
 								
 								</ImageView>
 								
-								<LinearLayout
+								<androidx.constraintlayout.widget.ConstraintLayout
 									android:id="@+id/current_location_layout2"
 									android:layout_width="wrap_content"
 									android:layout_height="wrap_content"
@@ -649,19 +649,27 @@
 										android:id="@+id/current_location_image2"
 										android:layout_width="wrap_content"
 										android:layout_height="wrap_content"
-										android:src="@drawable/baseline_my_location_24">
+										android:src="@drawable/baseline_my_location_24"
+										app:layout_constraintStart_toStartOf="parent"
+										app:layout_constraintTop_toTopOf="parent"
+										>
 									
 									</ImageView>
 									
 									<TextView
+										android:id="@+id/current_location_text2"
 										android:layout_width="match_parent"
 										android:layout_height="wrap_content"
 										android:layout_marginStart="@dimen/s_spacing"
-										android:text="Use current location">
+										android:text="Use current location"
+										android:textColor="@color/noticeable"
+										app:layout_constraintStart_toEndOf="@+id/current_location_image2"
+										app:layout_constraintTop_toTopOf="@+id/current_location_image2"
+										app:layout_constraintBottom_toBottomOf="@+id/current_location_image2">
 									
 									</TextView>
 								
-								</LinearLayout>
+								</androidx.constraintlayout.widget.ConstraintLayout>
 								
 								<TextView
 									android:id="@+id/question_text2"
