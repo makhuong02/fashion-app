@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.status.UserStatus;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -46,7 +47,12 @@ public class CartAddedDialogFragment extends DialogFragment {
         totalPriceTextView.setText(String.format("%s VND", VNDFormat.format(totalPrice)));
         // Set click listeners
         checkoutButton.setOnClickListener(v -> {
-            getMainActivityInstance().navController.navigate(R.id.cartActivity);
+            if (UserStatus._isLoggedIn){
+                getMainActivityInstance().navController.navigate(R.id.cartActivity);
+            }
+            else {
+                getMainActivityInstance().navController.navigate(R.id.loginActivity);
+            }
             dismiss();
         });
 

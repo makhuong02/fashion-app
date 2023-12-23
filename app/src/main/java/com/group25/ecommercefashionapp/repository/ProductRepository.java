@@ -145,6 +145,9 @@ public class ProductRepository {
     public void insertDbData() {
         db.beginTransaction();
         try {
+            if(!isDatabaseEmpty()) {
+                return;
+            }
             productDbHelper.onCreate(db);
             insertProductData(new Product("Beige Shirt", "Linen cotton fabric keep you warm through out the year.", 1500000, "Áo thun"));
             insertProductData(new Product("Beige Shirt", "Linen cotton fabric keep you warm through out the year.", 510000, "Áo thun"));
@@ -180,7 +183,20 @@ public class ProductRepository {
             db.endTransaction();
         }
     }
-
+    private boolean isDatabaseEmpty() {
+        // Check if the database has any records
+        Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + ProductContract.ProductEntry.TABLE_NAME, null);
+        if (cursor != null) {
+            try {
+                cursor.moveToFirst();
+                int count = cursor.getInt(0);
+                return count == 0;
+            } finally {
+                cursor.close();
+            }
+        }
+        return true;
+    }
     private void randomInsertProductColorData() {
         db.beginTransaction();
         try {

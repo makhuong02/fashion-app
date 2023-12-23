@@ -34,6 +34,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.group25.ecommercefashionapp.AddressCallback;
 import com.group25.ecommercefashionapp.R;
 
 import java.util.Arrays;
@@ -50,7 +51,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker selectedMarker;
     private AutocompleteSupportFragment searchView;
     FusedLocationProviderClient fusedLocationProviderClient;
-
+    private OnMapLoadCompleteListener onMapLoadCompleteListener;
+    public interface OnMapLoadCompleteListener {
+        void onMapLoadComplete();
+    }
+    public void setOnMapLoadCompleteListener(OnMapLoadCompleteListener onMapLoadCompleteListener) {
+        this.onMapLoadCompleteListener = onMapLoadCompleteListener;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +69,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         confirmBtn = findViewById(R.id.btnConfirmLocation);
         confirmBtn.setOnClickListener(v -> {
             if (selectedLatLng != null) {
-                Toast.makeText(this, convertLatLngToAddress(selectedLatLng), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, convertLatLngToAddress(this, selectedLatLng), Toast.LENGTH_SHORT).show();
                 Bundle getBundle = new Bundle();
-                getBundle.putString("address", convertLatLngToAddress(selectedLatLng));
+                getBundle.putString("address", convertLatLngToAddress(this, selectedLatLng));
                 Intent intent = new Intent();
                 intent.putExtras(getBundle);
                 setResult(RESULT_OK, intent);
@@ -90,6 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onError(@NonNull Status e) {
+                Toast.makeText(MapsActivity.this, "Error: " + e.getStatusMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -136,6 +144,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         this.map.getUiSettings().setAllGesturesEnabled(true);
         this.map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         this.map.animateCamera(CameraUpdateFactory.zoomTo(17));
+        if (onMapLoadCompleteListener != null) {
+            onMapLoadCompleteListener.onMapLoadComplete();
+        }
         googleMap.setOnCameraMoveListener(() -> {
               LatLng center = googleMap.getCameraPosition().target;
               if (selectedMarker == null) {
@@ -156,10 +167,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
-    private String convertLatLngToAddress(LatLng latLng) {
+    private static String convertLatLngToAddress(FragmentActivity activity, LatLng latLng) {
         String address = "";
         try {
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            Geocoder geocoder = new Geocoder(activity, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
             if (addresses != null && addresses.size() > 0) {
                 address = addresses.get(0).getAddressLine(0);
@@ -178,6 +189,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             } else {
                 Toast.makeText(this, "Location Permission is denied, please allow it to use this feature", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+    public static void getCurrentAddress(FragmentActivity activity, AddressCallback callback) {
+        try {
+            FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity);
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 100);
+                callback.onAddressReceived("Location Permission is denied, please allow it to use this feature");
+                return;
+            }
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+            task.addOnSuccessListener(location -> {
+                if (location != null) {
+                    LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                    String address = convertLatLngToAddress(activity, latLng);
+                    callback.onAddressReceived(address);
+                } else {
+                    callback.onAddressReceived("Location is null");
+                }
+            });
+        } catch (Exception e) {
+            Log.e("MapsActivity", "getCurrentAddress: " + e.getMessage());
+            callback.onAddressReceived("Error getting address");
         }
     }
 }

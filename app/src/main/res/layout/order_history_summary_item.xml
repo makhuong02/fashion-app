@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	
+		
+		<ImageView
+			android:id="@+id/item_image"
+			android:layout_width="0dp"
+			android:layout_height="130dp"
+			android:layout_marginTop="@dimen/m_spacing"
+			android:scaleType="centerCrop"
+			
+			app:layout_constraintDimensionRatio="h,1:1"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/order_summary_title"
+			app:layout_constraintVertical_bias="0"
+			app:srcCompat="@drawable/portrait_handsome_young_businessman"
+			android:contentDescription="@string/content_description_product_image" />
+		
+		<TextView
+			android:id="@+id/item_name"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/m_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:text="@string/decoy_product_name"
+			android:textColor="@color/primary_black"
+			android:textSize="18sp"
+			android:fontFamily="@font/uniqlopro_bold"
+			app:layout_constraintLeft_toRightOf="@id/item_image"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/order_summary_title"
+			app:layout_constraintBottom_toTopOf="@id/product_id"
+			/>
+		
+		<TextView
+			android:id="@+id/product_id_title"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:gravity="center_vertical"
+			android:lineSpacingExtra="6sp"
+			android:text="@string/text_productid"
+			android:textSize="14sp"
+			app:layout_constraintBottom_toTopOf="@+id/color_text_title"
+			app:layout_constraintLeft_toRightOf="@+id/item_image"
+			app:layout_constraintTop_toBottomOf="@+id/item_name" />
+		
+		<TextView
+			android:id="@+id/product_id_colon"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/text_symbol_colon"
+			android:textSize="14sp"
+			
+			app:layout_constraintBottom_toBottomOf="@+id/product_id_title"
+			app:layout_constraintStart_toEndOf="@+id/product_id_title"
+			app:layout_constraintTop_toTopOf="@+id/product_id_title" />
+		
+		<TextView
+			android:id="@+id/product_id"
+			style="@style/Caption1"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/xxs_spacing"
+			
+			android:lineSpacingExtra="6sp"
+			android:textSize="14sp"
+			app:layout_constrainedWidth="true"
+			
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/product_id_colon"
+			app:layout_constraintBottom_toBottomOf="@+id/product_id_title"
+			/>
+		
+		<TextView
+			android:id="@+id/color_text_title"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:text="@string/text_color"
+			android:textSize="14sp"
+			android:textColor="@color/primary_black"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/item_image"
+			app:layout_constraintTop_toBottomOf="@+id/product_id" />
+		
+		<TextView
+			android:id="@+id/product_color_colon"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/text_symbol_colon"
+			android:textSize="14sp"
+			android:textColor="@color/primary_black"
+			app:layout_constraintBottom_toBottomOf="@+id/color_text_title"
+			app:layout_constraintStart_toEndOf="@+id/color_text_title"
+			app:layout_constraintTop_toTopOf="@+id/color_text_title" />
+		
+		<TextView
+			android:id="@+id/product_color"
+			style="@style/Caption1"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/xxs_spacing"
+			android:layout_marginTop="@dimen/l_spacing"
+			android:lineSpacingExtra="6sp"
+			android:textSize="14sp"
+			android:textColor="@color/primary_black"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/product_color_colon"
+			app:layout_constraintBottom_toBottomOf="@id/color_text_title"/>
+		
+		<TextView
+			android:id="@+id/item_size_title"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:textSize="14sp"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:text="@string/text_size"
+			android:textColor="@color/primary_black"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/item_image"
+			app:layout_constraintTop_toBottomOf="@+id/product_color"
+			app:layout_constraintEnd_toEndOf="parent"
+			/>
+		
+		<TextView
+			android:id="@+id/product_size_colon"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/text_symbol_colon"
+			android:textSize="14sp"
+			android:textColor="@color/primary_black"
+			app:layout_constraintBottom_toBottomOf="@+id/item_size_title"
+			app:layout_constraintStart_toEndOf="@+id/item_size_title"
+			app:layout_constraintTop_toTopOf="@+id/item_size_title" />
+		
+		<TextView
+			android:id="@+id/product_size"
+			style="@style/Caption1"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/xxs_spacing"
+			android:layout_marginTop="@dimen/l_spacing"
+			android:lineSpacingExtra="6sp"
+			android:textColor="@color/primary_black"
+			android:textSize="14sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/product_size_colon"
+			app:layout_constraintBottom_toBottomOf="@id/item_size_title"
+			app:layout_constraintEnd_toEndOf="parent"
+			/>
+		
+		<TextView
+			android:id="@+id/item_price"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/m_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:fontFamily="@font/uniqlopro_bold"
+			android:textColor="@color/primary_black"
+			android:textSize="16sp"
+			android:text="@string/decoy_price"
+			app:layout_constraintLeft_toRightOf="@+id/item_image"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/product_size" />
+		
+		<TextView
+			android:id="@+id/product_quantity_text"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:textColor="@color/primary_black"
+			android:textSize="14sp"
+			android:text="Quantity:"
+			app:layout_constraintLeft_toRightOf="@+id/item_image"
+			
+			app:layout_constraintTop_toBottomOf="@+id/item_price" />
+		
+		<TextView
+			android:id="@+id/product_quantity"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/xxs_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:textColor="@color/primary_black"
+			android:textSize="14sp"
+			android:text="1"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/product_quantity_text"
+			app:layout_constraintTop_toBottomOf="@id/item_price" />
+		
+		
+		
+		
+		<TextView
+			android:id="@+id/subtotal_price_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/xs_spacing"
+			android:layout_marginEnd="@dimen/m_spacing"
+			android:fontFamily="@font/uniqlopro_bold"
+			android:text="@string/text_subtotal"
+			android:textSize="14sp"
+			android:textAllCaps="true"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toEndOf="@+id/item_image"
+			app:layout_constraintTop_toBottomOf="@+id/product_quantity_text" />
+		
+		<TextView
+			android:id="@+id/subtotal_colon"
+			style="@style/Caption1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/text_symbol_colon"
+			android:fontFamily="@font/uniqlopro_bold"
+			app:layout_constraintBottom_toBottomOf="@+id/subtotal_price_text"
+			app:layout_constraintStart_toEndOf="@+id/subtotal_price_text"
+			app:layout_constraintTop_toTopOf="@+id/subtotal_price_text" />
+		
+		<TextView
+			android:id="@+id/product_subtotal_price"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/xxs_spacing"
+			android:layout_marginTop="@dimen/xxs_spacing"
+			android:lineSpacingExtra="6sp"
+			android:fontFamily="@font/uniqlopro_bold"
+			android:textColor="@color/primary_black"
+			android:text="@string/decoy_price"
+			android:textSize="18sp"
+			app:layout_constrainedWidth="true"
+			app:layout_constraintBottom_toBottomOf="@+id/subtotal_price_text"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toEndOf="@+id/subtotal_colon"
+			app:layout_constraintTop_toBottomOf="@+id/product_quantity"
+			/>
+</androidx.constraintlayout.widget.ConstraintLayout>

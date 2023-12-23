@@ -30,7 +30,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
     Context context = null;
     private NestedScrollView nestedScrollView;
     private BottomNavigationView bottomNavigationView;
-    private MaterialCardView imageCardView, profileCardView, settingsCardView;
+    private MaterialCardView imageCardView, profileCardView, settingsCardView, orderHistoryCardView;
     private View view = null;
     List<ActionItem> items;
     float alpha = 1.0f;
@@ -51,6 +51,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
         nestedScrollView = view.findViewById(R.id.nestedScrollView);
         profileCardView = view.findViewById(R.id.profileCardView);
         settingsCardView = view.findViewById(R.id.settingsCardView);
+        orderHistoryCardView = view.findViewById(R.id.orderHistoryCardView);
 
 
         items = getActionItems();
@@ -70,6 +71,15 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
                 else {
                     mainActivity.navController.navigate(R.id.loginActivity);
                 }
+            }
+        });
+
+        orderHistoryCardView.setOnClickListener(v -> {
+            if (UserStatus._isLoggedIn){
+                mainActivity.navController.navigate(R.id.orderHistoryActivity);
+            }
+            else {
+                mainActivity.navController.navigate(R.id.loginActivity);
             }
         });
 

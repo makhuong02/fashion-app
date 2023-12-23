@@ -9,7 +9,6 @@
 		android:id="@+id/coordinatorLayout"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"
-		app:layout_constraintBottom_toTopOf="@+id/footer"
 		app:layout_constraintTop_toTopOf="parent">
 		
 		<com.google.android.material.appbar.AppBarLayout
@@ -89,9 +88,6 @@
 						android:layout_marginStart="@dimen/m_spacing"
 						android:layout_marginTop="@dimen/xl_spacing"
 						android:layout_marginEnd="@dimen/m_spacing"
-						android:clickable="true"
-						android:focusable="true"
-						android:foreground="?android:attr/selectableItemBackground"
 						app:cardBackgroundColor="@color/primary_white"
 						app:cardCornerRadius="0dp"
 						app:cardElevation="4dp"
@@ -329,7 +325,7 @@
 								
 								</ImageView>
 								
-								<LinearLayout
+								<androidx.constraintlayout.widget.ConstraintLayout
 									android:id="@+id/current_location_layout"
 									android:layout_width="wrap_content"
 									android:layout_height="wrap_content"
@@ -347,19 +343,26 @@
 										android:id="@+id/current_location_image"
 										android:layout_width="wrap_content"
 										android:layout_height="wrap_content"
-										android:src="@drawable/baseline_my_location_24">
+										android:src="@drawable/baseline_my_location_24"
+										app:layout_constraintStart_toStartOf="parent"
+										app:layout_constraintTop_toTopOf="parent">
 									
 									</ImageView>
 									
 									<TextView
+										android:id="@+id/current_location_text"
 										android:layout_width="match_parent"
 										android:layout_height="wrap_content"
 										android:layout_marginStart="@dimen/s_spacing"
-										android:text="Use current location">
+										android:text="Use current location"
+										android:textColor="@color/noticeable"
+										app:layout_constraintStart_toEndOf="@+id/current_location_image"
+										app:layout_constraintTop_toTopOf="@+id/current_location_image"
+										app:layout_constraintBottom_toBottomOf="@+id/current_location_image">
 									
 									</TextView>
 								
-								</LinearLayout>
+								</androidx.constraintlayout.widget.ConstraintLayout>
 								
 								<TextView
 									android:id="@+id/question_text"
@@ -386,9 +389,6 @@
 						android:layout_marginStart="@dimen/m_spacing"
 						android:layout_marginTop="@dimen/xl_spacing"
 						android:layout_marginEnd="@dimen/m_spacing"
-						android:clickable="true"
-						android:focusable="true"
-						android:foreground="?android:attr/selectableItemBackground"
 						app:cardBackgroundColor="@color/primary_white"
 						app:cardCornerRadius="0dp"
 						app:cardElevation="4dp"
@@ -576,92 +576,7 @@
 										android:hint="Please enter your last name" />
 								</com.google.android.material.textfield.TextInputLayout>
 								
-								<TextView
-									android:id="@+id/address_details_text2"
-									style="@style/Headline3"
-									android:layout_width="wrap_content"
-									android:layout_height="wrap_content"
-									android:layout_marginStart="@dimen/m_spacing"
-									android:layout_marginTop="@dimen/m_spacing"
-									android:layout_marginEnd="@dimen/m_spacing"
-									android:layout_marginBottom="@dimen/m_spacing"
-									android:text="Address Details*"
-									android:textAllCaps="true"
-									android:textColor="@color/primary_black"
-									android:textSize="16sp"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintTop_toBottomOf="@id/lastNameInputLayout2"
-									app:layout_constraintVertical_bias="0.0" />
 								
-								<com.google.android.material.textfield.TextInputLayout
-									android:id="@+id/addressDetailsInputLayout2"
-									style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox"
-									android:layout_width="0dp"
-									android:layout_height="wrap_content"
-									android:layout_marginStart="@dimen/m_spacing"
-									android:layout_marginEnd="@dimen/m_spacing"
-									app:endIconMode="clear_text"
-									android:foreground="?attr/selectableItemBackground"
-									app:helperTextTextColor="@color/error_red"
-									app:layout_constraintEnd_toStartOf="@id/map_button2"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintTop_toBottomOf="@id/address_details_text2">
-									
-									<com.google.android.material.textfield.TextInputEditText
-										android:id="@+id/addressDetailsEditText2"
-										android:layout_width="match_parent"
-										android:layout_height="wrap_content"
-										android:editable="false"
-										android:hint="Please select from map" />
-								</com.google.android.material.textfield.TextInputLayout>
-								
-								<ImageView
-									android:id="@+id/map_button2"
-									android:layout_width="30dp"
-									android:layout_height="30dp"
-									android:layout_marginEnd="@dimen/m_spacing"
-									android:clickable="true"
-									android:focusable="true"
-									android:foreground="?attr/selectableItemBackground"
-									android:src="@drawable/google_maps"
-									app:layout_constraintBottom_toBottomOf="@+id/addressDetailsInputLayout2"
-									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintStart_toEndOf="@+id/addressDetailsInputLayout2"
-									app:layout_constraintTop_toTopOf="@+id/addressDetailsInputLayout2">
-								
-								</ImageView>
-								
-								<LinearLayout
-									android:id="@+id/current_location_layout2"
-									android:layout_width="wrap_content"
-									android:layout_height="wrap_content"
-									android:layout_marginStart="@dimen/m_spacing"
-									android:layout_marginTop="@dimen/xs_spacing"
-									android:layout_marginEnd="@dimen/m_spacing"
-									android:clickable="true"
-									android:focusable="true"
-									android:foreground="?attr/selectableItemBackground"
-									android:orientation="horizontal"
-									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintTop_toBottomOf="@+id/addressDetailsInputLayout2">
-									
-									<ImageView
-										android:id="@+id/current_location_image2"
-										android:layout_width="wrap_content"
-										android:layout_height="wrap_content"
-										android:src="@drawable/baseline_my_location_24">
-									
-									</ImageView>
-									
-									<TextView
-										android:layout_width="match_parent"
-										android:layout_height="wrap_content"
-										android:layout_marginStart="@dimen/s_spacing"
-										android:text="Use current location">
-									
-									</TextView>
-								
-								</LinearLayout>
 								
 								<TextView
 									android:id="@+id/question_text2"
@@ -673,7 +588,7 @@
 									android:text="You may be contacted via phone or email if we have questions about your order and delivery."
 									android:textColor="@color/primary_black"
 									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintTop_toBottomOf="@+id/current_location_layout2" />
+									app:layout_constraintTop_toBottomOf="@+id/lastNameInputLayout2" />
 								
 								<View
 									android:layout_width="match_parent"
@@ -930,7 +845,6 @@
 									app:layout_constraintTop_toTopOf="parent"
 									app:layout_constraintVertical_bias="0.0" />
 								
-								
 								<com.google.android.material.divider.MaterialDivider
 									android:id="@+id/item_subtotal_divider"
 									android:layout_width="match_parent"
@@ -944,6 +858,97 @@
 									app:layout_constraintTop_toBottomOf="@id/totalText" />
 								
 								<TextView
+									android:id="@+id/shipping_fee_text"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Shipping fee"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/shipping_fee_price"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:fontFamily="@font/uniqlopro_light"
+									android:text="50.000 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/shipping_fee_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shipping_fee_text" />
+								
+								<TextView
+									android:id="@+id/subtotal_text"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Subtotal"
+									style="@style/H3"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shipping_fee_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/subtotal_price"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="1.618.000 VND"
+									style="@style/H3"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shipping_fee_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/subtotal_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/subtotal_text" />
+								
+								<TextView
 									android:id="@+id/VATText"
 									android:layout_width="wrap_content"
 									android:layout_height="wrap_content"
@@ -955,7 +960,7 @@
 									android:textSize="14sp"
 									app:layout_constraintBottom_toBottomOf="parent"
 									app:layout_constraintStart_toStartOf="parent"
-									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintTop_toBottomOf="@id/subtotal_divider"
 									app:layout_constraintVertical_bias="0.0" />
 								
 								<TextView
@@ -972,7 +977,7 @@
 									android:textSize="14sp"
 									app:layout_constraintBottom_toBottomOf="parent"
 									app:layout_constraintEnd_toEndOf="parent"
-									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintTop_toBottomOf="@id/subtotal_divider"
 									app:layout_constraintVertical_bias="0.0" />
 								
 								
@@ -1012,7 +1017,7 @@
 									android:layout_height="wrap_content"
 									android:layout_marginStart="@dimen/m_spacing"
 									android:layout_marginEnd="@dimen/m_spacing"
-									android:text="1.568.000 VND"
+									android:text="1.774.800 VND"
 									android:textColor="@color/primary_black"
 									android:textSize="18sp"
 									app:layout_constraintBottom_toBottomOf="@id/orderTotalText"

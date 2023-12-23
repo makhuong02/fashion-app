@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Product extends Item {
-    private final int id;
     private final String description;
     private final Integer price;
     private final String category;

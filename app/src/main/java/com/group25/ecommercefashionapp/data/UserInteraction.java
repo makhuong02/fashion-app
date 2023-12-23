@@ -8,14 +8,11 @@ import java.util.List;
 public class UserInteraction {
     private List<Product> favoriteList;
     private List<CartItem> cartList;
-    private List<Product> orderList;
-    private List<Product> productList;
-
+    private List<OrderHistoryItem> orderList;
     public UserInteraction() {
         this.favoriteList = new ArrayList<>();
         this.cartList = new ArrayList<>();
         this.orderList = new ArrayList<>();
-        this.productList = new ArrayList<>();
     }
     public void setFavoriteList(List<Product> favoriteList) {
         this.favoriteList = favoriteList;
@@ -56,4 +53,29 @@ public class UserInteraction {
     public void clearCart() {
         cartList.clear();
     }
+
+    public List<CartItem> shallowCopyCartList() {
+        List<CartItem> shallowCopy = new ArrayList<>();
+        for(CartItem cartItem : cartList) {
+            shallowCopy.add(new CartItem(cartItem.getProductId(), cartItem.getQuantity(), cartItem.getSelectedColor(), cartItem.getSelectedSize()));
+        }
+        return shallowCopy;
+    }
+
+    public void setOrderList(List<OrderHistoryItem> orderList) {
+        this.orderList = orderList;
+    }
+
+    public void addOrder(OrderHistoryItem orderHistoryItem) {
+        orderList.add(orderHistoryItem);
+    }
+
+    public void removeOrder(OrderHistoryItem orderHistoryItem) {
+        orderList.remove(orderHistoryItem);
+    }
+
+    public List<OrderHistoryItem> getOrderList() {
+        return orderList;
+    }
+
 }

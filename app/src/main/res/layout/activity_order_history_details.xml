@@ -1,0 +1,775 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/tertiary_gray_050"
+	android:tag="layout/fragment_cart_0">
+	
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+		android:id="@+id/coordinatorLayout"
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		app:layout_constraintTop_toTopOf="parent">
+		
+		<com.google.android.material.appbar.AppBarLayout
+			android:id="@+id/app_bar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			
+			<androidx.appcompat.widget.Toolbar
+				android:id="@+id/toolbar"
+				android:layout_width="match_parent"
+				android:layout_height="?attr/actionBarSize"
+				app:layout_scrollFlags="scroll|enterAlways"
+				app:navigationIcon="@drawable/round_arrow_back_24"
+				app:popupTheme="@style/ThemeOverlay.AppCompat"
+				app:title="@string/order_history_1_line" />
+			
+			<View
+				android:id="@+id/toolbar_shadow"
+				android:layout_width="match_parent"
+				android:layout_height="2dp"
+				android:background="@drawable/toolbar_dropshadow" />
+		
+		</com.google.android.material.appbar.AppBarLayout>
+		
+		<androidx.core.widget.NestedScrollView
+			android:id="@+id/cart_nested_scroll_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+			
+			
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical">
+				
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:elevation="4dp"
+					android:orientation="vertical">
+					
+					<TextView
+						style="@style/Headline3"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/m_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:text="@string/order_history_details"
+						android:textColor="@color/primary_black"
+						android:textSize="20sp" />
+					
+					
+					<TextView
+						android:id="@+id/cancel_order_message"
+						style="@style/Caption1"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="@dimen/m_spacing"
+						android:layout_marginTop="@dimen/m_spacing"
+						android:layout_marginEnd="@dimen/m_spacing"
+						android:text="If you want to cancel your order, please go to the order history page and click on the cancel button."
+						android:textColor="@color/primary_black"
+						android:textSize="14sp"
+						android:visibility="visible" />
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/order_details_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/l_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginTop="@dimen/ex_l_spacing"
+							android:layout_marginBottom="@dimen/ex_l_spacing"
+							android:layout_marginEnd="@dimen/m_spacing">
+							<TextView
+								android:id="@+id/order_date_text"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="Date of order">
+							
+							</TextView>
+							<TextView
+								android:id="@+id/order_date"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="23/12/2023"
+								app:layout_constraintStart_toEndOf="@id/order_date_text"
+								app:layout_constraintTop_toTopOf="parent"
+								>
+							</TextView>
+							<TextView
+								android:id="@+id/order_status_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Status:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/order_date_text"
+								/>
+							<TextView
+								android:id="@+id/order_status"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Delivered"
+								app:layout_constraintStart_toEndOf="@id/order_status_text"
+								app:layout_constraintBottom_toBottomOf="@id/order_status_text"
+								/>
+							<TextView
+								android:id="@+id/order_class_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xxs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Order class:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/order_status_text"
+								/>
+							<TextView
+								android:id="@+id/order_class"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Online Store"
+								app:layout_constraintStart_toEndOf="@id/order_class_text"
+								app:layout_constraintBottom_toBottomOf="@id/order_class_text"
+								/>
+							<TextView
+								android:id="@+id/order_total_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xxs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Order total:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/order_class_text"
+								/>
+							<TextView
+								android:id="@+id/order_total"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="100.000 VND"
+								style="@style/DirectFontRegular"
+								app:layout_constraintStart_toEndOf="@id/order_total_text"
+								app:layout_constraintBottom_toBottomOf="@id/order_total_text"
+								/>
+							
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					</com.google.android.material.card.MaterialCardView>
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/shipping_address_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/l_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginTop="@dimen/ex_l_spacing"
+							android:layout_marginBottom="@dimen/ex_l_spacing"
+							android:layout_marginEnd="@dimen/m_spacing">
+							<TextView
+								android:id="@+id/shipping_address_text"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="Shipping Address">
+							
+							</TextView>
+							<TextView
+								android:id="@+id/customer_name_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Name:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/shipping_address_text"
+								/>
+							<TextView
+								android:id="@+id/customer_name"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Nguyen Van A"
+								app:layout_constraintStart_toEndOf="@id/customer_name_text"
+								app:layout_constraintBottom_toBottomOf="@id/customer_name_text"
+								/>
+							<TextView
+								android:id="@+id/customer_address_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xxs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Address:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/customer_name"
+								/>
+							<TextView
+								android:id="@+id/customer_address"
+								android:layout_width="0dp"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="123 Nguyen Van A, Phuong Binh Thanh, Quan 1, TP HCM"
+								app:layout_constraintStart_toEndOf="@id/customer_address_text"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintTop_toTopOf="@id/customer_address_text"
+								/>
+							<TextView
+								android:id="@+id/customer_phone_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xxs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Phone:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/customer_address"
+								/>
+							<TextView
+								android:id="@+id/customer_phone"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="0123456789"
+								app:layout_constraintStart_toEndOf="@id/customer_phone_text"
+								app:layout_constraintBottom_toBottomOf="@id/customer_phone_text"
+								/>
+							
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					</com.google.android.material.card.MaterialCardView>
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/click_and_collect_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/l_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginTop="@dimen/ex_l_spacing"
+							android:layout_marginBottom="@dimen/ex_l_spacing"
+							android:layout_marginEnd="@dimen/m_spacing">
+							<TextView
+								android:id="@+id/click_and_collect_title"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="Click &amp; Collect">
+							
+							</TextView>
+							<TextView
+								android:id="@+id/store_name_text"
+								android:fontFamily="@font/uniqlopro_bold"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="ChicCloth"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/click_and_collect_title"
+								/>
+							<TextView
+								android:id="@+id/store_address_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xxs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="123 Nguyen Van A, Phuong Binh Thanh, Quan 1, TP HCM"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/store_name_text"
+								
+								>
+								
+								
+							</TextView>
+							
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					</com.google.android.material.card.MaterialCardView>
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/delivery_date_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/l_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginTop="@dimen/ex_l_spacing"
+							android:layout_marginBottom="@dimen/ex_l_spacing"
+							android:layout_marginEnd="@dimen/m_spacing">
+							<TextView
+								android:id="@+id/delivery_date_title"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="Delivery Date">
+							
+							</TextView>
+							<TextView
+								android:id="@+id/shipping_fee_price_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Shipping:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/delivery_date_title"
+								/>
+							<TextView
+								android:id="@+id/shipping_fee_price_delivery"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								style="@style/H3"
+								android:textSize="15sp"
+								android:text="10.000 VND"
+								app:layout_constraintStart_toEndOf="@id/shipping_fee_price_text"
+								app:layout_constraintBottom_toBottomOf="@id/shipping_fee_price_text"
+								/>
+							<TextView
+								android:id="@+id/delivery_date_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xxs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Delivery date:"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/shipping_fee_price_text"
+								/>
+							<TextView
+								android:id="@+id/delivery_date"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginStart="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="23/12/2023"
+								app:layout_constraintStart_toEndOf="@id/delivery_date_text"
+								app:layout_constraintBottom_toBottomOf="@id/delivery_date_text"
+								/>
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					</com.google.android.material.card.MaterialCardView>
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/payment_method_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/l_spacing"
+						android:layout_marginBottom="@dimen/m_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginTop="@dimen/ex_l_spacing"
+							android:layout_marginBottom="@dimen/ex_l_spacing"
+							android:layout_marginEnd="@dimen/m_spacing">
+							<TextView
+								android:id="@+id/payment_method_title"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="Payment Method">
+							
+							</TextView>
+							<TextView
+								android:id="@+id/payment_method_text"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/xs_spacing"
+								android:textColor="@color/primary_black"
+								android:textSize="14sp"
+								android:text="Cash on delivery"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/payment_method_title"
+								/>
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					</com.google.android.material.card.MaterialCardView>
+					
+					
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/order_summary_card_view"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="@dimen/l_spacing"
+						android:layout_marginBottom="@dimen/m_spacing"
+						android:clickable="true"
+						android:focusable="true"
+						android:foreground="?android:attr/selectableItemBackground"
+						app:cardBackgroundColor="@color/primary_white"
+						app:cardCornerRadius="0dp"
+						app:cardElevation="4dp"
+						app:strokeWidth="0dp">
+						<androidx.constraintlayout.widget.ConstraintLayout
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:layout_marginStart="@dimen/m_spacing"
+							android:layout_marginTop="@dimen/ex_l_spacing"
+							android:layout_marginBottom="@dimen/ex_l_spacing"
+							android:layout_marginEnd="@dimen/m_spacing">
+							<TextView
+								android:id="@+id/order_summary_title"
+								style="@style/Headline3"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toTopOf="parent"
+								android:textColor="@color/primary_black"
+								android:textSize="16sp"
+								android:text="Order Summary">
+							
+							</TextView>
+							
+							<androidx.recyclerview.widget.RecyclerView
+								android:id="@+id/order_summary_recycler_view"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/m_spacing"
+								android:layout_marginBottom="@dimen/m_spacing"
+								android:orientation="vertical"
+								app:layout_constraintTop_toBottomOf="@id/order_summary_title"
+								>
+								
+							</androidx.recyclerview.widget.RecyclerView>
+							<androidx.constraintlayout.widget.ConstraintLayout
+								android:id="@+id/order_summary_detail_layout"
+								android:layout_width="wrap_content"
+								android:layout_height="wrap_content"
+								android:layout_marginTop="@dimen/m_spacing"
+								android:visibility="visible"
+								app:layout_constraintEnd_toEndOf="parent"
+								app:layout_constraintStart_toStartOf="parent"
+								app:layout_constraintTop_toBottomOf="@id/order_summary_recycler_view">
+								
+								
+								<TextView
+									android:id="@+id/totalText"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Item(s) subtotal"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toTopOf="parent"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/totalPrice"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:fontFamily="@font/uniqlopro_light"
+									android:text="1.568.000 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toTopOf="parent"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/item_subtotal_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/totalText" />
+								
+								<TextView
+									android:id="@+id/shipping_fee_text"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Shipping fee"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/shipping_fee_price"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:fontFamily="@font/uniqlopro_light"
+									android:text="50.000 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/item_subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/shipping_fee_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shipping_fee_text" />
+								
+								<TextView
+									android:id="@+id/subtotal_text"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="Subtotal"
+									style="@style/H3"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shipping_fee_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/subtotal_price"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="1.618.000 VND"
+									style="@style/H3"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/shipping_fee_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/subtotal_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/subtotal_text" />
+								
+								<TextView
+									android:id="@+id/VATText"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:text="VAT (10%) included"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/VATPrice"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									android:fontFamily="@font/uniqlopro_light"
+									android:text="156.800 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="14sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/subtotal_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								
+								<com.google.android.material.divider.MaterialDivider
+									android:id="@+id/VAT_divider"
+									android:layout_width="match_parent"
+									android:layout_height="1dp"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:layout_marginBottom="@dimen/m_spacing"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/VATText" />
+								
+								<TextView
+									android:id="@+id/orderTotalText"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginTop="@dimen/xs_spacing"
+									android:layout_marginBottom="@dimen/xs_spacing"
+									android:text="Order Total"
+									android:textAllCaps="true"
+									android:textColor="@color/primary_black"
+									android:textSize="16sp"
+									app:layout_constraintBottom_toBottomOf="parent"
+									app:layout_constraintStart_toStartOf="parent"
+									app:layout_constraintTop_toBottomOf="@id/VAT_divider"
+									app:layout_constraintVertical_bias="0.0" />
+								
+								<TextView
+									android:id="@+id/orderTotalPrice"
+									style="@style/Headline3"
+									android:layout_width="wrap_content"
+									android:layout_height="wrap_content"
+									android:layout_marginStart="@dimen/m_spacing"
+									android:layout_marginEnd="@dimen/m_spacing"
+									android:text="1.774.800 VND"
+									android:textColor="@color/primary_black"
+									android:textSize="18sp"
+									app:layout_constraintBottom_toBottomOf="@id/orderTotalText"
+									app:layout_constraintEnd_toEndOf="parent"
+									app:layout_constraintVertical_bias="0.0" />
+							</androidx.constraintlayout.widget.ConstraintLayout>
+						</androidx.constraintlayout.widget.ConstraintLayout>
+					</com.google.android.material.card.MaterialCardView>
+					
+					
+				
+				</LinearLayout>
+				
+				<androidx.appcompat.widget.AppCompatButton
+					android:id="@+id/return_to_order_history_button"
+					style="@style/H3"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginStart="@dimen/m_spacing"
+					android:layout_marginTop="@dimen/m_spacing"
+					android:layout_marginEnd="@dimen/m_spacing"
+					android:layout_marginBottom="@dimen/m_spacing"
+					android:background="@color/primary_black"
+					android:foreground="?android:attr/selectableItemBackground"
+					android:text="@string/return_to_order_history"
+					android:textColor="@color/primary_white" />
+				
+
+			</LinearLayout>
+		</androidx.core.widget.NestedScrollView>
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

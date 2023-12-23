@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper productDbHelper = new DatabaseHelper(this);
         productRepository = new ProductRepository(productDbHelper);
-        productRepository.dropProductTable();
         ordersRepository = new OrdersRepository(productDbHelper);
         MyApp.setMainActivityInstance(this, ordersRepository, productRepository);
 
@@ -59,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
             LoginActivity.LoginInfo loginInfo = sharedPreferences.getUserLoginInfo();
             login(loginInfo);
         }
+        if(sharedPreferences.getUserFavoriteList() != null) {
+            userInteraction.setFavoriteList(sharedPreferences.getUserFavoriteList());
+        }
+        if(sharedPreferences.getUserCartList() != null) {
+            userInteraction.setCartList(sharedPreferences.getUserCartList());
+        }
+        if(sharedPreferences.getUserOrderList() != null) {
+            userInteraction.setOrderList(sharedPreferences.getUserOrderList());
+        }
+
     }
 
     private void login(LoginActivity.LoginInfo loginInfo) {
@@ -100,5 +109,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sharedPreferences.putUserFavoriteList(userInteraction.getFavoriteList());
     }
 }
