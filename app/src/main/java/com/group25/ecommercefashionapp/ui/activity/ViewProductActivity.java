@@ -136,8 +136,12 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         spinner.setAdapter(spinnerEntries);
 
         addToCartButton.setOnClickListener(v -> {
+            if(UserStatus._isLoggedIn == false) {
+                getMainActivityInstance().navController.navigate(R.id.loginActivity);
+                return;
+            }
             int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
-            CartItem cartItem = new CartItem(id, quantity, selectedColor, selectedSize);
+            CartItem cartItem = new CartItem(id, quantity, selectedColor, selectedSize, UserStatus.currentUser.getPhoneNumber());
             mainActivity.userInteraction.addCart(cartItem);
             CartAddedDialogFragment cartAddedDialogFragment = new CartAddedDialogFragment(quantity, (long) (product.getPrice() * 0.9f * quantity));
             cartAddedDialogFragment.show(getSupportFragmentManager(), "cart_added");

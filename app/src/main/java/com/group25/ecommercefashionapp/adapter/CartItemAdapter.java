@@ -31,11 +31,13 @@ import java.util.List;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder>{
     private final List<CartItem> items;
+    private final List<CartItem> cartItems;
     private final OnItemClickListener clickListener;
     private final DecimalFormat VNDFormat;
     private final Context context;
     public CartItemAdapter(List<CartItem> items, OnItemClickListener clickListener, Context context) {
         this.items = items;
+        this.cartItems = getMainActivityInstance().userInteraction.getCartList();
         this.clickListener = clickListener;
         this.context = context;
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
@@ -52,6 +54,15 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartItem item = items.get(position);
+        CartItem cartItem = null;
+        for(CartItem cartItem1 : cartItems) {
+            if (cartItem1.getProductId() == item.getProductId() && cartItem1.getSelectedColor().getId() == item.getSelectedColor().getId() && cartItem1.getSelectedSize().getId() == item.getSelectedSize().getId() && cartItem1.getPhoneNumber().equals(item.getPhoneNumber())) {
+                cartItem = cartItem1;
+                item.setQuantity(cartItem.getQuantity());
+                break;
+            }
+        }
+
         Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
         // Bind your data to the UI components of the CardView
         if (product.getAvailableQuantity() == 0) {
@@ -67,18 +78,20 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
         holder.productImage.setImageResource(product.getImageList().get(0).getImage_int_id());
         holder.productName.setText(product.getName());
-        holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice())));
+        holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice()*0.9f)));
         holder.productId.setText(String.valueOf(product.getId()));
         holder.productSize.setText(item.getSelectedSize().getName());
         holder.productColor.setText(item.getSelectedColor().getName());
-        holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice() * item.getQuantity())));
+        holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice()*0.9f * item.getQuantity())));
         holder.quantitySpinner.setAdapter(spinnerEntries);
         holder.quantitySpinner.setSelection(item.getQuantity() - 1);
+        CartItem finalCartItem = cartItem;
         holder.quantitySpinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 item.setQuantity(position + 1);
-                holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice() * item.getQuantity())));
+                finalCartItem.setQuantity(position + 1);
+                holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice()*0.9f * item.getQuantity())));
                 ((CartActivity) context).updateCartSummaryView();
             }
 
@@ -91,7 +104,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(v, product));
         holder.removeButton.setOnClickListener(v ->
         {
-            RemoveItemBottomSheetFragment removeItemBottomSheetFragment = new RemoveItemBottomSheetFragment(item, this);
+            RemoveItemBottomSheetFragment removeItemBottomSheetFragment = new RemoveItemBottomSheetFragment(item, items, this);
             removeItemBottomSheetFragment.show(((AppCompatActivity) v.getContext()).getSupportFragmentManager(), removeItemBottomSheetFragment.getTag());
         });
     }

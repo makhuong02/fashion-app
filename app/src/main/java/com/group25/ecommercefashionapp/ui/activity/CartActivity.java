@@ -42,6 +42,9 @@ import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class CartActivity extends AppCompatActivity implements OnItemClickListener {
     AppCompatButton footerCheckoutButton, checkoutButton, orderSummaryExpandButton, continueShoppingButton;
@@ -61,11 +64,20 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     private static final int MAP_REQUEST_CODE = 2;
     int totalOrderPrice;
     Toolbar toolbar;
-
+    String customerPhoneNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (userInteraction.getCartList().size() == 0) {
+        List<CartItem> fakeCartList = userInteraction.getCartList();
+        List<CartItem> cartList = new ArrayList<>();
+
+        customerPhoneNumber = UserStatus.currentUser.getPhoneNumber();
+        for(CartItem cartItem : fakeCartList) {
+            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
+                cartList.add(cartItem);
+            }
+        }
+        if (cartList.size() == 0) {
             setContentView(R.layout.activity_empty_cart);
             toolbar = findViewById(R.id.toolbar);
             toolbar.setNavigationOnClickListener(v -> {
@@ -99,7 +111,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
             onBackPressed();
         });
 
-        CartItemAdapter cartItemAdapter = new CartItemAdapter(getMainActivityInstance().userInteraction.getCartList(), this, this);
+        CartItemAdapter cartItemAdapter = new CartItemAdapter(cartList, this, this);
         cartRecyclerView.setAdapter(cartItemAdapter);
 
         orderSummaryCardView.setOnClickListener(v -> orderSummaryExpandButton.performClick());
@@ -129,7 +141,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);
-            if (userInteraction.getCartList().size() == 0) {
+            if (cartList.size() == 0) {
                 setContentView(R.layout.activity_empty_cart);
                 toolbar = findViewById(R.id.toolbar);
                 toolbar.setNavigationOnClickListener(v -> {
@@ -221,7 +233,14 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     public void updateCartSummaryView() {
-        itemCounterTextView.setText(String.valueOf(userInteraction.getCartList().size()));
+        List<CartItem> cartList = new ArrayList<>();
+        List<CartItem> fakeCartList = userInteraction.getCartList();
+        for(CartItem cartItem : fakeCartList) {
+            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
+                cartList.add(cartItem);
+            }
+        }
+        itemCounterTextView.setText(String.valueOf(cartList.size()));
         subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
         taxTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
         orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 1.1)));
@@ -231,13 +250,20 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     private void checkout() {
         setContentView(R.layout.activity_checkout);
         toolbar = findViewById(R.id.toolbar);
+        List<CartItem> fakeCartList = userInteraction.getCartList();
+        List<CartItem> cartList = new ArrayList<>();
+        customerPhoneNumber = UserStatus.currentUser.getPhoneNumber();
+        for (CartItem cartItem : fakeCartList) {
+            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
+                cartList.add(cartItem);
+            }
+        }
         TextView freeShip = findViewById(R.id.free_shipping_text);
         AppCompatCheckBox shipToAddressCheckBox = findViewById(R.id.ship_to_address_check_box);
         ConstraintLayout shipToAddressLayout = findViewById(R.id.ship_to_address_layout);
         AppCompatCheckBox clickAndCollectCheckBox = findViewById(R.id.click_and_collect_check_box);
         ConstraintLayout clickAndCollectLayout = findViewById(R.id.click_and_collect_layout);
 
-        MaterialCardView ship_to_address_card_view = findViewById(R.id.ship_to_address_card_view);
         firstNameEditText = findViewById(R.id.firstNameEditText);
         lastNameEditText = findViewById(R.id.lastNameEditText);
         addressEditText = findViewById(R.id.addressDetailsEditText);
@@ -274,7 +300,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
             lastNameEditText2.setText(sharedPreferences.getUserLastName());
         }
 
-        itemCounterTextView.setText(String.valueOf(userInteraction.getCartList().size()));
+        itemCounterTextView.setText(String.valueOf(cartList.size()));
         if(shipToAddressCheckBox.isChecked()){
             if (userInteraction.getCartTotalPrice() < 999000) {
                 subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
@@ -378,7 +404,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
             }
             if (clickAndCollectCheckBox.isChecked()) {
 
-                OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(),
+                OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(cartList),
                         "ChicCloth - 227 Đ. Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh, Việt Nam",
                         firstNameEditText2.getText().toString(),
                         lastNameEditText2.getText().toString(),
@@ -387,7 +413,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                         UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
                 getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
             } else {
-                OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(),
+                OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(cartList),
                         "",
                         firstNameEditText.getText().toString(),
                         lastNameEditText.getText().toString(),

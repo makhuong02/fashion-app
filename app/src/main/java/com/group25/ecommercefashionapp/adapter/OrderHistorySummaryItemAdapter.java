@@ -46,12 +46,12 @@ public class OrderHistorySummaryItemAdapter extends RecyclerView.Adapter<OrderHi
 
         holder.productImage.setImageResource(product.getImageList().get(0).getImage_int_id());
         holder.productName.setText(product.getName());
-        holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice())));
+        holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice()*0.9f)));
         holder.productId.setText(String.valueOf(product.getId()));
         holder.productSize.setText(item.getSelectedSize().getName());
         holder.productColor.setText(item.getSelectedColor().getName());
         holder.productQuantity.setText(String.valueOf(item.getQuantity()));
-        holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice() * item.getQuantity())));
+        holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice()*0.9f * item.getQuantity())));
 
         // Set click listener on the card
     }

@@ -14,12 +14,16 @@ import com.group25.ecommercefashionapp.adapter.CartItemAdapter;
 import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 
+import java.util.List;
+
 public class RemoveItemBottomSheetFragment extends BottomSheetDialogFragment {
     AppCompatButton removeButton, cancelButton;
     CartItem cartItem;
+    List<CartItem> cartItems;
     CartItemAdapter cartItemAdapter;
-    public RemoveItemBottomSheetFragment(CartItem cartItem, CartItemAdapter cartItemAdapter) {
+    public RemoveItemBottomSheetFragment(CartItem cartItem, List<CartItem> cartItems, CartItemAdapter cartItemAdapter) {
         this.cartItem = cartItem;
+        this.cartItems = cartItems;
         this.cartItemAdapter = cartItemAdapter;
         // Required empty public constructor
     }
@@ -32,6 +36,7 @@ public class RemoveItemBottomSheetFragment extends BottomSheetDialogFragment {
         cancelButton.setOnClickListener(v -> dismiss());
         removeButton.setOnClickListener(v -> {
             userInteraction.removeCart(cartItem);
+            cartItems.remove(cartItem);
             cartItemAdapter.notifyDataChanged();
             dismiss();
         });

@@ -46,7 +46,7 @@ public class UserInteraction {
     public int getCartTotalPrice() {
         int totalPrice = 0;
         for(CartItem cartItem : cartList) {
-            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice();
+            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice()*0.9f;
         }
         return totalPrice;
     }
@@ -54,10 +54,10 @@ public class UserInteraction {
         cartList.clear();
     }
 
-    public List<CartItem> shallowCopyCartList() {
+    public List<CartItem> shallowCopyCartList(List<CartItem> cartList) {
         List<CartItem> shallowCopy = new ArrayList<>();
         for(CartItem cartItem : cartList) {
-            shallowCopy.add(new CartItem(cartItem.getProductId(), cartItem.getQuantity(), cartItem.getSelectedColor(), cartItem.getSelectedSize()));
+            shallowCopy.add(new CartItem(cartItem.getProductId(), cartItem.getQuantity(), cartItem.getSelectedColor(), cartItem.getSelectedSize(), cartItem.getPhoneNumber()));
         }
         return shallowCopy;
     }

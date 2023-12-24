@@ -91,7 +91,7 @@ public class OrderHistoryItem extends Item {
     public int getCartTotalPrice() {
         int totalPrice = 0;
         for (CartItem cartItem : cartList) {
-            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice();
+            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice()*0.9f;
         }
         return totalPrice;
     }
