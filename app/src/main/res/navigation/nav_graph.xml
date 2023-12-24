@@ -8,7 +8,11 @@
 		android:id="@+id/homeBotNav"
 		android:name="com.group25.ecommercefashionapp.ui.fragment.home.HomeFragment"
 		android:label="Home Fragment"
-		tools:layout="@layout/home" />
+		tools:layout="@layout/home" >
+		<action
+			android:id="@+id/action_homeBotNav_to_filterCategory"
+			app:destination="@id/filterCategory" />
+	</fragment>
 	
 	<fragment
 		android:id="@+id/categoryBotNav"

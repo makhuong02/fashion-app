@@ -4,7 +4,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:background="#D1E5F4"
+	android:background="@color/tertiary_gray_150"
 	android:orientation="vertical">
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
@@ -38,168 +38,215 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical"
 			android:layout_margin="5dp">
-			<HorizontalScrollView
+
+			<androidx.cardview.widget.CardView
+				android:layout_width="match_parent"
+				android:layout_height="200dp"
+				android:layout_marginTop="30dp"
+				android:layout_marginStart="20dp"
+				android:layout_marginEnd="20dp"
+				app:cardElevation="20dp"
+				app:cardCornerRadius="20dp">
+
+				<com.denzcoskun.imageslider.ImageSlider
+					android:id="@+id/imageSlider"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					app:iss_period="1000"
+					app:iss_auto_cycle="true"
+					app:iss_delay="1000"
+					app:iss_corner_radius="20"
+					app:iss_title_background="@drawable/gradient"/>
+			</androidx.cardview.widget.CardView>
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="30dp">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:text="Categories"
+					android:textSize="20dp"
+					android:layout_gravity="center"/>
+
+				<Button
+					android:id="@+id/homeToCategoryBtn"
+					android:layout_width="90dp"
+					android:layout_height="40dp"
+					android:layout_gravity="right"
+					android:text="see all"
+					android:textColor="@color/primary_black"
+					android:backgroundTint="@color/tertiary_gray_500"/>
+			</LinearLayout>
+
+			<TableLayout
+				android:id="@+id/grid_layout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:layout_margin="10dp"
+				android:gravity="center"
+
+				android:measureWithLargestChild="false"
+				android:stretchColumns="*">
+				<TableRow
+					android:layout_width="0dp"
+					android:layout_height="wrap_content">
+
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/tshirtCardView"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_margin="5dp"
+						android:clickable="true">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:orientation="vertical"
+							android:layout_marginTop="5dp">
+
+							<ImageView
+								android:layout_width="35dp"
+								android:layout_height="35dp"
+								android:layout_gravity="center"
+								app:srcCompat="@drawable/tshirt" />
+
+							<TextView
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:text="Áo"
+								android:textAlignment="center" />
+						</LinearLayout>
+					</com.google.android.material.card.MaterialCardView>
+
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/skirtCardView"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_margin="5dp"
+						android:clickable="true">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:orientation="vertical"
+							android:layout_marginTop="5dp">
+
+							<ImageView
+								android:layout_width="35dp"
+								android:layout_height="35dp"
+								android:layout_gravity="center"
+								app:srcCompat="@drawable/skirt" />
+
+							<TextView
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:text="Váy"
+								android:textAlignment="center" />
+						</LinearLayout>
+					</com.google.android.material.card.MaterialCardView>
+
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/sneakersCardView"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_margin="5dp"
+						android:clickable="true">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:orientation="vertical"
+							android:layout_marginTop="5dp">
+
+							<ImageView
+								android:layout_width="35dp"
+								android:layout_height="35dp"
+								android:layout_gravity="center"
+								app:srcCompat="@drawable/sneakers"/>
+
+							<TextView
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:text="Giày"
+								android:textAlignment="center" />
+						</LinearLayout>
+					</com.google.android.material.card.MaterialCardView>
+
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/pantsCardView"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_margin="5dp"
+						android:clickable="true">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:orientation="vertical"
+							android:layout_marginTop="5dp">
+
+							<ImageView
+								android:layout_width="35dp"
+								android:layout_height="35dp"
+								android:layout_gravity="center"
+								app:srcCompat="@drawable/jeans" />
+
+							<TextView
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:text="Quần"
+								android:textAlignment="center" />
+						</LinearLayout>
+					</com.google.android.material.card.MaterialCardView>
+
+					<com.google.android.material.card.MaterialCardView
+						android:id="@+id/walletCardView"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_margin="5dp"
+						android:clickable="true">
+
+						<LinearLayout
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:orientation="vertical"
+							android:layout_marginTop="5dp">
+
+							<ImageView
+								android:layout_width="35dp"
+								android:layout_height="35dp"
+								android:layout_gravity="center"
+								app:srcCompat="@drawable/wallet" />
+
+							<TextView
+								android:layout_width="match_parent"
+								android:layout_height="match_parent"
+								android:text="Bóp"
+								android:textAlignment="center" />
+						</LinearLayout>
+					</com.google.android.material.card.MaterialCardView>
+
+				</TableRow>
+			</TableLayout>
+
+			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_margin="10dp">
+				android:text="Best seller"
+				android:textSize="20dp"/>
 
-				<LinearLayout
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent">
-
-					<com.google.android.material.card.MaterialCardView
-						android:layout_width="90dp"
-						android:layout_height="90dp"
-						android:layout_margin="10dp">
-
-						<LinearLayout
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:orientation="vertical">
-
-							<ImageView
-								android:layout_width="70dp"
-								android:layout_height="70dp"
-								android:layout_gravity="center"
-								app:srcCompat = "@drawable/hot"/>
-
-							<TextView
-								android:layout_width="match_parent"
-								android:layout_height="match_parent"
-								android:text="Hot"
-								android:textAlignment="center"/>
-						</LinearLayout>
-					</com.google.android.material.card.MaterialCardView>
-
-					<com.google.android.material.card.MaterialCardView
-						android:layout_width="90dp"
-						android:layout_height="90dp"
-						android:layout_margin="10dp">
-
-						<LinearLayout
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:orientation="vertical">
-
-							<ImageView
-								android:layout_width="70dp"
-								android:layout_height="70dp"
-								android:layout_gravity="center"
-								app:srcCompat = "@drawable/sale_tag"/>
-
-							<TextView
-								android:layout_width="match_parent"
-								android:layout_height="match_parent"
-								android:text="Sales"
-								android:textAlignment="center"/>
-						</LinearLayout>
-					</com.google.android.material.card.MaterialCardView>
-
-					<com.google.android.material.card.MaterialCardView
-						android:layout_width="90dp"
-						android:layout_height="90dp"
-						android:layout_margin="10dp">
-
-						<LinearLayout
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:orientation="vertical">
-
-							<ImageView
-								android:layout_width="70dp"
-								android:layout_height="70dp"
-								android:layout_gravity="center"
-								app:srcCompat = "@drawable/planner"/>
-
-							<TextView
-								android:layout_width="match_parent"
-								android:layout_height="match_parent"
-								android:text="Sự kiện"
-								android:textAlignment="center"/>
-						</LinearLayout>
-					</com.google.android.material.card.MaterialCardView>
-
-					<com.google.android.material.card.MaterialCardView
-						android:layout_width="90dp"
-						android:layout_height="90dp"
-						android:layout_margin="10dp">
-
-						<LinearLayout
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:orientation="vertical">
-
-							<ImageView
-								android:layout_width="70dp"
-								android:layout_height="70dp"
-								android:layout_gravity="center"
-								app:srcCompat = "@drawable/tshirt"/>
-
-							<TextView
-								android:layout_width="match_parent"
-								android:layout_height="match_parent"
-								android:text="Nam"
-								android:textAlignment="center"/>
-						</LinearLayout>
-					</com.google.android.material.card.MaterialCardView>
-
-					<com.google.android.material.card.MaterialCardView
-						android:layout_width="90dp"
-						android:layout_height="90dp"
-						android:layout_margin="10dp">
-
-						<LinearLayout
-							android:layout_width="match_parent"
-							android:layout_height="match_parent"
-							android:orientation="vertical">
-
-							<ImageView
-								android:layout_width="70dp"
-								android:layout_height="70dp"
-								android:layout_gravity="center"
-								app:srcCompat = "@drawable/skirt"/>
-
-							<TextView
-								android:layout_width="match_parent"
-								android:layout_height="match_parent"
-								android:text="Nữ"
-								android:textAlignment="center"/>
-						</LinearLayout>
-					</com.google.android.material.card.MaterialCardView>
-				</LinearLayout>
-			</HorizontalScrollView>
-
-			<com.google.android.material.imageview.ShapeableImageView
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/productRecyclerView"
 				android:layout_width="match_parent"
-				android:layout_height="150dp"
-				android:adjustViewBounds="true"
-				android:alpha="1.0"
-				android:scaleType="centerCrop"
-				android:contentDescription="@string/content_description_media"
-				android:layout_marginBottom="10dp"
-				app:srcCompat="@drawable/_06z_graphic_224_sale_18" />
-			<com.google.android.material.imageview.ShapeableImageView
-				android:layout_width="match_parent"
-				android:layout_height="150dp"
-				android:adjustViewBounds="true"
-				android:alpha="1.0"
-				android:scaleType="centerCrop"
-				android:contentDescription="@string/content_description_media"
-				android:layout_marginBottom="10dp"
-				app:srcCompat="@drawable/_06z_graphic_224_sale_18" />
-			<com.google.android.material.imageview.ShapeableImageView
-				android:layout_width="match_parent"
-				android:layout_height="150dp"
-				android:adjustViewBounds="true"
-				android:alpha="1.0"
-				android:scaleType="centerCrop"
-				android:contentDescription="@string/content_description_media"
-				android:layout_marginBottom="10dp"
-				app:srcCompat="@drawable/_06z_graphic_224_sale_18" />
+				android:layout_height="match_parent"
+				android:layout_margin="5dp"
+				android:elevation="20dp"/>
+
 		</LinearLayout>
-
-
-
 
 	</androidx.core.widget.NestedScrollView>
 

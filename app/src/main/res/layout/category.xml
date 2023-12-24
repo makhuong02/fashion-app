@@ -45,7 +45,7 @@
 				android:layout_height="match_parent"
 				android:layout_margin="5dp"
 				android:horizontalSpacing="10dp"
-				android:numColumns="4"
+				android:numColumns="2"
 				android:verticalSpacing="10dp"
 				tools:layout_editor_absoluteX="4dp"
 				tools:layout_editor_absoluteY="-130dp" />

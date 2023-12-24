@@ -158,4 +158,7 @@
 		<item name="android:textStyle">bold</item>
 		<item name="android:textColor">#FF1F46</item>
 	</style>
+	<style name="circle">
+		<item name="cornerSize">50%</item>
+	</style>
 </resources>

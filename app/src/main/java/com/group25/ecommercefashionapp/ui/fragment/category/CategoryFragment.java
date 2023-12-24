@@ -45,7 +45,7 @@ public class CategoryFragment extends Fragment implements OnListItemClick {
         ProductRepository productRepository = mainActivity.productRepository;
         categories = productRepository.getCategories();
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 4);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         categoryRecyclerView.setLayoutManager(gridLayoutManager);
 
         CustomCategoryItemAdapter adapter = new CustomCategoryItemAdapter(categories, this);

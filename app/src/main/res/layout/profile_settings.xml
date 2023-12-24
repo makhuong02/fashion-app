@@ -28,6 +28,45 @@
 		android:elevation="5dp"
 		android:orientation="vertical"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<GridLayout
+			android:layout_width="match_parent"
+			android:layout_height="200dp"
+			android:background="@color/tertiary_gray_500"
+			android:columnCount="2">
+			<com.google.android.material.imageview.ShapeableImageView
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_columnWeight="1"
+				android:padding="40dp"
+				android:scaleType="centerCrop"
+				app:shapeAppearanceOverlay="@style/circle"
+				app:strokeColor="@color/primary_white"
+				app:strokeWidth="2dp"
+				app:srcCompat="@drawable/avatar"/>
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="match_parent"
+				android:layout_columnWeight="1"
+				android:orientation="vertical"
+				android:gravity="center">
+				<TextView
+					android:id="@+id/textviewEmail"
+					android:text="Email:"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textColor="@color/primary_white"/>
+				<TextView
+					android:id="@+id/textviewPhone"
+					android:text="Phone:"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:textColor="@color/primary_white"/>
+
+
+			</LinearLayout>
+
+		</GridLayout>
 		
 		<androidx.cardview.widget.CardView
 			android:id="@+id/editProfileCardView"
@@ -172,7 +211,7 @@
 					android:layout_height="wrap_content"
 					android:padding="16dp"
 					android:text="@string/logout"
-					android:textColor="@color/primary_black"
+					android:textColor="@color/primary_red"
 					android:textSize="15sp" />
 				
 				<com.google.android.material.divider.MaterialDivider

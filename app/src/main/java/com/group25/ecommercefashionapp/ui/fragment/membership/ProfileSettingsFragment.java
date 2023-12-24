@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,7 @@ public class ProfileSettingsFragment extends Fragment {
     MaterialToolbar toolbar;
     MainActivity mainActivity;
     CardView logoutCardView;
+    TextView emailTextview, phoneTextview;
     MySharedPreferences sharedPreferences;
 
     public ProfileSettingsFragment() {
@@ -33,8 +35,13 @@ public class ProfileSettingsFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
         toolbar = view.findViewById(R.id.topAppBar);
         logoutCardView = view.findViewById(R.id.logoutCardView);
+        emailTextview = view.findViewById(R.id.textviewEmail);
+        phoneTextview = view.findViewById(R.id.textviewPhone);
 
         toolbar.setNavigationOnClickListener(v -> mainActivity.navController.popBackStack());
+
+        emailTextview.setText("Name: " + UserStatus.currentUser.getEmail());
+        phoneTextview.setText("Phone: " + UserStatus.currentUser.getPhoneNumber());
 
         logoutCardView.setOnClickListener(new View.OnClickListener() {
             @Override
