@@ -52,12 +52,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private AutocompleteSupportFragment searchView;
     FusedLocationProviderClient fusedLocationProviderClient;
     private OnMapLoadCompleteListener onMapLoadCompleteListener;
+    private LatLng initLatLng;
+
     public interface OnMapLoadCompleteListener {
         void onMapLoadComplete();
     }
     public void setOnMapLoadCompleteListener(OnMapLoadCompleteListener onMapLoadCompleteListener) {
         this.onMapLoadCompleteListener = onMapLoadCompleteListener;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,46 +128,63 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.map = googleMap;
-
-        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-        this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
-        this.map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        this.map.getUiSettings().setZoomControlsEnabled(true);
-        this.map.getUiSettings().setZoomGesturesEnabled(true);
-        this.map.getUiSettings().setScrollGesturesEnabled(true);
-        this.map.getUiSettings().setRotateGesturesEnabled(true);
-        this.map.getUiSettings().setTiltGesturesEnabled(true);
-        this.map.getUiSettings().setCompassEnabled(true);
-        this.map.getUiSettings().setMyLocationButtonEnabled(true);
-        this.map.getUiSettings().setMapToolbarEnabled(true);
-        this.map.getUiSettings().setIndoorLevelPickerEnabled(true);
-        this.map.getUiSettings().setAllGesturesEnabled(true);
-        this.map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        this.map.animateCamera(CameraUpdateFactory.zoomTo(17));
-        if (onMapLoadCompleteListener != null) {
-            onMapLoadCompleteListener.onMapLoadComplete();
-        }
-        googleMap.setOnCameraMoveListener(() -> {
-              LatLng center = googleMap.getCameraPosition().target;
-              if (selectedMarker == null) {
-                  selectedMarker = googleMap.addMarker(new MarkerOptions().position(center).title("Selected Location"));
-              } else {
-                  selectedMarker.setPosition(center);
-                  selectedLatLng = center;
-              }
-        });
-        googleMap.setOnMapClickListener(latLng1 -> {
-            if (selectedMarker == null) {
-                selectedMarker = googleMap.addMarker(new MarkerOptions().position(latLng1).title("Selected Location"));
-            } else {
-                selectedMarker.setPosition(latLng1);
-                selectedLatLng = latLng1;
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            initLatLng = bundle.getParcelable("storeLocation");
+            String storeName = bundle.getString("storeName");
+            if (initLatLng != null) {
+                selectedLatLng = initLatLng;
+                selectedMarker = googleMap.addMarker(new MarkerOptions().position(initLatLng).title(storeName));
+                this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(initLatLng, 17));
+                confirmBtn.setText("Back");
+                confirmBtn.setOnClickListener(v -> {
+                    finish();
+                });
             }
-            this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 17));
-        });
+        }
+        else {
+            LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+            this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17));
+            this.map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            this.map.getUiSettings().setZoomControlsEnabled(true);
+            this.map.getUiSettings().setZoomGesturesEnabled(true);
+            this.map.getUiSettings().setScrollGesturesEnabled(true);
+            this.map.getUiSettings().setRotateGesturesEnabled(true);
+            this.map.getUiSettings().setTiltGesturesEnabled(true);
+            this.map.getUiSettings().setCompassEnabled(true);
+            this.map.getUiSettings().setMyLocationButtonEnabled(true);
+            this.map.getUiSettings().setMapToolbarEnabled(true);
+            this.map.getUiSettings().setIndoorLevelPickerEnabled(true);
+            this.map.getUiSettings().setAllGesturesEnabled(true);
+            this.map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            this.map.animateCamera(CameraUpdateFactory.zoomTo(17));
+            if (onMapLoadCompleteListener != null) {
+                onMapLoadCompleteListener.onMapLoadComplete();
+            }
+            googleMap.setOnCameraMoveListener(() -> {
+                LatLng center = googleMap.getCameraPosition().target;
+                if (selectedMarker == null) {
+                    selectedMarker = googleMap.addMarker(new MarkerOptions().position(center).title("Selected Location"));
+                } else {
+                    selectedMarker.setPosition(center);
+                    selectedLatLng = center;
+                }
+            });
+            googleMap.setOnMapClickListener(latLng1 -> {
+                if (selectedMarker == null) {
+                    selectedMarker = googleMap.addMarker(new MarkerOptions().position(latLng1).title("Selected Location"));
+                } else {
+                    selectedMarker.setPosition(latLng1);
+                    selectedLatLng = latLng1;
+                }
+                this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng1, 17));
+            });
+        }
     }
 
     private static String convertLatLngToAddress(FragmentActivity activity, LatLng latLng) {
