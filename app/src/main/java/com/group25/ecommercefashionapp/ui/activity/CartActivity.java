@@ -37,6 +37,7 @@ import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
 
 import java.text.DecimalFormat;
@@ -383,7 +384,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                         lastNameEditText2.getText().toString(),
                         "",
                         "Click and Collect",
-                        totalOrderPrice);
+                        UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
                 getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
             } else {
                 OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(),
@@ -392,7 +393,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                         lastNameEditText.getText().toString(),
                         addressEditText.getText().toString(),
                         "Ship to Address",
-                        totalOrderPrice);
+                        UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
                 getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
             }
 

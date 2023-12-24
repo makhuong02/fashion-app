@@ -19,4 +19,7 @@ public class UserProfile {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 }

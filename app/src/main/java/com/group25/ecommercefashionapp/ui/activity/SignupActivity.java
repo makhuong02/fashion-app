@@ -355,6 +355,7 @@ public class SignupActivity extends AppCompatActivity {
                 password,
                 phoneNumber
         );
+        Log.d("phone", phoneNumber);
 
         return userProfile;
     }

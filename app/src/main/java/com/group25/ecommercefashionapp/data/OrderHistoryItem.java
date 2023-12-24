@@ -14,14 +14,17 @@ public class OrderHistoryItem extends Item {
     private String lastName;
     private String address;
     private String deliveryOption;
+    private String phoneNumber;
     private int totalPrice;
-    public OrderHistoryItem(List<CartItem> cartList, String pickupPlace, String firstName, String lastName, String address, String deliveryOption, int totalPrice) {
+
+    public OrderHistoryItem(List<CartItem> cartList, String pickupPlace, String firstName, String lastName, String address, String deliveryOption, String phoneNumber, int totalPrice) {
         super("");
         this.pickupPlace = pickupPlace;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.deliveryOption = deliveryOption;
+        this.phoneNumber = phoneNumber;
         this.totalPrice = totalPrice;
         this.orderDate = java.text.DateFormat.getDateTimeInstance().format(new java.util.Date());
         this.orderStatus = "Pending";
@@ -52,25 +55,33 @@ public class OrderHistoryItem extends Item {
     public List<CartItem> getCartList() {
         return cartList;
     }
+
     public String getFirstName() {
         return firstName;
     }
+
     public String getLastName() {
         return lastName;
     }
+
     public String getAddress() {
         return address;
     }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
     public String getDeliveryOption() {
         return deliveryOption;
     }
 
     @Override
-    public boolean equals(Object object){
-        if(object == null) return false;
-        if(!(object instanceof OrderHistoryItem)) return false;
+    public boolean equals(Object object) {
+        if (object == null) return false;
+        if (!(object instanceof OrderHistoryItem)) return false;
         OrderHistoryItem item = (OrderHistoryItem) object;
-        return item.getOrderDate().equals(this.getOrderDate());
+        return item.getOrderDate().equals(this.getOrderDate()) && item.getPhoneNumber().equals(this.getPhoneNumber());
     }
 
     public int getTotalPrice() {
@@ -79,7 +90,7 @@ public class OrderHistoryItem extends Item {
 
     public int getCartTotalPrice() {
         int totalPrice = 0;
-        for(CartItem cartItem : cartList) {
+        for (CartItem cartItem : cartList) {
             totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice();
         }
         return totalPrice;

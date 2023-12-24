@@ -19,6 +19,7 @@ import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
+import com.group25.ecommercefashionapp.status.UserStatus;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -72,6 +73,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
             clickAndCollectCardView.setVisibility(android.view.View.GONE);
             orderCustomerName.setText(orderHistoryItem.getFirstName() + " " + orderHistoryItem.getLastName());
             orderAddress.setText(orderHistoryItem.getAddress());
+            orderCustomerPhone.setText(UserStatus.currentUser.getPhoneNumber());
         }
 
         orderShippingDeliveryPrice.setText(VNDFormat.format(50000) + " VND");

@@ -19,8 +19,11 @@ import com.group25.ecommercefashionapp.adapter.OrderHistoryItemAdapter;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
+import com.group25.ecommercefashionapp.status.UserStatus;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class OrderHistoryFragment extends Fragment {
     TextView orderCountTextView;
@@ -28,11 +31,19 @@ public class OrderHistoryFragment extends Fragment {
     MaterialCardView noOrderHistoryCardView;
     AppCompatButton returnToMembershipButton;
     OrderHistoryItemAdapter adapter;
+    String customerPhoneNumber;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         UserInteraction UserInteraction = getMainActivityInstance().userInteraction;
-        List<OrderHistoryItem> orderHistoryList = UserInteraction.getOrderList();
+        customerPhoneNumber = UserStatus.currentUser.getPhoneNumber();
+        List<OrderHistoryItem> fakeOrderHistoryList = UserInteraction.getOrderList();
+        List<OrderHistoryItem> orderHistoryList = new ArrayList<>();
+        for(OrderHistoryItem orderHistoryItem : fakeOrderHistoryList) {
+            if (Objects.equals(orderHistoryItem.getPhoneNumber(), customerPhoneNumber)) {
+                orderHistoryList.add(orderHistoryItem);
+            }
+        }
 
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
