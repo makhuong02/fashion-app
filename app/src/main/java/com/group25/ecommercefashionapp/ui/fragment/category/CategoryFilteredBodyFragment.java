@@ -4,7 +4,6 @@ import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +64,6 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                Log.d("MainActivity", "onEditorAction: " + searchEditText.getText().toString());
                 if (searchEditText.getText().toString().isEmpty()) {
                     products = productRepository.getProductsByCategory(category);
                 } else {

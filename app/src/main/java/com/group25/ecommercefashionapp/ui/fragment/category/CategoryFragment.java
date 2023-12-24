@@ -2,7 +2,6 @@ package com.group25.ecommercefashionapp.ui.fragment.category;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,6 @@ public class CategoryFragment extends Fragment implements OnListItemClick {
 
     @Override
     public void onItemClick(Item item, int position) {
-        Log.d("MainActivity", "onItemClick: " + item.getName());
         Bundle bundle = new Bundle();
         bundle.putString("category", categories.get(position).getName());
         mainActivity.navController.navigate(R.id.action_categoryBotNav_to_filterCategory, bundle);

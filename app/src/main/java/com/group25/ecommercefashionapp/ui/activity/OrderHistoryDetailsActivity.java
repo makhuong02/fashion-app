@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class OrderHistoryDetailsActivity extends AppCompatActivity {
-    TextView orderDate, orderStatus, orderTotalPrice, orderAddress, orderClass, orderCustomerName, orderCustomerPhone, orderShippingDeliveryPrice, orderDeliveryDate;
+    TextView orderDate, orderStatus, orderTotalPrice, orderAddress, orderClass, orderCustomerName, orderCustomerPhone, storeAddress, orderShippingDeliveryPrice, orderDeliveryDate;
     TextView totalPrice, shippingFee, subTotalPrice, VATPrice, orderTotalPrice2, shippingFeeTextView;
     Toolbar toolbar;
     RecyclerView cartRecyclerView;
@@ -66,6 +66,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         if (orderHistoryItem.getAddress().equals("")) {
             shippingAddressCardView.setVisibility(android.view.View.GONE);
             clickAndCollectCardView.setVisibility(android.view.View.VISIBLE);
+            storeAddress.setText(orderHistoryItem.getPickupPlace());
         } else {
             shippingAddressCardView.setVisibility(android.view.View.VISIBLE);
             clickAndCollectCardView.setVisibility(android.view.View.GONE);
@@ -109,6 +110,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
                 shippingFeeDivider.setVisibility(View.GONE);
                 subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
                 VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() * 0.1)));
+                totalOrderPrice = (int) (orderHistoryItem.getCartTotalPrice() * 1.1);
                 orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
             }
         } else {
@@ -118,6 +120,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
             shippingFeeDivider.setVisibility(View.GONE);
             subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
             VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() * 0.1)));
+            totalOrderPrice = (int) (orderHistoryItem.getCartTotalPrice() * 1.1);
             orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
 
         }
@@ -135,6 +138,8 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         orderCustomerName = findViewById(R.id.customer_name);
         orderAddress = findViewById(R.id.customer_address);
         orderCustomerPhone = findViewById(R.id.customer_phone);
+
+        storeAddress = findViewById(R.id.store_address_text);
 
         shippingAddressCardView = findViewById(R.id.shipping_address_card_view);
         clickAndCollectCardView = findViewById(R.id.click_and_collect_card_view);

@@ -83,7 +83,16 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
             // Hide cancel button if the order is older than 30 minutes
             if (timeDifferenceMillis > thirtyMinutesMillis) {
                 holder.orderCancel.setVisibility(View.GONE);
-                holder.orderStatus.setText("On the way");
+                if(!holder.orderStatus.getText().equals("Cancelled")) {
+                    if (holder.pickupPlace.getText().toString().contains("Your address")) {
+                        holder.orderStatus.setText("Available for pickup");
+                        item.setOrderStatus("Available for pickup");
+                    }
+                    else {
+                        holder.orderStatus.setText("On the way");
+                        item.setOrderStatus("On the way");
+                    }
+                }
             } else {
                 // Set click listener for cancel button
                 holder.orderCancel.setOnClickListener(v -> {
@@ -94,8 +103,15 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
             }
 
             if (timeDifferenceMillis > oneHourMillis) {
-                if(holder.orderStatus.getText().equals("On the way"))
-                    holder.orderStatus.setText("Delivered");
+                if(holder.orderStatus.getText().equals("On the way") || holder.orderStatus.getText().equals("Available for pickup"))
+                    if(!holder.pickupPlace.getText().toString().contains("Your address")) {
+                        holder.orderStatus.setText("Picked up");
+                        item.setOrderStatus("Picked up");
+                    }
+                    else {
+                        holder.orderStatus.setText("Delivered");
+                        item.setOrderStatus("Delivered");
+                    }
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
