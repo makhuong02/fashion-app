@@ -38,5 +38,6 @@
 	<color name="colorPrimary">#fff</color>
 	<color name="carousel_indicator_selected">#85000000</color>
 	<color name="nickel">#74777B</color>
+	<color name="search_gray">#f0f0f0</color>
 </resources>
 

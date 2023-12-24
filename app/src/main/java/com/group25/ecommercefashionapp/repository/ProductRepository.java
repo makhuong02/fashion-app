@@ -6,17 +6,18 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import com.group25.ecommercefashionapp.data.CartItem;
-import com.group25.ecommercefashionapp.data.ProductImage;
-import com.group25.ecommercefashionapp.data.ProductSize;
-import com.group25.ecommercefashionapp.utilities.ColorUtils;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.ProductColor;
-import com.group25.ecommercefashionapp.database.ProductContract;
+import com.group25.ecommercefashionapp.data.ProductImage;
+import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.database.DatabaseHelper;
+import com.group25.ecommercefashionapp.database.ProductContract;
+import com.group25.ecommercefashionapp.utilities.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,12 +77,14 @@ public class ProductRepository {
 
         long colorId = db.insert(ProductContract.ColorEntry.TABLE_NAME, null, values);
     }
+
     public void insertProductSizeData(ProductSize size) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.SizeEntry.COLUMN_PRODUCT_ID, size.getProduct_id());
         values.put(ProductContract.SizeEntry.COLUMN_SIZE, size.getName());
         long sizeId = db.insert(ProductContract.SizeEntry.TABLE_NAME, null, values);
     }
+
     public void insertProductImageData(ProductImage image) {
         ContentValues values = new ContentValues();
         values.put(ProductContract.ImageEntry.COLUMN_PRODUCT_ID, image.getProduct_id());
@@ -145,7 +148,7 @@ public class ProductRepository {
     public void insertDbData() {
         db.beginTransaction();
         try {
-            if(!isDatabaseEmpty()) {
+            if (!isDatabaseEmpty()) {
                 return;
             }
             productDbHelper.onCreate(db);
@@ -158,19 +161,19 @@ public class ProductRepository {
             insertProductData(new Product("Quần", "Đây là sản phẩm 7 có nhiều lượt bán nhất", 300000, "Quần"));
             insertProductData(new Product("Giày", "Đây là sản phẩm 8 có nhiều lượt bán nhất", 300000, "Giày"));
             insertProductData(new Product("Bóp", "Đây là sản phẩm 9 có nhiều lượt bán nhất", 300000, "Bóp"));
-            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 10 có nhiều lượt bán nhất", 200000,  "Áo khoác"));
-            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 11 có nhiều lượt bán nhất", 200000,  "Áo khoác"));
-            insertProductData(new Product("Hoodie", "Đây là sản phẩm 12 có nhiều lượt bán nhất", 100000,  "Hoodie"));
-            insertProductData(new Product("Hoodie", "Đây là sản phẩm 13 có nhiều lượt bán nhất", 100000,  "Hoodie"));
-            insertProductData(new Product("Túi xách", "Đây là sản phẩm 14 có nhiều lượt bán nhất", 860000,  "Túi xách"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 15 có nhiều lượt bán nhất", 350000,  "Áo thun"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 16 có nhiều lượt bán nhất", 4600000,  "Áo thun"));
+            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 10 có nhiều lượt bán nhất", 200000, "Áo khoác"));
+            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 11 có nhiều lượt bán nhất", 200000, "Áo khoác"));
+            insertProductData(new Product("Hoodie", "Đây là sản phẩm 12 có nhiều lượt bán nhất", 100000, "Hoodie"));
+            insertProductData(new Product("Hoodie", "Đây là sản phẩm 13 có nhiều lượt bán nhất", 100000, "Hoodie"));
+            insertProductData(new Product("Túi xách", "Đây là sản phẩm 14 có nhiều lượt bán nhất", 860000, "Túi xách"));
+            insertProductData(new Product("Áo thun", "Đây là sản phẩm 15 có nhiều lượt bán nhất", 350000, "Áo thun"));
+            insertProductData(new Product("Áo thun", "Đây là sản phẩm 16 có nhiều lượt bán nhất", 4600000, "Áo thun"));
             insertProductData(new Product("Đồng hồ", "Đây là sản phẩm 17 có nhiều lượt bán nhất", 4600000, "Đồng hồ"));
-            insertProductData(new Product("Túi xách", "Đây là sản phẩm 18 có nhiều lượt bán nhất", 8700000,  "Túi xách"));
-            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 19 có nhiều lượt bán nhất", 8700000,  "Túi xách"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 20 có nhiều lượt bán nhất", 8800000,  "Áo thun"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 21 có nhiều lượt bán nhất", 1200000,  "Áo thun"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 22 có nhiều lượt bán nhất", 3400000,  "Áo thun"));
+            insertProductData(new Product("Túi xách", "Đây là sản phẩm 18 có nhiều lượt bán nhất", 8700000, "Túi xách"));
+            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 19 có nhiều lượt bán nhất", 8700000, "Túi xách"));
+            insertProductData(new Product("Áo thun", "Đây là sản phẩm 20 có nhiều lượt bán nhất", 8800000, "Áo thun"));
+            insertProductData(new Product("Áo thun", "Đây là sản phẩm 21 có nhiều lượt bán nhất", 1200000, "Áo thun"));
+            insertProductData(new Product("Áo thun", "Đây là sản phẩm 22 có nhiều lượt bán nhất", 3400000, "Áo thun"));
 
 
             randomInsertProductColorData();
@@ -183,6 +186,7 @@ public class ProductRepository {
             db.endTransaction();
         }
     }
+
     private boolean isDatabaseEmpty() {
         // Check if the database has any records
         Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + ProductContract.ProductEntry.TABLE_NAME, null);
@@ -197,6 +201,7 @@ public class ProductRepository {
         }
         return true;
     }
+
     private void randomInsertProductColorData() {
         db.beginTransaction();
         try {
@@ -217,6 +222,7 @@ public class ProductRepository {
             db.endTransaction();
         }
     }
+
     private void randomInsertProductSizeData() {
         db.beginTransaction();
         try {
@@ -236,6 +242,7 @@ public class ProductRepository {
             db.endTransaction();
         }
     }
+
     private void randomInsertProductImageData() {
         db.beginTransaction();
         try {
@@ -244,7 +251,7 @@ public class ProductRepository {
                 int imageCount = new Random().nextInt(5) + 1;
                 while (imageCount > 0) {
                     int image = generateImageByCategory(product.getCategory());
-                    insertProductImageData(new ProductImage(product.getId(), image,product.getName()));
+                    insertProductImageData(new ProductImage(product.getId(), image, product.getName()));
                     imageCount--;
                 }
             }
@@ -286,6 +293,7 @@ public class ProductRepository {
     private int hexColorToInteger(String hexColor) {
         return Integer.parseInt(hexColor.substring(1), 16);
     }
+
     private static String generateRandomHexColor() {
         Random random = new Random();
 
@@ -299,7 +307,6 @@ public class ProductRepository {
 
         return hexColor;
     }
-
 
 
     private static Integer generateImageByCategory(String category) {
@@ -381,6 +388,52 @@ public class ProductRepository {
 
             cursor.moveToNext();
         }
+
+        cursor.close();
+        return products;
+    }
+
+    public List<Product> getProductsBySearchAndCategory(String search, String category) {
+        List<Product> products = new ArrayList<>();
+
+        db = productDbHelper.getReadableDatabase();
+        String[] projection = {ProductContract.ProductEntry.COLUMN_ID, ProductContract.ProductEntry.COLUMN_NAME, ProductContract.ProductEntry.COLUMN_DESCRIPTION, ProductContract.ProductEntry.COLUMN_PRICE, ProductContract.ProductEntry.COLUMN_CATEGORY, ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY};
+
+        String selection = ProductContract.ProductEntry.COLUMN_CATEGORY + " = ? AND " + ProductContract.ProductEntry.COLUMN_NAME + " LIKE ?";
+        String[] selectionArgs = {category, "%" + search + "%"};
+
+        Cursor cursor = db.query(ProductContract.ProductEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        int idIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_ID);
+        int nameIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_NAME);
+        int descriptionIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_DESCRIPTION);
+        int priceIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRICE);
+        int categoryIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_CATEGORY);
+        int availableQuantityIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int productId = cursor.getInt(idIndex);
+            String productName = cursor.getString(nameIndex);
+            Log.d("MainActivity", "getProductsBySearchAndCategory: " + productName);
+            String productDescription = cursor.getString(descriptionIndex);
+            int productPrice = cursor.getInt(priceIndex);
+            String productCategory = cursor.getString(categoryIndex);
+            int productQuantity = cursor.getInt(availableQuantityIndex);
+
+            List<ProductColor> colors = getColorsForProduct(productId);
+            List<ProductSize> sizes = getSizesForProduct(productId);
+            List<ProductImage> images = getImagesForProduct(productId);
+            Product product = new Product(productId, productName, productDescription, productPrice, productCategory, productQuantity);
+            product.addColors(colors);
+            product.addSizes(sortSizes(sizes));
+            product.addImages(images);
+
+            products.add(product);
+
+            cursor.moveToNext();
+        }
+        Log.d("MainActivity", "getProductsBySearchAndCategory: " + products.size());
 
         cursor.close();
         return products;

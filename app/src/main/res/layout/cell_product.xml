@@ -1,213 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:aapt="http://schemas.android.com/aapt"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/productCardView"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 	
-<androidx.constraintlayout.widget.ConstraintLayout
-	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:background="@color/primary_white"
-	android:elevation="@dimen/product_cell_elevation"
-	android:foreground="?attr/selectableItemBackgroundBorderless"
-	android:tag="layout/cell_product_0">
-	
-	<ImageView
-		android:id="@+id/product_imageView"
-		android:layout_width="0dp"
-		android:layout_height="0dp"
-		android:background="@color/tertiary_gray_050"
-		android:scaleType="centerCrop"
-		android:tag="binding_1"
-		app:layout_constraintDimensionRatio="h,1:1"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="0"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
-	
-	<com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox
-		android:id="@+id/favorite_checkBox"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:button="@drawable/check_box_favorite"
-		android:gravity="center"
-		android:padding="@dimen/xs_spacing"
-		android:tag="binding_2"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
-	
 	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/product_content_container"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingBottom="@dimen/xl_spacing"
-		app:layout_constraintEnd_toStartOf="parent"
-		app:layout_constraintHorizontal_bias="0"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/product_imageView">
+		android:background="@color/primary_white"
+		android:elevation="@dimen/product_cell_elevation"
+		android:foreground="?attr/selectableItemBackgroundBorderless"
+		android:tag="layout/cell_product_0">
 		
-		<androidx.constraintlayout.widget.Guideline
-			android:id="@+id/guidelineLeft"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			app:layout_constraintGuide_begin="@dimen/m_spacing" />
-		
-		<androidx.constraintlayout.widget.Guideline
-			android:id="@+id/guidelineRight"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			app:layout_constraintGuide_end="@dimen/m_spacing" />
-		
-		<androidx.constraintlayout.widget.Barrier
-			android:id="@+id/barrier"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			app:barrierDirection="start"
-			app:constraint_referenced_ids="productGender" />
-		
-		<TextView
-			android:id="@+id/productGender"
-			style="@style/Caption1"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:tag="binding_3"
-			android:text="Unisex"
-			android:textColor="@color/tertiary_gray_500"
-			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-			app:layout_constraintTop_toBottomOf="@+id/chip_imagesView" />
-		
-		<TextView
-			android:id="@+id/product_size_range"
-			style="@style/Caption1"
+		<ImageView
+			android:id="@+id/product_imageView"
 			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="16dp"
-			android:ellipsize="end"
-			android:gravity="end"
-			android:maxLines="4"
-			android:tag="binding_4"
-			android:text="S-L"
-			android:textColor="@color/tertiary_gray_500"
-			app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-			app:layout_constraintHorizontal_bias="1"
-			app:layout_constraintStart_toEndOf="@+id/barrier"
-			app:layout_constraintTop_toBottomOf="@+id/chip_imagesView" />
-		
-		<TextView
-			android:id="@+id/productName"
-			style="@style/Subtitle2"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="8dp"
-			android:tag="binding_5"
-			android:textColor="@color/primary_black"
+			android:layout_height="0dp"
+			android:background="@color/tertiary_gray_050"
+			android:scaleType="centerCrop"
+			app:layout_constraintDimensionRatio="h,1:1"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-			app:layout_constraintTop_toBottomOf="@+id/product_size_range" />
-		
-		<LinearLayout
-			android:id="@+id/flags_product"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/xxs_spacing"
-			android:layout_marginBottom="@dimen/xxs_spacing"
-			android:tag="binding_6"
-			app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
 			app:layout_constraintHorizontal_bias="0"
-			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-			app:layout_constraintTop_toBottomOf="@+id/productName"
-			android:orientation="vertical">
-			<TextView
-				android:id="@+id/product_flag_text"
-				style="@style/FlagLarge"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:ellipsize="end"
-				android:gravity="start"
-				android:tag="layout/view_flag_0" />
-		</LinearLayout>
-		
-		<TextView
-			android:id="@+id/price_view"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/xxs_spacing"
-			android:tag="binding_7"
-			android:text="900.000"
-			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-			app:layout_constraintTop_toBottomOf="@+id/flags_product" />
-		
-		<LinearLayout
-			android:id="@+id/flags_price"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/xxs_spacing"
-			android:layout_marginBottom="@dimen/xxs_spacing"
-			android:tag="binding_8"
-			app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-			app:layout_constraintHorizontal_bias="0"
-			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-			app:layout_constraintTop_toBottomOf="@+id/price_view"
-			android:orientation="vertical">
-			<TextView
-				android:id="@+id/price_flag_text"
-				style="@style/FlagLarge"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:ellipsize="end"
-				android:gravity="start"
-				android:tag="layout/view_flag_0" />
-		</LinearLayout>
-		
-		
-		<RatingBar
-			android:id="@+id/rating_stars_view"
-			style="@style/Widget.AppCompat.RatingBar.Small"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/xxs_spacing"
-			android:isIndicator="true"
-			android:numStars="5"
-			android:rating="3.8"
-			android:stepSize="0.1"
-			android:tag="binding_9"
-			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
-			app:layout_constraintTop_toBottomOf="@+id/flags_price" />
-		
-		<TextView
-			android:id="@+id/only_store_inventory"
-			style="@style/Caption1"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-
-			android:paddingTop="@dimen/xxs_spacing"
-			android:paddingBottom="@dimen/xxs_spacing"
-			android:paddingStart="5dp"
-			android:paddingEnd="5dp"
-			android:tag="binding_10"
-			android:text="(3)"
-			android:textColor="@color/primary_black"
-			app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-			app:layout_constraintStart_toEndOf="@+id/rating_stars_view"
-			app:layout_constraintTop_toBottomOf="@+id/flags_price" />
-		
-		<com.group25.ecommercefashionapp.ui.widget.ChipImagesView
-			android:id="@+id/chip_imagesView"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:paddingTop="@dimen/m_spacing"
-			android:paddingBottom="@dimen/s_spacing"
-			android:tag="binding_11"
-			app:layout_constraintBottom_toTopOf="@+id/product_size_range"
-			app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-			app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent" />
+		
+		<com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox
+			android:id="@+id/favorite_checkBox"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:button="@drawable/check_box_favorite"
+			android:gravity="center"
+			android:padding="@dimen/xs_spacing"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/product_content_container"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingBottom="@dimen/xl_spacing"
+			app:layout_constraintEnd_toStartOf="parent"
+			app:layout_constraintHorizontal_bias="0"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/product_imageView">
+			
+			<androidx.constraintlayout.widget.Guideline
+				android:id="@+id/guidelineLeft"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				app:layout_constraintGuide_begin="@dimen/m_spacing" />
+			
+			<androidx.constraintlayout.widget.Guideline
+				android:id="@+id/guidelineRight"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				app:layout_constraintGuide_percent="0.96107054" />
+			
+			<androidx.constraintlayout.widget.Barrier
+				android:id="@+id/barrier"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				app:barrierDirection="start"
+				app:constraint_referenced_ids="productGender" />
+			
+			<TextView
+				android:id="@+id/productGender"
+				style="@style/Caption1"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Unisex"
+				android:textColor="@color/tertiary_gray_500"
+				app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+				app:layout_constraintTop_toBottomOf="@+id/chip_imagesView" />
+			
+			<TextView
+				android:id="@+id/product_size_range"
+				style="@style/Caption1"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginStart="16dp"
+				android:ellipsize="end"
+				android:gravity="end"
+				android:maxLines="4"
+				android:text="S-L"
+				android:textColor="@color/tertiary_gray_500"
+				app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+				app:layout_constraintHorizontal_bias="1"
+				app:layout_constraintStart_toEndOf="@+id/barrier"
+				app:layout_constraintTop_toBottomOf="@+id/chip_imagesView" />
+			
+			<TextView
+				android:id="@+id/productName"
+				style="@style/Subtitle2"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:textColor="@color/primary_black"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+				app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+				app:layout_constraintTop_toBottomOf="@+id/product_size_range" />
+			
+			<TextView
+				android:id="@+id/price_discount_view"
+				style="@style/H3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/xxs_spacing"
+				android:text="1.000.000 VND"
+				android:textSize="15sp"
+				app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+				app:layout_constraintTop_toBottomOf="@+id/productName" />
+			
+			<TextView
+				android:id="@+id/price_view"
+				style="@style/H3"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/xxs_spacing"
+				android:text="900.000"
+				android:textColor="@color/primary_black"
+				android:textSize="18sp"
+				app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+				app:layout_constraintTop_toBottomOf="@+id/price_discount_view" />
+			
+			
+			<RatingBar
+				android:id="@+id/rating_stars_view"
+				style="@style/Widget.AppCompat.RatingBar.Small"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/xxs_spacing"
+				android:isIndicator="true"
+				android:numStars="5"
+				android:rating="3.8"
+				android:stepSize="0.1"
+				app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+				app:layout_constraintTop_toBottomOf="@+id/price_view" />
+			
+			<TextView
+				android:id="@+id/only_store_inventory"
+				style="@style/Caption1"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				
+				android:paddingStart="5dp"
+				android:paddingTop="@dimen/xxs_spacing"
+				android:paddingEnd="5dp"
+				android:paddingBottom="@dimen/xxs_spacing"
+				android:text="(3)"
+				android:textColor="@color/primary_black"
+				app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+				app:layout_constraintStart_toEndOf="@+id/rating_stars_view"
+				app:layout_constraintTop_toBottomOf="@+id/price_view" />
+			
+			<com.group25.ecommercefashionapp.ui.widget.ChipImagesView
+				android:id="@+id/chip_imagesView"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:paddingTop="@dimen/m_spacing"
+				android:paddingBottom="@dimen/s_spacing"
+				app:layout_constraintBottom_toTopOf="@+id/product_size_range"
+				app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
+				app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
+				app:layout_constraintTop_toTopOf="parent" />
+		</androidx.constraintlayout.widget.ConstraintLayout>
 	</androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

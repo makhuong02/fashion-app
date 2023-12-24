@@ -133,4 +133,6 @@
     <string name="yes">Yes</string>
 	<string name="order_history_details">Order History Details</string>
 	<string name="return_to_order_history">Return to Order History</string>
+    <string name="text_storesearch_sampletext">Search by Keyword</string>
+	<string name="text_product_count_item">%1$d ITEM(S)</string>
 </resources>
