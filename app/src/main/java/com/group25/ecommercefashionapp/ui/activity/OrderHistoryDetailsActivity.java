@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +40,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
     private DecimalFormat VNDFormat;
     int totalOrderPrice = 0;
     MaterialDivider shippingFeeDivider;
+    AppCompatButton returnToOrderHistoryButton;
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {
@@ -127,6 +129,8 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
 
         }
 
+        returnToOrderHistoryButton.setOnClickListener(v -> onBackPressed());
+
         toolbar.setOnClickListener(v -> onBackPressed());
     }
 
@@ -158,6 +162,9 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         shippingFeeDivider = findViewById(R.id.shipping_fee_divider);
         VATPrice = findViewById(R.id.VATPrice);
         orderTotalPrice2 = findViewById(R.id.orderTotalPrice);
+
+        returnToOrderHistoryButton = findViewById(R.id.return_to_order_history_button);
+
 
     }
 }

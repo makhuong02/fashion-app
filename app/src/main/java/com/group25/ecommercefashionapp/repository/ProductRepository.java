@@ -153,11 +153,11 @@ public class ProductRepository {
             }
             productDbHelper.onCreate(db);
             insertProductData(new Product("Áo Polo Vải Dry Pique Ngắn Tay", "Được cập nhật để có thêm sự thoải mái và phong cách trong mùa này.", 489000, "Áo thun"));
-            insertProductData(new Product("Áo Thun Supima Cotton Cổ Tròn Ngắn Tay", "100% bông SUPIMA® với kết cấu cao cấp. Được thiết kế tỉ mỉ đến từng chi tiết.", 391000, "Áo thun"));
-            insertProductData(new Product("Áo Thun Tay Ngắn", "Đặc biệt nhỏ gọn phù hợp và chiều dài ngắn. Một kiểu dáng mang hơi hướng của thập niên 90.", 293000, "Áo thun"));
-            insertProductData(new Product("Chân Váy Xếp Ly Vải Chiffon", "Thiết kế in họa tiết hình cánh hoa nổi bật. Các nếp gấp tạo nên kiểu dáng thanh lịch.t", 980000, "Váy"));
+            insertProductData(new Product("Áo Thun Supima Cotton Cổ Tròn", "100% bông SUPIMA® với kết cấu cao cấp. Được thiết kế tỉ mỉ đến từng chi tiết.", 391000, "Áo thun"));
+            insertProductData(new Product("Áo Thun Vải Cotton Tay Ngắn", "Đặc biệt nhỏ gọn phù hợp và chiều dài ngắn. Một kiểu dáng mang hơi hướng của thập niên 90.", 293000, "Áo thun"));
+            insertProductData(new Product("Chân Váy Xếp Ly Vải Chiffon eo cao", "Thiết kế in họa tiết hình cánh hoa nổi bật. Các nếp gấp tạo nên kiểu dáng thanh lịch.t", 980000, "Váy"));
             insertProductData(new Product("AIRism Áo Thun Vải Rũ Ngắn Tay", "Sự thoải mái và mát mẻ. Kiểu dáng suông mượt.", 391000, "Áo thun"));
-            insertProductData(new Product("Quần Vải Cotton Dáng Relax Dài Đến Mắt Cá", "Hiện tại chất liệu vải cotton đã dày hơn. Kiểu dáng đẹp, bạn có thể mặc ở bất cứ nơi nào.", 489000, "Quần"));
+            insertProductData(new Product("Quần Vải Cotton Trơn Dáng Relax", "Hiện tại chất liệu vải cotton đã dày hơn. Kiểu dáng đẹp, bạn có thể mặc ở bất cứ nơi nào.", 489000, "Quần"));
             insertProductData(new Product("Quần Smart Pants Dài Đến Mắt Cá", "Co giãn 2 chiều giúp bạn dễ mặc mà vẫn sang trọng. Đường cắt thon gọn cho kiểu dáng đẹp.", 784000, "Quần"));
             insertProductData(new Product("Giày New Balance Pro Court Navy, New Balance CRT300", "Với biểu tượng N nổi bật nằm hai bên thân giày, được tô điểm bằng màu xanh Navy, đôi giày này tạo ra điểm nhấn độc đáo và phong cách.", 1295000, "Giày"));
             insertProductData(new Product("Ví Da Nam Lata", "Mẫu ví da được thiết kế tối ưu gồm nhiều ngăn đựng lớn, nhỏ giúp thuận tiện hơn trong sử dụng.", 269000, "Bóp"));
@@ -171,7 +171,6 @@ public class ProductRepository {
             insertProductData(new Product("AirSense Áo Khoác (Vải Lai Cotton)", "Kết hợp sự thoải mái và hiệu suất đáng kinh ngạc. Một chiếc áo khoác đa năng với cảm giác tự nhiên", 1471000, "Áo Khoác"));
             insertProductData(new Product("Chân Váy Mini Vải Lông Cừu Cao Cấp","Được dệt kim bằng len chất lượng cao. Tạo kiểu theo cách riêng của bạn.", 489000, "Váy"));
             insertProductData(new Product("Giày Sandal Gót Thanh Phối Si Vân", "Gót cao 11 cm cho bạn những bước đi uyển chuyển, tự tin khi diện", 489000, "Giày"));
-
 
             randomInsertProductColorData();
             randomInsertProductSizeData();

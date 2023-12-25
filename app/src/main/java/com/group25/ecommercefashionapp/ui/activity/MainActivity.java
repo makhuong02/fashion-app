@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         ordersRepository = new OrdersRepository(productDbHelper);
         MyApp.setMainActivityInstance(this, ordersRepository, productRepository);
 
-        productRepository.deleteAllProducts();
         productRepository.insertDbData();
 
         // Initialize navigation components
