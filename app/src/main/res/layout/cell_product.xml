@@ -122,7 +122,7 @@
 				android:layout_height="wrap_content"
 				android:layout_marginTop="@dimen/xxs_spacing"
 				android:text="900.000"
-				android:textColor="@color/primary_black"
+				android:textColor="@color/primary_red"
 				android:textSize="18sp"
 				app:layout_constraintStart_toStartOf="@+id/guidelineLeft"
 				app:layout_constraintTop_toBottomOf="@+id/price_discount_view" />

@@ -129,7 +129,7 @@ public class ProductRepository {
         return products;
     }
 
-    private void deleteAllProducts() {
+    public void deleteAllProducts() {
         db.delete(ProductContract.ProductEntry.TABLE_NAME, null, null);
     }
 
@@ -152,28 +152,25 @@ public class ProductRepository {
                 return;
             }
             productDbHelper.onCreate(db);
-            insertProductData(new Product("Beige Shirt", "Linen cotton fabric keep you warm through out the year.", 1500000, "Áo thun"));
-            insertProductData(new Product("Beige Shirt", "Linen cotton fabric keep you warm through out the year.", 510000, "Áo thun"));
-            insertProductData(new Product("Beige Shirt", "Linen cotton fabric keep you warm through out the year.", 750000, "Áo thun"));
-            insertProductData(new Product("Váy", "Đây là sản phẩm 4 có nhiều lượt bán nhất", 800000, "Váy"));
-            insertProductData(new Product("Beige Shirt", "Linen cotton fabric keep you warm through out the year.", 500000, "Áo thun"));
-            insertProductData(new Product("Quần", "Đây là sản phẩm 6 có nhiều lượt bán nhất", 300000, "Quần"));
-            insertProductData(new Product("Quần", "Đây là sản phẩm 7 có nhiều lượt bán nhất", 300000, "Quần"));
-            insertProductData(new Product("Giày", "Đây là sản phẩm 8 có nhiều lượt bán nhất", 300000, "Giày"));
-            insertProductData(new Product("Bóp", "Đây là sản phẩm 9 có nhiều lượt bán nhất", 300000, "Bóp"));
-            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 10 có nhiều lượt bán nhất", 200000, "Áo khoác"));
-            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 11 có nhiều lượt bán nhất", 200000, "Áo khoác"));
-            insertProductData(new Product("Hoodie", "Đây là sản phẩm 12 có nhiều lượt bán nhất", 100000, "Hoodie"));
-            insertProductData(new Product("Hoodie", "Đây là sản phẩm 13 có nhiều lượt bán nhất", 100000, "Hoodie"));
-            insertProductData(new Product("Túi xách", "Đây là sản phẩm 14 có nhiều lượt bán nhất", 860000, "Túi xách"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 15 có nhiều lượt bán nhất", 350000, "Áo thun"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 16 có nhiều lượt bán nhất", 4600000, "Áo thun"));
-            insertProductData(new Product("Đồng hồ", "Đây là sản phẩm 17 có nhiều lượt bán nhất", 4600000, "Đồng hồ"));
-            insertProductData(new Product("Túi xách", "Đây là sản phẩm 18 có nhiều lượt bán nhất", 8700000, "Túi xách"));
-            insertProductData(new Product("Áo khoác", "Đây là sản phẩm 19 có nhiều lượt bán nhất", 8700000, "Túi xách"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 20 có nhiều lượt bán nhất", 8800000, "Áo thun"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 21 có nhiều lượt bán nhất", 1200000, "Áo thun"));
-            insertProductData(new Product("Áo thun", "Đây là sản phẩm 22 có nhiều lượt bán nhất", 3400000, "Áo thun"));
+            insertProductData(new Product("Áo Polo Vải Dry Pique Ngắn Tay", "Được cập nhật để có thêm sự thoải mái và phong cách trong mùa này.", 489000, "Áo thun"));
+            insertProductData(new Product("Áo Thun Supima Cotton Cổ Tròn Ngắn Tay", "100% bông SUPIMA® với kết cấu cao cấp. Được thiết kế tỉ mỉ đến từng chi tiết.", 391000, "Áo thun"));
+            insertProductData(new Product("Áo Thun Tay Ngắn", "Đặc biệt nhỏ gọn phù hợp và chiều dài ngắn. Một kiểu dáng mang hơi hướng của thập niên 90.", 293000, "Áo thun"));
+            insertProductData(new Product("Chân Váy Xếp Ly Vải Chiffon", "Thiết kế in họa tiết hình cánh hoa nổi bật. Các nếp gấp tạo nên kiểu dáng thanh lịch.t", 980000, "Váy"));
+            insertProductData(new Product("AIRism Áo Thun Vải Rũ Ngắn Tay", "Sự thoải mái và mát mẻ. Kiểu dáng suông mượt.", 391000, "Áo thun"));
+            insertProductData(new Product("Quần Vải Cotton Dáng Relax Dài Đến Mắt Cá", "Hiện tại chất liệu vải cotton đã dày hơn. Kiểu dáng đẹp, bạn có thể mặc ở bất cứ nơi nào.", 489000, "Quần"));
+            insertProductData(new Product("Quần Smart Pants Dài Đến Mắt Cá", "Co giãn 2 chiều giúp bạn dễ mặc mà vẫn sang trọng. Đường cắt thon gọn cho kiểu dáng đẹp.", 784000, "Quần"));
+            insertProductData(new Product("Giày New Balance Pro Court Navy, New Balance CRT300", "Với biểu tượng N nổi bật nằm hai bên thân giày, được tô điểm bằng màu xanh Navy, đôi giày này tạo ra điểm nhấn độc đáo và phong cách.", 1295000, "Giày"));
+            insertProductData(new Product("Ví Da Nam Lata", "Mẫu ví da được thiết kế tối ưu gồm nhiều ngăn đựng lớn, nhỏ giúp thuận tiện hơn trong sử dụng.", 269000, "Bóp"));
+            insertProductData(new Product("Áo Khoác Kiểu Sơ Mi Dáng Rộng", "Một lớp khoác ngoài với kiểu dáng vai rũ. Gói gọn trong một thiết kế đầy tinh tế.", 1471000, "Áo khoác"));
+            insertProductData(new Product("Áo Khoác Giả Lông Cừu Kéo Khóa Dài Tay", "Trọng lượng nhẹ nhưng vẫn giữ ấm tốt: Chất vải giả lông cừu dày, đàn hồi.", 686000, "Áo khoác"));
+            insertProductData(new Product("Studio Ghibli Áo Nỉ Dài Tay", "Bộ sưu tập khắc họa vũ trụ Studio Ghibli đa dạng và độc đáo đã đến với UT.", 784000, "Hoodie"));
+            insertProductData(new Product("Áo Hoodie Chui Đầu Giả Lông Cừu Dài Tay", "Chất vải giả lông cừu mềm mại và ấm áp. Thêm phần phong cách với họa tiết nhỏ ở ngực áo.", 784000, "Hoodie"));
+            insertProductData(new Product("Túi Xách Nhỏ Marina", "Túi thiết kế dáng nhỏ gọn, nổi bật khoá kim loại", 843000, "Túi xách"));
+            insertProductData(new Product("Orient SK RA-AA0B02R19B", "Phiên bản mạ vàng với mẫu kim chỉ nổi bật trên mặt số", 4600000, "Đồng hồ"));
+            insertProductData(new Product("Túi Bán Nguyệt Giả Da Mini Đeo Chéo", "Túi đeo vai tròn được làm bằng đệm để tạo cảm giác thoáng mát.", 7800000, "Túi xách"));
+            insertProductData(new Product("AirSense Áo Khoác (Vải Lai Cotton)", "Kết hợp sự thoải mái và hiệu suất đáng kinh ngạc. Một chiếc áo khoác đa năng với cảm giác tự nhiên", 1471000, "Áo Khoác"));
+            insertProductData(new Product("Chân Váy Mini Vải Lông Cừu Cao Cấp","Được dệt kim bằng len chất lượng cao. Tạo kiểu theo cách riêng của bạn.", 489000, "Váy"));
+            insertProductData(new Product("Giày Sandal Gót Thanh Phối Si Vân", "Gót cao 11 cm cho bạn những bước đi uyển chuyển, tự tin khi diện", 489000, "Giày"));
 
 
             randomInsertProductColorData();
@@ -321,28 +318,28 @@ public class ProductRepository {
 
                 break;
             case "Váy":
-                image = R.drawable.skirt;
+                image = R.drawable.skirt1;
                 break;
             case "Quần":
-                image = R.drawable.jeans;
+                image = R.drawable.pants1;
                 break;
             case "Áo khoác":
-                image = R.drawable.jacket;
+                image = R.drawable.jacket1;
                 break;
             case "Hoodie":
-                image = R.drawable.hoodie;
+                image = R.drawable.hoodie1;
                 break;
             case "Giày":
-                image = R.drawable.sneakers;
+                image = R.drawable.shoes1;
                 break;
             case "Đồng hồ":
-                image = R.drawable.watch;
+                image = R.drawable.watch1;
                 break;
             case "Bóp":
-                image = R.drawable.wallet;
+                image = R.drawable.wallet1;
                 break;
             case "Túi xách":
-                image = R.drawable.handbag;
+                image = R.drawable.handbag1;
                 break;
         }
         return image;
