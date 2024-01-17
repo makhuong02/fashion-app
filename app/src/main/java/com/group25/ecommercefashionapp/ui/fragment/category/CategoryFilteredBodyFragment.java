@@ -7,10 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,23 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.adapter.FilterItemAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
+import com.group25.ecommercefashionapp.data.FilterType;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class CategoryFilteredBodyFragment extends Fragment implements OnItemClickListener {
     MainActivity mainActivity;
     Context context = null;
-    TextView productCountTextView;
-    EditText searchEditText;
-    ImageButton clearSearchButton;
-    RecyclerView productRecyclerView;
+    RecyclerView productRecyclerView, filterRecyclerView;
     List<Product> products;
-    String category = "";
+    String category = "", search = "";
     ProductItemAdapter adapter;
 
     @Override
@@ -43,64 +39,33 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
         View view = inflater.inflate(R.layout.category_filtered_fragment, container, false);
 
         productRecyclerView = view.findViewById(R.id.productRecyclerView);
-        productCountTextView = view.findViewById(R.id.text_product_count);
-        searchEditText = view.findViewById(R.id.search_edit_text);
-        clearSearchButton = view.findViewById(R.id.clear_button);
+        filterRecyclerView = view.findViewById(R.id.list);
+        List<FilterType> filterSections = Arrays.asList(FilterType.SIZE, FilterType.COLOR, FilterType.PRICE);
+        FilterItemAdapter filterItemAdapter = new FilterItemAdapter(filterSections);
 
+        filterRecyclerView.setAdapter(filterItemAdapter);
 
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
 
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            category = bundle.getString("category");
-        }
-
         ProductRepository productRepository = mainActivity.productRepository;
         products = productRepository.getProductsByCategory(category);
 
-        productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
-
-        searchEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        searchEditText.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (searchEditText.getText().toString().isEmpty()) {
-                    products = productRepository.getProductsByCategory(category);
-                } else {
-                    products = productRepository.getProductsBySearchAndCategory(searchEditText.getText().toString(), category);
-                }
-                adapter = new ProductItemAdapter(products, this);
-                productRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
-
-            }
-
-            return false;
-        });
-        if (searchEditText.getText().toString().isEmpty()) {
-            clearSearchButton.setVisibility(View.GONE);
-        } else {
-            clearSearchButton.setVisibility(View.VISIBLE);
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            category = bundle.getString("category");
+            search = bundle.getString("search");
         }
 
-        clearSearchButton.setOnClickListener(v -> {
-            searchEditText.setText("");
-            clearSearchButton.setVisibility(View.GONE);
+        if(search != null && !search.isEmpty()) {
+            products = productRepository.getProductsBySearchAndCategory(search, category);
+        }
+        else {
             products = productRepository.getProductsByCategory(category);
-            adapter = new ProductItemAdapter(products, this);
-            productRecyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
-        });
-
-        searchEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                clearSearchButton.setVisibility(View.VISIBLE);
-            } else {
-                clearSearchButton.setVisibility(View.GONE);
-            }
-        });
+        }
+        adapter = new ProductItemAdapter(products, this);
+        productRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);

@@ -42,13 +42,6 @@
     <string name="messages">Messages</string>
     <string name="news">News</string>
     <string name="cart">Cart</string>
-    <string-array name="productQuantitySpinnerItems">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
-
     <string name="product_price">%1$s VND</string>
     <string name="share">Share</string>
     <string name="share_content_description">Share button</string>
@@ -137,4 +130,10 @@
 	<string name="text_product_count_item">%1$d ITEM(S)</string>
 	<string name="save_to_phone">Save to phone</string>
 	<string name="share_external">Share external</string>
+	<string name="text_filter">Filter</string>
+	<string name="text_price">Price</string>
+	<string name="text_reset">Reset</string>
+    <string name="text_view_searchresult">Apply</string>
+	<string name="price_range_dash">~</string>
+ 
 </resources>

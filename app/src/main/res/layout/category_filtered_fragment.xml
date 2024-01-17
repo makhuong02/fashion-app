@@ -3,53 +3,39 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
-	android:orientation="vertical"
-	android:tag="layout/fragment_favorite_product_list_0">
-	
-	<androidx.constraintlayout.widget.ConstraintLayout
+	android:orientation="vertical">
+	<LinearLayout
 		android:id="@+id/layout_tools"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:paddingTop="@dimen/xxs_spacing"
+		android:paddingBottom="@dimen/xxs_spacing"
 		android:background="@color/primary_white"
 		android:elevation="4dp">
-		
 		<include
-			android:id="@+id/search_view"
-			layout="@layout/view_store_selection_search"
+			android:id="@+id/filter_view"
+			layout="@layout/view_product_list_filter"
 			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
-		
-		<TextView
-			android:id="@+id/text_product_count"
-			style="@style/Body2"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/m_spacing"
-			android:text="@string/text_favorite_count"
-			android:textAllCaps="true"
-			android:textColor="@color/primary_black"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@id/search_view" />
-		
-		<include
-			android:id="@+id/app_toolbar"
-			layout="@layout/view_progressbar"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			app:layout_constraintTop_toBottomOf="@+id/text_product_count" />
-	</androidx.constraintlayout.widget.ConstraintLayout>
+			android:layout_height="wrap_content" />
+	</LinearLayout>
 	
 	<androidx.core.widget.NestedScrollView
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="match_parent"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 		
-		<androidx.recyclerview.widget.RecyclerView
-			android:id="@+id/productRecyclerView"
+		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+			
+
+			
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/productRecyclerView"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" />
+		</LinearLayout>
 	</androidx.core.widget.NestedScrollView>
 </LinearLayout>
 
