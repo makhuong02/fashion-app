@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.utilities.ImageSaver;
+import com.group25.ecommercefashionapp.utilities.ImageShareUtils;
 
 public class PhotoLongClickBottomSheetFragment extends BottomSheetDialogFragment {
 
@@ -28,6 +29,10 @@ public class PhotoLongClickBottomSheetFragment extends BottomSheetDialogFragment
         shareCardView = view.findViewById(R.id.shareActionCardView);
         saveToPhoneCardView.setOnClickListener(v -> {
             ImageSaver.saveImageToPhone(getContext(), drawable.getBitmap());
+            dismiss();
+        });
+        shareCardView.setOnClickListener(v -> {
+            ImageShareUtils.shareImage(getContext(), drawable.getBitmap(),"");
             dismiss();
         });
 
