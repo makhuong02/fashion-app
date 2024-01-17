@@ -1,0 +1,89 @@
+Index: app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group25.ecommercefashionapp;\n\nimport android.content.Intent;\nimport android.graphics.Paint;\nimport android.os.Bundle;\nimport android.view.View;\nimport android.widget.RatingBar;\nimport android.widget.TextView;\n\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.appcompat.view.menu.ActionMenuItemView;\nimport androidx.core.text.HtmlCompat;\nimport androidx.recyclerview.widget.GridLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\nimport androidx.viewpager.widget.ViewPager;\n\nimport com.google.android.material.appbar.MaterialToolbar;\nimport com.group25.ecommercefashionapp.adapter.ProductColorAdapter;\nimport com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;\nimport com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;\nimport com.group25.ecommercefashionapp.data.Item;\nimport com.group25.ecommercefashionapp.data.Product;\nimport com.group25.ecommercefashionapp.data.ProductImage;\nimport com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;\nimport com.group25.ecommercefashionapp.repository.ProductRepository;\n\nimport java.text.DecimalFormat;\nimport java.text.DecimalFormatSymbols;\nimport java.util.List;\n\npublic class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{\n    MaterialToolbar toolbar;\n    MainActivity mainActivity;\n    TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;\n    private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();\n    RatingBar ratingBar;\n    ActionMenuItemView cart;\n    RecyclerView colorRecyclerView, sizeRecyclerView;\n    ViewPager productCarousel;\n    private DecimalFormat VNDFormat;\n    ActionMenuItemView share;\n    private static final int VIEW_PRODUCT_IMAGES_REQUEST_CODE = 1;\n    ProductRepository productRepository;\n    Product product;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_view_product);\n        symbols.setGroupingSeparator('.');\n        VNDFormat = new DecimalFormat(\"###,###,###,###\", symbols);\n\n        productRepository = MyApp.getMainActivityInstance().productRepository;\n        Bundle bundle = getIntent().getExtras();\n        int id = bundle.getInt(\"id\");\n        product = productRepository.getProductById(id);\n\n        mainActivity = MyApp.getMainActivityInstance();\n\n        initializeViews();\n\n        txtName.setText(product.getName());\n        txtHighlight.setText(product.getDescription());\n        txtActualPrice.setText(getString(R.string.product_price, VNDFormat.format(product.getPrice())));\n        txtActualPrice.setPaintFlags(txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);\n        txtDiscountPrice.setText(getString(R.string.product_price, VNDFormat.format(product.getPrice() * 0.9f)));\n        txtId.setText(getString(R.string.product_id, String.valueOf(bundle.getInt(\"id\"))));\n        float rating = 3.8f;\n        ratingBar.setRating(rating);\n        txtRating.setText(String.valueOf(rating));\n        txtReview.setText(HtmlCompat.fromHtml(\"<font color=\\\"blue\\\"><u>(See 5 reviews)</u></font>\", HtmlCompat.FROM_HTML_MODE_LEGACY));\n        List<ProductImage> imageList = mainActivity.productRepository.getProductById(id).getImageList();\n\n        ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, imageList, this);\n        productCarousel.setAdapter(productImageCarouselAdapter);\n        share.setOnClickListener(v -> shareContent());\n\n        // Set up Color recycler view\n        GridAutoFitLayoutManager colorGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);\n        colorRecyclerView.setLayoutManager(colorGridLayoutManager);\n        ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);\n        colorRecyclerView.setAdapter(colorAdapter);\n\n        // Set up Size recycler view\n        GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);\n        sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);\n        ProductSizeAdapter sizeAdapter = new ProductSizeAdapter(product.getSizeList(), this, sizeRecyclerView);\n        sizeRecyclerView.setAdapter(sizeAdapter);\n\n        toolbar.setNavigationOnClickListener(v -> {\n            mainActivity.navController.popBackStack();\n            onBackPressed();\n        });\n    }\n\n    private void shareContent() {\n        // Create an Intent to share content\n        Intent shareIntent = new Intent(Intent.ACTION_SEND);\n        shareIntent.setType(\"text/plain\");\n        String shareBody = product.getName() + \"\\n\" + getString(R.string.product_price, VNDFormat.format(product.getPrice() * 0.9f));\n        shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);\n\n        // Start the activity for sharing\n        startActivity(Intent.createChooser(shareIntent, getString(R.string.share)));\n    }\n\n    @Override\n    public void onItemClick(View view, Item item) {\n        if (view.getId() == R.id.chip_image_card) {\n            selectedColorTextView.setText( item.getName());\n        } else if (view.getId() == R.id.chip_size_card) {\n            selectedSizeTextView.setText(item.getName());\n        }else if(view.getId() == R.id.carousel_image_view){\n            Bundle bundle = new Bundle();\n            bundle.putInt(\"product_id\", product.getId());\n            bundle.putInt(\"position\", productCarousel.getCurrentItem());\n            Intent intent = new Intent(this, ViewProductImages.class);\n            intent.putExtras(bundle);\n            startActivityForResult(intent, VIEW_PRODUCT_IMAGES_REQUEST_CODE);\n        }\n    }\n    @Override\n    protected void onActivityResult(int requestCode, int resultCode, Intent data) {\n        super.onActivityResult(requestCode, resultCode, data);\n        if (requestCode == VIEW_PRODUCT_IMAGES_REQUEST_CODE) {\n            if (resultCode == RESULT_OK) {\n                Bundle bundle = data.getExtras();\n                int id = bundle.getInt(\"product_id\");\n                int position = bundle.getInt(\"position\");\n                Product product = mainActivity.productRepository.getProductById(id);\n                ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, product.getImageList(), this);\n                productCarousel.setAdapter(productImageCarouselAdapter);\n                productCarousel.setCurrentItem(position);\n            }\n        }\n    }\n\n    private void initializeViews() {\n        txtName = findViewById(R.id.productNameTextView);\n        txtHighlight = findViewById(R.id.productHighlightsTextView);\n        txtActualPrice = findViewById(R.id.productActualPriceTextView);\n        txtDiscountPrice = findViewById(R.id.productDiscountPriceTextView);\n        txtRating = findViewById(R.id.ratingTextView);\n        txtReview = findViewById(R.id.seeReviewsTextView);\n        ratingBar = findViewById(R.id.ratingBar);\n        txtId = findViewById(R.id.productIDTextView);\n        productCarousel = findViewById(R.id.carousel);\n        toolbar = findViewById(R.id.topAppBar);\n        share = toolbar.findViewById(R.id.share);\n        cart = toolbar.findViewById(R.id.cart);\n        selectedColorTextView = findViewById(R.id.selectColorText);\n        colorRecyclerView = findViewById(R.id.colorRecycler);\n        selectedSizeTextView = findViewById(R.id.selectSizeText);\n        sizeRecyclerView = findViewById(R.id.sizeRecycler);\n        toolbar = findViewById(R.id.topAppBar);\n    }\n}\n
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java
+--- a/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java	
++++ b/app/src/main/java/com/group25/ecommercefashionapp/ViewProductActivity.java	
+@@ -28,6 +28,7 @@
+ import java.text.DecimalFormatSymbols;
+ import java.util.List;
+ 
++
+ public class ViewProductActivity extends AppCompatActivity implements OnItemClickListener{
+     MaterialToolbar toolbar;
+     MainActivity mainActivity;
+@@ -36,10 +37,12 @@
+     RatingBar ratingBar;
+     ActionMenuItemView cart;
+     RecyclerView colorRecyclerView, sizeRecyclerView;
++
+     ViewPager productCarousel;
+     private DecimalFormat VNDFormat;
+     ActionMenuItemView share;
+-    private static final int VIEW_PRODUCT_IMAGES_REQUEST_CODE = 1;
++
++
+     ProductRepository productRepository;
+     Product product;
+ 
+@@ -81,6 +84,7 @@
+         ProductColorAdapter colorAdapter = new ProductColorAdapter(product.getColorList(), this, colorRecyclerView);
+         colorRecyclerView.setAdapter(colorAdapter);
+ 
++
+         // Set up Size recycler view
+         GridAutoFitLayoutManager sizeGridLayoutManager = new GridAutoFitLayoutManager(this, 0, GridLayoutManager.HORIZONTAL, false);
+         sizeRecyclerView.setLayoutManager(sizeGridLayoutManager);
+@@ -90,6 +94,7 @@
+         toolbar.setNavigationOnClickListener(v -> {
+             mainActivity.navController.popBackStack();
+             onBackPressed();
++
+         });
+     }
+ 
+@@ -114,24 +119,7 @@
+             Bundle bundle = new Bundle();
+             bundle.putInt("product_id", product.getId());
+             bundle.putInt("position", productCarousel.getCurrentItem());
+-            Intent intent = new Intent(this, ViewProductImages.class);
+-            intent.putExtras(bundle);
+-            startActivityForResult(intent, VIEW_PRODUCT_IMAGES_REQUEST_CODE);
+-        }
+-    }
+-    @Override
+-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+-        super.onActivityResult(requestCode, resultCode, data);
+-        if (requestCode == VIEW_PRODUCT_IMAGES_REQUEST_CODE) {
+-            if (resultCode == RESULT_OK) {
+-                Bundle bundle = data.getExtras();
+-                int id = bundle.getInt("product_id");
+-                int position = bundle.getInt("position");
+-                Product product = mainActivity.productRepository.getProductById(id);
+-                ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, product.getImageList(), this);
+-                productCarousel.setAdapter(productImageCarouselAdapter);
+-                productCarousel.setCurrentItem(position);
+-            }
++            mainActivity.navController.navigate(R.id.viewProductImages, bundle);
+         }
+     }
+ 
+Index: app/src/main/java/com/group25/ecommercefashionapp/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group25.ecommercefashionapp;\n\nimport android.os.Bundle;\nimport android.view.Menu;\nimport android.view.MenuItem;\n\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.navigation.NavController;\nimport androidx.navigation.fragment.NavHostFragment;\nimport androidx.navigation.ui.NavigationUI;\n\nimport com.google.android.material.bottomnavigation.BottomNavigationView;\nimport com.group25.ecommercefashionapp.data.User;\nimport com.group25.ecommercefashionapp.database.DatabaseHelper;\nimport com.group25.ecommercefashionapp.repository.OrdersRepository;\nimport com.group25.ecommercefashionapp.repository.ProductRepository;\n\n\n\npublic class MainActivity extends AppCompatActivity {\n    private BottomNavigationView bottomNavigationView;\n    public NavController navController;\n    public ProductRepository productRepository;\n    public OrdersRepository ordersRepository;\n    public User user = new User();\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n\n\n        DatabaseHelper productDbHelper = new DatabaseHelper(this);\n        productRepository = new ProductRepository(productDbHelper);\n        productRepository.dropProductTable();\n        ordersRepository = new OrdersRepository(productDbHelper);\n        MyApp.setMainActivityInstance(this, ordersRepository, productRepository);\n\n        productRepository.insertDbData();\n\n        // Initialize navigation components\n        initializeViews();\n        setupNavigation();\n\n\n    }\n\n    private void initializeViews() {\n        bottomNavigationView = findViewById(R.id.bottomNavigation);\n    }\n\n    private void setupNavigation() {\n        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);\n        navController = navHostFragment.getNavController();\n        NavigationUI.setupWithNavController(bottomNavigationView, navController);\n    }\n\n    public void updateNavigationBarState(int actionId){\n        Menu menu = bottomNavigationView.getMenu();\n        for (int i = 0, size = menu.size(); i < size; i++) {\n            MenuItem item = menu.getItem(i);\n            if (item.getItemId() == actionId) {\n                item.setChecked(true);\n                break;\n            }\n        }\n    }\n}\n
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/MainActivity.java b/app/src/main/java/com/group25/ecommercefashionapp/MainActivity.java
+--- a/app/src/main/java/com/group25/ecommercefashionapp/MainActivity.java	
++++ b/app/src/main/java/com/group25/ecommercefashionapp/MainActivity.java	
+@@ -10,6 +10,8 @@
+ import androidx.navigation.ui.NavigationUI;
+ 
+ import com.google.android.material.bottomnavigation.BottomNavigationView;
++import com.group25.ecommercefashionapp.MyApp;
++import com.group25.ecommercefashionapp.R;
+ import com.group25.ecommercefashionapp.data.User;
+ import com.group25.ecommercefashionapp.database.DatabaseHelper;
+ import com.group25.ecommercefashionapp.repository.OrdersRepository;

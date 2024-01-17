@@ -8,15 +8,14 @@
 	android:orientation="vertical"
 	app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 	
-	<com.google.android.material.imageview.ShapeableImageView
+	<com.github.chrisbanes.photoview.PhotoView
 		android:id="@+id/carousel_image_view"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/product_image_size"
-		android:scaleType="centerCrop"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent"
-		app:srcCompat="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
+		android:src="@drawable/man_beige_shirt_pants_casual_wear_fashion" />
 	
 	<LinearLayout
 		android:layout_width="wrap_content"

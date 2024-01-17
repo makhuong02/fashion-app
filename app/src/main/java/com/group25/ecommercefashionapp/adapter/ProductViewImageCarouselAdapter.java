@@ -7,10 +7,10 @@ import androidx.annotation.NonNull;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ProductImage;
 
@@ -20,8 +20,6 @@ public class ProductViewImageCarouselAdapter extends PagerAdapter {
 
     private final Context context;
     private final List<ProductImage> imageList;
-
-
     public ProductViewImageCarouselAdapter(Context context, List<ProductImage> imageList) {
         this.context = context;
         this.imageList = imageList;
@@ -33,7 +31,7 @@ public class ProductViewImageCarouselAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View itemView = inflater.inflate(R.layout.view_product_carousel_item, container, false);
 
-        ImageView image = itemView.findViewById(R.id.carousel_image_view);
+        PhotoView image = itemView.findViewById(R.id.carousel_image_view);
         TextView currentImageTextView = itemView.findViewById(R.id.current_image_indicator_text_view);
         TextView totalImageTextView = itemView.findViewById(R.id.image_size_indicator_text_view);
 
