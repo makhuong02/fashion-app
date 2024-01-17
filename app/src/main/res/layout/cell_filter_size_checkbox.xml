@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+	
+	<androidx.appcompat.widget.AppCompatCheckBox
+		android:id="@+id/radio_button"
+		style="@style/Body2"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/filter_cell_size"
+		android:clickable="true"
+		android:minHeight="?attr/listPreferredItemHeightSmall"
+		android:paddingStart="@dimen/xxs_spacing"
+        android:paddingEnd="@dimen/xxs_spacing"
+		android:text="XS"
+		android:theme="@style/PrimaryBlackCheckBox" />
+</FrameLayout>

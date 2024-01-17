@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper productDbHelper = new DatabaseHelper(this);
         productRepository = new ProductRepository(productDbHelper);
-        productRepository.dropProductTable();
         ordersRepository = new OrdersRepository(productDbHelper);
         MyApp.setMainActivityInstance(this, ordersRepository, productRepository);
 

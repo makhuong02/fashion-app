@@ -3,6 +3,7 @@ package com.group25.ecommercefashionapp.ui.fragment.category;
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
 import android.os.Bundle;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +17,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.group25.ecommercefashionapp.OnProductCountUpdateListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryFilteredFragment extends Fragment {
+public class CategoryFilteredFragment extends Fragment implements OnProductCountUpdateListener {
     MaterialToolbar toolbar;
     TextView productCountTextView;
     EditText searchEditText;
     ImageButton clearSearchButton;
     ActionMenuItemView cart;
     List<Product> products;
+    private final List<String> selectedItems = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_filtered, container, false);
@@ -48,37 +52,36 @@ public class CategoryFilteredFragment extends Fragment {
         products = productRepository.getProductsByCategory(category);
 
         productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
+        startTransaction(category, searchEditText.getText().toString());
 
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                products = productRepository.getProductsBySearchAndCategory(searchEditText.getText().toString(), category);
-                productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
                 startTransaction(category, searchEditText.getText().toString());
             }
 
             return false;
         });
-        if (searchEditText.getText().toString().isEmpty()) {
-            clearSearchButton.setVisibility(View.GONE);
-        } else {
-            clearSearchButton.setVisibility(View.VISIBLE);
-        }
+        searchEditText.addTextChangedListener(new TextWatcher(){
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (searchEditText.getText().toString().isEmpty()) {
+                    clearSearchButton.setVisibility(View.GONE);
+                } else {
+                    clearSearchButton.setVisibility(View.VISIBLE);
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void afterTextChanged(android.text.Editable s) {
+            }
+        });
 
         clearSearchButton.setOnClickListener(v -> {
             searchEditText.setText("");
-            clearSearchButton.setVisibility(View.GONE);
-            products = productRepository.getProductsByCategory(category);
-            productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
             startTransaction(category, searchEditText.getText().toString());
-        });
-
-        searchEditText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                clearSearchButton.setVisibility(View.VISIBLE);
-            } else {
-                clearSearchButton.setVisibility(View.GONE);
-            }
         });
 
         cart.setOnClickListener(v -> {
@@ -88,7 +91,7 @@ public class CategoryFilteredFragment extends Fragment {
                 getMainActivityInstance().navController.navigate(R.id.loginActivity);
             }
         });
-        startTransaction(category, searchEditText.getText().toString());
+
 
         toolbar.setNavigationOnClickListener(v -> getMainActivityInstance().navController.popBackStack());
 
@@ -98,10 +101,18 @@ public class CategoryFilteredFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("category", category);
         bundle.putString("search", search);
-        CategoryFilteredBodyFragment bodyFragment = new CategoryFilteredBodyFragment();
+        CategoryFilteredBodyFragment bodyFragment = new CategoryFilteredBodyFragment(selectedItems);
         bodyFragment.setArguments(bundle);
+
+        // Callback to update product count
+        bodyFragment.setProductCountUpdateListener(this);
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, bodyFragment);
         transaction.commit();
+    }
+
+    @Override
+    public void onProductCountUpdate(int count) {
+        productCountTextView.setText(getString(R.string.text_product_count_item, count));
     }
 }
