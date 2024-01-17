@@ -161,4 +161,8 @@
 	<style name="circle">
 		<item name="cornerSize">50%</item>
 	</style>
+	<style name="PrimaryBlackCheckBox">
+		<item name="colorControlActivated">@color/primary_black</item>
+		<item name="colorControlNormal">@color/tertiary_gray_350</item>
+	</style>
 </resources>

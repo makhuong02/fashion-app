@@ -8,7 +8,9 @@
 	
 	<com.google.android.material.appbar.AppBarLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:background="@color/primary_white"
+		>
 		
 		<com.google.android.material.appbar.MaterialToolbar
 			android:id="@+id/topAppBar"
@@ -20,7 +22,38 @@
 			app:menu="@menu/category_action_menu"
 			app:navigationIcon="@drawable/round_arrow_back_24"
 			app:title="Áo thun" />
+		<include
+			android:id="@+id/search_view"
+			layout="@layout/view_store_selection_search"
+			android:background="@color/primary_white"
+			
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_collapseMode="pin"
+			app:layout_scrollFlags="scroll|enterAlways"/>
 		
+		<TextView
+			android:id="@+id/text_product_count"
+			style="@style/Body2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@color/primary_white"
+			
+			android:layout_marginStart="@dimen/m_spacing"
+			android:text="@string/text_favorite_count"
+			android:textAllCaps="true"
+			android:textColor="@color/primary_black"
+			app:layout_collapseMode="pin"
+			app:layout_scrollFlags="scroll|enterAlways"/>
+		
+		<include
+			android:id="@+id/app_toolbar"
+			layout="@layout/view_progressbar"
+			android:layout_width="match_parent"
+			android:background="@color/primary_white"
+			app:layout_collapseMode="pin"
+			app:layout_scrollFlags="scroll|enterAlways"
+			android:layout_height="wrap_content" />
 		<View
 			android:id="@+id/toolbar_shadow"
 			android:layout_width="match_parent"

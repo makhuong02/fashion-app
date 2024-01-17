@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/coordinatorLayout"
+	android:background="@color/primary_white"
+	
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/storeListFilter"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/primary_white"
+		android:tag="layout/dialog_store_list_filter_0">
+		
+		<androidx.constraintlayout.widget.ConstraintLayout
+			android:id="@+id/headerView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@android:color/white"
+			android:elevation="2dp"
+			android:padding="@dimen/m_spacing"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
+			
+			<TextView
+				android:id="@+id/title"
+				style="@style/Subtitle1.NoCaps"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:ellipsize="end"
+				android:gravity="center_horizontal"
+				android:maxLines="1"
+				android:text="@string/text_filter"
+				android:textColor="@color/primary_black"
+				app:layout_constraintStart_toStartOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+			
+			<TextView
+				android:id="@+id/filterReset"
+				style="@style/Subtitle2"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:ellipsize="end"
+				android:gravity="center_vertical"
+				android:maxLines="1"
+				android:text="@string/text_reset"
+				app:layout_constraintBottom_toBottomOf="parent"
+				app:layout_constraintEnd_toEndOf="parent"
+				app:layout_constraintTop_toTopOf="parent" />
+		</androidx.constraintlayout.widget.ConstraintLayout>
+		
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/filterSections"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_marginStart="@dimen/m_spacing"
+			android:layout_marginTop="@dimen/xl_spacing"
+			android:clipToPadding="false"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/headerView" />
+		
+
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:id="@+id/footerView"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@android:color/white"
+		android:elevation="4dp"
+		android:padding="@dimen/xs_spacing"
+		android:layout_gravity="bottom">
+		
+		<androidx.appcompat.widget.AppCompatButton
+			android:id="@+id/filterApply"
+			style="@style/Subtitle2"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:background="@color/primary_black"
+			android:ellipsize="end"
+			android:maxLines="1"
+			android:text="@string/text_view_searchresult"
+			android:textColor="@color/primary_white"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintLeft_toRightOf="@+id/filteredCount"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+		
+		<TextView
+			android:id="@+id/filteredCount"
+			style="@style/Body2"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="@dimen/xs_spacing"
+			android:ellipsize="end"
+			android:gravity="center_horizontal"
+			android:maxLines="1"
+			android:text="3 item(s)"
+			android:textColor="@color/primary_black"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toLeftOf="@+id/filterApply"
+			app:layout_constraintTop_toTopOf="parent" />
+	
+	</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

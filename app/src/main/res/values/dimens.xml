@@ -53,5 +53,6 @@
 	<dimen name="product_image_indicator_text_size">10sp</dimen>
 	<dimen name="product_image_indicator_vertical_bar_margin">3dp</dimen>
 	<dimen name="product_image_indicator_vertical_bar_width">0.7dp</dimen>
+	<dimen name="filter_cell_size">48dp</dimen>
 
 </resources>

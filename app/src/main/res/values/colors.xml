@@ -39,5 +39,8 @@
 	<color name="carousel_indicator_selected">#85000000</color>
 	<color name="nickel">#74777B</color>
 	<color name="search_gray">#f0f0f0</color>
+	<color name="secondary_teal">#378694</color>
+	<color name="tertiary_gray_350">#ababab</color>
+	
 </resources>
 

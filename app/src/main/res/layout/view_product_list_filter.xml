@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/filter_view"
+	android:layout_width="match_parent"
+	android:layout_height="52dp"
+	android:background="@color/primary_white"
+	android:tag="layout/view_product_list_filter_0"
+	app:layout_behavior="@string/appbar_scrolling_view_behavior">
+	
+	<TextView
+		android:id="@+id/button_filter"
+		style="@style/Caption1"
+		android:layout_width="wrap_content"
+		android:layout_height="32dp"
+		android:layout_marginLeft="@dimen/m_spacing"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:gravity="center_vertical"
+		android:paddingHorizontal="@dimen/xs_spacing"
+		android:paddingLeft="@dimen/xs_spacing"
+		android:paddingRight="@dimen/xs_spacing"
+		android:text="@string/text_filter"
+		android:textColor="@color/secondary_teal"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
+	
+	<ImageView
+		android:id="@+id/filterIndicator"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:src="@drawable/filter_indicator"
+		android:visibility="gone"
+		app:layout_constraintEnd_toEndOf="@+id/button_filter"
+		app:layout_constraintTop_toTopOf="@+id/button_filter" />
+	
+	
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/list"
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="@dimen/s_spacing"
+		android:orientation="horizontal"
+		app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toEndOf="@+id/button_filter"
+		app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

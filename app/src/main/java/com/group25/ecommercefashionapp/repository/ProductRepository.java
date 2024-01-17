@@ -491,6 +491,112 @@ public class ProductRepository {
         return items;
     }
 
+    public List<Product> getProductsBySizeOptionsAndCategory(List<String> sizeOptions, String category) {
+        if(sizeOptions.isEmpty())
+            return getProductsByCategory(category);
+        List<Product> products = new ArrayList<>();
+
+        db = productDbHelper.getReadableDatabase();
+        String[] projection = {ProductContract.ProductEntry.COLUMN_ID, ProductContract.ProductEntry.COLUMN_NAME, ProductContract.ProductEntry.COLUMN_DESCRIPTION, ProductContract.ProductEntry.COLUMN_PRICE, ProductContract.ProductEntry.COLUMN_CATEGORY, ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY};
+
+        String selection = ProductContract.ProductEntry.COLUMN_CATEGORY + " = ?";
+        String[] selectionArgs = {category};
+
+        Cursor cursor = db.query(ProductContract.ProductEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        int idIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_ID);
+        int nameIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_NAME);
+        int descriptionIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_DESCRIPTION);
+        int priceIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRICE);
+        int categoryIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_CATEGORY);
+        int availableQuantityIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int productId = cursor.getInt(idIndex);
+            String productName = cursor.getString(nameIndex);
+            String productDescription = cursor.getString(descriptionIndex);
+            int productPrice = cursor.getInt(priceIndex);
+            String productCategory = cursor.getString(categoryIndex);
+            int productQuantity = cursor.getInt(availableQuantityIndex);
+
+            List<ProductColor> colors = getColorsForProduct(productId);
+            List<ProductSize> sizes = getSizesForProduct(productId);
+            List<ProductImage> images = getImagesForProduct(productId);
+            Product product = new Product(productId, productName, productDescription, productPrice, productCategory, productQuantity);
+            product.addColors(colors);
+            product.addSizes(sizes);
+            product.addImages(images);
+
+            for (String sizeOption : sizeOptions) {
+                for (ProductSize size : sizes) {
+                    if (size.getName().equals(sizeOption)) {
+                        if(!products.contains(product))
+                            products.add(product);
+                    }
+                }
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return products;
+    }
+
+    public List<Product> getProductsBySizeOptionsCategoryAndSearch(List<String> sizeOptions, String category, String search) {
+        if(sizeOptions.isEmpty())
+            return getProductsBySearchAndCategory(search, category);
+        List<Product> products = new ArrayList<>();
+
+        db = productDbHelper.getReadableDatabase();
+        String[] projection = {ProductContract.ProductEntry.COLUMN_ID, ProductContract.ProductEntry.COLUMN_NAME, ProductContract.ProductEntry.COLUMN_DESCRIPTION, ProductContract.ProductEntry.COLUMN_PRICE, ProductContract.ProductEntry.COLUMN_CATEGORY, ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY};
+
+        String selection = ProductContract.ProductEntry.COLUMN_CATEGORY + " = ? AND " + ProductContract.ProductEntry.COLUMN_NAME + " LIKE ?";
+        String[] selectionArgs = {category, "%" + search + "%"};
+
+        Cursor cursor = db.query(ProductContract.ProductEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, null);
+
+        int idIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_ID);
+        int nameIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_NAME);
+        int descriptionIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_DESCRIPTION);
+        int priceIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRICE);
+        int categoryIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_CATEGORY);
+        int availableQuantityIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_AVAILABLE_QUANTITY);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            int productId = cursor.getInt(idIndex);
+            String productName = cursor.getString(nameIndex);
+            String productDescription = cursor.getString(descriptionIndex);
+            int productPrice = cursor.getInt(priceIndex);
+            String productCategory = cursor.getString(categoryIndex);
+            int productQuantity = cursor.getInt(availableQuantityIndex);
+
+            List<ProductColor> colors = getColorsForProduct(productId);
+            List<ProductSize> sizes = getSizesForProduct(productId);
+            List<ProductImage> images = getImagesForProduct(productId);
+            Product product = new Product(productId, productName, productDescription, productPrice, productCategory, productQuantity);
+            product.addColors(colors);
+            product.addSizes(sizes);
+            product.addImages(images);
+
+            for (String sizeOption : sizeOptions) {
+                for (ProductSize size : sizes) {
+                    if (size.getName().equals(sizeOption)) {
+                        if(!products.contains(product))
+                            products.add(product);
+                    }
+                }
+            }
+
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return products;
+    }
+
     private List<ProductColor> getColorsForProduct(int productId) {
         List<ProductColor> colors = new ArrayList<>();
         String[] colorProjection = {ProductContract.ColorEntry.COLUMN_HEX_COLOR};
