@@ -1,18 +1,21 @@
 package com.group25.ecommercefashionapp.adapter;
 
 import android.content.Context;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.github.chrisbanes.photoview.PhotoView;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.ProductImage;
+import com.group25.ecommercefashionapp.ui.fragment.bottomsheet.PhotoLongClickBottomSheetFragment;
 
 import java.util.List;
 
@@ -37,7 +40,16 @@ public class ProductViewImageCarouselAdapter extends PagerAdapter {
 
         currentImageTextView.setText(String.valueOf(position + 1));
         totalImageTextView.setText(String.valueOf(imageList.size()));
-        image.setImageResource(imageList.get(position).getImage_int_id());
+
+        BitmapDrawable drawable = (BitmapDrawable) context.getResources().getDrawable(imageList.get(position).getImage_int_id());
+        Bitmap bitmap = drawable.getBitmap();
+
+        image.setImageBitmap(bitmap);
+        image.setOnLongClickListener(v -> {
+            PhotoLongClickBottomSheetFragment photoLongClickBottomSheetFragment = new PhotoLongClickBottomSheetFragment((BitmapDrawable) image.getDrawable());
+            photoLongClickBottomSheetFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "photo_long_click_bottom_sheet");
+            return false;
+        });
 
         container.addView(itemView);
         return itemView;

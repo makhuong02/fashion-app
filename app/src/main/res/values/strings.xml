@@ -135,4 +135,6 @@
 	<string name="return_to_order_history">Return to Order History</string>
     <string name="text_storesearch_sampletext">Search by Keyword</string>
 	<string name="text_product_count_item">%1$d ITEM(S)</string>
+	<string name="save_to_phone">Save to phone</string>
+	<string name="share_external">Share external</string>
 </resources>
