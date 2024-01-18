@@ -70,7 +70,7 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
         } else
             holder.pickupPlace.setText(item.getPickupPlace());
         String orderDateString = item.getOrderDate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy HH:mm:ss", Locale.getDefault());
 
         Date orderDate = null;
         try {

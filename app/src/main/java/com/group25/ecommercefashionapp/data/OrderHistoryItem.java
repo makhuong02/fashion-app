@@ -2,7 +2,10 @@ package com.group25.ecommercefashionapp.data;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderHistoryItem extends Item {
     private List<CartItem> cartList;
@@ -26,7 +29,9 @@ public class OrderHistoryItem extends Item {
         this.deliveryOption = deliveryOption;
         this.phoneNumber = phoneNumber;
         this.totalPrice = totalPrice;
-        this.orderDate = java.text.DateFormat.getDateTimeInstance().format(new java.util.Date());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy HH:mm:ss", Locale.getDefault());
+        String formattedDate = dateFormat.format(new Date());
+        this.orderDate = formattedDate;
         this.orderStatus = "Pending";
         this.cartList = cartList;
         this.orderClass = "Online Order";

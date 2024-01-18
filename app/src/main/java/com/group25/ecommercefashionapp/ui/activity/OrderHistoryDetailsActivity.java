@@ -79,7 +79,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         }
 
         orderShippingDeliveryPrice.setText(VNDFormat.format(50000) + " VND");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy HH:mm:ss", Locale.getDefault());
 
         Date orderDate = null;
         try {
