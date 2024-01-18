@@ -3,6 +3,8 @@ package com.group25.ecommercefashionapp.ui.activity;
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 import static com.group25.ecommercefashionapp.ui.activity.MapsActivity.getCurrentAddress;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -33,6 +35,7 @@ import com.group25.ecommercefashionapp.adapter.CartItemAdapter;
 import com.group25.ecommercefashionapp.adapter.CheckOutItemAdapter;
 import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.Item;
+import com.group25.ecommercefashionapp.data.NotificationDetails;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
@@ -422,6 +425,12 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                         UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
                 getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
             }
+
+            Context context = getMainActivityInstance();
+            String title = "Payment success";
+            String description = "Your order will be delivered soon.";
+            NotificationDetails notification = new NotificationDetails(context, title, description);
+            notification.showNotification((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
 
             Bundle bundle = new Bundle();
             bundle.putString("message", "ordered");
