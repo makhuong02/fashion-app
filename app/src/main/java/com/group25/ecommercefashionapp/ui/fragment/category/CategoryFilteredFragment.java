@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.group25.ecommercefashionapp.OnProductCountUpdateListener;
+import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.repository.ProductRepository;

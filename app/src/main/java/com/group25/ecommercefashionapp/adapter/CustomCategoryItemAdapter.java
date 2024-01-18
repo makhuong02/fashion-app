@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.OnListItemClick;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnListItemClick;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 

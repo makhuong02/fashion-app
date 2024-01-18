@@ -2,6 +2,8 @@ package com.group25.ecommercefashionapp.ui.fragment.bottomsheet;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.data.NotificationDetails;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 
@@ -37,6 +40,12 @@ public class CancelOrderBottomSheetFragment extends BottomSheetDialogFragment {
             orderHistoryItem.setOrderStatus("Cancelled");
             userInteraction.getOrderList().get(userInteraction.getOrderList().indexOf(orderHistoryItem)).setOrderStatus("Cancelled");
             cancelOrderButton.setVisibility(View.GONE);
+
+            Context context = getMainActivityInstance().getApplicationContext();
+            String title = "Order Cancelled";
+            String description = "Your order has been cancelled";
+            NotificationDetails notification = new NotificationDetails(context, title, description);
+            notification.showNotification((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
             dismiss();
         });
         return view;

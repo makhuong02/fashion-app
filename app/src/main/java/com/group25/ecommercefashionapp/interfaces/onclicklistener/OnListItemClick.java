@@ -1,4 +1,4 @@
-package com.group25.ecommercefashionapp;
+package com.group25.ecommercefashionapp.interfaces.onclicklistener;
 
 import com.group25.ecommercefashionapp.data.Item;
 

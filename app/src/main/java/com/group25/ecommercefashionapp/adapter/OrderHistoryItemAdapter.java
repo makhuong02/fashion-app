@@ -2,6 +2,7 @@ package com.group25.ecommercefashionapp.adapter;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CartItem;
+import com.group25.ecommercefashionapp.data.NotificationDetails;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.ui.fragment.bottomsheet.CancelOrderBottomSheetFragment;
 
@@ -68,7 +70,7 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
         } else
             holder.pickupPlace.setText(item.getPickupPlace());
         String orderDateString = item.getOrderDate();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault());
 
         Date orderDate = null;
         try {
@@ -87,10 +89,18 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
                     if (holder.pickupPlace.getText().toString().contains("Your address")) {
                         holder.orderStatus.setText("Available for pickup");
                         item.setOrderStatus("Available for pickup");
+                        String title = "Order Available for pickup";
+                        String description = "Your order is available for pickup";
+                        NotificationDetails notification = new NotificationDetails(context, title, description);
+                        notification.showNotification((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
                     }
                     else {
                         holder.orderStatus.setText("On the way");
                         item.setOrderStatus("On the way");
+                        String title = "Order Delivering";
+                        String description = "Your order is on the way";
+                        NotificationDetails notification = new NotificationDetails(context, title, description);
+                        notification.showNotification((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
                     }
                 }
             } else {
@@ -107,10 +117,18 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
                     if(!holder.pickupPlace.getText().toString().contains("Your address")) {
                         holder.orderStatus.setText("Picked up");
                         item.setOrderStatus("Picked up");
+                        String title = "Order Picked up";
+                        String description = "Your order has been picked up";
+                        NotificationDetails notification = new NotificationDetails(context, title, description);
+                        notification.showNotification((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
                     }
                     else {
                         holder.orderStatus.setText("Delivered");
                         item.setOrderStatus("Delivered");
+                        String title = "Order Delivered";
+                        String description = "Your order has been delivered";
+                        NotificationDetails notification = new NotificationDetails(context, title, description);
+                        notification.showNotification((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE));
                     }
             }
         } catch (ParseException e) {

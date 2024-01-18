@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:paddingStart="@dimen/m_spacing"
+	android:paddingTop="@dimen/m_spacing"
+	android:paddingEnd="@dimen/m_spacing"
+	android:tag="layout/view_search_filter_price_0"
+	app:layout_constraintBottom_toTopOf="@+id/price_rangeBar"
+	app:layout_constraintEnd_toEndOf="parent"
+	app:layout_constraintStart_toStartOf="parent">
+	
+	<TextView
+		android:id="@+id/tv_minPrice"
+		style="@style/Body1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentStart="true"
+		android:layout_toStartOf="@+id/divider"
+		android:gravity="center"
+        android:text="0 VND"
+		android:textColor="@color/primary_black" />
+	
+	<TextView
+		android:id="@+id/divider"
+		style="@style/Body1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_marginStart="@dimen/xs_spacing"
+		android:layout_marginEnd="@dimen/xs_spacing"
+		android:text="@string/price_range_dash"
+		android:textColor="@color/primary_black" />
+	
+	<TextView
+		android:id="@+id/tv_maxPrice"
+		style="@style/Body1"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentEnd="true"
+		android:layout_toEndOf="@+id/divider"
+        android:text="MAX"
+		android:gravity="center"
+		android:textAllCaps="false"
+		android:textColor="@color/primary_black" />
+	
+	<com.google.android.material.slider.Slider
+		android:id="@+id/price_rangeBar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/tv_maxPrice"
+		android:layout_marginTop="@dimen/s_spacing"
+		android:layout_marginBottom="@dimen/l_spacing"
+		app:values="@array/initial_slider_values"
+		android:valueFrom="0.0"
+		android:valueTo="100.0"
+		/>
+</RelativeLayout>

@@ -21,7 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.MySharedPreferences;
-import com.group25.ecommercefashionapp.OnItemClickListener;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;

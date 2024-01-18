@@ -34,7 +34,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.group25.ecommercefashionapp.AddressCallback;
+import com.group25.ecommercefashionapp.interfaces.callback.AddressCallback;
 import com.group25.ecommercefashionapp.R;
 
 import java.util.Arrays;

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.OnCheckBoxItemClickListener;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnCheckBoxItemClickListener;
 import com.group25.ecommercefashionapp.R;
 
 import java.util.Arrays;

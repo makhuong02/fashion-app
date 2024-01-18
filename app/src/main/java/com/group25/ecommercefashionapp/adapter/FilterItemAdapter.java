@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.FilterDialogCallback;
+import com.group25.ecommercefashionapp.interfaces.callback.FilterDialogCallback;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.FilterType;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.FilterDialog;

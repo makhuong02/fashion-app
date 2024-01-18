@@ -13,10 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.FilterDialogCallback;
+import com.group25.ecommercefashionapp.interfaces.callback.FilterDialogCallback;
 import com.group25.ecommercefashionapp.MySharedPreferences;
-import com.group25.ecommercefashionapp.OnItemClickListener;
-import com.group25.ecommercefashionapp.OnProductCountUpdateListener;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
+import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.FilterItemAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
@@ -60,7 +60,7 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
         filterIndicator = view.findViewById(R.id.filterIndicator);
 
         setFilterIndicatorVisibility(!selectedItems.isEmpty());
-        List<FilterType> filterSections = Arrays.asList(FilterType.SIZE, FilterType.COLOR, FilterType.PRICE);
+        List<FilterType> filterSections = Arrays.asList(FilterType.SIZE);
         FilterItemAdapter filterItemAdapter = new FilterItemAdapter(filterSections,selectedItems, category, search, this);
 
         filterRecyclerView.setAdapter(filterItemAdapter);

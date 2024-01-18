@@ -1,0 +1,115 @@
+Index: app/src/main/java/com/group25/ecommercefashionapp/api/ApiService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.group25.ecommercefashionapp.api;\n\nimport com.group25.ecommercefashionapp.data.UserProfile;\nimport com.group25.ecommercefashionapp.status.LoginStatus;\nimport com.group25.ecommercefashionapp.status.RegisterStatus;\nimport com.group25.ecommercefashionapp.ui.activity.LoginActivity;\n\nimport retrofit2.Call;\nimport retrofit2.Retrofit;\nimport retrofit2.converter.gson.GsonConverterFactory;\nimport retrofit2.http.Body;\nimport retrofit2.http.POST;\n\npublic interface ApiService {\n    // Link API: http://localhost:8080/api/v1/\n    String LOCALHOST = \"192.168.1.14\";\n    String PORT = \"8080\";\n    ApiService apiService = new Retrofit.Builder()\n            .baseUrl(\"http://\" + LOCALHOST + \":\" + PORT + \"/api/v1/\")\n            .addConverterFactory(GsonConverterFactory.create())\n            .build()\n            .create(ApiService.class);\n\n    @POST(\"auth/register\")\n    Call<RegisterStatus> userRegister(@Body UserProfile userProfile);\n\n    @POST(\"auth/login\")\n    Call<LoginStatus> userLogin(@Body LoginActivity.LoginInfo loginInfo);\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/group25/ecommercefashionapp/api/ApiService.java b/app/src/main/java/com/group25/ecommercefashionapp/api/ApiService.java
+--- a/app/src/main/java/com/group25/ecommercefashionapp/api/ApiService.java	(revision 5c49f241fc4349f5c7961b2d54358c398d2e69ee)
++++ b/app/src/main/java/com/group25/ecommercefashionapp/api/ApiService.java	(date 1705516299498)
+@@ -13,7 +13,7 @@
+ 
+ public interface ApiService {
+     // Link API: http://localhost:8080/api/v1/
+-    String LOCALHOST = "192.168.1.14";
++    String LOCALHOST = "192.168.1.17";
+     String PORT = "8080";
+     ApiService apiService = new Retrofit.Builder()
+             .baseUrl("http://" + LOCALHOST + ":" + PORT + "/api/v1/")
+Index: app/src/main/res/layout/dialog_store_list_filter.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n\txmlns:app=\"http://schemas.android.com/apk/res-auto\"\n\tandroid:id=\"@+id/coordinatorLayout\"\n\tandroid:background=\"@color/primary_white\"\n\t\n\tandroid:layout_width=\"match_parent\"\n\tandroid:layout_height=\"match_parent\">\n\t\n\t<androidx.constraintlayout.widget.ConstraintLayout\n\t\tandroid:id=\"@+id/storeListFilter\"\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"match_parent\"\n\t\tandroid:background=\"@color/primary_white\"\n\t\tandroid:tag=\"layout/dialog_store_list_filter_0\">\n\t\t\n\t\t<androidx.constraintlayout.widget.ConstraintLayout\n\t\t\tandroid:id=\"@+id/headerView\"\n\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\tandroid:background=\"@android:color/white\"\n\t\t\tandroid:elevation=\"2dp\"\n\t\t\tandroid:padding=\"@dimen/m_spacing\"\n\t\t\tapp:layout_constraintEnd_toEndOf=\"parent\"\n\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\tapp:layout_constraintTop_toTopOf=\"parent\">\n\t\t\t\n\t\t\t<TextView\n\t\t\t\tandroid:id=\"@+id/title\"\n\t\t\t\tstyle=\"@style/Subtitle1.NoCaps\"\n\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:ellipsize=\"end\"\n\t\t\t\tandroid:gravity=\"center_horizontal\"\n\t\t\t\tandroid:maxLines=\"1\"\n\t\t\t\tandroid:text=\"@string/text_filter\"\n\t\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\t\tapp:layout_constraintStart_toStartOf=\"parent\"\n\t\t\t\tapp:layout_constraintTop_toTopOf=\"parent\" />\n\t\t\t\n\t\t\t<TextView\n\t\t\t\tandroid:id=\"@+id/filterReset\"\n\t\t\t\tstyle=\"@style/Subtitle2\"\n\t\t\t\tandroid:layout_width=\"wrap_content\"\n\t\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\t\tandroid:ellipsize=\"end\"\n\t\t\t\tandroid:gravity=\"center_vertical\"\n\t\t\t\tandroid:maxLines=\"1\"\n\t\t\t\tandroid:text=\"@string/text_reset\"\n\t\t\t\tapp:layout_constraintBottom_toBottomOf=\"parent\"\n\t\t\t\tapp:layout_constraintEnd_toEndOf=\"parent\"\n\t\t\t\tapp:layout_constraintTop_toTopOf=\"parent\" />\n\t\t</androidx.constraintlayout.widget.ConstraintLayout>\n\t\t\n\t\t<androidx.recyclerview.widget.RecyclerView\n\t\t\tandroid:id=\"@+id/filterSections\"\n\t\t\tandroid:layout_width=\"match_parent\"\n\t\t\tandroid:layout_height=\"match_parent\"\n\t\t\tandroid:layout_marginStart=\"@dimen/m_spacing\"\n\t\t\tandroid:layout_marginTop=\"@dimen/xl_spacing\"\n\t\t\tandroid:clipToPadding=\"false\"\n\t\t\tapp:layout_constraintLeft_toLeftOf=\"parent\"\n\t\t\tapp:layout_constraintRight_toRightOf=\"parent\"\n\t\t\tapp:layout_constraintTop_toBottomOf=\"@id/headerView\" />\n\t\t\n\n\t\n\t</androidx.constraintlayout.widget.ConstraintLayout>\n\t<androidx.constraintlayout.widget.ConstraintLayout\n\t\tandroid:id=\"@+id/footerView\"\n\t\tandroid:layout_width=\"match_parent\"\n\t\tandroid:layout_height=\"wrap_content\"\n\t\tandroid:background=\"@android:color/white\"\n\t\tandroid:elevation=\"4dp\"\n\t\tandroid:padding=\"@dimen/xs_spacing\"\n\t\tandroid:layout_gravity=\"bottom\">\n\t\t\n\t\t<androidx.appcompat.widget.AppCompatButton\n\t\t\tandroid:id=\"@+id/filterApply\"\n\t\t\tstyle=\"@style/Subtitle2\"\n\t\t\tandroid:layout_width=\"0dp\"\n\t\t\tandroid:layout_height=\"match_parent\"\n\t\t\tandroid:background=\"@color/primary_black\"\n\t\t\tandroid:ellipsize=\"end\"\n\t\t\tandroid:maxLines=\"1\"\n\t\t\tandroid:text=\"@string/text_view_searchresult\"\n\t\t\tandroid:textColor=\"@color/primary_white\"\n\t\t\tapp:layout_constraintBottom_toBottomOf=\"parent\"\n\t\t\tapp:layout_constraintLeft_toRightOf=\"@+id/filteredCount\"\n\t\t\tapp:layout_constraintRight_toRightOf=\"parent\"\n\t\t\tapp:layout_constraintTop_toTopOf=\"parent\" />\n\t\t\n\t\t<TextView\n\t\t\tandroid:id=\"@+id/filteredCount\"\n\t\t\tstyle=\"@style/Body2\"\n\t\t\tandroid:layout_width=\"0dp\"\n\t\t\tandroid:layout_height=\"wrap_content\"\n\t\t\tandroid:layout_marginEnd=\"@dimen/xs_spacing\"\n\t\t\tandroid:ellipsize=\"end\"\n\t\t\tandroid:gravity=\"center_horizontal\"\n\t\t\tandroid:maxLines=\"1\"\n\t\t\tandroid:text=\"3 item(s)\"\n\t\t\tandroid:textColor=\"@color/primary_black\"\n\t\t\tapp:layout_constraintBottom_toBottomOf=\"parent\"\n\t\t\tapp:layout_constraintLeft_toLeftOf=\"parent\"\n\t\t\tapp:layout_constraintRight_toLeftOf=\"@+id/filterApply\"\n\t\t\tapp:layout_constraintTop_toTopOf=\"parent\" />\n\t\n\t</androidx.constraintlayout.widget.ConstraintLayout>\n</androidx.coordinatorlayout.widget.CoordinatorLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/dialog_store_list_filter.xml b/app/src/main/res/layout/dialog_store_list_filter.xml
+--- a/app/src/main/res/layout/dialog_store_list_filter.xml	(revision 5c49f241fc4349f5c7961b2d54358c398d2e69ee)
++++ b/app/src/main/res/layout/dialog_store_list_filter.xml	(date 1705559981755)
+@@ -55,14 +55,13 @@
+ 		<androidx.recyclerview.widget.RecyclerView
+ 			android:id="@+id/filterSections"
+ 			android:layout_width="match_parent"
+-			android:layout_height="match_parent"
++			android:layout_height="wrap_content"
+ 			android:layout_marginStart="@dimen/m_spacing"
+ 			android:layout_marginTop="@dimen/xl_spacing"
+ 			android:clipToPadding="false"
+ 			app:layout_constraintLeft_toLeftOf="parent"
+ 			app:layout_constraintRight_toRightOf="parent"
+ 			app:layout_constraintTop_toBottomOf="@id/headerView" />
+-		
+ 
+ 	
+ 	</androidx.constraintlayout.widget.ConstraintLayout>
+Index: app/src/main/res/layout/view_search_filter_price.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/view_search_filter_price.xml b/app/src/main/res/layout/view_search_filter_price.xml
+new file mode 100644
+--- /dev/null	(date 1705517338508)
++++ b/app/src/main/res/layout/view_search_filter_price.xml	(date 1705517338508)
+@@ -0,0 +1,60 @@
++<?xml version="1.0" encoding="utf-8"?>
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++	xmlns:app="http://schemas.android.com/apk/res-auto"
++	
++	android:layout_width="match_parent"
++	android:layout_height="wrap_content"
++	android:paddingStart="@dimen/m_spacing"
++	android:paddingTop="@dimen/m_spacing"
++	android:paddingEnd="@dimen/m_spacing"
++	android:tag="layout/view_search_filter_price_0"
++	app:layout_constraintBottom_toTopOf="@+id/price_rangeBar"
++	app:layout_constraintEnd_toEndOf="parent"
++	app:layout_constraintStart_toStartOf="parent">
++	
++	<TextView
++		android:id="@+id/tv_minPrice"
++		style="@style/Body1"
++		android:layout_width="wrap_content"
++		android:layout_height="wrap_content"
++		android:layout_alignParentStart="true"
++		android:layout_toStartOf="@+id/divider"
++		android:gravity="center"
++        android:text="0 VND"
++		android:textColor="@color/primary_black" />
++	
++	<TextView
++		android:id="@+id/divider"
++		style="@style/Body1"
++		android:layout_width="wrap_content"
++		android:layout_height="wrap_content"
++		android:layout_centerHorizontal="true"
++		android:layout_marginStart="@dimen/xs_spacing"
++		android:layout_marginEnd="@dimen/xs_spacing"
++		android:text="@string/price_range_dash"
++		android:textColor="@color/primary_black" />
++	
++	<TextView
++		android:id="@+id/tv_maxPrice"
++		style="@style/Body1"
++		android:layout_width="wrap_content"
++		android:layout_height="wrap_content"
++		android:layout_alignParentEnd="true"
++		android:layout_toEndOf="@+id/divider"
++        android:text="MAX"
++		android:gravity="center"
++		android:textAllCaps="false"
++		android:textColor="@color/primary_black" />
++	
++	<com.google.android.material.slider.Slider
++		android:id="@+id/price_rangeBar"
++		android:layout_width="match_parent"
++		android:layout_height="wrap_content"
++		android:layout_below="@+id/tv_maxPrice"
++		android:layout_marginTop="@dimen/s_spacing"
++		android:layout_marginBottom="@dimen/l_spacing"
++		app:values="@array/initial_slider_values"
++		android:valueFrom="0.0"
++		android:valueTo="100.0
++		/>
++</RelativeLayout>
