@@ -1,6 +1,5 @@
 package com.group25.ecommercefashionapp.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnListItemClick;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CategoryItem;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnListItemClick;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,10 +38,13 @@ public class CustomCategoryItemAdapter extends RecyclerView.Adapter<CustomCatego
     public void onBindViewHolder(ViewHolder holder, int position) {
         CategoryItem item = items.get(position);
 
-        Log.d("CustomCategoryItemAdapter", "onBindViewHolder: " + item.getName());
         // Bind your data to the UI components of the CardView
         holder.txtCategoryName.setText(item.getName());
-        holder.img.setImageResource(item.getImgID());
+        Picasso.get()
+                .load(item.getImageUrl())
+                .placeholder(R.drawable.loading_img)
+                .error(R.drawable.ic_connection_error)
+                .into(holder.img);
 
         // Set click listener on the card
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(item, position));
@@ -64,5 +67,4 @@ public class CustomCategoryItemAdapter extends RecyclerView.Adapter<CustomCatego
             cardView = view.findViewById(R.id.categoryCardView);
         }
     }
-
 }

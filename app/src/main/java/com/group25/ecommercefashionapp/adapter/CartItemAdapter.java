@@ -28,6 +28,7 @@ import com.group25.ecommercefashionapp.ui.fragment.bottomsheet.RemoveItemBottomS
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Objects;
 
 public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHolder>{
     private final List<CartItem> items;
@@ -56,14 +57,16 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         CartItem item = items.get(position);
         CartItem cartItem = null;
         for(CartItem cartItem1 : cartItems) {
-            if (cartItem1.getProductId() == item.getProductId() && cartItem1.getSelectedColor().getId() == item.getSelectedColor().getId() && cartItem1.getSelectedSize().getId() == item.getSelectedSize().getId() && cartItem1.getPhoneNumber().equals(item.getPhoneNumber())) {
+            if (cartItem1.getProductId() == item.getProductId() && Objects.equals(cartItem1.getSelectedColor().getId(), item.getSelectedColor().getId()) && Objects.equals(cartItem1.getSelectedSize().getId(), item.getSelectedSize().getId()) && cartItem1.getPhoneNumber().equals(item.getPhoneNumber())) {
                 cartItem = cartItem1;
                 item.setQuantity(cartItem.getQuantity());
                 break;
             }
         }
+        
+        Product product = null;
 
-        Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
+//        Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
         // Bind your data to the UI components of the CardView
         if (product.getAvailableQuantity() == 0) {
             holder.outOfStockText.setVisibility(View.VISIBLE);

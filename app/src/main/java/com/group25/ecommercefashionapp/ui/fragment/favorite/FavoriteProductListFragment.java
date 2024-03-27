@@ -71,7 +71,7 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
     @Override
     public void onItemClick(View view, Item item) {
         Bundle bundle = new Bundle();
-        bundle.putInt("id", item.getId());
+        bundle.putLong("id", item.getId());
         getMainActivityInstance().navController.navigate(R.id.viewProduct, bundle);
     }
 

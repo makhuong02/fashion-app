@@ -1,7 +1,5 @@
 package com.group25.ecommercefashionapp.adapter;
 
-import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CartItem;
-import com.group25.ecommercefashionapp.data.Product;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -41,17 +38,17 @@ public class OrderHistorySummaryItemAdapter extends RecyclerView.Adapter<OrderHi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartItem item = items.get(position);
-        Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
+//        Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
         // Bind your data to the UI components of the CardView
 
-        holder.productImage.setImageResource(product.getImageList().get(0).getImage_int_id());
-        holder.productName.setText(product.getName());
-        holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice()*0.9f)));
-        holder.productId.setText(String.valueOf(product.getId()));
+//        holder.productImage.setImageResource(product.getImageList().get(0).getImage_int_id());
+//        holder.productName.setText(product.getName());
+//        holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice()*0.9f)));
+//        holder.productId.setText(String.valueOf(product.getId()));
         holder.productSize.setText(item.getSelectedSize().getName());
         holder.productColor.setText(item.getSelectedColor().getName());
         holder.productQuantity.setText(String.valueOf(item.getQuantity()));
-        holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice()*0.9f * item.getQuantity())));
+//        holder.productTotalPrice.setText(String.format("%s VND", VNDFormat.format((long) product.getPrice()*0.9f * item.getQuantity())));
 
         // Set click listener on the card
     }

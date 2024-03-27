@@ -1,7 +1,5 @@
 package com.group25.ecommercefashionapp.adapter;
 
-import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.CartItem;
-import com.group25.ecommercefashionapp.data.Product;
 
 import java.util.List;
 
@@ -34,12 +31,12 @@ public class CheckOutItemAdapter extends RecyclerView.Adapter<CheckOutItemAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         CartItem item = items.get(position);
-        Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
+//        Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
 
         // Bind your data to the UI components of the CardView
 
         // Set click listener on the card
-        holder.img.setImageResource(product.getImageList().get(0).getImage_int_id());
+//        holder.img.setImageResource(product.getImageList().get(0).getImage_int_id());
         holder.txtQuantity.setText(String.valueOf(item.getQuantity()));
     }
 

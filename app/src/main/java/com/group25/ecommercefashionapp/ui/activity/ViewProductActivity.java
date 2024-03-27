@@ -21,7 +21,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.MySharedPreferences;
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
@@ -30,11 +29,10 @@ import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.ProductColor;
-import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.data.UserInteraction;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
-import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.CartAddedDialogFragment;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
@@ -58,7 +56,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     private DecimalFormat VNDFormat;
     ActionMenuItemView share;
     private static final int VIEW_PRODUCT_IMAGES_REQUEST_CODE = 1;
-    ProductRepository productRepository;
+//    ProductRepository productRepository;
     Product product;
     Spinner spinner;
     FavoriteCheckBox favoriteCheckBox;
@@ -75,10 +73,10 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         UserInteraction UserInteraction = mainActivity.userInteraction;
         List<Product> favoriteList = UserInteraction.getFavoriteList();
 
-        productRepository = mainActivity.productRepository;
+//        productRepository = mainActivity.productRepository;
         Bundle bundle = getIntent().getExtras();
         int id = bundle.getInt("id");
-        product = productRepository.getProductById(id);
+//        product = productRepository.getProductById(id);
 
 
         initializeViews();
@@ -110,10 +108,10 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         ratingBar.setRating(rating);
         txtRating.setText(String.valueOf(rating));
         txtReview.setText(HtmlCompat.fromHtml("<font color=\"blue\"><u>(See 5 reviews)</u></font>", HtmlCompat.FROM_HTML_MODE_LEGACY));
-        List<ProductImage> imageList = mainActivity.productRepository.getProductById(id).getImageList();
+//        List<ProductImage> imageList = mainActivity.productRepository.getProductById(id).getImageList();
 
-        ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, imageList, this);
-        productCarousel.setAdapter(productImageCarouselAdapter);
+//        ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, imageList, this);
+//        productCarousel.setAdapter(productImageCarouselAdapter);
         share.setOnClickListener(v -> shareContent());
 
         // Set up Color recycler view
@@ -136,7 +134,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         spinner.setAdapter(spinnerEntries);
 
         addToCartButton.setOnClickListener(v -> {
-            if(UserStatus._isLoggedIn == false) {
+            if(!UserStatus._isLoggedIn) {
                 getMainActivityInstance().navController.navigate(R.id.loginActivity);
                 return;
             }
@@ -182,7 +180,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             selectedSize = (ProductSize) item;
         }else if(view.getId() == R.id.carousel_image_view){
             Bundle bundle = new Bundle();
-            bundle.putInt("product_id", product.getId());
+            bundle.putLong("product_id", product.getId());
             bundle.putInt("position", productCarousel.getCurrentItem());
             Intent intent = new Intent(this, ViewProductImagesActivity.class);
             intent.putExtras(bundle);
@@ -197,7 +195,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
                 Bundle bundle = data.getExtras();
                 int id = bundle.getInt("product_id");
                 int position = bundle.getInt("position");
-                Product product = mainActivity.productRepository.getProductById(id);
+//                Product product = mainActivity.productRepository.getProductById(id);
                 ProductImageCarouselAdapter productImageCarouselAdapter = new ProductImageCarouselAdapter(this, product.getImageList(), this);
                 productCarousel.setAdapter(productImageCarouselAdapter);
                 productCarousel.setCurrentItem(position);

@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,18 +17,23 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.card.MaterialCardView;
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
+import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
+import com.group25.ecommercefashionapp.repository.ProductRepositoryB;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment implements OnItemClickListener {
     MainActivity mainActivity;
@@ -70,9 +77,8 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
 
-
-        ProductRepository productRepository = mainActivity.productRepository;
-        products = productRepository.getAllProducts();
+//        ProductRepository productRepository = mainActivity.productRepository;
+//        products = productRepository.getAllProducts();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);
@@ -80,11 +86,9 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
         productRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
+        fetchProductsFromApi();
 
 
-        adapter = new ProductItemAdapter(products.subList(0,6), this);
-        productRecyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
 
         categoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,10 +136,39 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         return view;
     }
 
+    private void fetchProductsFromApi() {
+         ApiService apiService = ProductRepositoryB.getInstance().getApiService();
+         Call<List<Product>> call = apiService.getProducts();
+         call.enqueue(new Callback<List<Product>>() {
+             @Override
+             public void onResponse(@NonNull Call<List<Product>> call, Response<List<Product>> response) {
+                 if (response.isSuccessful()) {
+                     products = response.body();
+                     setupRecyclerView();
+                 } else {
+                     Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
+                 }
+             }
+
+             @Override
+             public void onFailure(@NonNull Call<List<Product>> call, Throwable t) {
+                 Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+             }
+         });
+    }
+
+    private void setupRecyclerView() {
+        int subListSize = Math.min(products.size(), 6);
+
+        adapter = new ProductItemAdapter(products.subList(0,subListSize), this);
+        productRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     public void onItemClick(View view, Item item) {
         Bundle bundle = new Bundle();
-        bundle.putInt("id", item.getId());
+        bundle.putLong("id", item.getId());
         mainActivity.navController.navigate(R.id.viewProduct, bundle);
     }
 
@@ -147,11 +180,11 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
 
     private ArrayList<CategoryItem> getHomePageCategories() {
         ArrayList<CategoryItem> items = new ArrayList<>();
-        items.add(new CategoryItem("Áo thun", R.drawable.tshirt));
-        items.add(new CategoryItem("Váy", R.drawable.skirt));
-        items.add(new CategoryItem("Giày", R.drawable.sneakers));
-        items.add(new CategoryItem("Quần", R.drawable.jeans));
-        items.add(new CategoryItem("Bóp", R.drawable.wallet));
+        items.add(new CategoryItem("Áo thun", ""));
+        items.add(new CategoryItem("Váy", ""));
+        items.add(new CategoryItem("Giày", ""));
+        items.add(new CategoryItem("Quần", ""));
+        items.add(new CategoryItem("Bóp", ""));
         return items;
     }
 }

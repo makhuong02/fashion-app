@@ -6,17 +6,15 @@ import android.app.NotificationManager;
 import android.os.Build;
 
 import com.group25.ecommercefashionapp.repository.OrdersRepository;
-import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
 public class MyApp extends Application {
     public static final String CHANNEL_ID = "Notification";
     private static MainActivity mainActivityInstance;
 
-    public static void setMainActivityInstance(MainActivity activity, OrdersRepository ordersRepository, ProductRepository productRepository) {
+    public static void setMainActivityInstance(MainActivity activity, OrdersRepository ordersRepository) {
         mainActivityInstance = activity;
         mainActivityInstance.ordersRepository = ordersRepository;
-        mainActivityInstance.productRepository = productRepository;
     }
 
     public static MainActivity getMainActivityInstance() {

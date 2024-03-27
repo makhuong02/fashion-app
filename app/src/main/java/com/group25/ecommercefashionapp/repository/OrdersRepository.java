@@ -4,23 +4,18 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.group25.ecommercefashionapp.R;
-import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Orders;
 import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.database.DatabaseHelper;
 import com.group25.ecommercefashionapp.database.OrderContract;
 import com.group25.ecommercefashionapp.database.OrderDetailsContract;
-import com.group25.ecommercefashionapp.database.ProductContract;
-import com.group25.ecommercefashionapp.database.DatabaseHelper;
 
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class OrdersRepository {
     private SQLiteDatabase db;
@@ -149,8 +144,8 @@ public class OrdersRepository {
     public ArrayList<Orders> getOrders() {
         orders.removeAll(orders);
 
-        ProductRepository productRepository = new ProductRepository(orderDBHelper);
-        products = productRepository.getAllProducts();
+//        ProductRepository productRepository = new ProductRepository(orderDBHelper);
+//        products = productRepository.getAllProducts();
 
         Cursor cursor = orderDBHelper.QueryData("Select * from Orders");
         while (cursor.moveToNext()) {

@@ -22,6 +22,7 @@ import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
+import java.util.Objects;
 
 public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.ViewHolder> {
     private final List<Product> items;
@@ -52,13 +53,17 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
         holder.txtDiscount.setText(String.format("%s VND", VNDFormat.format(item.getPrice())));
         holder.txtDiscount.setPaintFlags(holder.txtDiscount.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.txtPrice.setText(String.format("%s VND", VNDFormat.format(item.getPrice() * 0.9f)));
-        holder.img.setImageResource(item.getImageList().get(0).getImage_int_id());
-        holder.txtSizeRange.setText(item.getSizeRange());
+        if(item.getSizeRange() == null) {
+            holder.txtSizeRange.setVisibility(View.GONE);
+        } else {
+            holder.txtSizeRange.setVisibility(View.VISIBLE);
+            holder.txtSizeRange.setText(item.getSizeRange());
+        }
 
         // Set click listener on the card
         holder.cardView.setOnClickListener(v -> clickListener.onItemClick(v, item));
         for (Product product : getMainActivityInstance().userInteraction.getFavoriteList()) {
-            if (product.getId() == item.getId()) {
+            if (Objects.equals(product.getId(), item.getId())) {
                 holder.favoriteCheckBox.setChecked(true);
                 break;
             }

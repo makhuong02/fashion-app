@@ -9,8 +9,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.MyApp;
 import com.group25.ecommercefashionapp.R;
-import com.group25.ecommercefashionapp.adapter.ProductViewImageCarouselAdapter;
-import com.group25.ecommercefashionapp.data.Product;
 
 public class ViewProductImagesActivity extends AppCompatActivity {
     ViewPager productCarousel;
@@ -31,10 +29,10 @@ public class ViewProductImagesActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         id = bundle.getInt("product_id");
         int position = bundle.getInt("position");
-        Product product = mainActivity.productRepository.getProductById(id);
+//        Product product = mainActivity.productRepository.getProductById(id);
 
-        ProductViewImageCarouselAdapter productImageCarouselAdapter = new ProductViewImageCarouselAdapter(this, product.getImageList());
-        productCarousel.setAdapter(productImageCarouselAdapter);
+//        ProductViewImageCarouselAdapter productImageCarouselAdapter = new ProductViewImageCarouselAdapter(this, product.getImageList());
+//        productCarousel.setAdapter(productImageCarouselAdapter);
         productCarousel.setCurrentItem(position);
         productCarousel.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

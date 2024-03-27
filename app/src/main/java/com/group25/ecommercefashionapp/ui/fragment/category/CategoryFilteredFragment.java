@@ -11,21 +11,28 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
+import com.group25.ecommercefashionapp.repository.ProductRepositoryB;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CategoryFilteredFragment extends Fragment implements OnProductCountUpdateListener {
     MaterialToolbar toolbar;
@@ -33,7 +40,7 @@ public class CategoryFilteredFragment extends Fragment implements OnProductCount
     EditText searchEditText;
     ImageButton clearSearchButton;
     ActionMenuItemView cart;
-    List<Product> products;
+    List<Product> products = new ArrayList<>();
     private final List<String> selectedItems = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,22 +49,23 @@ public class CategoryFilteredFragment extends Fragment implements OnProductCount
         toolbar = view.findViewById(R.id.topAppBar);
         cart = view.findViewById(R.id.cart);
         String category = getArguments().getString("category");
+        Long categoryId = getArguments().getLong("categoryId");
         toolbar.setTitle(category);
         productCountTextView = view.findViewById(R.id.text_product_count);
         searchEditText = view.findViewById(R.id.search_edit_text);
         clearSearchButton = view.findViewById(R.id.clear_button);
 
         MainActivity mainActivity = (MainActivity) getActivity();
-        ProductRepository productRepository = mainActivity.productRepository;
-        products = productRepository.getProductsByCategory(category);
-
+//        ProductRepository productRepository = mainActivity.productRepository;
+//        products = productRepository.getProductsByCategory(category);
+        fetchProductsFromApi(categoryId);
         productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
-        startTransaction(category, searchEditText.getText().toString());
+        startTransaction(category, searchEditText.getText().toString(), categoryId);
 
         searchEditText.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                startTransaction(category, searchEditText.getText().toString());
+                startTransaction(category, searchEditText.getText().toString(), categoryId);
             }
 
             return false;
@@ -81,7 +89,7 @@ public class CategoryFilteredFragment extends Fragment implements OnProductCount
 
         clearSearchButton.setOnClickListener(v -> {
             searchEditText.setText("");
-            startTransaction(category, searchEditText.getText().toString());
+            startTransaction(category, searchEditText.getText().toString(), categoryId);
         });
 
         cart.setOnClickListener(v -> {
@@ -97,19 +105,71 @@ public class CategoryFilteredFragment extends Fragment implements OnProductCount
 
         return view;
     }
-    private void startTransaction(String category, String search) {
-        Bundle bundle = new Bundle();
-        bundle.putString("category", category);
-        bundle.putString("search", search);
-        CategoryFilteredBodyFragment bodyFragment = new CategoryFilteredBodyFragment(selectedItems);
-        bodyFragment.setArguments(bundle);
+    private void fetchProductsFromApi(Long categoryId) {
+        ApiService apiService = ProductRepositoryB.getInstance().getApiService();
+        Call<List<Product>> call = apiService.getProductsByCategory(categoryId);
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Product>> call, Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    products = response.body();
 
-        // Callback to update product count
-        bodyFragment.setProductCountUpdateListener(this);
+                } else {
+                    Toast.makeText(requireContext(), "Failed to fetch products", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Product>> call, Throwable t) {
+                Toast.makeText(requireContext(), "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void startTransaction(String category, String search, Long categoryId) {
+        CategoryFilteredBodyFragment existingFragment = findExistingFragment();
+        if (existingFragment != null) {
+            updateFragmentArguments(existingFragment, category, search, categoryId);
+        } else {
+            createAndReplaceFragment(category, search, categoryId);
+        }
+    }
+
+    private CategoryFilteredBodyFragment findExistingFragment() {
+        return (CategoryFilteredBodyFragment) getChildFragmentManager().findFragmentById(R.id.fragmentContainer);
+    }
+
+    private void updateFragmentArguments(CategoryFilteredBodyFragment fragment, String category, String search, Long categoryId) {
+        Bundle args = createArgumentsBundle(category, search, categoryId);
+        fragment.setArguments(args);
+    }
+
+    private void createAndReplaceFragment(String category, String search, Long categoryId) {
+        CategoryFilteredBodyFragment fragment = createFragment(category, search, categoryId);
+        fragment.setProductCountUpdateListener(this);
+        replaceFragment(fragment);
+    }
+
+    private CategoryFilteredBodyFragment createFragment(String category, String search, Long categoryId) {
+        Bundle args = createArgumentsBundle(category, search, categoryId);
+        CategoryFilteredBodyFragment fragment = new CategoryFilteredBodyFragment(selectedItems);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    private Bundle createArgumentsBundle(String category, String search, Long categoryId) {
+        Bundle args = new Bundle();
+        args.putString("category", category);
+        args.putString("search", search);
+        args.putLong("categoryId", categoryId);
+        return args;
+    }
+
+    private void replaceFragment(CategoryFilteredBodyFragment fragment) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, bodyFragment);
+        transaction.replace(R.id.fragmentContainer, fragment);
         transaction.commit();
     }
+
 
     @Override
     public void onProductCountUpdate(int count) {

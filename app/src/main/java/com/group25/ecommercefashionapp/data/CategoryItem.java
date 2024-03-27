@@ -1,15 +1,18 @@
 package com.group25.ecommercefashionapp.data;
 
-public class CategoryItem extends Item {
-    private final int imgID;
+import com.google.gson.annotations.SerializedName;
 
-    public CategoryItem(String category_name, int imgID) {
+public class CategoryItem extends Item {
+    @SerializedName("imageUrl")
+    private final String imageUrl;
+
+    public CategoryItem(String category_name, String imageUrl) {
         super(category_name);
-        this.imgID = imgID;
+        this.imageUrl = imageUrl;
     }
 
-    public int getImgID() {
-        return imgID;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
 }

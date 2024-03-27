@@ -39,7 +39,6 @@ import com.group25.ecommercefashionapp.data.NotificationDetails;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
-import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
 
@@ -60,7 +59,6 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     TextView itemCounterTextView, subTotalTextView, taxTextView, orderTotalTextView, outOfStockText, footerTotalPriceTextView;
     DecimalFormat VNDFormat;
     UserInteraction userInteraction = getMainActivityInstance().userInteraction;
-    ProductRepository productRepository = getMainActivityInstance().productRepository;
     private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     private int rotationAngle = 0;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -127,12 +125,12 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
             orderSummaryLayout.setVisibility(orderSummaryLayout.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
         });
 
-        for (CartItem item : userInteraction.getCartList()) {
-            if (productRepository.getProductById(item.getProductId()).getAvailableQuantity() == 0) {
-                outOfStockText.setVisibility(View.VISIBLE);
-                break;
-            }
-        }
+//        for (CartItem item : userInteraction.getCartList()) {
+//            if (productRepository.getProductById(item.getProductId()).getAvailableQuantity() == 0) {
+//                outOfStockText.setVisibility(View.VISIBLE);
+//                break;
+//            }
+//        }
 
         toolbar.setNavigationOnClickListener(v -> {
             getMainActivityInstance().navController.popBackStack();
@@ -210,7 +208,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     @Override
     public void onItemClick(View view, Item item) {
         Bundle bundle = new Bundle();
-        bundle.putInt("id", item.getId());
+        bundle.putLong("id", item.getId());
         getMainActivityInstance().navController.navigate(R.id.viewProduct, bundle);
     }
 
@@ -435,7 +433,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
             Bundle bundle = new Bundle();
             bundle.putString("message", "ordered");
             bundle.putString("button", "Continue Shopping");
-            getMainActivityInstance().productRepository.updateProductAfterCheckout(userInteraction.getCartList());
+//            getMainActivityInstance().productRepository.updateProductAfterCheckout(userInteraction.getCartList());
             getMainActivityInstance().navController.navigate(R.id.successActivity, bundle);
             getMainActivityInstance().navController.popBackStack();
             onBackPressed();

@@ -1,19 +1,25 @@
 package com.group25.ecommercefashionapp.data;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Product extends Item {
+    @SerializedName("description")
     private final String description;
+    @SerializedName("price")
     private final Integer price;
+    @SerializedName("category")
     private final String category;
+    @SerializedName("availableQuantity")
     private Integer availableQuantity;
     private final List<ProductImage> imageList = new ArrayList<>();
     private final List<ProductColor> colorList = new ArrayList<>();
     private final List<ProductSize> sizeList = new ArrayList<>();
 
-    public Product(Integer id, String name, String description, Integer price, String category, Integer availableQuantity) {
+    public Product(Long id, String name, String description, Integer price, String category, Integer availableQuantity) {
         super(name);
         this.id = id;
         this.description = description;
@@ -26,7 +32,7 @@ public class Product extends Item {
         super("");
         this.description = description;
         this.price = price;
-        this.id = -1;
+        this.id = -1L;
         this.category = category;
         this.availableQuantity = 100;
 
@@ -36,7 +42,7 @@ public class Product extends Item {
         super(name);
         this.description = description;
         this.price = price;
-        this.id = -1;
+        this.id = -1L;
         this.category = category;
         this.availableQuantity = 100;
     }
@@ -68,16 +74,20 @@ public class Product extends Item {
         availableQuantity = quantity;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
     public List<String> getColors() {
         List<String> colors = new ArrayList<>();
-        for (ProductColor color : colorList) {
-            colors.add(color.getHexColor());
+        try {
+            for (ProductColor color : colorList) {
+                colors.add(color.getHexColor());
+            }
+            return colors;
+        }catch (Exception e) {
+            return colors;
         }
-        return colors;
     }
 
     public List<ProductColor> getColorList() {
@@ -120,14 +130,18 @@ public class Product extends Item {
         return id == product.id;
     }
     public String getSizeRange() {
-        String sizeRange = "";
-        if (sizeList.size() > 0) {
-            sizeRange = sizeList.get(0).getName();
-            if (sizeList.size() > 1) {
-                sizeRange += " - " + sizeList.get(sizeList.size() - 1).getName();
+        try {
+            String sizeRange = "";
+            if (sizeList.size() > 0) {
+                sizeRange = sizeList.get(0).getName();
+                if (sizeList.size() > 1) {
+                    sizeRange += " - " + sizeList.get(sizeList.size() - 1).getName();
+                }
             }
+            return sizeRange;
+        }catch (Exception e) {
+            return "";
         }
-        return sizeRange;
     }
     public void addImages(List<ProductImage> images) {
         imageList.addAll(images);

@@ -1,7 +1,5 @@
 package com.group25.ecommercefashionapp.ui.fragment.dialog;
 
-import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -20,12 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.group25.ecommercefashionapp.interfaces.callback.FilterDialogCallback;
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnCheckBoxItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.FilterSizeAdapter;
-import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.interfaces.callback.FilterDialogCallback;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnCheckBoxItemClickListener;
 
 import java.util.List;
 import java.util.Objects;
@@ -75,15 +71,15 @@ public class FilterDialog extends BottomSheetDialogFragment implements OnCheckBo
 
         resetTextView.setOnClickListener(v -> {
             selectedItems.clear();
-            ProductRepository productRepository = getMainActivityInstance().productRepository;
-            List<Product> filteredProducts = productRepository.getProductsBySizeOptionsCategoryAndSearch(selectedItems, category, search);
-            filteredCountTextView.setText(getString(R.string.text_product_count_item, filteredProducts.size()));
+//            ProductRepository productRepository = getMainActivityInstance().productRepository;
+//            List<Product> filteredProducts = productRepository.getProductsBySizeOptionsCategoryAndSearch(selectedItems, category, search);
+//            filteredCountTextView.setText(getString(R.string.text_product_count_item, filteredProducts.size()));
             setAdapter();
         });
 
-        ProductRepository productRepository = getMainActivityInstance().productRepository;
-        List<Product> filteredProducts = productRepository.getProductsBySizeOptionsCategoryAndSearch(selectedItems, category, search);
-        filteredCountTextView.setText(getString(R.string.text_product_count_item, filteredProducts.size()));
+//        ProductRepository productRepository = getMainActivityInstance().productRepository;
+//        List<Product> filteredProducts = productRepository.getProductsBySizeOptionsCategoryAndSearch(selectedItems, category, search);
+//        filteredCountTextView.setText(getString(R.string.text_product_count_item, filteredProducts.size()));
 
         titleTextView.setText(getString(titleId));
         if(Objects.equals(getString(titleId), getString(R.string.text_size))) {
@@ -113,9 +109,9 @@ public class FilterDialog extends BottomSheetDialogFragment implements OnCheckBo
             selectedItems.remove(name);
         else
             selectedItems.add(name);
-        ProductRepository productRepository = getMainActivityInstance().productRepository;
-        List<Product> filteredProducts = productRepository.getProductsBySizeOptionsCategoryAndSearch(selectedItems, category, search);
-        filteredCountTextView.setText(getString(R.string.text_product_count_item, filteredProducts.size()));
+//        ProductRepository productRepository = getMainActivityInstance().productRepository;
+//        List<Product> filteredProducts = productRepository.getProductsBySizeOptionsCategoryAndSearch(selectedItems, category, search);
+//        filteredCountTextView.setText(getString(R.string.text_product_count_item, filteredProducts.size()));
     }
 
     public void setFilterDialogCallback(FilterDialogCallback callback) {
