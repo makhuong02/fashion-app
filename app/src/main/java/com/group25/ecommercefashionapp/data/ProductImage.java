@@ -1,21 +1,23 @@
 package com.group25.ecommercefashionapp.data;
 
-public class ProductImage extends Item {
-    private final int product_id;
-    private final int image_int_id;
-    private final int image_id;
+import com.google.gson.annotations.SerializedName;
 
-    public ProductImage(int product_id, int image_int_id, int image_id) {
+public class ProductImage extends Item {
+    @SerializedName("productId")
+    private final int product_id;
+    @SerializedName("imagePath")
+    private final String image_name;
+    public ProductImage(int product_id, String image_name, Long imageId) {
         super("");
         this.product_id = product_id;
-        this.image_int_id = image_int_id;
-        this.image_id = image_id;
+        this.image_name = image_name;
+        this.id = imageId;
     }
 
-    public ProductImage(int product_id, int image_int_id, String name) {
+    public ProductImage(int product_id, String image_name, String name) {
         super(name);
-        this.image_id = -1;
-        this.image_int_id = image_int_id;
+        this.id = -1L;
+        this.image_name = image_name;
         this.product_id = product_id;
     }
 
@@ -23,11 +25,7 @@ public class ProductImage extends Item {
         return product_id;
     }
 
-    public int getImage_int_id() {
-        return image_int_id;
+    public String getImage_name() {
+        return image_name;
     }
-    public int getImage_id() {
-        return image_id;
-    }
-
 }

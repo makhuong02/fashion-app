@@ -19,7 +19,7 @@ import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnListItemClick;
-import com.group25.ecommercefashionapp.repository.ProductRepositoryB;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
 
@@ -63,7 +63,7 @@ public class CategoryFragment extends Fragment implements OnListItemClick {
     }
 
     private void fetchCategoriesFromApi() {
-        ApiService apiService = ProductRepositoryB.getInstance().getApiService();
+        ApiService apiService = ProductRepository.getInstance().getApiService();
         Call<List<CategoryItem>> call = apiService.getCategories();
         call.enqueue(new Callback<List<CategoryItem>>() {
             @Override

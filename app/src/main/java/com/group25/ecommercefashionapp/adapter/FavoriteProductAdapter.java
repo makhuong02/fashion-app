@@ -57,7 +57,7 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         holder.txtActualPrice.setText(String.format("%s VND",VNDFormat.format(item.getPrice())));
         holder.txtActualPrice.setPaintFlags(holder.txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.txtDiscountPrice.setText(String.format("%s VND", VNDFormat.format(item.getPrice() * 0.9f)));
-        holder.img.setImageResource(item.getImageList().get(0).getImage_int_id());
+//        holder.img.setImageResource(item.getImageList().get(0).getImage_int_id());
 
         // Set click listener on the card
         if(position == items.size() - 1) {

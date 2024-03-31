@@ -24,6 +24,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.api.ApiService;
+import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.RegisterStatus;
 import com.group25.ecommercefashionapp.utilities.PhoneNumberFormatter;
@@ -306,7 +307,7 @@ public class SignupActivity extends AppCompatActivity {
     private void clickSignUp() {
         UserProfile userProfile = getUserProfile();
 
-        ApiService.apiService.userRegister(userProfile).enqueue(new Callback<RegisterStatus>() {
+        ApiServiceBuilder.buildService().userRegister(userProfile).enqueue(new Callback<RegisterStatus>() {
             @Override
             public void onResponse(Call<RegisterStatus> call, Response<RegisterStatus> response) {
                 if (response.body() != null) {

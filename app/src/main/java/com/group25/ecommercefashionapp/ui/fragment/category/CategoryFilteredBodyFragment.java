@@ -28,12 +28,12 @@ import com.group25.ecommercefashionapp.data.FilterType;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 //import com.group25.ecommercefashionapp.repository.ProductRepository;
-import com.group25.ecommercefashionapp.repository.ProductRepositoryB;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -99,13 +99,15 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
     }
 
     private void fetchProductsFromApi(Long categoryId) {
-        ApiService apiService = ProductRepositoryB.getInstance().getApiService();
+        ApiService apiService = ProductRepository.getInstance().getApiService();
         Call<List<Product>> call = apiService.getProductsByCategory(categoryId);
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(@NonNull Call<List<Product>> call, Response<List<Product>> response) {
                 if (response.isSuccessful()) {
                     products = response.body();
+                    Log.d("Product", "onResponse: " + products);
+                    Log.d("Product", "onResponse: " + response.body());
                     setupRecyclerView();
 
                 } else {
@@ -115,6 +117,7 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
 
             @Override
             public void onFailure(@NonNull Call<List<Product>> call, Throwable t) {
+                Log.d("Product", "onFailure: " + t.getMessage());
                 Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -130,6 +133,7 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
         productRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
+
     }
 
     @Override

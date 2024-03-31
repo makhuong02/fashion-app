@@ -3,9 +3,9 @@ package com.group25.ecommercefashionapp.data;
 import com.google.gson.annotations.SerializedName;
 
 abstract public class Item {
-    @SerializedName(value = "name", alternate = "CategoryName")
+    @SerializedName(value = "name")
     protected final String name;
-    @SerializedName(value = "id", alternate = "CategoryID")
+    @SerializedName(value = "id")
     protected Long id;
 
     protected Item(String name) {

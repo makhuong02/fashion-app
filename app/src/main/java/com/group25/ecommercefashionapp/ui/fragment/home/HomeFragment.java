@@ -24,7 +24,7 @@ import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
-import com.group25.ecommercefashionapp.repository.ProductRepositoryB;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
 
@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     }
 
     private void fetchProductsFromApi() {
-         ApiService apiService = ProductRepositoryB.getInstance().getApiService();
+         ApiService apiService = ProductRepository.getInstance().getApiService();
          Call<List<Product>> call = apiService.getProducts();
          call.enqueue(new Callback<List<Product>>() {
              @Override

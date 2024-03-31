@@ -79,7 +79,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
             spinnerEntries.add(String.valueOf(i));
         }
 
-        holder.productImage.setImageResource(product.getImageList().get(0).getImage_int_id());
+//        holder.productImage.setImageResource(product.getImageList().get(0).getImage_int_id());
         holder.productName.setText(product.getName());
         holder.productPrice.setText(String.format("%s VND", VNDFormat.format(product.getPrice()*0.9f)));
         holder.productId.setText(String.valueOf(product.getId()));
