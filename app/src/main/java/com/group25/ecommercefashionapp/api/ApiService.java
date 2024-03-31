@@ -21,14 +21,6 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface ApiService {
-    // Link API: http://localhost:8080/api/v1/
-    String LOCALHOST = "192.168.1.11";
-    String PORT = "8080";
-    ApiService apiService = new Retrofit.Builder()
-            .baseUrl("http://" + LOCALHOST + ":" + PORT + "/api/v1/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ApiService.class);
 
     @POST("auth/register")
     Call<RegisterStatus> userRegister(@Body UserProfile userProfile);

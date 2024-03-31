@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.api.ApiService;
+import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.status.LoginStatus;
 import com.group25.ecommercefashionapp.status.UserStatus;
 
@@ -207,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login(LoginInfo loginInfo) {
 
-        ApiService.apiService.userLogin(loginInfo).enqueue(new Callback<LoginStatus>() {
+        ApiServiceBuilder.buildService().userLogin(loginInfo).enqueue(new Callback<LoginStatus>() {
             @Override
             public void onResponse(Call<LoginStatus> call, Response<LoginStatus> response) {
                 if (response.body() != null) {

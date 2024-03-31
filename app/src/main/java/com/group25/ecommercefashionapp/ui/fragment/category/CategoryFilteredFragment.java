@@ -23,7 +23,7 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
-import com.group25.ecommercefashionapp.repository.ProductRepositoryB;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
@@ -106,7 +106,7 @@ public class CategoryFilteredFragment extends Fragment implements OnProductCount
         return view;
     }
     private void fetchProductsFromApi(Long categoryId) {
-        ApiService apiService = ProductRepositoryB.getInstance().getApiService();
+        ApiService apiService = ProductRepository.getInstance().getApiService();
         Call<List<Product>> call = apiService.getProductsByCategory(categoryId);
         call.enqueue(new Callback<List<Product>>() {
             @Override

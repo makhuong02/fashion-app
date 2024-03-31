@@ -41,10 +41,10 @@ public class ProductViewImageCarouselAdapter extends PagerAdapter {
         currentImageTextView.setText(String.valueOf(position + 1));
         totalImageTextView.setText(String.valueOf(imageList.size()));
 
-        BitmapDrawable drawable = (BitmapDrawable) context.getResources().getDrawable(imageList.get(position).getImage_int_id());
-        Bitmap bitmap = drawable.getBitmap();
+//        BitmapDrawable drawable = (BitmapDrawable) context.getResources().getDrawable(imageList.get(position).getImage_int_id());
+//        Bitmap bitmap = drawable.getBitmap();
 
-        image.setImageBitmap(bitmap);
+//        image.setImageBitmap(bitmap);
         image.setOnLongClickListener(v -> {
             PhotoLongClickBottomSheetFragment photoLongClickBottomSheetFragment = new PhotoLongClickBottomSheetFragment((BitmapDrawable) image.getDrawable());
             photoLongClickBottomSheetFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), "photo_long_click_bottom_sheet");

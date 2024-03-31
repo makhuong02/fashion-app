@@ -15,7 +15,9 @@ public class Product extends Item {
     private final String category;
     @SerializedName("availableQuantity")
     private Integer availableQuantity;
+    @SerializedName("images")
     private final List<ProductImage> imageList = new ArrayList<>();
+    @SerializedName("colors")
     private final List<ProductColor> colorList = new ArrayList<>();
     private final List<ProductSize> sizeList = new ArrayList<>();
 

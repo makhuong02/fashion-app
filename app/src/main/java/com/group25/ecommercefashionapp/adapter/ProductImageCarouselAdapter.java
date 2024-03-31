@@ -43,7 +43,7 @@ public class ProductImageCarouselAdapter extends PagerAdapter {
 
         currentImageTextView.setText(String.valueOf(position + 1));
         totalImageTextView.setText(String.valueOf(imageList.size()));
-        image.setImageResource(imageList.get(position).getImage_int_id());
+//        image.setImageResource(imageList.get(position).getImage_int_id());
         image.setOnClickListener(v -> clickListener.onItemClick(v, imageList.get(position)));
 
         container.addView(itemView);
