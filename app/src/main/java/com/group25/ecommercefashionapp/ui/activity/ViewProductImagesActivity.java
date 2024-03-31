@@ -3,19 +3,29 @@ package com.group25.ecommercefashionapp.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.group25.ecommercefashionapp.MyApp;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.adapter.ProductViewImageCarouselAdapter;
+import com.group25.ecommercefashionapp.cache.ProductCache;
+import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ViewProductImagesActivity extends AppCompatActivity {
     ViewPager productCarousel;
     MaterialToolbar toolbar;
     MainActivity mainActivity;
     private int finalPosition;
-    private int id;
+    private Long id;
+    Product product;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +37,31 @@ public class ViewProductImagesActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.topAppBar);
 
         Bundle bundle = getIntent().getExtras();
-        id = bundle.getInt("product_id");
+        id = bundle.getLong("product_id");
         int position = bundle.getInt("position");
-//        Product product = mainActivity.productRepository.getProductById(id);
+        if(ProductCache.getInstance().containsProduct(id)) {
+            product = ProductCache.getInstance().getProduct(id);
+        } else {
+            ProductRepository.getInstance().fetchProductByProductIdFromApi(id, this ,new Callback<Product>() {
+                @Override
+                public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
+                    if (response.isSuccessful()) {
+                        product = response.body();
+                    }
+                }
 
-//        ProductViewImageCarouselAdapter productImageCarouselAdapter = new ProductViewImageCarouselAdapter(this, product.getImageList());
-//        productCarousel.setAdapter(productImageCarouselAdapter);
+                @Override
+                public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
+
+                    // Handle network error
+
+                }
+            });
+
+        }
+
+        ProductViewImageCarouselAdapter productImageCarouselAdapter = new ProductViewImageCarouselAdapter(this, product.getImageList());
+        productCarousel.setAdapter(productImageCarouselAdapter);
         productCarousel.setCurrentItem(position);
         productCarousel.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -52,7 +81,7 @@ public class ViewProductImagesActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> {
             Bundle getBundle = new Bundle();
             getBundle.putInt("position", finalPosition);
-            getBundle.putInt("product_id", id);
+            getBundle.putLong("product_id", id);
 
             Intent intent = new Intent();
             intent.putExtras(getBundle);
@@ -67,7 +96,7 @@ public class ViewProductImagesActivity extends AppCompatActivity {
     public void onBackPressed() {
         Bundle getBundle = new Bundle();
         getBundle.putInt("position", finalPosition);
-        getBundle.putInt("product_id", id);
+        getBundle.putLong("product_id", id);
 
         Intent intent = new Intent();
         intent.putExtras(getBundle);

@@ -3,7 +3,6 @@ package com.group25.ecommercefashionapp.adapter;
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.ui.widget.ChipImagesView;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import com.squareup.picasso.Picasso;
@@ -79,8 +78,12 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
             }
         });
         holder.chipImagesView.setChipImages(item.getColors());
+        String imageNames = "";
+        if(item.getImageList().size() != 0) {
+            imageNames = item.getImageList().get(0).getImage_name();
+        }
         Picasso.get()
-                .load(ApiServiceBuilder.BASE_URL +"public/product-images/"+ item.getImageList().get(0).getImage_name())
+                .load(ApiServiceBuilder.BASE_URL +"public/product-images/"+ imageNames)
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.ic_connection_error)
                 .into(holder.img);

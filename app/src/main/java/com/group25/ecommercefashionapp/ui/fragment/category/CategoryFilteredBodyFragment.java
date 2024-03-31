@@ -4,7 +4,6 @@ import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +15,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.api.ApiService;
-import com.group25.ecommercefashionapp.interfaces.callback.FilterDialogCallback;
 import com.group25.ecommercefashionapp.MySharedPreferences;
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
-import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.FilterItemAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
+import com.group25.ecommercefashionapp.cache.ProductCache;
 import com.group25.ecommercefashionapp.data.FilterType;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
-//import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.interfaces.callback.FilterDialogCallback;
+import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -75,15 +72,34 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
 
         setFilterIndicatorVisibility(!selectedItems.isEmpty());
         List<FilterType> filterSections = Collections.singletonList(FilterType.SIZE);
-        FilterItemAdapter filterItemAdapter = new FilterItemAdapter(filterSections,selectedItems, category, search, this);
+        FilterItemAdapter filterItemAdapter = new FilterItemAdapter(filterSections, selectedItems, category, search, this);
 
         filterRecyclerView.setAdapter(filterItemAdapter);
 
         mainActivity = (MainActivity) getActivity();
         context = getActivity();
 
-        fetchProductsFromApi(categoryId);
-        Log.d("Product", "onCreateView: " + categoryId);
+        if (ProductCache.getInstance().containsCategory(categoryId)) {
+            products = ProductCache.getInstance().getProducts(categoryId);
+            setupRecyclerView();
+        } else{
+            ProductRepository.getInstance().fetchProductsByCategoryIdFromApi(categoryId, context, new Callback<List<Product>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                    if (response.isSuccessful()) {
+                        products = response.body();
+                        setupRecyclerView();
+                    } else {
+                        Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                    Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         updateFilterProducts(products);
 
@@ -97,32 +113,6 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
         bundle.putLong("id", item.getId());
         mainActivity.navController.navigate(R.id.viewProduct, bundle);
     }
-
-    private void fetchProductsFromApi(Long categoryId) {
-        ApiService apiService = ProductRepository.getInstance().getApiService();
-        Call<List<Product>> call = apiService.getProductsByCategory(categoryId);
-        call.enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    products = response.body();
-                    Log.d("Product", "onResponse: " + products);
-                    Log.d("Product", "onResponse: " + response.body());
-                    setupRecyclerView();
-
-                } else {
-                    Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Product>> call, Throwable t) {
-                Log.d("Product", "onFailure: " + t.getMessage());
-                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     private void setupRecyclerView() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);

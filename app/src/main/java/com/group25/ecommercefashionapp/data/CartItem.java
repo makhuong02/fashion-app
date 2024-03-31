@@ -1,13 +1,13 @@
 package com.group25.ecommercefashionapp.data;
 
 public class CartItem extends Item{
-    private final int productId;
+    private final Long productId;
     private int quantity;
     private final ProductColor selectedColor;
     private final ProductSize selectedSize;
     private String phoneNumber;
 
-    public CartItem(int productId, int quantity, ProductColor selectedColor, ProductSize selectedSize, String phoneNumber) {
+    public CartItem(Long productId, int quantity, ProductColor selectedColor, ProductSize selectedSize, String phoneNumber) {
         super("");
         this.productId = productId;
         this.quantity = quantity;
@@ -18,7 +18,7 @@ public class CartItem extends Item{
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-    public int getProductId() {
+    public Long getProductId() {
         return productId;
     }
     public int getQuantity() {

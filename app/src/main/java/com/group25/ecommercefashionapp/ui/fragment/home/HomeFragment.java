@@ -19,7 +19,6 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.card.MaterialCardView;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
-import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
@@ -86,8 +85,22 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
         productRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
-        fetchProductsFromApi();
+        ProductRepository.getInstance().fetchProductsFromApi(context, new Callback<List<Product>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    products = response.body();
+                    setupRecyclerView();
+                } else {
+                    Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         categoryButton.setOnClickListener(new View.OnClickListener() {
@@ -134,27 +147,6 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         });
 
         return view;
-    }
-
-    private void fetchProductsFromApi() {
-         ApiService apiService = ProductRepository.getInstance().getApiService();
-         Call<List<Product>> call = apiService.getProducts();
-         call.enqueue(new Callback<List<Product>>() {
-             @Override
-             public void onResponse(@NonNull Call<List<Product>> call, Response<List<Product>> response) {
-                 if (response.isSuccessful()) {
-                     products = response.body();
-                     setupRecyclerView();
-                 } else {
-                     Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
-                 }
-             }
-
-             @Override
-             public void onFailure(@NonNull Call<List<Product>> call, Throwable t) {
-                 Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
-             }
-         });
     }
 
     private void setupRecyclerView() {
