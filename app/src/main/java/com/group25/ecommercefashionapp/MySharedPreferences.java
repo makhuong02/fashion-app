@@ -9,7 +9,6 @@ import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.status.UserStatus;
-import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -17,16 +16,15 @@ import java.util.List;
 public class MySharedPreferences {
     private static final String MY_SHARED_PREFERENCES = "MY_SHARED_PREFERENCES";
     private static final String KEY_LOGIN_STATUS = "KEY_LOGIN";
-    private static final String KEY_EMAIL = "KEY_EMAIL";
-    private static final String KEY_PASSWORD = "KEY_PASSWORD";
     private static final String KEY_FAVORITE_LIST = "KEY_FAVORITE_LIST";
     private static final String KEY_CART_LIST = "KEY_CART_LIST";
     private static final String KEY_ADDRESS = "KEY_ADDRESS";
     private static final String KEY_FIRST_NAME = "KEY_FIRST_NAME";
     private static final String KEY_LAST_NAME = "KEY_LAST_NAME";
     private static final String KEY_ORDER_LIST = "KEY_ORDER_LIST";
+    private static final String KEY_ACCESS_TOKEN = "access_token";
     private Context context;
-    SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
     public MySharedPreferences(Context context) {
@@ -35,28 +33,32 @@ public class MySharedPreferences {
         editor = sharedPreferences.edit();
     }
 
+    public void saveTokens(String accessToken) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_ACCESS_TOKEN, accessToken);
+        editor.apply();
+    }
+
+    public String getAccessToken() {
+        return sharedPreferences.getString(KEY_ACCESS_TOKEN, null);
+    }
+
+
+    public void clearTokens() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(KEY_ACCESS_TOKEN);
+        editor.apply();
+    }
+
     public void updateUserLoginStatus() {
         boolean isLoggedIn = UserStatus._isLoggedIn;
         editor.putBoolean(KEY_LOGIN_STATUS, isLoggedIn);
         if (!isLoggedIn) {
-            editor.remove(KEY_EMAIL)
-                    .remove(KEY_PASSWORD);
+            editor.remove(KEY_ACCESS_TOKEN);
         }
         editor.apply();
     }
 
-    public void putUserLoginInfo (LoginActivity.LoginInfo loginInfo) {
-        editor.putString(KEY_EMAIL, loginInfo.email)
-                .putString(KEY_PASSWORD, loginInfo.password);
-        editor.apply();
-    }
-
-    public LoginActivity.LoginInfo getUserLoginInfo() {
-        LoginActivity loginActivity = new LoginActivity();
-        String email = sharedPreferences.getString(KEY_EMAIL, "");
-        String password = sharedPreferences.getString(KEY_PASSWORD, "");
-        return loginActivity.new LoginInfo(email, password);
-    }
 
     public boolean getUserLoginStatus() {
         try {

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -14,13 +15,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.group25.ecommercefashionapp.MyApp;
 import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.R;
-import com.group25.ecommercefashionapp.api.ApiService;
-import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
+import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.Token;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.database.DatabaseHelper;
 import com.group25.ecommercefashionapp.repository.OrdersRepository;
-import com.group25.ecommercefashionapp.status.LoginStatus;
+import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
+import com.group25.ecommercefashionapp.utilities.TokenUtils;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -51,39 +55,54 @@ public class MainActivity extends AppCompatActivity {
 
         Context context = getApplication();
         sharedPreferences = new MySharedPreferences(context);
-        if (sharedPreferences.getUserLoginStatus()) {
-            LoginActivity.LoginInfo loginInfo = sharedPreferences.getUserLoginInfo();
-            login(loginInfo);
+        if (sharedPreferences.getAccessToken() != null) {
+            validateToken(sharedPreferences.getAccessToken());
         }
-        if(sharedPreferences.getUserFavoriteList() != null) {
-            userInteraction.setFavoriteList(sharedPreferences.getUserFavoriteList());
-        }
-        if(sharedPreferences.getUserCartList() != null) {
-            userInteraction.setCartList(sharedPreferences.getUserCartList());
-        }
-        if(sharedPreferences.getUserOrderList() != null) {
-            userInteraction.setOrderList(sharedPreferences.getUserOrderList());
-        }
+
+//        if(sharedPreferences.getUserCartList() != null) {
+//            userInteraction.setCartList(sharedPreferences.getUserCartList());
+//        }
+//        if(sharedPreferences.getUserOrderList() != null) {
+//            userInteraction.setOrderList(sharedPreferences.getUserOrderList());
+//        }
 
     }
 
-    private void login(LoginActivity.LoginInfo loginInfo) {
+    private void validateToken(String accessToken) {
 
-        ApiServiceBuilder.buildService().userLogin(loginInfo).enqueue(new Callback<LoginStatus>() {
+        UserRepository.getInstance().validateToken(TokenUtils.bearerToken(accessToken), getApplicationContext(), new Callback<Boolean>() {
             @Override
-            public void onResponse(Call<LoginStatus> call, Response<LoginStatus> response) {
-                if (response.body() != null) {
-                    LoginStatus result = response.body();
-                    result.data.user.setPassword(loginInfo.password);
-
-                    UserStatus._isLoggedIn = true;
-                    UserStatus.currentUser = result.data.user;
-                    UserStatus.access_token = result.data.access_token;
+            public void onResponse(@NonNull Call<Boolean> call, @NonNull Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    if (Boolean.TRUE.equals(response.body())) {
+                        UserStatus._isLoggedIn = true;
+                        UserStatus.access_token = new Token(accessToken);
+                        fetchFavoriteList();
+                    } else {
+                        sharedPreferences.clearTokens();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginStatus> call, Throwable t) {
+            public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
+                sharedPreferences.clearTokens();
+            }
+        });
+    }
+
+    private void fetchFavoriteList() {
+        UserRepository.getInstance().fetchFavoriteList(TokenUtils.bearerToken(UserStatus.access_token.token), getApplicationContext(), new Callback<List<Product>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    userInteraction.setFavoriteList(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                // Handle failure
             }
         });
     }

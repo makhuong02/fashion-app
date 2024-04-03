@@ -1,12 +1,9 @@
 package com.group25.ecommercefashionapp.status;
 
-import com.group25.ecommercefashionapp.data.UserProfile;
+import com.google.gson.annotations.SerializedName;
 
 public class LoginStatus {
-    public Data data;
 
-    public static class Data {
-        public UserProfile user;
-        public String access_token;
-    }
+    @SerializedName("token")
+    public String access_token;
 }

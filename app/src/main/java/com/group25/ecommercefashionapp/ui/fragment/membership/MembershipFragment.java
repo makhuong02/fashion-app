@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
+import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
@@ -26,8 +28,13 @@ import com.group25.ecommercefashionapp.data.ActionItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.activity.MapsActivity;
+import com.group25.ecommercefashionapp.utilities.TokenUtils;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MembershipFragment extends Fragment implements OnItemClickListener {
     MainActivity mainActivity;
@@ -75,12 +82,32 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
         bottomNavigationView = mainActivity.findViewById(R.id.bottomNavigation);
         bottomNavigationView.setVisibility(View.VISIBLE);
 
-        // profileCardView.setOnClickListener(v -> mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings));
         profileCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (UserStatus._isLoggedIn){
-                    mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings);
+                Log.d("MembershipFragment", UserStatus._isLoggedIn + "");
+                if (UserStatus._isLoggedIn) {
+                    UserRepository.getInstance().validateToken(TokenUtils.bearerToken(UserStatus.access_token.token), context, new Callback<Boolean>() {
+                        @Override
+                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("MembershipFragment", "onResponse: " + response.body());
+                                if (response.body() != null && response.body()) {
+                                    mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings);
+                                } else {
+                                    mainActivity.navController.navigate(R.id.loginActivity);
+                                }
+                            }
+                            else {
+                                Toast.makeText(context, "Failed to validate token", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Boolean> call, Throwable t) {
+
+                        }
+                    });
                 }
                 else {
                     mainActivity.navController.navigate(R.id.loginActivity);
@@ -89,10 +116,9 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
         });
 
         orderHistoryCardView.setOnClickListener(v -> {
-            if (UserStatus._isLoggedIn){
+            if (UserStatus._isLoggedIn) {
                 mainActivity.navController.navigate(R.id.orderHistoryActivity);
-            }
-            else {
+            } else {
                 mainActivity.navController.navigate(R.id.loginActivity);
             }
         });

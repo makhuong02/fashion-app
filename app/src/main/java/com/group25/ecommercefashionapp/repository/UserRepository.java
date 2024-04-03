@@ -1,0 +1,111 @@
+package com.group25.ecommercefashionapp.repository;
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.group25.ecommercefashionapp.api.ApiService;
+import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
+import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.UserProfile;
+import com.group25.ecommercefashionapp.status.UserStatus;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class UserRepository {
+    private static UserRepository instance;
+    private final ApiService apiService;
+
+    public UserRepository() {
+        this.apiService = ApiServiceBuilder.buildService();
+    }
+
+    public static synchronized UserRepository getInstance() {
+        if (instance == null) {
+            instance = new UserRepository();
+        }
+        return instance;
+    }
+
+    public void fetchUserDetails(String token, Context context, Callback<UserProfile> callback) {
+        Call<UserProfile> call = apiService.getUserInfo(token);
+        Log.d("UserRepository", "token: " + token);
+        // Fetch user details from the server
+       call.enqueue(new Callback<UserProfile>() {
+            @Override
+            public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+                if (response.isSuccessful()) {
+                    UserStatus.currentUser = response.body();
+                    callback.onResponse(call, response);
+                }
+                else {
+
+                    Toast.makeText(context, "Failed to fetch user details", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+                // Handle failure
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public void validateToken(String token, Context context, Callback<Boolean> callback) {
+        Call<Boolean> call = apiService.validateToken(token);
+        // Validate the token
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(@NonNull Call<Boolean> call, @NonNull Response<Boolean> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                }
+                else {
+                    Toast.makeText(context, "Failed to validate token", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
+                // Handle failure
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public void fetchFavoriteList(String token, Context context, Callback<List<Product>> callback) {
+        Call<List<Product>> call = apiService.getFavoriteProducts(token);
+        // Fetch favorite list from the server
+        call.enqueue(new Callback<List<Product>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                }
+                else {
+                    Toast.makeText(context, "Failed to fetch favorite list", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                // Handle failure
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public ApiService getApiService() {
+        return apiService;
+    }
+}

@@ -13,10 +13,10 @@ import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -30,6 +30,9 @@ public interface ApiService {
 
     @POST("auth/logout")
     Call<LoginStatus> userLogout(@Body LoginActivity.LoginInfo loginInfo);
+
+    @POST("auth/validate-token")
+    Call<Boolean> validateToken(@Header("Authorization") String token);
 
     @GET("public/products")
     Call<List<Product>> getProducts();
@@ -51,5 +54,17 @@ public interface ApiService {
 
     @GET("public/products/{product-id}/product-images")
     Call<List<ProductImage>> getProductImages(@Path("product-id") Long productId);
+
+    @POST("user/favorite-products/{product-id}")
+    Call<?> addFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
+
+    @GET("user/favorite-products")
+    Call<List<Product>> getFavoriteProducts(@Header("Authorization") String token);
+
+    @DELETE("user/favorite-products/{product-id}")
+    Call<?> removeFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
+
+    @GET("user/users")
+    Call<UserProfile> getUserInfo(@Header("Authorization") String token);
 
 }

@@ -23,7 +23,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
 import com.group25.ecommercefashionapp.R;
-import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.RegisterStatus;
@@ -356,7 +355,6 @@ public class SignupActivity extends AppCompatActivity {
                 password,
                 phoneNumber
         );
-        Log.d("phone", phoneNumber);
 
         return userProfile;
     }
