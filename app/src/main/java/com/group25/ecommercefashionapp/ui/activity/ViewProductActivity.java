@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.gson.JsonElement;
 import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
@@ -87,12 +88,13 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             product = ProductCache.getInstance().getProduct(id);
             init();
         } else {
-            ProductRepository.getInstance().fetchProductByProductIdFromApi(id, getApplicationContext(), new Callback<Product>() {
+            ProductRepository.getInstance().fetchProductByProductIdFromApi(id, getApplicationContext(), new Callback<JsonElement>() {
                 @Override
-                public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
+                public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
                     if (response.isSuccessful()) {
-                        product = response.body();
                         // Handle successful response
+                        JsonElement jsonElement = response.body();
+                        product = ProductRepository.getInstance().parseJsonToProduct(jsonElement);
                         init();
                     } else {
                         // Handle unsuccessful response
@@ -101,7 +103,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
                     // Handle network error
                     Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
                 }
@@ -303,7 +305,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     public void onPause() {
         super.onPause();
         MySharedPreferences sharedPreferences = new MySharedPreferences(this);
-        sharedPreferences.putUserFavoriteList(getMainActivityInstance().userInteraction.getFavoriteList());
-        sharedPreferences.putUserCartList(getMainActivityInstance().userInteraction.getCartList());
+        sharedPreferences.saveUserFavoriteList(getMainActivityInstance().userInteraction.getFavoriteList());
+        sharedPreferences.saveUserCartList(getMainActivityInstance().userInteraction.getCartList());
     }
 }

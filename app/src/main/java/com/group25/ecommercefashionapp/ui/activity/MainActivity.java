@@ -58,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
         if (sharedPreferences.getAccessToken() != null) {
             validateToken(sharedPreferences.getAccessToken());
         }
+        else {
+            if (sharedPreferences.getUserFavoriteList() != null) {
+                userInteraction.setFavoriteList(sharedPreferences.getUserFavoriteList());
+            }
+        }
 
 //        if(sharedPreferences.getUserCartList() != null) {
 //            userInteraction.setCartList(sharedPreferences.getUserCartList());
@@ -77,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     if (Boolean.TRUE.equals(response.body())) {
                         UserStatus._isLoggedIn = true;
                         UserStatus.access_token = new Token(accessToken);
-                        fetchFavoriteList();
+                        fetchFavoriteListFromApi();
                     } else {
                         sharedPreferences.clearTokens();
                     }
@@ -91,11 +96,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchFavoriteList() {
+    private void fetchFavoriteListFromApi() {
         UserRepository.getInstance().fetchFavoriteList(TokenUtils.bearerToken(UserStatus.access_token.token), getApplicationContext(), new Callback<List<Product>>() {
             @Override
             public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
                 if (response.isSuccessful()) {
+
                     userInteraction.setFavoriteList(response.body());
                 }
             }
@@ -131,6 +137,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        sharedPreferences.putUserFavoriteList(userInteraction.getFavoriteList());
+        sharedPreferences.saveUserFavoriteList(userInteraction.getFavoriteList());
     }
 }

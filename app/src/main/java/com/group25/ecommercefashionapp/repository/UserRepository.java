@@ -1,11 +1,11 @@
 package com.group25.ecommercefashionapp.repository;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.JsonElement;
 import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.data.Product;
@@ -35,7 +35,6 @@ public class UserRepository {
 
     public void fetchUserDetails(String token, Context context, Callback<UserProfile> callback) {
         Call<UserProfile> call = apiService.getUserInfo(token);
-        Log.d("UserRepository", "token: " + token);
         // Fetch user details from the server
        call.enqueue(new Callback<UserProfile>() {
             @Override
@@ -105,7 +104,42 @@ public class UserRepository {
         });
     }
 
-    public ApiService getApiService() {
-        return apiService;
+    public void addFavoriteProduct(String token, long productId, Context context) {
+        Call<JsonElement> call = apiService.addFavoriteProduct(productId, token);
+        // Add a product to the favorite list
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Failed to add product to favorite list", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
+                // Handle failure
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
+    public void removeFavoriteProduct(String token, long productId, Context context) {
+        Call<Void> call = apiService.removeFavoriteProduct(productId, token);
+        // Remove a product from the favorite list
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Failed to remove product from favorite list", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+                // Handle failure
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

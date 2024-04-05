@@ -4,28 +4,28 @@ import com.google.gson.annotations.SerializedName;
 
 public class ProductImage extends Item {
     @SerializedName("productId")
-    private final int product_id;
+    private final int productId;
     @SerializedName("imagePath")
-    private final String image_name;
-    public ProductImage(int product_id, String image_name, Long imageId) {
+    private final String imagePath;
+    public ProductImage(int productId, String imagePath, Long imageId) {
         super("");
-        this.product_id = product_id;
-        this.image_name = image_name;
+        this.productId = productId;
+        this.imagePath = imagePath;
         this.id = imageId;
     }
 
-    public ProductImage(int product_id, String image_name, String name) {
+    public ProductImage(int productId, String imagePath, String name) {
         super(name);
         this.id = -1L;
-        this.image_name = image_name;
-        this.product_id = product_id;
+        this.imagePath = imagePath;
+        this.productId = productId;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public String getImage_name() {
-        return image_name;
+    public String getImagePath() {
+        return imagePath;
     }
 }

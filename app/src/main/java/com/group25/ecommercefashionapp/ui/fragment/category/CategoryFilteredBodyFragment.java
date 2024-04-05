@@ -159,7 +159,7 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
     public void onPause() {
         super.onPause();
         MySharedPreferences sharedPreferences = new MySharedPreferences(requireContext());
-        sharedPreferences.putUserFavoriteList(getMainActivityInstance().userInteraction.getFavoriteList());
+        sharedPreferences.saveUserFavoriteList(getMainActivityInstance().userInteraction.getFavoriteList());
     }
 
     private void setFilterIndicatorVisibility(boolean isVisible) {

@@ -59,16 +59,7 @@ public class MySharedPreferences {
         editor.apply();
     }
 
-
-    public boolean getUserLoginStatus() {
-        try {
-            return sharedPreferences.getBoolean(KEY_LOGIN_STATUS, false);
-        }
-        catch (Exception e) {
-            return false;
-        }
-    }
-    public void putUserFavoriteList(List<Product> favoriteList) {
+    public void saveUserFavoriteList(List<Product> favoriteList) {
         Gson gson = new Gson();
         String json = gson.toJson(favoriteList);
         editor.putString(KEY_FAVORITE_LIST, json);
@@ -82,7 +73,7 @@ public class MySharedPreferences {
         Type type = new TypeToken<List<Product>>() {}.getType();
         return gson.fromJson(json, type);
     }
-    public void putUserCartList(List<CartItem> cartList) {
+    public void saveUserCartList(List<CartItem> cartList) {
         Gson gson = new Gson();
         String json = gson.toJson(cartList);
         editor.putString(KEY_CART_LIST, json);
@@ -97,7 +88,7 @@ public class MySharedPreferences {
         return gson.fromJson(json, type);
     }
 
-    public void putUserAddress(String address) {
+    public void saveUserAddress(String address) {
         editor.putString(KEY_ADDRESS, address);
         editor.apply();
     }
@@ -106,7 +97,7 @@ public class MySharedPreferences {
         return sharedPreferences.getString(KEY_ADDRESS, "");
     }
 
-    public void putUserFirstName(String firstName) {
+    public void saveUserFirstName(String firstName) {
         editor.putString(KEY_FIRST_NAME, firstName);
         editor.apply();
     }
@@ -115,7 +106,7 @@ public class MySharedPreferences {
         return sharedPreferences.getString(KEY_FIRST_NAME, "");
     }
 
-    public void putUserLastName(String lastName) {
+    public void saveUserLastName(String lastName) {
         editor.putString(KEY_LAST_NAME, lastName);
         editor.apply();
     }
@@ -124,7 +115,7 @@ public class MySharedPreferences {
         return sharedPreferences.getString(KEY_LAST_NAME, "");
     }
 
-    public void putUserOrderList(List<OrderHistoryItem> orderList) {
+    public void saveUserOrderList(List<OrderHistoryItem> orderList) {
         Gson gson = new Gson();
         String json = gson.toJson(orderList);
         editor.putString(KEY_ORDER_LIST, json);

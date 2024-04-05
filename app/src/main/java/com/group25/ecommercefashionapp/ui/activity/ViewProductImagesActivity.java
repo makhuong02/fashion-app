@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.gson.JsonElement;
 import com.group25.ecommercefashionapp.MyApp;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductViewImageCarouselAdapter;
@@ -42,16 +43,17 @@ public class ViewProductImagesActivity extends AppCompatActivity {
         if(ProductCache.getInstance().containsProduct(id)) {
             product = ProductCache.getInstance().getProduct(id);
         } else {
-            ProductRepository.getInstance().fetchProductByProductIdFromApi(id, this ,new Callback<Product>() {
+            ProductRepository.getInstance().fetchProductByProductIdFromApi(id, this ,new Callback<JsonElement>() {
                 @Override
-                public void onResponse(@NonNull Call<Product> call, @NonNull Response<Product> response) {
+                public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
                     if (response.isSuccessful()) {
-                        product = response.body();
+                        JsonElement jsonElement = response.body();
+                        product = ProductRepository.getInstance().parseJsonToProduct(jsonElement);
                     }
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Product> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
 
                     // Handle network error
 

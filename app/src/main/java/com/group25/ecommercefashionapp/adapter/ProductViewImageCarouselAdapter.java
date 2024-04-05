@@ -44,7 +44,7 @@ public class ProductViewImageCarouselAdapter extends PagerAdapter {
 
         String imageNames = "";
         if(imageList.size() != 0) {
-            imageNames = imageList.get(position).getImage_name();
+            imageNames = imageList.get(position).getImagePath();
         }
 
         Picasso.get()

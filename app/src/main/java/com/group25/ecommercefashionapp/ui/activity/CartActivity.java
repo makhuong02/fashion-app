@@ -483,28 +483,28 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     public void onPause() {
         super.onPause();
         MySharedPreferences sharedPreferences = new MySharedPreferences(this);
-        sharedPreferences.putUserCartList(getMainActivityInstance().userInteraction.getCartList());
+        sharedPreferences.saveUserCartList(getMainActivityInstance().userInteraction.getCartList());
         if (addressEditText != null) {
             if (!addressEditText.getText().toString().isEmpty()) {
-                sharedPreferences.putUserAddress(addressEditText.getText().toString());
+                sharedPreferences.saveUserAddress(addressEditText.getText().toString());
             }
         }
         if (firstNameEditText != null || firstNameEditText2 != null) {
             if (!firstNameEditText.getText().toString().isEmpty()) {
-                sharedPreferences.putUserFirstName(firstNameEditText.getText().toString());
+                sharedPreferences.saveUserFirstName(firstNameEditText.getText().toString());
             }
             if (!firstNameEditText2.getText().toString().isEmpty()) {
-                sharedPreferences.putUserFirstName(firstNameEditText2.getText().toString());
+                sharedPreferences.saveUserFirstName(firstNameEditText2.getText().toString());
             }
         }
         if (lastNameEditText != null || lastNameEditText2 != null) {
             if (!lastNameEditText.getText().toString().isEmpty()) {
-                sharedPreferences.putUserLastName(lastNameEditText.getText().toString());
+                sharedPreferences.saveUserLastName(lastNameEditText.getText().toString());
             }
             if (!lastNameEditText2.getText().toString().isEmpty()) {
-                sharedPreferences.putUserLastName(lastNameEditText2.getText().toString());
+                sharedPreferences.saveUserLastName(lastNameEditText2.getText().toString());
             }
         }
-        sharedPreferences.putUserOrderList(getMainActivityInstance().userInteraction.getOrderList());
+        sharedPreferences.saveUserOrderList(getMainActivityInstance().userInteraction.getOrderList());
     }
 }

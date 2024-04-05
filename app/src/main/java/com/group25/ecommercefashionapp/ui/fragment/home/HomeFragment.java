@@ -1,5 +1,7 @@
 package com.group25.ecommercefashionapp.ui.fragment.home;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,15 +19,20 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.card.MaterialCardView;
+import com.google.gson.JsonElement;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.repository.UserRepository;
+import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 import com.group25.ecommercefashionapp.ui.decorations.ProductItemDecoration;
+import com.group25.ecommercefashionapp.utilities.TokenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,19 +92,24 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
         int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
         productRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
-        ProductRepository.getInstance().fetchProductsFromApi(context, new Callback<List<Product>>() {
+        ProductRepository.getInstance().fetchProductsFromApi(context, new Callback<JsonElement>() {
             @Override
-            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
                 if (response.isSuccessful()) {
-                    products = response.body();
-                    setupRecyclerView();
-                } else {
-                    Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
+                    JsonElement jsonElement = response.body();
+                    if (jsonElement != null) {
+                        products = ProductRepository.getInstance().parseJsonToProducts(jsonElement);
+                        if(UserStatus._isLoggedIn) {
+                            fetchFavoriteListFromApi();
+                        }
+                    } else {
+                        Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
                 Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
             }
         });
@@ -178,5 +190,24 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         items.add(new CategoryItem("Quần", ""));
         items.add(new CategoryItem("Bóp", ""));
         return items;
+    }
+
+    private void fetchFavoriteListFromApi() {
+        UserRepository.getInstance().fetchFavoriteList(TokenUtils.bearerToken(UserStatus.access_token.token), getMainActivityInstance().getApplicationContext(), new Callback<List<Product>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    UserInteraction userInteraction = getMainActivityInstance().userInteraction;
+                    userInteraction.setFavoriteList(response.body());
+                    setupRecyclerView();
+
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                // Handle failure
+            }
+        });
     }
 }

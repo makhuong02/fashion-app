@@ -1,5 +1,6 @@
 package com.group25.ecommercefashionapp.api;
 
+import com.google.gson.JsonElement;
 import com.group25.ecommercefashionapp.data.CategoryItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.ProductColor;
@@ -35,13 +36,13 @@ public interface ApiService {
     Call<Boolean> validateToken(@Header("Authorization") String token);
 
     @GET("public/products")
-    Call<List<Product>> getProducts();
+    Call<JsonElement> getProducts();
 
     @GET("public/categories")
     Call<List<CategoryItem>> getCategories();
 
     @GET("public/products/{id}")
-    Call<Product> getProductById(@Path("id") Long productId);
+    Call<JsonElement> getProductById(@Path("id") Long productId);
 
     @GET("public/categories/{id}/products")
     Call<List<Product>> getProductsByCategory(@Path("id") Long categoryId);
@@ -56,13 +57,13 @@ public interface ApiService {
     Call<List<ProductImage>> getProductImages(@Path("product-id") Long productId);
 
     @POST("user/favorite-products/{product-id}")
-    Call<?> addFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
+    Call<JsonElement> addFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
 
     @GET("user/favorite-products")
     Call<List<Product>> getFavoriteProducts(@Header("Authorization") String token);
 
     @DELETE("user/favorite-products/{product-id}")
-    Call<?> removeFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
+    Call<Void> removeFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
 
     @GET("user/users")
     Call<UserProfile> getUserInfo(@Header("Authorization") String token);

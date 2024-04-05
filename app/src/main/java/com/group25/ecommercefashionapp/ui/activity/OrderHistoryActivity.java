@@ -28,6 +28,6 @@ public class OrderHistoryActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         MySharedPreferences mySharedPreferences = new MySharedPreferences(this);
-        mySharedPreferences.putUserOrderList(getMainActivityInstance().userInteraction.getOrderList());
+        mySharedPreferences.saveUserOrderList(getMainActivityInstance().userInteraction.getOrderList());
     }
 }
