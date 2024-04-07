@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
-                sharedPreferences.clearTokens();
+                // Handle failure
+
             }
         });
     }

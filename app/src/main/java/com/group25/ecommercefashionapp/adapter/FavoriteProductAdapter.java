@@ -13,15 +13,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
-import com.group25.ecommercefashionapp.data.ProductColor;
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
+import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
+import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.ProductColor;
 import com.group25.ecommercefashionapp.data.UserInteraction;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
-import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.utilities.TokenUtils;
 import com.squareup.picasso.Picasso;
 
@@ -30,10 +30,6 @@ import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProductAdapter.ViewHolder>{
     private final List<Product> items;
@@ -143,28 +139,18 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         if(UserStatus._isLoggedIn) {
             UserRepository.getInstance().addFavoriteProduct(TokenUtils.bearerToken(UserStatus.access_token.token), item.getId(), getMainActivityInstance().getApplicationContext());
         }
+        else {
+            getMainActivityInstance().userInteraction.addFavorite(item);
+        }
     }
 
     private void removeUserFavoriteProduct(Product item) {
         if(UserStatus._isLoggedIn) {
             UserRepository.getInstance().removeFavoriteProduct(TokenUtils.bearerToken(UserStatus.access_token.token), item.getId(), getMainActivityInstance().getApplicationContext());
         }
+        else {
+            getMainActivityInstance().userInteraction.removeFavorite(item);
+        }
     }
 
-    private void fetchFavoriteListFromApi() {
-        UserRepository.getInstance().fetchFavoriteList(TokenUtils.bearerToken(UserStatus.access_token.token), getMainActivityInstance().getApplicationContext(), new Callback<List<Product>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    UserInteraction userInteraction = getMainActivityInstance().userInteraction;
-                    userInteraction.setFavoriteList(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
-                // Handle failure
-            }
-        });
-    }
 }

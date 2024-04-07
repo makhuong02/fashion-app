@@ -68,7 +68,7 @@ public class UserRepository {
                     callback.onResponse(call, response);
                 }
                 else {
-                    Toast.makeText(context, "Failed to validate token", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
                 }
             }
 

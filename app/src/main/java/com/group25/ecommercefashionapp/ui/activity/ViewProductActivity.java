@@ -36,16 +36,18 @@ import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.ProductColor;
 import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.data.ProductSize;
-import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
+import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.CartAddedDialogFragment;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
+import com.group25.ecommercefashionapp.utilities.TokenUtils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -72,6 +74,8 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     Spinner spinner;
     FavoriteCheckBox favoriteCheckBox;
     private long id;
+
+    List<Product> favoriteList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +113,13 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
                 }
             });
         }
+        if(UserStatus._isLoggedIn) {
+            fetchFavoriteListFromApi();
+        }
+        else {
+            favoriteList = mainActivity.userInteraction.getFavoriteList();
+            setupFavoriteCheckBox();
+        }
     }
 
     private void initializeViews() {
@@ -135,13 +146,11 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     }
 
     private void setupFavoriteCheckBox() {
-        UserInteraction userInteraction = mainActivity.userInteraction;
-        List<Product> favoriteList = userInteraction.getFavoriteList();
         favoriteCheckBox.setOnClickListener(v -> {
             if (favoriteCheckBox.isChecked()) {
-                userInteraction.addFavorite(product);
+                addFavoriteProduct();
             } else {
-                userInteraction.removeFavorite(product);
+                removeFavoriteProduct();
             }
         });
 
@@ -153,6 +162,37 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
                 }
             }
         }
+    }
+
+    private void fetchFavoriteListFromApi() {
+        UserRepository.getInstance().fetchFavoriteList(TokenUtils.bearerToken(UserStatus.access_token.token), getMainActivityInstance().getApplicationContext(), new Callback<List<Product>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                if (response.isSuccessful()) {
+                    favoriteList = response.body();
+                    setupFavoriteCheckBox();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                // Handle failure
+            }
+        });
+    }
+
+    private void addFavoriteProduct() {
+        if(UserStatus._isLoggedIn) {
+            UserRepository.getInstance().addFavoriteProduct(UserStatus.access_token.token, id, getApplicationContext());
+        }
+        mainActivity.userInteraction.addFavorite(product);
+    }
+
+    private void removeFavoriteProduct() {
+        if(UserStatus._isLoggedIn) {
+            UserRepository.getInstance().removeFavoriteProduct(UserStatus.access_token.token, id, getApplicationContext());
+        }
+        mainActivity.userInteraction.removeFavorite(product);
     }
 
     private void displayProductDetails(Product product) {

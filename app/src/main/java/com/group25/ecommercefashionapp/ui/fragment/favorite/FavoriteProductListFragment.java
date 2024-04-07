@@ -44,12 +44,10 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
     private View view;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(UserStatus.access_token == null) {
-            favoriteList = getMainActivityInstance().userInteraction.getFavoriteList();
-        }
-        fetchFavoriteListFromApi();
 
         view = inflater.inflate(R.layout.fragment_favorite_product_list, container, false);
+        fetchFavoriteList();
+
 
         return view;
     }
@@ -85,24 +83,30 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
         favoriteRecyclerView.setHasFixedSize(true);
     }
 
-    private void fetchFavoriteListFromApi() {
-        UserRepository.getInstance().fetchFavoriteList(TokenUtils.bearerToken(UserStatus.access_token.token), getMainActivityInstance().getApplicationContext(), new Callback<List<Product>>() {
-            @Override
-            public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    updateFavoriteList(response.body());
-                }
-                else {
-                    Toast.makeText(getMainActivityInstance().getApplicationContext(), "Failed to fetch favorite list", Toast.LENGTH_SHORT).show();
-                }
-            }
+    private void fetchFavoriteList() {
+        if(UserStatus.access_token == null) {
+            favoriteList = getMainActivityInstance().userInteraction.getFavoriteList();
+            updateFavoriteList(favoriteList);
 
-            @Override
-            public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
-                // Handle failure
-                Toast.makeText(getMainActivityInstance().getApplicationContext(), "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }
+        else {
+            UserRepository.getInstance().fetchFavoriteList(TokenUtils.bearerToken(UserStatus.access_token.token), getMainActivityInstance().getApplicationContext(), new Callback<List<Product>>() {
+                @Override
+                public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
+                    if (response.isSuccessful()) {
+                        updateFavoriteList(response.body());
+                    } else {
+                        Toast.makeText(getMainActivityInstance().getApplicationContext(), "Failed to fetch favorite list", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
+                    // Handle failure
+                    Toast.makeText(getMainActivityInstance().getApplicationContext(), "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void updateFavoriteList(List<Product> fetchedList) {
@@ -135,7 +139,7 @@ public class FavoriteProductListFragment extends Fragment implements OnItemClick
 
     private void setupSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            fetchFavoriteListFromApi();
+            fetchFavoriteList();
             adapter.checkAndRemoveFavorite();
             updateFavoriteCount();
             adapter.notifyDataSetChanged();

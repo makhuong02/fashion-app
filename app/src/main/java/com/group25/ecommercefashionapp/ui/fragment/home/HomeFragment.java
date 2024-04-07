@@ -102,6 +102,8 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                         if(UserStatus._isLoggedIn) {
                             fetchFavoriteListFromApi();
                         }
+                        setupRecyclerView();
+
                     } else {
                         Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
                     }
@@ -199,8 +201,6 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 if (response.isSuccessful()) {
                     UserInteraction userInteraction = getMainActivityInstance().userInteraction;
                     userInteraction.setFavoriteList(response.body());
-                    setupRecyclerView();
-
                 }
             }
 
