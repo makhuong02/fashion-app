@@ -3,11 +3,16 @@ package com.group25.ecommercefashionapp.status;
 import com.google.gson.annotations.SerializedName;
 
 public class RegisterStatus {
-    @SerializedName("data")
-    public boolean status = false;
-    private String log;
+    @SerializedName("message")
+    private String message;
+    @SerializedName("status")
+    private String status;
 
-    public String getLog() {
-        return log;
+    public String getMessage() {
+        return message;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }

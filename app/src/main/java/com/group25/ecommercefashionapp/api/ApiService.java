@@ -8,7 +8,6 @@ import com.group25.ecommercefashionapp.data.ProductImage;
 import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.LoginStatus;
-import com.group25.ecommercefashionapp.status.RegisterStatus;
 import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 
 import java.util.List;
@@ -24,7 +23,7 @@ import retrofit2.http.Path;
 public interface ApiService {
 
     @POST("auth/register")
-    Call<RegisterStatus> userRegister(@Body UserProfile userProfile);
+    Call<JsonElement> userRegister(@Body UserProfile userProfile);
 
     @POST("auth/login")
     Call<LoginStatus> userLogin(@Body LoginActivity.LoginInfo loginInfo);

@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -22,14 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.RegisterStatus;
 import com.group25.ecommercefashionapp.utilities.PhoneNumberFormatter;
-
-import java.io.IOException;
-import java.util.Map;
 
 import pl.droidsonroids.gif.GifImageView;
 import retrofit2.Call;
@@ -306,39 +303,26 @@ public class SignupActivity extends AppCompatActivity {
     private void clickSignUp() {
         UserProfile userProfile = getUserProfile();
 
-        ApiServiceBuilder.buildService().userRegister(userProfile).enqueue(new Callback<RegisterStatus>() {
+        ApiServiceBuilder.buildService().userRegister(userProfile).enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<RegisterStatus> call, Response<RegisterStatus> response) {
-                if (response.body() != null) {
-                    RegisterStatus result = response.body();
-                    if (result.status) {
-                        new BackgroundTask().execute();
-                        Toast.makeText(SignupActivity.this, "Sign Up success", Toast.LENGTH_SHORT).show();
-                        switchToLoginActivity();
-                    }
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                if (response.isSuccessful()) {
+                    new BackgroundTask().execute();
+                    Toast.makeText(SignupActivity.this, "Sign Up success", Toast.LENGTH_SHORT).show();
+                    switchToLoginActivity();
                 }
                 else {
-                    String text = null;
-                    Map<String, String> errorMap;
-                    try {
-                        text = response.errorBody().string();
-                        text = text.substring(0, 1).toUpperCase() + text.substring(1);
-                        Log.d("error", text);
-                        Gson gson = new Gson();
-                        errorMap = gson.fromJson(text, Map.class);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    Gson gson = new Gson();
+                    RegisterStatus registerStatus = gson.fromJson(response.errorBody().charStream(), RegisterStatus.class);
                     new BackgroundTask().execute();
-                    Toast.makeText(SignupActivity.this, errorMap.get("log"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, registerStatus.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
 
             @Override
-            public void onFailure(Call<RegisterStatus> call, Throwable t) {
+            public void onFailure(Call<JsonElement> call, Throwable t) {
                 new BackgroundTask().execute();
-                Toast.makeText(SignupActivity.this, "Sign up Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignupActivity.this, t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
     }

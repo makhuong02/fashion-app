@@ -15,7 +15,7 @@ public class UserProfile {
         this.username = username;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.role = "user";
+        this.role = "USER";
     }
 
     public void setPassword(String password) {
