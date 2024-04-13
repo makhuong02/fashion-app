@@ -1,34 +1,22 @@
 package com.group25.ecommercefashionapp.data;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ProductColor extends Item {
-    private final Long product_id;
-    private final String hexColor;
-    private final Long colorId;
+    @SerializedName("hexCode")
+    private final String hexCode;
 
-    public ProductColor(Long product_id, String hexColor, Long colorId) {
+    public ProductColor(String hexCode) {
         super("");
-        this.product_id = product_id;
-        this.hexColor = hexColor;
-        this.colorId = colorId;
+        this.hexCode = hexCode;
     }
 
-    public ProductColor(Long product_id, String hexColor, String name) {
+    public ProductColor(String hexCode, String name) {
         super(name);
-        this.colorId = -1L;
-        this.hexColor = hexColor;
-        this.product_id = product_id;
+        this.hexCode = hexCode;
     }
 
-    public Long getProduct_id() {
-        return product_id;
+    public String getHexCode() {
+        return hexCode;
     }
-
-    public String getHexColor() {
-        return hexColor;
-    }
-
-    public Long getColorId() {
-        return colorId;
-    }
-
 }

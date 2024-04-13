@@ -137,4 +137,5 @@
 	<string name="price_range_dash">~</string>
     <string name="channel_name">Notification</string>
     <string name="channel_description">Notification description</string>
+    <string name="available_quantity">Available quantity: %1$d</string>
 </resources>

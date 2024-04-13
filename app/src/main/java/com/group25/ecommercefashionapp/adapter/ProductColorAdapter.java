@@ -38,7 +38,9 @@ public class ProductColorAdapter extends RecyclerView.Adapter<ProductColorAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         ProductColor item = items.get(position);
 
-        holder.img.setBackgroundColor(Color.parseColor(item.getHexColor()));
+        // Get hexCode #FFFFFF from ProductColor
+        String hexCode = "#" + item.getHexCode();
+        holder.img.setBackgroundColor(Color.parseColor(hexCode));
         holder.img.setVisibility(View.VISIBLE);
         holder.cardView.setOnClickListener(v ->
         {

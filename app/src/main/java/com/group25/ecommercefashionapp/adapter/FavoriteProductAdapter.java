@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,19 +18,22 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.ProductColor;
+import com.group25.ecommercefashionapp.data.ProductQuantity;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
+import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
 import com.group25.ecommercefashionapp.utilities.TokenUtils;
 import com.squareup.picasso.Picasso;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProductAdapter.ViewHolder>{
     private final List<Product> items;
@@ -59,17 +63,12 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         // Bind your data to the UI components of the CardView
         holder.txtName.setText(item.getName());
         holder.txtProductID.setText(String.valueOf(item.getId()));
-        List<ProductColor> colorList = item.getColorList();
-        if(colorList.size() > 0) {
-            holder.txtColor.setText(colorList.get(0).getName());
-        } else {
-            holder.txtColor.setVisibility(View.GONE);
-        }
+        fetchProductQuantitiesFromApi(item.getId(), holder);
         holder.txtActualPrice.setText(String.format("%s VND",VNDFormat.format(item.getPrice())));
         holder.txtActualPrice.setPaintFlags(holder.txtActualPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.txtDiscountPrice.setText(String.format("%s VND", VNDFormat.format(item.getPrice() * 0.9f)));
         String imageNames = "";
-        if(item.getImageList().size() != 0) {
+        if(!item.getImageList().isEmpty()) {
             imageNames = item.getImageList().get(0).getImagePath();
         }
 
@@ -151,6 +150,36 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         else {
             getMainActivityInstance().userInteraction.removeFavorite(item);
         }
+    }
+
+    private void fetchProductQuantitiesFromApi(Long productId, ViewHolder holder) {
+        ProductRepository.getInstance().fetchProductQuantitiesFromApi(productId, getMainActivityInstance().getApplicationContext(), new Callback<List<ProductQuantity>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<ProductQuantity>> call, @NonNull Response<List<ProductQuantity>> response) {
+                if (response.isSuccessful()) {
+                    List<ProductQuantity> productQuantities = response.body();
+                    Set<ProductColor> uniqueColors = new TreeSet<>(Comparator.comparing(ProductColor::getHexCode));
+                    assert productQuantities != null;
+                    productQuantities.forEach(productQuantity -> uniqueColors.add(productQuantity.getColor()));
+                    List<ProductColor> colors = new ArrayList<>(uniqueColors);
+                    if(!colors.isEmpty()) {
+                        holder.txtColor.setText(colors.get(0).getName());
+                    } else {
+                        holder.txtColor.setVisibility(View.GONE);
+                    }
+                }
+                else {
+                    // Handle unsuccessful response
+                    Toast.makeText(getMainActivityInstance().getApplicationContext(), "Failed to fetch product quantities", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<ProductQuantity>> call, @NonNull Throwable t) {
+                // Handle failure
+                Toast.makeText(getMainActivityInstance().getApplicationContext(), "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 }

@@ -51,8 +51,10 @@ public class CategoryFragment extends Fragment implements OnListItemClick {
 
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
+        initRecyclerView();
 
         fetchCategoriesFromApi();
+
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             fetchCategoriesFromApi();
@@ -60,6 +62,12 @@ public class CategoryFragment extends Fragment implements OnListItemClick {
         });
 
         return view;
+    }
+
+    private void initRecyclerView() {
+        int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
+        int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
+        categoryRecyclerView.addItemDecoration(new ProductItemDecoration(context, verticalSpacing, horizontalSpacing));
     }
 
     private void fetchCategoriesFromApi() {
@@ -90,9 +98,6 @@ public class CategoryFragment extends Fragment implements OnListItemClick {
         CustomCategoryItemAdapter adapter = new CustomCategoryItemAdapter(categories, this);
         categoryRecyclerView.setAdapter(adapter);
 
-        int verticalSpacing = getResources().getDimensionPixelSize(R.dimen.product_vertical_spacing);
-        int horizontalSpacing = getResources().getDimensionPixelSize(R.dimen.product_horizontal_spacing);
-        categoryRecyclerView.addItemDecoration(new ProductItemDecoration(requireContext(), verticalSpacing, horizontalSpacing));
     }
 
 

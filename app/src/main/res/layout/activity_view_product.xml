@@ -316,11 +316,7 @@
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:fontFamily="sans-serif-condensed"
-					android:paddingStart="8dp"
-					android:paddingTop="8dp"
-					android:paddingEnd="8dp"
-					android:paddingBottom="8dp"
-					
+					android:padding="8dp"
 					android:text="@string/quantity"
 					android:textSize="13sp" />
 				
@@ -333,6 +329,19 @@
 					android:spinnerMode="dropdown">
 				
 				</androidx.appcompat.widget.AppCompatSpinner>
+
+				<TextView
+					android:id="@+id/productAvailableQuantityTextView"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:fontFamily="@font/uniqlopro_bold"
+					android:padding="8dp"
+					android:text="@string/available_quantity"
+
+					android:textColor="@color/primary_black"
+					android:textSize="15sp" />
+
+
 				<androidx.constraintlayout.widget.ConstraintLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"

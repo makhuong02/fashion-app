@@ -16,6 +16,7 @@ import com.group25.ecommercefashionapp.data.Product;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.group25.ecommercefashionapp.data.ProductQuantity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -109,6 +110,27 @@ public class ProductRepository {
             }
         });
     }
+
+    public void fetchProductQuantitiesFromApi(Long productId, Context context, Callback<List<ProductQuantity>> callback) {
+        Call<List<ProductQuantity>> call = apiService.getProductQuantities(productId);
+        call.enqueue(new Callback<List<ProductQuantity>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<ProductQuantity>> call, @NonNull Response<List<ProductQuantity>> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                } else {
+                    Toast.makeText(context, "Failed to fetch product quantities", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<ProductQuantity>> call, @NonNull Throwable t) {
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
     public ApiService getApiService() {
         return apiService;
     }

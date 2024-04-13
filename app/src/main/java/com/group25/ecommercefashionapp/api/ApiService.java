@@ -1,12 +1,7 @@
 package com.group25.ecommercefashionapp.api;
 
 import com.google.gson.JsonElement;
-import com.group25.ecommercefashionapp.data.CategoryItem;
-import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.data.ProductColor;
-import com.group25.ecommercefashionapp.data.ProductImage;
-import com.group25.ecommercefashionapp.data.ProductSize;
-import com.group25.ecommercefashionapp.data.UserProfile;
+import com.group25.ecommercefashionapp.data.*;
 import com.group25.ecommercefashionapp.status.LoginStatus;
 import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 
@@ -34,37 +29,40 @@ public interface ApiService {
     @POST("auth/validate-token")
     Call<Boolean> validateToken(@Header("Authorization") String token);
 
-    @GET("public/products")
+    @GET("products")
     Call<JsonElement> getProducts();
 
-    @GET("public/categories")
+    @GET("categories")
     Call<List<CategoryItem>> getCategories();
 
-    @GET("public/products/{id}")
+    @GET("products/{id}")
     Call<JsonElement> getProductById(@Path("id") Long productId);
 
-    @GET("public/categories/{id}/products")
+    @GET("categories/{id}/products")
     Call<List<Product>> getProductsByCategory(@Path("id") Long categoryId);
 
-    @GET("public/products/{id}/colors")
+    @GET("product-quantities/{productId}")
+    Call<List<ProductQuantity>> getProductQuantities(@Path("productId") Long productId);
+
+    @GET("products/{id}/colors")
     Call<List<ProductColor>> getProductColors(@Path("id") Long productId);
 
-    @GET("public/colors/{id}/sizes")
+    @GET("colors/{id}/sizes")
     Call<List<ProductSize>> getColorSizes(@Path("id") Long colorId);
 
-    @GET("public/products/{product-id}/product-images")
+    @GET("products/{product-id}/product-images")
     Call<List<ProductImage>> getProductImages(@Path("product-id") Long productId);
 
-    @POST("user/favorite-products/{product-id}")
+    @POST("favorite-products/{product-id}")
     Call<JsonElement> addFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
 
-    @GET("user/favorite-products")
+    @GET("favorite-products")
     Call<List<Product>> getFavoriteProducts(@Header("Authorization") String token);
 
-    @DELETE("user/favorite-products/{product-id}")
+    @DELETE("favorite-products/{product-id}")
     Call<Void> removeFavoriteProduct(@Path("product-id") Long productId, @Header("Authorization") String token);
 
-    @GET("user/users")
+    @GET("users")
     Call<UserProfile> getUserInfo(@Header("Authorization") String token);
 
 }

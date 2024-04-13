@@ -75,6 +75,9 @@ public final class ChipImagesView extends LinearLayout {
     }
 
     private void configureVisibleChip(ImageView chipImageView, String color) {
+        if(!color.contains("#")) {
+            color = "#" + color;
+        }
         chipImageView.setVisibility(View.VISIBLE);
         chipImageView.setBackgroundColor(Color.parseColor(color));
         ViewGroup.LayoutParams layoutParams = chipImageView.getLayoutParams();

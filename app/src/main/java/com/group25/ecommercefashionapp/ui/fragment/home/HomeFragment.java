@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     Context context = null;
     ImageSlider imageSlider;
     Button categoryButton;
-    MaterialCardView tshirtCardView, skirtCardView, sneakersCardView, pantsCardView, walletCardView;
+    MaterialCardView tShirtCardView, skirtCardView, sneakersCardView, pantsCardView, walletCardView;
     RecyclerView productRecyclerView;
     List<Product> products;
     ArrayList<CategoryItem> categories;
@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         imageSlider = view.findViewById(R.id.imageSlider);
         productRecyclerView = view.findViewById(R.id.productRecyclerView);
         categoryButton = view.findViewById(R.id.homeToCategoryBtn);
-        tshirtCardView = view.findViewById(R.id.tshirtCardView);
+        tShirtCardView = view.findViewById(R.id.tshirtCardView);
         skirtCardView = view.findViewById(R.id.skirtCardView);
         sneakersCardView = view.findViewById(R.id.sneakersCardView);
         pantsCardView = view.findViewById(R.id.pantsCardView);
@@ -78,13 +78,11 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         slideModels.add(new SlideModel(R.drawable.image2, ScaleTypes.FIT));
         slideModels.add(new SlideModel(R.drawable.image3, ScaleTypes.FIT));
         imageSlider.setImageList(slideModels, ScaleTypes.FIT);
+        imageSlider.startSliding(3000);
 
 
         context = getActivity();
         mainActivity = (MainActivity) getActivity();
-
-//        ProductRepository productRepository = mainActivity.productRepository;
-//        products = productRepository.getAllProducts();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         productRecyclerView.setLayoutManager(gridLayoutManager);
@@ -102,7 +100,6 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                         if(UserStatus._isLoggedIn) {
                             fetchFavoriteListFromApi();
                         }
-                        setupRecyclerView();
 
                     } else {
                         Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
@@ -117,48 +114,18 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         });
 
 
-        categoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.navController.navigate(R.id.categoryBotNav);
-            }
-        });
+        categoryButton.setOnClickListener(v -> mainActivity.navController.navigate(R.id.categoryBotNav));
 
         categories = getHomePageCategories();
-        tshirtCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                categoryClick(0);
-            }
-        });
+        tShirtCardView.setOnClickListener(v -> categoryClick(0));
 
-        skirtCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                categoryClick(1);
-            }
-        });
+        skirtCardView.setOnClickListener(v -> categoryClick(1));
 
-        sneakersCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                categoryClick(2);
-            }
-        });
+        sneakersCardView.setOnClickListener(v -> categoryClick(2));
 
-        pantsCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                categoryClick(3);
-            }
-        });
+        pantsCardView.setOnClickListener(v -> categoryClick(3));
 
-        walletCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                categoryClick(4);
-            }
-        });
+        walletCardView.setOnClickListener(v -> categoryClick(4));
 
         return view;
     }
@@ -201,6 +168,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 if (response.isSuccessful()) {
                     UserInteraction userInteraction = getMainActivityInstance().userInteraction;
                     userInteraction.setFavoriteList(response.body());
+                    setupRecyclerView();
                 }
             }
 

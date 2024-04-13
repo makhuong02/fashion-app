@@ -57,7 +57,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
         CartItem item = items.get(position);
         CartItem cartItem = null;
         for(CartItem cartItem1 : cartItems) {
-            if (cartItem1.getProductId() == item.getProductId() && Objects.equals(cartItem1.getSelectedColor().getId(), item.getSelectedColor().getId()) && Objects.equals(cartItem1.getSelectedSize().getId(), item.getSelectedSize().getId()) && cartItem1.getPhoneNumber().equals(item.getPhoneNumber())) {
+            if (Objects.equals(cartItem1.getProductId(), item.getProductId()) && Objects.equals(cartItem1.getSelectedColor().getId(), item.getSelectedColor().getId()) && Objects.equals(cartItem1.getSelectedSize().getId(), item.getSelectedSize().getId()) && cartItem1.getPhoneNumber().equals(item.getPhoneNumber())) {
                 cartItem = cartItem1;
                 item.setQuantity(cartItem.getQuantity());
                 break;
@@ -68,16 +68,16 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
 //        Product product = getMainActivityInstance().productRepository.getProductById(item.getProductId());
         // Bind your data to the UI components of the CardView
-        if (product.getAvailableQuantity() == 0) {
-            holder.outOfStockText.setVisibility(View.VISIBLE);
-        } else {
-            holder.outOfStockText.setVisibility(View.GONE);
-        }
+//        if (product.getAvailableQuantity() == 0) {
+//            holder.outOfStockText.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.outOfStockText.setVisibility(View.GONE);
+//        }
         ArrayAdapter<CharSequence> spinnerEntries = new ArrayAdapter<>(getMainActivityInstance(), android.R.layout.simple_spinner_item);
         spinnerEntries.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        for (int i = 1; i <= product.getAvailableQuantity() && i <= 5; i++) {
-            spinnerEntries.add(String.valueOf(i));
-        }
+//        for (int i = 1; i <= product.getAvailableQuantity() && i <= 5; i++) {
+//            spinnerEntries.add(String.valueOf(i));
+//        }
 
 //        holder.productImage.setImageResource(product.getImageList().get(0).getImage_int_id());
         holder.productName.setText(product.getName());

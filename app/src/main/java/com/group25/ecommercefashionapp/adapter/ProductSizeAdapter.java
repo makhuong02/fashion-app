@@ -39,10 +39,10 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
     public void onBindViewHolder(ProductSizeAdapter.ViewHolder holder, int position) {
         ProductSize item = items.get(position);
 
-        holder.textView.setText(item.getName());
+        holder.textView.setText(item.getSize());
         holder.cardView.setOnClickListener(v ->
         {
-            uncheckAll(holder);
+            uncheckAll();
             holder.textView.setTextColor(Color.parseColor("#FFFFFF"));
             holder.layout.setBackgroundColor(Color.parseColor("#000000"));
             holder.cardView.setChecked(true);
@@ -71,7 +71,7 @@ public class ProductSizeAdapter extends RecyclerView.Adapter<ProductSizeAdapter.
         return items.size();
     }
 
-    private void uncheckAll(ProductSizeAdapter.ViewHolder holder) {
+    private void uncheckAll() {
         for (int i = 0; i < getItemCount(); i++) {
             ProductSizeAdapter.ViewHolder viewHolder = (ProductSizeAdapter.ViewHolder) recyclerView.findViewHolderForAdapterPosition(i);
             if (viewHolder != null) {

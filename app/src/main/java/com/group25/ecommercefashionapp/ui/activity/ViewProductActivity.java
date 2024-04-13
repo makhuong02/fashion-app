@@ -29,13 +29,7 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
-import com.group25.ecommercefashionapp.cache.ProductCache;
-import com.group25.ecommercefashionapp.data.CartItem;
-import com.group25.ecommercefashionapp.data.Item;
-import com.group25.ecommercefashionapp.data.Product;
-import com.group25.ecommercefashionapp.data.ProductColor;
-import com.group25.ecommercefashionapp.data.ProductImage;
-import com.group25.ecommercefashionapp.data.ProductSize;
+import com.group25.ecommercefashionapp.data.*;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
@@ -43,12 +37,12 @@ import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.CartAddedDialogFragment;
 import com.group25.ecommercefashionapp.ui.widget.FavoriteCheckBox;
+import com.group25.ecommercefashionapp.utilities.SizeUtils;
 import com.group25.ecommercefashionapp.utilities.TokenUtils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,7 +53,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     MainActivity mainActivity;
     Context context;
     Button addToCartButton;
-    TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView;
+    TextView txtName, txtActualPrice, txtDiscountPrice, txtId, txtHighlight, txtRating, txtReview, selectedColorTextView, selectedSizeTextView, availableQuantityTextView;
     private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     RatingBar ratingBar;
     private ProductColor selectedColor = null;
@@ -73,9 +67,13 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     Product product;
     Spinner spinner;
     FavoriteCheckBox favoriteCheckBox;
-    private long id;
+    private long productId;
 
     List<Product> favoriteList = new ArrayList<>();
+    List<ProductQuantity> productQuantities = new ArrayList<>();
+    List<ProductColor> colorList = new ArrayList<>();
+    List<ProductSize> sizeList = new ArrayList<>();
+    private Integer productQuantity = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,40 +84,9 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         context = getMainActivityInstance();
 
         Bundle bundle = getIntent().getExtras();
-        id = bundle.getLong("id");
+        productId = bundle.getLong("id");
 
-        if(ProductCache.getInstance().containsProduct(id)) {
-            product = ProductCache.getInstance().getProduct(id);
-            init();
-        } else {
-            ProductRepository.getInstance().fetchProductByProductIdFromApi(id, getApplicationContext(), new Callback<JsonElement>() {
-                @Override
-                public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
-                    if (response.isSuccessful()) {
-                        // Handle successful response
-                        JsonElement jsonElement = response.body();
-                        product = ProductRepository.getInstance().parseJsonToProduct(jsonElement);
-                        init();
-                    } else {
-                        // Handle unsuccessful response
-                        Toast.makeText(context, "Failed to fetch product", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
-                    // Handle network error
-                    Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-        if(UserStatus._isLoggedIn) {
-            fetchFavoriteListFromApi();
-        }
-        else {
-            favoriteList = mainActivity.userInteraction.getFavoriteList();
-            setupFavoriteCheckBox();
-        }
+        fetchProductByProductIdFromApi(productId);
     }
 
     private void initializeViews() {
@@ -143,6 +110,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         addToCartButton = findViewById(R.id.addToCartButton);
         spinner = findViewById(R.id.productQuantitySpinner);
         favoriteCheckBox = findViewById(R.id.favorite_button);
+        availableQuantityTextView = findViewById(R.id.productAvailableQuantityTextView);
     }
 
     private void setupFavoriteCheckBox() {
@@ -154,14 +122,37 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
             }
         });
 
-        if (favoriteList.size() != 0) {
+        if (!favoriteList.isEmpty()) {
             for (Product product : favoriteList) {
-                if (product.getId() == id) {
+                if (product.getId() == productId) {
                     favoriteCheckBox.setChecked(true);
                     break;
                 }
             }
         }
+    }
+
+    private void fetchProductByProductIdFromApi(Long productId) {
+        ProductRepository.getInstance().fetchProductByProductIdFromApi(productId, getApplicationContext(), new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                if (response.isSuccessful()) {
+                    // Handle successful response
+                    JsonElement jsonElement = response.body();
+                    product = ProductRepository.getInstance().parseJsonToProduct(jsonElement);
+                    fetchProductQuantitiesFromApi();
+                } else {
+                    // Handle unsuccessful response
+                    Toast.makeText(context, "Failed to fetch product", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
+                // Handle network error
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void fetchFavoriteListFromApi() {
@@ -181,16 +172,70 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         });
     }
 
+    private void fetchProductQuantitiesFromApi() {
+        ProductRepository.getInstance().fetchProductQuantitiesFromApi(productId, getApplicationContext(), new Callback<List<ProductQuantity>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<ProductQuantity>> call, @NonNull Response<List<ProductQuantity>> response) {
+                if (response.isSuccessful()) {
+                    productQuantities = response.body();
+                    Set<ProductColor> uniqueColors = new TreeSet<>(Comparator.comparing(ProductColor::getHexCode));
+                    assert productQuantities != null;
+                    productQuantities.forEach(productQuantity -> uniqueColors.add(productQuantity.getColor()));
+                    colorList = new ArrayList<>(uniqueColors);
+                    sizeList = getSizeList(productQuantities, colorList.get(0));
+                    productQuantity = productQuantities.get(0).getQuantity();
+                    if(UserStatus._isLoggedIn) {
+                        fetchFavoriteListFromApi();
+                    }
+                    else {
+                        favoriteList = mainActivity.userInteraction.getFavoriteList();
+                        setupFavoriteCheckBox();
+                    }
+                    init();
+                }
+                else {
+                    // Handle unsuccessful response
+                    Toast.makeText(context, "Failed to fetch product quantities", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<ProductQuantity>> call, @NonNull Throwable t) {
+                // Handle failure
+            }
+        });
+    }
+
+    private List<ProductSize> getSizeList(List<ProductQuantity> productQuantities, ProductColor color) {
+        List<ProductSize> sizeList = new ArrayList<>();
+        for(ProductQuantity productQuantity : productQuantities) {
+            if(Objects.equals(productQuantity.getColor().getId(), color.getId())) {
+                sizeList.add(productQuantity.getSize());
+            }
+        }
+
+        return SizeUtils.sortSizes(sizeList);
+    }
+
+    private Integer getProductQuantity(List<ProductQuantity> productQuantities, ProductColor color, ProductSize size) {
+        for(ProductQuantity productQuantity : productQuantities) {
+            if(Objects.equals(productQuantity.getColor().getId(), color.getId()) && Objects.equals(productQuantity.getSize().getId(), size.getId())) {
+                return productQuantity.getQuantity();
+            }
+        }
+        return 0;
+    }
+
     private void addFavoriteProduct() {
         if(UserStatus._isLoggedIn) {
-            UserRepository.getInstance().addFavoriteProduct(UserStatus.access_token.token, id, getApplicationContext());
+            UserRepository.getInstance().addFavoriteProduct(TokenUtils.bearerToken(UserStatus.access_token.token), productId, getApplicationContext());
         }
         mainActivity.userInteraction.addFavorite(product);
     }
 
     private void removeFavoriteProduct() {
         if(UserStatus._isLoggedIn) {
-            UserRepository.getInstance().removeFavoriteProduct(UserStatus.access_token.token, id, getApplicationContext());
+            UserRepository.getInstance().removeFavoriteProduct(TokenUtils.bearerToken(UserStatus.access_token.token), productId, getApplicationContext());
         }
         mainActivity.userInteraction.removeFavorite(product);
     }
@@ -242,11 +287,20 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     private void updateUI() {
         displayProductDetails(product);
         setupProductImagesCarousel(product.getImageList());
-        setupColorRecyclerView(product.getColorList());
-//        setupSizeRecyclerView(product.getSizeList());
-        setupQuantitySpinner(product.getAvailableQuantity());
-//        setupFavoriteCheckBox();
+        setupColorRecyclerView(colorList);
+        setupSizeRecyclerView(sizeList);
+        setupQuantitySpinner(productQuantity);
+        setupFavoriteCheckBox();
         setupAddToCartButton();
+        initColorAndSize();
+        availableQuantityTextView.setText(getString(R.string.available_quantity, productQuantity));
+    }
+
+    private void initColorAndSize() {
+        selectedColor = colorList.get(0);
+        selectedSize = sizeList.get(0);
+        selectedColorTextView.setText(selectedColor.getName());
+        selectedSizeTextView.setText(selectedSize.getSize());
     }
 
     private void setupShareButton() {
@@ -260,7 +314,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
                 return;
             }
             int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
-            CartItem cartItem = new CartItem(id, quantity, selectedColor, selectedSize, UserStatus.currentUser.getPhoneNumber());
+            CartItem cartItem = new CartItem(productId, quantity, selectedColor, selectedSize, UserStatus.currentUser.getPhoneNumber());
             mainActivity.userInteraction.addCart(cartItem);
             CartAddedDialogFragment cartAddedDialogFragment = new CartAddedDialogFragment(quantity, (long) (product.getPrice() * 0.9f * quantity));
             cartAddedDialogFragment.show(getSupportFragmentManager(), "cart_added");
@@ -313,9 +367,19 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
         if (view.getId() == R.id.chip_image_card) {
             selectedColorTextView.setText( item.getName());
             selectedColor = (ProductColor) item;
+            sizeList = getSizeList(productQuantities, selectedColor);
+            productQuantity = getProductQuantity(productQuantities, selectedColor, sizeList.get(0));
+            setupSizeRecyclerView(sizeList);
+            setupQuantitySpinner(productQuantity);
+            availableQuantityTextView.setText(getString(R.string.available_quantity, productQuantity));
+
         } else if (view.getId() == R.id.chip_size_card) {
-            selectedSizeTextView.setText(item.getName());
             selectedSize = (ProductSize) item;
+            selectedSizeTextView.setText(selectedSize.getSize());
+            productQuantity = getProductQuantity(productQuantities, selectedColor, selectedSize);
+            setupQuantitySpinner(productQuantity);
+            availableQuantityTextView.setText(getString(R.string.available_quantity, productQuantity));
+
         }else if(view.getId() == R.id.carousel_image_view){
             Bundle bundle = new Bundle();
             bundle.putLong("product_id", product.getId());

@@ -25,7 +25,6 @@ import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.interfaces.callback.OnProductCountUpdateListener;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
-import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +54,6 @@ public class CategoryFilteredFragment extends Fragment implements OnProductCount
         searchEditText = view.findViewById(R.id.search_edit_text);
         clearSearchButton = view.findViewById(R.id.clear_button);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
-//        ProductRepository productRepository = mainActivity.productRepository;
-//        products = productRepository.getProductsByCategory(category);
         fetchProductsFromApi(categoryId);
         productCountTextView.setText(getString(R.string.text_product_count_item, products.size()));
         startTransaction(category, searchEditText.getText().toString(), categoryId);
