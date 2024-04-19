@@ -73,7 +73,7 @@ public class FavoriteProductAdapter extends RecyclerView.Adapter<FavoriteProduct
         }
 
         Picasso.get()
-                .load(ApiServiceBuilder.BASE_URL +"public/product-images/"+ imageNames)
+                .load(ApiServiceBuilder.BASE_URL +"product-images/"+ imageNames)
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.ic_connection_error)
                 .into(holder.img);

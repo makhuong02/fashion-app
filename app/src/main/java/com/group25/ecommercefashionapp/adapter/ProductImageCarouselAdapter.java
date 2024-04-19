@@ -43,11 +43,11 @@ public class ProductImageCarouselAdapter extends PagerAdapter {
         currentImageTextView.setText(String.valueOf(position + 1));
         totalImageTextView.setText(String.valueOf(imageList.size()));
         String imageNames = "";
-        if(imageList.size() != 0) {
+        if(!imageList.isEmpty()) {
             imageNames = imageList.get(position).getImagePath();
         }
         Picasso.get()
-                .load(ApiServiceBuilder.BASE_URL +"public/product-images/"+ imageNames)
+                .load(ApiServiceBuilder.BASE_URL +"product-images/"+ imageNames)
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.ic_connection_error)
                 .into(image);

@@ -89,7 +89,7 @@ public class ProductItemAdapter extends RecyclerView.Adapter<ProductItemAdapter.
             imageNames = item.getImageList().get(0).getImagePath();
         }
         Picasso.get()
-                .load(ApiServiceBuilder.BASE_URL +"public/product-images/"+ imageNames)
+                .load(ApiServiceBuilder.BASE_URL +"product-images/"+ imageNames)
                 .placeholder(R.drawable.loading_img)
                 .error(R.drawable.ic_connection_error)
                 .into(holder.img);
