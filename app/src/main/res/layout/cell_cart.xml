@@ -56,7 +56,6 @@
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toBottomOf="@id/item_out_of_stock_text"
 			app:layout_constraintVertical_bias="0"
-			app:srcCompat="@drawable/portrait_handsome_young_businessman"
 			android:contentDescription="@string/content_description_product_image" />
 		
 		<TextView
@@ -66,7 +65,6 @@
 			android:layout_marginStart="@dimen/m_spacing"
 			android:layout_marginTop="@dimen/m_spacing"
 			android:layout_marginEnd="@dimen/m_spacing"
-			android:text="@string/decoy_product_name"
 			android:textColor="@color/primary_black"
 			android:textSize="18sp"
 			android:fontFamily="@font/uniqlopro_bold"
@@ -220,7 +218,6 @@
 			android:fontFamily="@font/uniqlopro_bold"
 			android:textColor="@color/primary_black"
 			android:textSize="16sp"
-			android:text="@string/decoy_price"
 			app:layout_constraintLeft_toRightOf="@+id/item_image"
 			app:layout_constraintRight_toRightOf="parent"
 			app:layout_constraintTop_toBottomOf="@+id/product_size" />
@@ -276,7 +273,6 @@
 			android:lineSpacingExtra="6sp"
 			android:fontFamily="@font/uniqlopro_bold"
 			android:textColor="@color/primary_black"
-			android:text="@string/decoy_price"
 			android:textSize="18sp"
 			app:layout_constrainedWidth="true"
 			app:layout_constraintBottom_toBottomOf="@+id/subtotal_price_text"

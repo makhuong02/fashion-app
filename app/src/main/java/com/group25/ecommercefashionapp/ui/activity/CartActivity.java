@@ -39,14 +39,17 @@ import com.group25.ecommercefashionapp.data.NotificationDetails;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
+import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
+import org.jetbrains.annotations.NotNull;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class CartActivity extends AppCompatActivity implements OnItemClickListener {
     AppCompatButton footerCheckoutButton, checkoutButton, orderSummaryExpandButton, continueShoppingButton;
@@ -66,38 +69,73 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     int totalOrderPrice;
     Toolbar toolbar;
     String customerPhoneNumber;
+    List<CartItem> cartList = new ArrayList<>();
+    CartItemAdapter cartItemAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        List<CartItem> fakeCartList = userInteraction.getCartList();
-        List<CartItem> cartList = new ArrayList<>();
+        fetchCarts();
 
-        customerPhoneNumber = UserStatus.currentUser.getPhoneNumber();
-        for(CartItem cartItem : fakeCartList) {
-            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
-                cartList.add(cartItem);
-            }
-        }
-        if (cartList.size() == 0) {
-            setContentView(R.layout.activity_empty_cart);
-            toolbar = findViewById(R.id.toolbar);
-            toolbar.setNavigationOnClickListener(v -> {
-                getMainActivityInstance().navController.popBackStack();
-                onBackPressed();
-            });
-            continueShoppingButton = findViewById(R.id.continue_shopping_button);
-            continueShoppingButton.setOnClickListener(v -> {
-                getMainActivityInstance().navController.popBackStack();
-                onBackPressed();
-            });
-            return;
-        }
+
+//        for (CartItem item : userInteraction.getCartList()) {
+//            if (productRepository.getProductById(item.getProductId()).getAvailableQuantity() == 0) {
+//                outOfStockText.setVisibility(View.VISIBLE);
+//                break;
+//            }
+//        }
+
+    }
+
+    private void setupCartView() {
         setContentView(R.layout.activity_cart);
+        setupCurrencyFormat();
+        initView();
+        setupCheckoutButton();
+        setupContinueShoppingButton();
+        setupRecyclerView();
+        setupOrderSummary();
+        setupToolbar();
+        setupSwipeRefreshLayout();
+        updateCartSummaryView(cartList);
+    }
+
+    private void setupContinueShoppingButton() {
+        continueShoppingButton.setOnClickListener(v -> {
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
+        });
+    }
+
+    private void setupCurrencyFormat() {
         symbols.setGroupingSeparator('.');
         VNDFormat = new DecimalFormat("###,###,###,###", symbols);
+    }
 
-        initView();
+    public void setupEmptyCartView() {
+        setContentView(R.layout.activity_empty_cart);
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> {
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
+        });
 
+        continueShoppingButton = findViewById(R.id.continue_shopping_button);
+        continueShoppingButton.setOnClickListener(v -> {
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
+        });
+    }
+
+    private void setupToolbar() {
+        toolbar.setNavigationOnClickListener(v -> {
+            getMainActivityInstance().navController.popBackStack();
+            onBackPressed();
+        });
+    }
+
+
+
+    private void setupCheckoutButton() {
         checkoutButton.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -107,59 +145,30 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
             }
         });
 
-        continueShoppingButton.setOnClickListener(v -> {
-            getMainActivityInstance().navController.popBackStack();
-            onBackPressed();
-        });
+        footerCheckoutButton.setOnClickListener(v -> checkout());
+        checkoutButton.setOnClickListener(v -> checkout());
+    }
 
-        CartItemAdapter cartItemAdapter = new CartItemAdapter(cartList, this, this);
-        cartRecyclerView.setAdapter(cartItemAdapter);
-
+    private void setupOrderSummary() {
         orderSummaryCardView.setOnClickListener(v -> orderSummaryExpandButton.performClick());
 
-        orderSummaryExpandButton = findViewById(R.id.order_summary_expand_button);
         orderSummaryExpandButton.setOnClickListener(v -> {
             rotationAngle = rotationAngle == 0 ? -180 : 0;
             orderSummaryExpandButton.animate().rotation(rotationAngle).setDuration(500).start();
-
             orderSummaryLayout.setVisibility(orderSummaryLayout.getVisibility() == View.GONE ? View.VISIBLE : View.GONE);
         });
+    }
 
-//        for (CartItem item : userInteraction.getCartList()) {
-//            if (productRepository.getProductById(item.getProductId()).getAvailableQuantity() == 0) {
-//                outOfStockText.setVisibility(View.VISIBLE);
-//                break;
-//            }
-//        }
+    private void setupRecyclerView() {
+        cartItemAdapter = new CartItemAdapter(cartList, this, this);
+        cartRecyclerView.setAdapter(cartItemAdapter);
+    }
 
-        toolbar.setNavigationOnClickListener(v -> {
-            getMainActivityInstance().navController.popBackStack();
-            onBackPressed();
-        });
-
-        checkoutButton.setOnClickListener(v -> checkout());
-        footerCheckoutButton.setOnClickListener(v -> checkout());
-
+    private void setupSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);
-            if (cartList.size() == 0) {
-                setContentView(R.layout.activity_empty_cart);
-                toolbar = findViewById(R.id.toolbar);
-                toolbar.setNavigationOnClickListener(v -> {
-                    getMainActivityInstance().navController.popBackStack();
-                    onBackPressed();
-                });
-                continueShoppingButton = findViewById(R.id.continue_shopping_button);
-                continueShoppingButton.setOnClickListener(v -> {
-                    getMainActivityInstance().navController.popBackStack();
-                    onBackPressed();
-                });
-                return;
-            }
-            cartItemAdapter.notifyDataSetChanged();
+            fetchCarts();
         });
-
-        updateCartSummaryView();
     }
 
     private void setupScrollListener() {
@@ -213,6 +222,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     private void initView() {
+        orderSummaryExpandButton = findViewById(R.id.order_summary_expand_button);
         outOfStockText = findViewById(R.id.item_out_of_stock_text);
         checkoutButton = findViewById(R.id.checkout_button);
         footerCheckoutButton = findViewById(R.id.footer_checkout_button);
@@ -233,32 +243,51 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
     }
 
-    public void updateCartSummaryView() {
-        List<CartItem> cartList = new ArrayList<>();
-        List<CartItem> fakeCartList = userInteraction.getCartList();
-        for(CartItem cartItem : fakeCartList) {
-            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
-                cartList.add(cartItem);
-            }
-        }
+    public void updateCartSummaryView(List<CartItem> cartList) {
         itemCounterTextView.setText(String.valueOf(cartList.size()));
-        subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-        taxTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
-        orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 1.1)));
-        footerTotalPriceTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 1.1)));
+        subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(cartList.stream().mapToDouble(CartItem::getTotalPrice).sum())));
+        taxTextView.setText(getString(R.string.product_price, VNDFormat.format(cartList.stream().mapToDouble(CartItem::getTotalPrice).sum() * 0.1)));
+        orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(cartList.stream().mapToDouble(CartItem::getTotalPrice).sum() * 1.1)));
+        footerTotalPriceTextView.setText(getString(R.string.product_price, VNDFormat.format(cartList.stream().mapToDouble(CartItem::getTotalPrice).sum() * 1.1)));
+    }
+
+    public void fetchCarts() {
+        UserRepository.getInstance().fetchCartItems(getMainActivityInstance().getApplicationContext(), new Callback<List<CartItem>>() {
+            @Override
+            public void onResponse(@NotNull Call<List<CartItem>> call, @NotNull retrofit2.Response<List<CartItem>> response) {
+                if (response.isSuccessful()) {
+                    cartList = response.body();
+                    userInteraction.setCartList(cartList);
+                    if (cartList.isEmpty()) {
+                        setupEmptyCartView();
+                        return;
+                    }
+                    setupCartView();
+                }
+                else{
+                    ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Error", "Failed to fetch cart items");
+                    errorDialogFragment.show(getSupportFragmentManager(), "error");
+                }
+            }
+
+            @Override
+            public void onFailure(@NotNull Call<List<CartItem>> call, Throwable t) {
+                ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Error", "Failed to fetch cart items");
+                errorDialogFragment.show(getSupportFragmentManager(), "error");
+            }
+        });
     }
 
     private void checkout() {
         setContentView(R.layout.activity_checkout);
         toolbar = findViewById(R.id.toolbar);
         List<CartItem> fakeCartList = userInteraction.getCartList();
-        List<CartItem> cartList = new ArrayList<>();
         customerPhoneNumber = UserStatus.currentUser.getPhoneNumber();
-        for (CartItem cartItem : fakeCartList) {
-            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
-                cartList.add(cartItem);
-            }
-        }
+//        for (CartItem cartItem : fakeCartList) {
+//            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
+//                cartList.add(cartItem);
+//            }
+//        }
         TextView freeShip = findViewById(R.id.free_shipping_text);
         AppCompatCheckBox shipToAddressCheckBox = findViewById(R.id.ship_to_address_check_box);
         ConstraintLayout shipToAddressLayout = findViewById(R.id.ship_to_address_layout);

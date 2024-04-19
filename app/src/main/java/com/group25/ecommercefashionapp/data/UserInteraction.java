@@ -55,7 +55,7 @@ public class UserInteraction {
     public List<CartItem> shallowCopyCartList(List<CartItem> cartList) {
         List<CartItem> shallowCopy = new ArrayList<>();
         for(CartItem cartItem : cartList) {
-            shallowCopy.add(new CartItem(cartItem.getProductId(), cartItem.getQuantity(), cartItem.getSelectedColor(), cartItem.getSelectedSize(), cartItem.getPhoneNumber()));
+            shallowCopy.add(new CartItem(cartItem.getProductId(), cartItem.getQuantity(),cartItem.getTotalPrice(), cartItem.getSelectedColorId(), cartItem.getSelectedSizeId()));
         }
         return shallowCopy;
     }

@@ -1,19 +1,16 @@
 package com.group25.ecommercefashionapp.api;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.group25.ecommercefashionapp.data.*;
 import com.group25.ecommercefashionapp.status.LoginStatus;
 import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
 
 public interface ApiService {
 
@@ -44,11 +41,14 @@ public interface ApiService {
     @GET("product-quantities/{productId}")
     Call<List<ProductQuantity>> getProductQuantities(@Path("productId") Long productId);
 
-    @GET("products/{id}/colors")
-    Call<List<ProductColor>> getProductColors(@Path("id") Long productId);
+    @GET("product-quantities/{productId}/{colorId}/{sizeId}")
+    Observable<ProductQuantity> getProductQuantity(@Path("productId") Long productId, @Path("colorId") Long colorId, @Path("sizeId") Long sizeId);
 
-    @GET("colors/{id}/sizes")
-    Call<List<ProductSize>> getColorSizes(@Path("id") Long colorId);
+    @GET("colors/{colorId}")
+    Call<JsonElement> getProductColor(@Path("colorId") Long colorId);
+
+    @GET("sizes/{sizeId}")
+    Call<JsonElement> getProductSize(@Path("sizeId") Long sizeId);
 
     @GET("products/{product-id}/product-images")
     Call<List<ProductImage>> getProductImages(@Path("product-id") Long productId);
@@ -64,5 +64,21 @@ public interface ApiService {
 
     @GET("users")
     Call<UserProfile> getUserInfo(@Header("Authorization") String token);
+
+    @GET("carts")
+    Call<List<CartItem>> getCartItems(@Header("Authorization") String token);
+
+    @POST("carts")
+    Call<JsonElement> addCartItem(@Body JsonObject cartItem, @Header("Authorization") String token);
+
+    @PATCH("carts/{cart-item-id}")
+    Call<JsonElement> updateCartItem(@Path("cart-item-id") Long cartItemId, @Body JsonObject cartItem, @Header("Authorization") String token);
+
+    @DELETE("carts/{cart-item-id}")
+    Call<Void> deleteCartItem(@Path("cart-item-id") Long cartItemId, @Header("Authorization") String token);
+
+    @DELETE("carts")
+    Call<Void> deleteAllCartItems(@Header("Authorization") String token);
+
 
 }

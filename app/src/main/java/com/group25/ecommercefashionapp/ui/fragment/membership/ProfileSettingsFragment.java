@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -61,14 +60,11 @@ public class ProfileSettingsFragment extends Fragment {
                         UserStatus.currentUser = response.body();
                         UserCache.getInstance().addUser(UserStatus.currentUser.getEmail(), UserStatus.currentUser);
                         updateUI(UserStatus.currentUser);
-                    } else {
-                        Toast.makeText(getContext(), "Failed to fetch user details", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
-                    Toast.makeText(getContext(), "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
                 }
             });
         }

@@ -136,6 +136,7 @@ public class CategoryFilteredFragment extends Fragment implements OnProductCount
 
     private void updateFragmentArguments(CategoryFilteredBodyFragment fragment, String category, String search, Long categoryId) {
         Bundle args = createArgumentsBundle(category, search, categoryId);
+        fragment.setProductCountUpdateListener(this);
         fragment.setArguments(args);
     }
 

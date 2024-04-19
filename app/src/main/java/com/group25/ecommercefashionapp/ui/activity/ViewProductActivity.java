@@ -44,6 +44,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
 
+import io.jsonwebtoken.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -185,13 +186,14 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
                     sizeList = getSizeList(productQuantities, colorList.get(0));
                     productQuantity = productQuantities.get(0).getQuantity();
                     if(UserStatus._isLoggedIn) {
+                        init();
                         fetchFavoriteListFromApi();
                     }
                     else {
                         favoriteList = mainActivity.userInteraction.getFavoriteList();
+                        init();
                         setupFavoriteCheckBox();
                     }
-                    init();
                 }
                 else {
                     // Handle unsuccessful response
@@ -314,10 +316,36 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
                 return;
             }
             int quantity = Integer.parseInt(spinner.getSelectedItem().toString());
-            CartItem cartItem = new CartItem(productId, quantity, selectedColor, selectedSize, UserStatus.currentUser.getPhoneNumber());
-            mainActivity.userInteraction.addCart(cartItem);
-            CartAddedDialogFragment cartAddedDialogFragment = new CartAddedDialogFragment(quantity, (long) (product.getPrice() * 0.9f * quantity));
-            cartAddedDialogFragment.show(getSupportFragmentManager(), "cart_added");
+            CartItem cartItem = new CartItem(productId, quantity, selectedColor.getId(), selectedSize.getId());
+            addToCart(cartItem);
+        });
+    }
+
+    private void addToCart(CartItem cartItem){
+        UserRepository.getInstance().addCartItem(cartItem, getApplicationContext(), new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                if (response.isSuccessful()) {
+                    // Handle successful response
+                    CartAddedDialogFragment cartAddedDialogFragment = new CartAddedDialogFragment(cartItem.getQuantity(), (long) (product.getPrice() * 0.9f * cartItem.getQuantity()));
+                    cartAddedDialogFragment.show(getSupportFragmentManager(), "cart_added");
+                } else if(response.code() == 400) {
+                    String errorMessage;
+                    try {
+                        errorMessage = response.errorBody().string();
+                    } catch (IOException | java.io.IOException e) {
+                        errorMessage = "Failed to parse error message.";
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
+                // Handle network error
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

@@ -131,6 +131,127 @@ public class ProductRepository {
         });
     }
 
+//    public void fetchProductQuantityFromApi(Long productId, Long colorId, Long sizeId, Context context, Callback<ProductQuantity> callback) {
+//        Call<ProductQuantity> call = apiService.getProductQuantity(productId, colorId, sizeId);
+//        call.enqueue(new Callback<ProductQuantity>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ProductQuantity> call, @NonNull Response<ProductQuantity> response) {
+//                if (response.isSuccessful()) {
+//                    callback.onResponse(call, response);
+//                } else {
+//                    Toast.makeText(context, "Failed to fetch product quantity", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ProductQuantity> call, @NonNull Throwable t) {
+//                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+//                callback.onFailure(call, t);
+//            }
+//        });
+//    }
+
+    public void fetchColorByIdFromApi(Long colorId, Context context, Callback<JsonElement> callback) {
+        Call<JsonElement> call = apiService.getProductColor(colorId);
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                } else {
+                    Toast.makeText(context, "Failed to fetch color", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public void fetchSizeByIdFromApi(Long sizeId, Context context, Callback<JsonElement> callback) {
+        Call<JsonElement> call = apiService.getProductSize(sizeId);
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(call, response);
+                } else {
+                    Toast.makeText(context, "Failed to fetch size", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public void fetchColorAndSizeByIdFromApi(Long colorId, Long sizeId, Context context, Callback<JsonElement> callback) {
+
+        Call<JsonElement> callColor = apiService.getProductColor(colorId);
+        Call<JsonElement> callSize = apiService.getProductSize(sizeId);
+
+        callColor.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                if (response.isSuccessful()) {
+                    callSize.enqueue(new Callback<JsonElement>() {
+                        @Override
+                        public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                            if (response.isSuccessful()) {
+                                callback.onResponse(call, response);
+                            } else {
+                                Toast.makeText(context, "Failed to fetch size", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
+                            Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                            callback.onFailure(call, t);
+                        }
+                    });
+                } else {
+                    Toast.makeText(context, "Failed to fetch color", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable t) {
+                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+                callback.onFailure(call, t);
+            }
+        });
+
+    }
+
+
+    public void synchronousFetchColorAndSizeByIdFromApi(Long colorId, Long sizeId, Context context, Callback<JsonElement> callback) {
+        Call<JsonElement> callColor = apiService.getProductColor(colorId);
+        Call<JsonElement> callSize = apiService.getProductSize(sizeId);
+
+        try {
+            Response<JsonElement> responseColor = callColor.execute();
+            if (responseColor.isSuccessful()) {
+                Response<JsonElement> responseSize = callSize.execute();
+                if (responseSize.isSuccessful()) {
+                    callback.onResponse(callSize, responseSize);
+                } else {
+                    Toast.makeText(context, "Failed to fetch size", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(context, "Failed to fetch color", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public ApiService getApiService() {
         return apiService;
     }

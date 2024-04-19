@@ -19,7 +19,6 @@ import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.FilterItemAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductItemAdapter;
-import com.group25.ecommercefashionapp.cache.ProductCache;
 import com.group25.ecommercefashionapp.data.FilterType;
 import com.group25.ecommercefashionapp.data.Item;
 import com.group25.ecommercefashionapp.data.Product;
@@ -78,17 +77,19 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
 
         mainActivity = (MainActivity) getActivity();
         context = getActivity();
+        setupRecyclerView();
 
-        if (ProductCache.getInstance().containsCategory(categoryId)) {
-            products = ProductCache.getInstance().getProducts(categoryId);
-            setupRecyclerView();
-        } else{
+//        if (ProductCache.getInstance().containsCategory(categoryId)) {
+//            products = ProductCache.getInstance().getProducts(categoryId);
+//            setupRecyclerView();
+//        } else{
             ProductRepository.getInstance().fetchProductsByCategoryIdFromApi(categoryId, context, new Callback<List<Product>>() {
                 @Override
                 public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
                     if (response.isSuccessful()) {
                         products = response.body();
                         setupRecyclerView();
+                        updateFilterProducts(products);
                     } else {
                         Toast.makeText(context, "Failed to fetch products", Toast.LENGTH_SHORT).show();
                     }
@@ -99,9 +100,8 @@ public class CategoryFilteredBodyFragment extends Fragment implements OnItemClic
                     Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
                 }
             });
-        }
+//        }
 
-        updateFilterProducts(products);
 
 
         return view;
