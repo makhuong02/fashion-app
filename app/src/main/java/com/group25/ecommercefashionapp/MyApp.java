@@ -5,16 +5,14 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
-import com.group25.ecommercefashionapp.repository.OrdersRepository;
 import com.group25.ecommercefashionapp.ui.activity.MainActivity;
 
 public class MyApp extends Application {
     public static final String CHANNEL_ID = "Notification";
     private static MainActivity mainActivityInstance;
 
-    public static void setMainActivityInstance(MainActivity activity, OrdersRepository ordersRepository) {
+    public static void setMainActivityInstance(MainActivity activity) {
         mainActivityInstance = activity;
-        mainActivityInstance.ordersRepository = ordersRepository;
     }
 
     public static MainActivity getMainActivityInstance() {

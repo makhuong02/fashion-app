@@ -24,12 +24,17 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.gson.JsonElement;
-import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.ProductColorAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductImageCarouselAdapter;
 import com.group25.ecommercefashionapp.adapter.ProductSizeAdapter;
-import com.group25.ecommercefashionapp.data.*;
+import com.group25.ecommercefashionapp.data.CartItem;
+import com.group25.ecommercefashionapp.data.Item;
+import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.ProductColor;
+import com.group25.ecommercefashionapp.data.ProductImage;
+import com.group25.ecommercefashionapp.data.ProductQuantity;
+import com.group25.ecommercefashionapp.data.ProductSize;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.ProductRepository;
@@ -42,7 +47,12 @@ import com.group25.ecommercefashionapp.utilities.TokenUtils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import io.jsonwebtoken.io.IOException;
 import retrofit2.Call;
@@ -322,7 +332,7 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     }
 
     private void addToCart(CartItem cartItem){
-        UserRepository.getInstance().addCartItem(cartItem, getApplicationContext(), new Callback<JsonElement>() {
+        UserRepository.getInstance().addCartItem(cartItem, new Callback<JsonElement>() {
             @Override
             public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
                 if (response.isSuccessful()) {
@@ -432,12 +442,5 @@ public class ViewProductActivity extends AppCompatActivity implements OnItemClic
     }
     public void onFavoriteButtonClicked(View view) {
         favoriteCheckBox.performClick(); // This will simulate a click on the FavoriteCheckBox
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        MySharedPreferences sharedPreferences = new MySharedPreferences(this);
-        sharedPreferences.saveUserFavoriteList(getMainActivityInstance().userInteraction.getFavoriteList());
-        sharedPreferences.saveUserCartList(getMainActivityInstance().userInteraction.getCartList());
     }
 }

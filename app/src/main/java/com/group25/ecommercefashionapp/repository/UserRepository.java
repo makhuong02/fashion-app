@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.group25.ecommercefashionapp.api.ApiService;
 import com.group25.ecommercefashionapp.api.ApiServiceBuilder;
 import com.group25.ecommercefashionapp.data.CartItem;
+import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.UserStatus;
@@ -145,7 +146,7 @@ public class UserRepository {
         });
     }
 
-    public void fetchCartItems(Context context, Callback<List<CartItem>> callback) {
+    public void fetchCartItems(Callback<List<CartItem>> callback) {
         Call<List<CartItem>> call = apiService.getCartItems(TokenUtils.bearerToken(UserStatus.access_token.token));
         // Fetch cart items from the server
         call.enqueue(new Callback<List<CartItem>>() {
@@ -162,7 +163,7 @@ public class UserRepository {
         });
     }
 
-    public void addCartItem(CartItem cartItem, Context context, Callback<JsonElement> callback) {
+    public void addCartItem(CartItem cartItem, Callback<JsonElement> callback) {
         JsonObject body = new JsonObject();
         body.addProperty("productId", cartItem.getProductId());
         body.addProperty("quantity", cartItem.getQuantity());
@@ -174,7 +175,7 @@ public class UserRepository {
         executeJsonElementCall(callback, call);
     }
 
-    public void updateCartItem(Long cartItemId, CartItem cartItem, Context context, Callback<JsonElement> callback) {
+    public void updateCartItem(Long cartItemId, CartItem cartItem, Callback<JsonElement> callback) {
         JsonObject body = new JsonObject();
         body.addProperty("quantity", cartItem.getQuantity());
         Call<JsonElement> call = apiService.updateCartItem(cartItemId, body, TokenUtils.bearerToken(UserStatus.access_token.token));
@@ -197,18 +198,69 @@ public class UserRepository {
         });
     }
 
-    public void removeCartItem(Long cartItemId, Context context, Callback<Void> callback) {
+    public void removeCartItem(Long cartItemId, Callback<Void> callback) {
         Call<Void> call = apiService.deleteCartItem(cartItemId, TokenUtils.bearerToken(UserStatus.access_token.token));
 
         // Delete an item from the cart
         executeVoidCall(callback, call);
     }
 
-    public void removeAllCartItems(Context context, Callback<Void> callback) {
+    public void removeAllCartItems(Callback<Void> callback) {
         Call<Void> call = apiService.deleteAllCartItems(TokenUtils.bearerToken(UserStatus.access_token.token));
         // Delete all items from the cart
         executeVoidCall(callback, call);
     }
+
+    public void getOrders( Callback<List<OrderHistoryItem>> callback) {
+        Call<List<OrderHistoryItem>> call = apiService.getOrders(TokenUtils.bearerToken(UserStatus.access_token.token));
+        // Fetch orders from the server
+        call.enqueue(new Callback<List<OrderHistoryItem>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<OrderHistoryItem>> call, @NonNull Response<List<OrderHistoryItem>> response) {
+                callback.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<OrderHistoryItem>> call, @NonNull Throwable t) {
+                // Handle failure
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public void getOrderById(Long orderId, Callback<OrderHistoryItem> callback) {
+        Call<OrderHistoryItem> call = apiService.getOrderById(orderId, TokenUtils.bearerToken(UserStatus.access_token.token));
+        // Fetch order by id from the server
+        call.enqueue(new Callback<OrderHistoryItem>() {
+            @Override
+            public void onResponse(@NonNull Call<OrderHistoryItem> call, @NonNull Response<OrderHistoryItem> response) {
+                callback.onResponse(call, response);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<OrderHistoryItem> call, @NonNull Throwable t) {
+                // Handle failure
+                callback.onFailure(call, t);
+            }
+        });
+    }
+
+    public void addOrder(JsonObject order, String token, Callback<JsonElement> callback) {
+        Call<JsonElement> call = apiService.addOrder(order, TokenUtils.bearerToken(token));
+        // Add an order to the server
+        executeJsonElementCall(callback, call);
+    }
+
+    public void updateOrder(Long orderId, String orderStatus, String token, Callback<JsonElement> callback) {
+        JsonObject body = new JsonObject();
+        body.addProperty("orderStatus", orderStatus);
+        Call<JsonElement> call = apiService.updateOrder(orderId, body, TokenUtils.bearerToken(token));
+        // Update an order on the server
+        executeJsonElementCall(callback, call);
+    }
+
+
+
 
     private void executeVoidCall(Callback<Void> callback, Call<Void> call) {
         call.enqueue(new Callback<Void>() {

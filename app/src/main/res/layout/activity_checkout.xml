@@ -138,12 +138,11 @@
 								app:layout_constraintTop_toBottomOf="@id/ship_to_address_text" />
 
 							<TextView
-								android:id="@+id/itemsText"
+								android:id="@+id/ship_to_address_shipping_fee_text"
 								style="@style/H3"
 								android:layout_width="wrap_content"
 								android:layout_height="wrap_content"
 								android:layout_marginStart="@dimen/xxs_spacing"
-								android:text="50.000 VND"
 								android:textSize="17sp"
 								app:layout_constraintBottom_toBottomOf="@id/shipping_text"
 								app:layout_constraintStart_toEndOf="@id/shipping_text" />
@@ -837,7 +836,6 @@
 									android:layout_marginEnd="@dimen/m_spacing"
 									android:layout_marginBottom="@dimen/m_spacing"
 									android:fontFamily="@font/uniqlopro_light"
-									android:text="1.568.000 VND"
 									android:textColor="@color/primary_black"
 									android:textSize="14sp"
 									app:layout_constraintEnd_toEndOf="parent"
@@ -880,7 +878,6 @@
 									android:layout_marginEnd="@dimen/m_spacing"
 									android:layout_marginBottom="@dimen/m_spacing"
 									android:fontFamily="@font/uniqlopro_light"
-									android:text="50.000 VND"
 									android:textColor="@color/primary_black"
 									android:textSize="14sp"
 									app:layout_constraintBottom_toBottomOf="parent"
@@ -926,7 +923,6 @@
 									android:layout_marginTop="@dimen/xs_spacing"
 									android:layout_marginEnd="@dimen/m_spacing"
 									android:layout_marginBottom="@dimen/m_spacing"
-									android:text="1.618.000 VND"
 									android:textColor="@color/primary_black"
 									android:textSize="16sp"
 									app:layout_constraintBottom_toBottomOf="parent"
@@ -971,7 +967,6 @@
 									android:layout_marginEnd="@dimen/m_spacing"
 									android:layout_marginBottom="@dimen/m_spacing"
 									android:fontFamily="@font/uniqlopro_light"
-									android:text="156.800 VND"
 									android:textColor="@color/primary_black"
 									android:textSize="14sp"
 									app:layout_constraintBottom_toBottomOf="parent"
@@ -1016,7 +1011,6 @@
 									android:layout_height="wrap_content"
 									android:layout_marginStart="@dimen/m_spacing"
 									android:layout_marginEnd="@dimen/m_spacing"
-									android:text="1.774.800 VND"
 									android:textColor="@color/primary_black"
 									android:textSize="18sp"
 									app:layout_constraintBottom_toBottomOf="@id/orderTotalText"

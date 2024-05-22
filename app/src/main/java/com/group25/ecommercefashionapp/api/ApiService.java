@@ -2,7 +2,13 @@ package com.group25.ecommercefashionapp.api;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.group25.ecommercefashionapp.data.*;
+import com.group25.ecommercefashionapp.data.CartItem;
+import com.group25.ecommercefashionapp.data.CategoryItem;
+import com.group25.ecommercefashionapp.data.OrderHistoryItem;
+import com.group25.ecommercefashionapp.data.Product;
+import com.group25.ecommercefashionapp.data.ProductImage;
+import com.group25.ecommercefashionapp.data.ProductQuantity;
+import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.LoginStatus;
 import com.group25.ecommercefashionapp.ui.activity.LoginActivity;
 
@@ -10,7 +16,13 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.Call;
-import retrofit2.http.*;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ApiService {
 
@@ -80,5 +92,19 @@ public interface ApiService {
     @DELETE("carts")
     Call<Void> deleteAllCartItems(@Header("Authorization") String token);
 
+    @GET("orders")
+    Call<List<OrderHistoryItem>> getOrders(@Header("Authorization") String token);
+
+    @GET("orders/{order-id}")
+    Call<OrderHistoryItem> getOrderById(@Path("order-id") Long orderId, @Header("Authorization") String token);
+
+    @POST("orders")
+    Call<JsonElement> addOrder(@Body JsonObject order, @Header("Authorization") String token);
+
+    @PATCH("orders/{order-id}")
+    Call<JsonElement> updateOrder(@Path("order-id") Long orderId, @Body JsonObject order, @Header("Authorization") String token);
+
+    @DELETE("orders/{order-id}")
+    Call<Void> deleteOrder(@Path("order-id") Long orderId, @Header("Authorization") String token);
 
 }

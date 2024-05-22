@@ -1,55 +1,43 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
 import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
-import static com.group25.ecommercefashionapp.ui.activity.MapsActivity.getCurrentAddress;
 
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.textfield.TextInputEditText;
-import com.group25.ecommercefashionapp.interfaces.callback.AddressCallback;
 import com.group25.ecommercefashionapp.MySharedPreferences;
-import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CartItemAdapter;
-import com.group25.ecommercefashionapp.adapter.CheckOutItemAdapter;
 import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.Item;
-import com.group25.ecommercefashionapp.data.NotificationDetails;
-import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.UserInteraction;
-import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
+import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.repository.UserRepository;
-import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
+
 import org.jetbrains.annotations.NotNull;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class CartActivity extends AppCompatActivity implements OnItemClickListener {
     AppCompatButton footerCheckoutButton, checkoutButton, orderSummaryExpandButton, continueShoppingButton;
@@ -252,7 +240,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     public void fetchCarts() {
-        UserRepository.getInstance().fetchCartItems(getMainActivityInstance().getApplicationContext(), new Callback<List<CartItem>>() {
+        UserRepository.getInstance().fetchCartItems(new Callback<List<CartItem>>() {
             @Override
             public void onResponse(@NotNull Call<List<CartItem>> call, @NotNull retrofit2.Response<List<CartItem>> response) {
                 if (response.isSuccessful()) {
@@ -279,222 +267,7 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     }
 
     private void checkout() {
-        setContentView(R.layout.activity_checkout);
-        toolbar = findViewById(R.id.toolbar);
-        List<CartItem> fakeCartList = userInteraction.getCartList();
-        customerPhoneNumber = UserStatus.currentUser.getPhoneNumber();
-//        for (CartItem cartItem : fakeCartList) {
-//            if (Objects.equals(cartItem.getPhoneNumber(), customerPhoneNumber)) {
-//                cartList.add(cartItem);
-//            }
-//        }
-        TextView freeShip = findViewById(R.id.free_shipping_text);
-        AppCompatCheckBox shipToAddressCheckBox = findViewById(R.id.ship_to_address_check_box);
-        ConstraintLayout shipToAddressLayout = findViewById(R.id.ship_to_address_layout);
-        AppCompatCheckBox clickAndCollectCheckBox = findViewById(R.id.click_and_collect_check_box);
-        ConstraintLayout clickAndCollectLayout = findViewById(R.id.click_and_collect_layout);
-
-        firstNameEditText = findViewById(R.id.firstNameEditText);
-        lastNameEditText = findViewById(R.id.lastNameEditText);
-        addressEditText = findViewById(R.id.addressDetailsEditText);
-        ImageView mapImageView = findViewById(R.id.map_button);
-        TextView setCurrentLocationTextView = findViewById(R.id.current_location_text);
-
-        firstNameEditText2 = findViewById(R.id.firstNameEditText2);
-        lastNameEditText2 = findViewById(R.id.lastNameEditText2);
-
-        AppCompatButton placeOrderButton = findViewById(R.id.place_order_button);
-        AppCompatCheckBox cashOnDeliveryCheckBox = findViewById(R.id.cash_on_delivery_check_box);
-
-        RecyclerView orderItemsRecyclerView = findViewById(R.id.order_items_recycler_view);
-        TextView shippingFeeTextView = findViewById(R.id.shipping_fee_text);
-        TextView shippingFeePriceTextView = findViewById(R.id.shipping_fee_price);
-        MaterialDivider shippingFeeDivider = findViewById(R.id.shipping_fee_divider);
-        TextView totalTextView = findViewById(R.id.subtotal_price);
-
-        itemCounterTextView = findViewById(R.id.item_count);
-        subTotalTextView = findViewById(R.id.totalPrice);
-        taxTextView = findViewById(R.id.VATPrice);
-        orderTotalTextView = findViewById(R.id.orderTotalPrice);
-        MySharedPreferences sharedPreferences = new MySharedPreferences(this);
-
-        if (!sharedPreferences.getUserAddress().isEmpty()) {
-            addressEditText.setText(sharedPreferences.getUserAddress());
-        }
-        if (!sharedPreferences.getUserFirstName().isEmpty()) {
-            firstNameEditText.setText(sharedPreferences.getUserFirstName());
-            firstNameEditText2.setText(sharedPreferences.getUserFirstName());
-        }
-        if (!sharedPreferences.getUserLastName().isEmpty()) {
-            lastNameEditText.setText(sharedPreferences.getUserLastName());
-            lastNameEditText2.setText(sharedPreferences.getUserLastName());
-        }
-
-        itemCounterTextView.setText(String.valueOf(cartList.size()));
-        if(shipToAddressCheckBox.isChecked()){
-            if (userInteraction.getCartTotalPrice() < 999000) {
-                subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-                shippingFeeTextView.setText(getString(R.string.product_price, VNDFormat.format(50000)));
-                totalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() + 50000)));
-                taxTextView.setText(getString(R.string.product_price, VNDFormat.format((userInteraction.getCartTotalPrice() + 50000) * 0.1)));
-                totalOrderPrice = (int) ((userInteraction.getCartTotalPrice() + 50000) * 1.1);
-                orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
-            } else {
-                subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-                shippingFeeTextView.setVisibility(View.GONE);
-                shippingFeePriceTextView.setVisibility(View.GONE);
-                shippingFeeDivider.setVisibility(View.GONE);
-                totalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-                taxTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
-                totalOrderPrice = (int) (userInteraction.getCartTotalPrice() * 1.1);
-                orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
-            }
-        }else {
-            subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-            shippingFeeTextView.setVisibility(View.GONE);
-            shippingFeePriceTextView.setVisibility(View.GONE);
-            shippingFeeDivider.setVisibility(View.GONE);
-            totalTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice())));
-            taxTextView.setText(getString(R.string.product_price, VNDFormat.format(userInteraction.getCartTotalPrice() * 0.1)));
-            totalOrderPrice = (int) (userInteraction.getCartTotalPrice() * 1.1);
-            orderTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
-
-        }
-
-        setCurrentLocationTextView.setOnClickListener(v -> getCurrentAddress(this, new AddressCallback() {
-            @Override
-            public void onAddressReceived(String address) {
-                addressEditText.setText(address);
-            }
-        }));
-        addressEditText.setOnClickListener(v -> mapImageView.performClick());
-
-        toolbar.setNavigationOnClickListener(v1 -> {
-            getMainActivityInstance().navController.popBackStack();
-            onBackPressed();
-        });
-
-        int columnWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70,
-                getResources().getDisplayMetrics());
-        toolbar.setTitle("Checkout");
-        GridAutoFitLayoutManager gridAutoFitLayoutManager = new GridAutoFitLayoutManager(this, columnWidth, LinearLayoutManager.VERTICAL, false);
-        orderItemsRecyclerView.setAdapter(new CheckOutItemAdapter(userInteraction.getCartList()));
-        orderItemsRecyclerView.setLayoutManager(gridAutoFitLayoutManager);
-
-        mapImageView.setOnClickListener(v -> {
-            mapImageView.setEnabled(false);
-            Intent intent = new Intent(CartActivity.this, MapsActivity.class);
-            MapsActivity.OnMapLoadCompleteListener onMapLoadCompleteListener = new MapsActivity.OnMapLoadCompleteListener() {
-                @Override
-                public void onMapLoadComplete() {
-                    mapImageView.setEnabled(true);
-                }
-            };
-            startActivityForResult(intent, MAP_REQUEST_CODE);
-        });
-
-        placeOrderButton.setOnClickListener(v -> {
-            if (!clickAndCollectCheckBox.isChecked() && !shipToAddressCheckBox.isChecked()) {
-                ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Checkout Failed", "Please select a delivery method");
-                errorDialogFragment.show(getSupportFragmentManager(), "error");
-                return;
-            }
-            if (shipToAddressCheckBox.isChecked()) {
-                if (firstNameEditText.getText().toString().isEmpty()) {
-                    firstNameEditText.setError("Please enter your first name");
-                    firstNameEditText.requestFocus();
-                    return;
-                }
-                if (lastNameEditText.getText().toString().isEmpty()) {
-                    lastNameEditText.setError("Please enter your last name");
-                    lastNameEditText.requestFocus();
-                    return;
-                }
-                if (addressEditText.getText().toString().isEmpty()) {
-                    addressEditText.setError("Please enter your address");
-                    addressEditText.requestFocus();
-                    return;
-                }
-            }
-            if (clickAndCollectCheckBox.isChecked()) {
-                if (firstNameEditText2.getText().toString().isEmpty()) {
-                    firstNameEditText2.setError("Please enter your first name");
-                    firstNameEditText2.requestFocus();
-                    return;
-                }
-                if (lastNameEditText2.getText().toString().isEmpty()) {
-                    lastNameEditText2.setError("Please enter your last name");
-                    lastNameEditText2.requestFocus();
-                    return;
-                }
-            }
-            if (!cashOnDeliveryCheckBox.isChecked()) {
-                cashOnDeliveryCheckBox.setError("Please select a payment method");
-                cashOnDeliveryCheckBox.requestFocus();
-            }
-            if (clickAndCollectCheckBox.isChecked()) {
-
-                OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(cartList),
-                        "ChicCloth - 227 Đ. Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh, Việt Nam",
-                        firstNameEditText2.getText().toString(),
-                        lastNameEditText2.getText().toString(),
-                        "",
-                        "Click and Collect",
-                        UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
-                getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
-            } else {
-                OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(cartList),
-                        "",
-                        firstNameEditText.getText().toString(),
-                        lastNameEditText.getText().toString(),
-                        addressEditText.getText().toString(),
-                        "Ship to Address",
-                        UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
-                getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
-            }
-
-            Context context = getMainActivityInstance();
-            String title = "Payment success";
-            String description = "Your order will be delivered soon.";
-            NotificationDetails notification = new NotificationDetails(context, title, description);
-            notification.showNotification((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-
-            Bundle bundle = new Bundle();
-            bundle.putString("message", "ordered");
-            bundle.putString("button", "Continue Shopping");
-//            getMainActivityInstance().productRepository.updateProductAfterCheckout(userInteraction.getCartList());
-            getMainActivityInstance().navController.navigate(R.id.successActivity, bundle);
-            getMainActivityInstance().navController.popBackStack();
-            onBackPressed();
-            getMainActivityInstance().userInteraction.clearCart();
-        });
-
-        shipToAddressCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                shipToAddressLayout.setVisibility(View.VISIBLE);
-                clickAndCollectCheckBox.setChecked(false);
-                clickAndCollectLayout.setVisibility(View.GONE);
-            } else {
-                shipToAddressLayout.setVisibility(View.GONE);
-            }
-        });
-
-        clickAndCollectCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                clickAndCollectLayout.setVisibility(View.VISIBLE);
-                shipToAddressCheckBox.setChecked(false);
-                shipToAddressLayout.setVisibility(View.GONE);
-            } else {
-                clickAndCollectLayout.setVisibility(View.GONE);
-            }
-        });
-
-        MainActivity mainActivity = getMainActivityInstance();
-        if (mainActivity.userInteraction.getCartTotalPrice() < 999000) {
-            freeShip.setVisibility(View.VISIBLE);
-        } else {
-            freeShip.setVisibility(View.GONE);
-        }
+        getMainActivityInstance().navController.navigate(R.id.checkoutActivity);
     }
 
     @Override
@@ -512,7 +285,6 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     public void onPause() {
         super.onPause();
         MySharedPreferences sharedPreferences = new MySharedPreferences(this);
-        sharedPreferences.saveUserCartList(getMainActivityInstance().userInteraction.getCartList());
         if (addressEditText != null) {
             if (!addressEditText.getText().toString().isEmpty()) {
                 sharedPreferences.saveUserAddress(addressEditText.getText().toString());
@@ -534,6 +306,5 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                 sharedPreferences.saveUserLastName(lastNameEditText2.getText().toString());
             }
         }
-        sharedPreferences.saveUserOrderList(getMainActivityInstance().userInteraction.getOrderList());
     }
 }

@@ -80,6 +80,9 @@
 			android:name=".ui.activity.CartActivity"
 			android:exported="false"
 			android:screenOrientation="portrait" />
+		<activity android:name=".ui.activity.CheckoutActivity"
+			android:exported="false"
+			android:screenOrientation="portrait" />
 		<activity
 			android:name=".ui.activity.OrderHistoryActivity"
 			android:exported="false"

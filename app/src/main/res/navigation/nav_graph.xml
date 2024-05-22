@@ -132,4 +132,9 @@
 		android:name="com.group25.ecommercefashionapp.ui.activity.OrderHistoryDetailsActivity"
 		android:label="Order History Details Activity"
 		tools:layout="@layout/activity_order_history_details" />
+	<activity
+		android:id="@+id/checkoutActivity"
+		android:name="com.group25.ecommercefashionapp.ui.activity.CheckoutActivity"
+		android:label="Checkout Activity"
+		tools:layout="@layout/activity_checkout" />
 </navigation>

@@ -1,11 +1,11 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
-import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
@@ -16,25 +16,29 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.divider.MaterialDivider;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.OrderHistorySummaryItemAdapter;
-import com.group25.ecommercefashionapp.data.CartItem;
+import com.group25.ecommercefashionapp.cache.UserCache;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
-import com.group25.ecommercefashionapp.data.UserInteraction;
+import com.group25.ecommercefashionapp.data.OrderItem;
+import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
+import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
+import com.group25.ecommercefashionapp.utilities.DateUtils;
+import com.group25.ecommercefashionapp.utilities.TokenUtils;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.Set;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderHistoryDetailsActivity extends AppCompatActivity {
     TextView orderDate, orderStatus, orderTotalPrice, orderAddress, orderClass, orderCustomerName, orderCustomerPhone, storeAddress, orderShippingDeliveryPrice, orderDeliveryDate;
     TextView totalPrice, shippingFee, subTotalPrice, VATPrice, orderTotalPrice2, shippingFeeTextView;
     Toolbar toolbar;
-    RecyclerView cartRecyclerView;
+    RecyclerView orderSummaryRecyclerView;
     MaterialCardView shippingAddressCardView, clickAndCollectCardView;
     OrderHistoryItem orderHistoryItem;
     private DecimalFormat VNDFormat;
@@ -47,90 +51,17 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_details);
         initView();
-        MainActivity mainActivity = getMainActivityInstance();
-        UserInteraction userInteraction = mainActivity.userInteraction;
-        List<OrderHistoryItem> orderList = userInteraction.getOrderList();
+
         Bundle bundle = getIntent().getExtras();
-        String orderDateString = bundle.getString("orderDate");
-        for (OrderHistoryItem orderHistoryItem : orderList) {
-            if (orderHistoryItem.getOrderDate().equals(orderDateString)) {
-                this.orderHistoryItem = orderHistoryItem;
-                break;
-            }
-        }
+        Long orderId = bundle.getLong("orderId");
+
+        fetchOrderHistoryItemByIdFromApi(orderId);
+
         DecimalFormatSymbols symbols = new DecimalFormatSymbols();
         symbols.setGroupingSeparator('.');
         VNDFormat = new DecimalFormat("###,###,###,###", symbols);
-        orderDate.setText(orderHistoryItem.getOrderDate());
-        orderStatus.setText(orderHistoryItem.getOrderStatus());
-        orderTotalPrice.setText(VNDFormat.format(orderHistoryItem.getTotalPrice()) + " VND");
-        orderClass.setText(orderHistoryItem.getOrderClass());
-
-        if (orderHistoryItem.getAddress().equals("")) {
-            shippingAddressCardView.setVisibility(android.view.View.GONE);
-            clickAndCollectCardView.setVisibility(android.view.View.VISIBLE);
-            storeAddress.setText(orderHistoryItem.getPickupPlace());
-        } else {
-            shippingAddressCardView.setVisibility(android.view.View.VISIBLE);
-            clickAndCollectCardView.setVisibility(android.view.View.GONE);
-            orderCustomerName.setText(orderHistoryItem.getFirstName() + " " + orderHistoryItem.getLastName());
-            orderAddress.setText(orderHistoryItem.getAddress());
-            orderCustomerPhone.setText(UserStatus.currentUser.getPhoneNumber());
-        }
-
-        orderShippingDeliveryPrice.setText(VNDFormat.format(50000) + " VND");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy HH:mm:ss", Locale.getDefault());
-
-        Date orderDate = null;
-        try {
-            orderDate = dateFormat.parse(orderDateString);
-            long oneHourMillis = 60 * 60 * 1000;  // 1 hour in milliseconds
-            Date deliveryDate = new Date(orderDate.getTime() + oneHourMillis);
-            orderDeliveryDate.setText("Delivered on " + dateFormat.format(deliveryDate));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-
-        List<CartItem> cartList = orderHistoryItem.getCartList();
-
-        LinearLayoutManagerWrapper linearLayoutManagerWrapper = new LinearLayoutManagerWrapper(this, LinearLayoutManager.VERTICAL, false);
-        cartRecyclerView.setLayoutManager(linearLayoutManagerWrapper);
-
-        OrderHistorySummaryItemAdapter orderHistorySummaryItemAdapter = new OrderHistorySummaryItemAdapter(cartList, this);
-        cartRecyclerView.setAdapter(orderHistorySummaryItemAdapter);
-
-        if (!orderHistoryItem.getAddress().equals("")) {
-            if (orderHistoryItem.getCartTotalPrice() < 999000) {
-                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
-                shippingFee.setText(getString(R.string.product_price, VNDFormat.format(50000)));
-                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() + 50000)));
-                VATPrice.setText(getString(R.string.product_price, VNDFormat.format((orderHistoryItem.getCartTotalPrice() + 50000) * 0.1)));
-                totalOrderPrice = (int) ((orderHistoryItem.getCartTotalPrice() + 50000) * 1.1);
-                orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
-            } else {
-                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
-                shippingFee.setVisibility(View.GONE);
-                shippingFeeTextView.setVisibility(View.GONE);
-                shippingFeeDivider.setVisibility(View.GONE);
-                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
-                VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() * 0.1)));
-                totalOrderPrice = (int) (orderHistoryItem.getCartTotalPrice() * 1.1);
-                orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
-            }
-        } else {
-            totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
-            shippingFeeTextView.setVisibility(View.GONE);
-            shippingFee.setVisibility(View.GONE);
-            shippingFeeDivider.setVisibility(View.GONE);
-            subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice())));
-            VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getCartTotalPrice() * 0.1)));
-            totalOrderPrice = (int) (orderHistoryItem.getCartTotalPrice() * 1.1);
-            orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
-
-        }
 
         returnToOrderHistoryButton.setOnClickListener(v -> onBackPressed());
-
         toolbar.setOnClickListener(v -> onBackPressed());
     }
 
@@ -153,7 +84,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         orderShippingDeliveryPrice = findViewById(R.id.shipping_fee_price_delivery);
         orderDeliveryDate = findViewById(R.id.delivery_date);
 
-        cartRecyclerView = findViewById(R.id.order_summary_recycler_view);
+        orderSummaryRecyclerView = findViewById(R.id.order_summary_recycler_view);
 
         totalPrice = findViewById(R.id.totalPrice);
         shippingFee = findViewById(R.id.shipping_fee_price);
@@ -164,7 +95,100 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         orderTotalPrice2 = findViewById(R.id.orderTotalPrice);
 
         returnToOrderHistoryButton = findViewById(R.id.return_to_order_history_button);
+    }
 
+    private void fetchOrderHistoryItemByIdFromApi(Long orderId) {
+        UserRepository.getInstance().getOrderById(orderId, new Callback<OrderHistoryItem>() {
+            @Override
+            public void onResponse(@NonNull Call<OrderHistoryItem> call, @NonNull Response<OrderHistoryItem> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    orderHistoryItem = response.body();
+                    populateOrderDetails();
+                } else {
+                    Toast.makeText(OrderHistoryDetailsActivity.this, "Failed to fetch order history item", Toast.LENGTH_SHORT).show();
+                }
+            }
 
+            @Override
+            public void onFailure(@NonNull Call<OrderHistoryItem> call, @NonNull Throwable t) {
+                Toast.makeText(OrderHistoryDetailsActivity.this, "Internal server error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void populateOrderDetails() {
+        orderDate.setText(DateUtils.convertDateFormat(orderHistoryItem.getOrderDate()));
+        orderStatus.setText(orderHistoryItem.getOrderStatus());
+        orderTotalPrice.setText(String.format("%s VND", VNDFormat.format(orderHistoryItem.getTotalPrice())));
+        orderClass.setText(orderHistoryItem.getOrderClass());
+
+        if (orderHistoryItem.getAddress().equals("")) {
+            shippingAddressCardView.setVisibility(View.GONE);
+            clickAndCollectCardView.setVisibility(View.VISIBLE);
+            storeAddress.setText(orderHistoryItem.getPickupPlace());
+        } else {
+            shippingAddressCardView.setVisibility(View.VISIBLE);
+            clickAndCollectCardView.setVisibility(View.GONE);
+            orderCustomerName.setText(String.format("%s %s", orderHistoryItem.getFirstName(), orderHistoryItem.getLastName()));
+            orderAddress.setText(orderHistoryItem.getAddress());
+            if (UserStatus.currentUser != null && UserCache.getInstance().containsUser(UserStatus.currentUser.getEmail())) {
+                UserStatus.currentUser = UserCache.getInstance().getUser(UserStatus.currentUser.getEmail());
+                orderCustomerPhone.setText(UserStatus.currentUser.getPhoneNumber());
+            } else {
+                UserRepository.getInstance().fetchUserDetails(TokenUtils.bearerToken(UserStatus.access_token.token), this, new Callback<UserProfile>() {
+                    @Override
+                    public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
+                        if (response.isSuccessful()) {
+                            UserStatus.currentUser = response.body();
+                            UserCache.getInstance().addUser(UserStatus.currentUser.getEmail(), UserStatus.currentUser);
+                            orderCustomerPhone.setText(UserStatus.currentUser.getPhoneNumber());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<UserProfile> call, @NonNull Throwable t) {
+                    }
+                });
+            }
+        }
+
+        orderShippingDeliveryPrice.setText(String.format("%s VND", VNDFormat.format(50000)));
+
+        Set<OrderItem> cartList = orderHistoryItem.getOrderItems();
+
+        LinearLayoutManagerWrapper linearLayoutManagerWrapper = new LinearLayoutManagerWrapper(this, LinearLayoutManager.VERTICAL, false);
+        orderSummaryRecyclerView.setLayoutManager(linearLayoutManagerWrapper);
+
+        OrderHistorySummaryItemAdapter orderHistorySummaryItemAdapter = new OrderHistorySummaryItemAdapter(cartList, this);
+        orderSummaryRecyclerView.setAdapter(orderHistorySummaryItemAdapter);
+
+        if (!orderHistoryItem.getAddress().equals("")) {
+            if (orderHistoryItem.getOrderTotalPrice() < 999000) {
+                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));
+                shippingFee.setText(getString(R.string.product_price, VNDFormat.format(50000)));
+                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice() + 50000)));
+                VATPrice.setText(getString(R.string.product_price, VNDFormat.format((orderHistoryItem.getOrderTotalPrice() + 50000) * 0.1)));
+                totalOrderPrice = (int) ((orderHistoryItem.getOrderTotalPrice() + 50000) * 1.1);
+                orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
+            } else {
+                totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));
+                shippingFee.setVisibility(View.GONE);
+                shippingFeeTextView.setVisibility(View.GONE);
+                shippingFeeDivider.setVisibility(View.GONE);
+                subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));
+                VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice() * 0.1)));
+                totalOrderPrice = (int) (orderHistoryItem.getOrderTotalPrice() * 1.1);
+                orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
+            }
+        } else {
+            totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));
+            shippingFeeTextView.setVisibility(View.GONE);
+            shippingFee.setVisibility(View.GONE);
+            shippingFeeDivider.setVisibility(View.GONE);
+            subTotalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));
+            VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice() * 0.1)));
+            totalOrderPrice = (int) (orderHistoryItem.getOrderTotalPrice() * 1.1);
+            orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
+        }
     }
 }

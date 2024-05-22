@@ -17,13 +17,15 @@ import com.google.android.material.card.MaterialCardView;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.OrderHistoryItemAdapter;
 import com.group25.ecommercefashionapp.data.OrderHistoryItem;
-import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.layoutmanager.LinearLayoutManagerWrapper;
-import com.group25.ecommercefashionapp.status.UserStatus;
+import com.group25.ecommercefashionapp.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OrderHistoryFragment extends Fragment {
     TextView orderCountTextView;
@@ -31,19 +33,10 @@ public class OrderHistoryFragment extends Fragment {
     MaterialCardView noOrderHistoryCardView;
     AppCompatButton returnToMembershipButton;
     OrderHistoryItemAdapter adapter;
-    String customerPhoneNumber;
+    List<OrderHistoryItem> orderHistoryList = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        UserInteraction UserInteraction = getMainActivityInstance().userInteraction;
-        customerPhoneNumber = UserStatus.currentUser.getPhoneNumber();
-        List<OrderHistoryItem> fakeOrderHistoryList = UserInteraction.getOrderList();
-        List<OrderHistoryItem> orderHistoryList = new ArrayList<>();
-        for(OrderHistoryItem orderHistoryItem : fakeOrderHistoryList) {
-            if (Objects.equals(orderHistoryItem.getPhoneNumber(), customerPhoneNumber)) {
-                orderHistoryList.add(orderHistoryItem);
-            }
-        }
 
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
@@ -51,17 +44,6 @@ public class OrderHistoryFragment extends Fragment {
         orderHistoryRecyclerView = view.findViewById(R.id.order_history_recycler_view);
         noOrderHistoryCardView = view.findViewById(R.id.no_order_card_view);
         returnToMembershipButton = view.findViewById(R.id.return_to_membership_button);
-
-        if (orderHistoryList.size() == 0) {
-            noOrderHistoryCardView.setVisibility(View.VISIBLE);
-            orderHistoryRecyclerView.setVisibility(View.GONE);
-        }
-        else {
-            noOrderHistoryCardView.setVisibility(View.GONE);
-            orderHistoryRecyclerView.setVisibility(View.VISIBLE);
-        }
-
-        orderCountTextView.setText(getString(R.string.text_order_history_count_item, orderHistoryList.size()));
 
         returnToMembershipButton.setOnClickListener(v -> {
             getMainActivityInstance().navController.popBackStack();
@@ -74,6 +56,45 @@ public class OrderHistoryFragment extends Fragment {
         adapter = new OrderHistoryItemAdapter(orderHistoryList, getContext());
         orderHistoryRecyclerView.setAdapter(adapter);
 
+        fetchOrderHistory();
+
         return view;
+    }
+
+    public void fetchOrderHistory() {
+        UserRepository.getInstance().getOrders(new Callback<List<OrderHistoryItem>>() {
+            @Override
+            public void onResponse(Call<List<OrderHistoryItem>> call, Response<List<OrderHistoryItem>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    orderHistoryList = response.body();
+                    updateUI();
+                } else {
+                    showNoOrderHistory();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<OrderHistoryItem>> call, Throwable throwable) {
+                showNoOrderHistory();
+            }
+        });
+    }
+
+    private void updateUI() {
+        if (orderHistoryList.isEmpty()) {
+            noOrderHistoryCardView.setVisibility(View.VISIBLE);
+            orderHistoryRecyclerView.setVisibility(View.GONE);
+        } else {
+            noOrderHistoryCardView.setVisibility(View.GONE);
+            orderHistoryRecyclerView.setVisibility(View.VISIBLE);
+        }
+        orderCountTextView.setText(getString(R.string.text_order_history_count_item, orderHistoryList.size()));
+        adapter.updateOrderHistoryList(orderHistoryList);
+    }
+
+    private void showNoOrderHistory() {
+        noOrderHistoryCardView.setVisibility(View.VISIBLE);
+        orderHistoryRecyclerView.setVisibility(View.GONE);
+        orderCountTextView.setText(getString(R.string.text_order_history_count_item, 0));
     }
 }

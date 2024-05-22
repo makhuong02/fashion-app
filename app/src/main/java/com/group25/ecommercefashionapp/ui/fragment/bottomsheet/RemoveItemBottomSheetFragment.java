@@ -51,7 +51,7 @@ public class RemoveItemBottomSheetFragment extends BottomSheetDialogFragment {
     }
 
     public void removeCartItem(CartItem cartItem) {
-        UserRepository.getInstance().removeCartItem(cartItem.getId(), getMainActivityInstance(), new Callback<Void>() {
+        UserRepository.getInstance().removeCartItem(cartItem.getId(), new Callback<Void>() {
             @Override
             public void onResponse(@NotNull Call<Void> call, @NotNull Response<Void> response) {
                 if (response.isSuccessful()) {

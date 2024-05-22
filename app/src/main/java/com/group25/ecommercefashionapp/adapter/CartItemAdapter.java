@@ -190,7 +190,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.ViewHo
 
     private void updateCartItemQuantity(CartItem item, ViewHolder holder) {
 //        item.setQuantity(holder.quantitySpinner.getSelectedItemPosition() + 1);
-        UserRepository.getInstance().updateCartItem(item.getId(), item, getMainActivityInstance().getApplicationContext(), new Callback<JsonElement>() {
+        UserRepository.getInstance().updateCartItem(item.getId(), item, new Callback<JsonElement>() {
             @Override
             public void onResponse(@NotNull Call<JsonElement> call, @NotNull Response<JsonElement> response) {
                 if (response.isSuccessful()) {

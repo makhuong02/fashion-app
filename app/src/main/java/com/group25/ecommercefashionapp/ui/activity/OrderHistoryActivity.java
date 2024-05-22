@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.R;
 
 public class OrderHistoryActivity extends AppCompatActivity {
@@ -23,11 +22,5 @@ public class OrderHistoryActivity extends AppCompatActivity {
             getMainActivityInstance().navController.popBackStack();
             onBackPressed();
         });
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        MySharedPreferences mySharedPreferences = new MySharedPreferences(this);
-        mySharedPreferences.saveUserOrderList(getMainActivityInstance().userInteraction.getOrderList());
     }
 }

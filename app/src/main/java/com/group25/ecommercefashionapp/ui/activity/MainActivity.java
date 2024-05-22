@@ -18,8 +18,6 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.Token;
 import com.group25.ecommercefashionapp.data.UserInteraction;
-import com.group25.ecommercefashionapp.database.DatabaseHelper;
-import com.group25.ecommercefashionapp.repository.OrdersRepository;
 import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.status.UserStatus;
 import com.group25.ecommercefashionapp.utilities.TokenUtils;
@@ -34,7 +32,6 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     public NavController navController;
-    public OrdersRepository ordersRepository;
     public UserInteraction userInteraction = new UserInteraction();
     public MySharedPreferences sharedPreferences;
 
@@ -43,10 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        DatabaseHelper productDbHelper = new DatabaseHelper(this);
-        ordersRepository = new OrdersRepository(productDbHelper);
-        MyApp.setMainActivityInstance(this, ordersRepository);
+        MyApp.setMainActivityInstance(this);
 
 
         // Initialize navigation components

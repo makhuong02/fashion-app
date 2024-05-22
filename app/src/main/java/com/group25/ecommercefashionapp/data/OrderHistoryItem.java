@@ -2,11 +2,11 @@ package com.group25.ecommercefashionapp.data;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class OrderHistoryItem extends Item {
-    private final List<CartItem> cartList;
+    private final Set<OrderItem> orderItems;
     private final String orderDate;
     private String orderStatus;
     private final String orderClass;
@@ -16,9 +16,9 @@ public class OrderHistoryItem extends Item {
     private final String address;
     private final String deliveryOption;
     private final String phoneNumber;
-    private final int totalPrice;
+    private final double totalPrice;
 
-    public OrderHistoryItem(List<CartItem> cartList, String pickupPlace, String firstName, String lastName, String address, String deliveryOption, String phoneNumber, int totalPrice) {
+    public OrderHistoryItem(Set<OrderItem> orderItems, String pickupPlace, String firstName, String lastName, String address, String deliveryOption, String phoneNumber, int totalPrice) {
         super("");
         this.pickupPlace = pickupPlace;
         this.firstName = firstName;
@@ -28,10 +28,9 @@ public class OrderHistoryItem extends Item {
         this.phoneNumber = phoneNumber;
         this.totalPrice = totalPrice;
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM, yyyy HH:mm:ss", Locale.getDefault());
-        String formattedDate = dateFormat.format(new Date());
-        this.orderDate = formattedDate;
+        this.orderDate = dateFormat.format(new Date());
         this.orderStatus = "Pending";
-        this.cartList = cartList;
+        this.orderItems = orderItems;
         this.orderClass = "Online Order";
     }
 
@@ -55,8 +54,8 @@ public class OrderHistoryItem extends Item {
         return pickupPlace;
     }
 
-    public List<CartItem> getCartList() {
-        return cartList;
+    public Set<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     public String getFirstName() {
@@ -87,14 +86,14 @@ public class OrderHistoryItem extends Item {
         return item.getOrderDate().equals(this.getOrderDate()) && item.getPhoneNumber().equals(this.getPhoneNumber());
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
-    public int getCartTotalPrice() {
+    public int getOrderTotalPrice() {
         int totalPrice = 0;
-        for (CartItem cartItem : cartList) {
-//            totalPrice += cartItem.getQuantity() * getMainActivityInstance().productRepository.getProductById(cartItem.getProductId()).getPrice()*0.9f;
+        for (OrderItem orderItem : orderItems) {
+            totalPrice += orderItem.getTotalPrice();
         }
         return totalPrice;
     }
