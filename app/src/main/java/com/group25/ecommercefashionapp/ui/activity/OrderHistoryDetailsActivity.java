@@ -39,7 +39,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
     TextView totalPrice, shippingFee, subTotalPrice, VATPrice, orderTotalPrice2, shippingFeeTextView;
     Toolbar toolbar;
     RecyclerView orderSummaryRecyclerView;
-    MaterialCardView shippingAddressCardView, clickAndCollectCardView;
+    MaterialCardView shippingAddressCardView, clickAndCollectCardView, deliveryDateCardView;
     OrderHistoryItem orderHistoryItem;
     private DecimalFormat VNDFormat;
     int totalOrderPrice = 0;
@@ -80,6 +80,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
 
         shippingAddressCardView = findViewById(R.id.shipping_address_card_view);
         clickAndCollectCardView = findViewById(R.id.click_and_collect_card_view);
+        deliveryDateCardView = findViewById(R.id.delivery_date_card_view);
 
         orderShippingDeliveryPrice = findViewById(R.id.shipping_fee_price_delivery);
         orderDeliveryDate = findViewById(R.id.delivery_date);
@@ -122,13 +123,15 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         orderTotalPrice.setText(String.format("%s VND", VNDFormat.format(orderHistoryItem.getTotalPrice())));
         orderClass.setText(orderHistoryItem.getOrderClass());
 
-        if (orderHistoryItem.getAddress().equals("")) {
+        if (!orderHistoryItem.getDeliveryOption().equals("DELIVERY")) {
             shippingAddressCardView.setVisibility(View.GONE);
+            deliveryDateCardView.setVisibility(View.GONE);
             clickAndCollectCardView.setVisibility(View.VISIBLE);
-            storeAddress.setText(orderHistoryItem.getPickupPlace());
+            storeAddress.setText(orderHistoryItem.getAddress());
         } else {
             shippingAddressCardView.setVisibility(View.VISIBLE);
             clickAndCollectCardView.setVisibility(View.GONE);
+            deliveryDateCardView.setVisibility(View.VISIBLE);
             orderCustomerName.setText(String.format("%s %s", orderHistoryItem.getFirstName(), orderHistoryItem.getLastName()));
             orderAddress.setText(orderHistoryItem.getAddress());
             if (UserStatus.currentUser != null && UserCache.getInstance().containsUser(UserStatus.currentUser.getEmail())) {
@@ -152,7 +155,6 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
             }
         }
 
-        orderShippingDeliveryPrice.setText(String.format("%s VND", VNDFormat.format(50000)));
 
         Set<OrderItem> cartList = orderHistoryItem.getOrderItems();
 
@@ -162,7 +164,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
         OrderHistorySummaryItemAdapter orderHistorySummaryItemAdapter = new OrderHistorySummaryItemAdapter(cartList, this);
         orderSummaryRecyclerView.setAdapter(orderHistorySummaryItemAdapter);
 
-        if (!orderHistoryItem.getAddress().equals("")) {
+        if (orderHistoryItem.getDeliveryOption().equals("DELIVERY")) {
             if (orderHistoryItem.getOrderTotalPrice() < 999000) {
                 totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));
                 shippingFee.setText(getString(R.string.product_price, VNDFormat.format(50000)));
@@ -170,6 +172,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
                 VATPrice.setText(getString(R.string.product_price, VNDFormat.format((orderHistoryItem.getOrderTotalPrice() + 50000) * 0.1)));
                 totalOrderPrice = (int) ((orderHistoryItem.getOrderTotalPrice() + 50000) * 1.1);
                 orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
+                orderShippingDeliveryPrice.setText(String.format("%s VND", VNDFormat.format(30000)));
             } else {
                 totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));
                 shippingFee.setVisibility(View.GONE);
@@ -179,6 +182,7 @@ public class OrderHistoryDetailsActivity extends AppCompatActivity {
                 VATPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice() * 0.1)));
                 totalOrderPrice = (int) (orderHistoryItem.getOrderTotalPrice() * 1.1);
                 orderTotalPrice2.setText(getString(R.string.product_price, VNDFormat.format(totalOrderPrice)));
+                orderShippingDeliveryPrice.setText(String.format("%s VND", VNDFormat.format(0)));
             }
         } else {
             totalPrice.setText(getString(R.string.product_price, VNDFormat.format(orderHistoryItem.getOrderTotalPrice())));

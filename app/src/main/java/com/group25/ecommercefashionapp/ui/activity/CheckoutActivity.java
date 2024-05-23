@@ -104,12 +104,7 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void setUpCurrentLocationTextView() {
-        setCurrentLocationTextView.setOnClickListener(v -> getCurrentAddress(this, new AddressCallback() {
-            @Override
-            public void onAddressReceived(String address) {
-                addressEditText.setText(address);
-            }
-        }));
+        setCurrentLocationTextView.setOnClickListener(v -> getCurrentAddress(this, address -> addressEditText.setText(address)));
     }
 
     private void setUpToolbar() {
@@ -148,7 +143,7 @@ public class CheckoutActivity extends AppCompatActivity {
         orderItemsRecyclerView.setLayoutManager(gridAutoFitLayoutManager);
     }
 
-    private void setUpListeners(){
+    private void setUpListeners() {
         setUpShipToAddressCheckBox();
         setUpClickAndCollectCheckBox();
         setPlaceOrderButtonListener();
@@ -160,6 +155,9 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void setupCartView() {
         itemCounterTextView.setText(String.valueOf(cartList.size()));
+        if (cartTotalPrice > 999000) {
+            shipToAddressShippingFeeTextView.setPaintFlags(shippingFeePriceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        }
         shipToAddressShippingFeeTextView.setText(getString(R.string.product_price, VNDFormat.format(SHIPPING_FEE)));
         if (shipToAddressCheckBox.isChecked()) {
             shipToAddressSetupDetails();
@@ -169,7 +167,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
     }
-    private void setPlaceOrderButtonListener(){
+
+    private void setPlaceOrderButtonListener() {
         placeOrderButton.setOnClickListener(v -> {
             if (!clickAndCollectCheckBox.isChecked() && !shipToAddressCheckBox.isChecked()) {
                 ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Checkout Failed", "Please select a delivery method");
@@ -205,11 +204,12 @@ public class CheckoutActivity extends AppCompatActivity {
             cashOnDeliveryCheckBox.requestFocus();
         }
     }
-    private void addClickAndCollectOrder(){
+
+    private void addClickAndCollectOrder() {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("address", Objects.requireNonNull(addressEditText.getText()).toString());
+        jsonObject.addProperty("address", "227 Đ. Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh, Việt Nam");
         jsonObject.addProperty("classification", "ONLINE");
-        jsonObject.addProperty("deliveryOption", "ON STORE PICKUP");
+        jsonObject.addProperty("deliveryOption", "ON_STORE_PICKUP");
         jsonObject.add("items", new Gson().toJsonTree(cartList));
 
         UserRepository.getInstance().addOrder(jsonObject, new Callback<JsonElement>() {
@@ -228,7 +228,7 @@ public class CheckoutActivity extends AppCompatActivity {
         });
     }
 
-    private void addShipToAddressOrder(){
+    private void addShipToAddressOrder() {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("address", Objects.requireNonNull(addressEditText.getText()).toString());
         jsonObject.addProperty("classification", "ONLINE");
@@ -286,7 +286,7 @@ public class CheckoutActivity extends AppCompatActivity {
         return false;
     }
 
-    private void navigateToSuccessActivity(){
+    private void navigateToSuccessActivity() {
         Bundle bundle = new Bundle();
         bundle.putString("message", "ordered");
         bundle.putString("button", "Continue Shopping");
@@ -299,13 +299,13 @@ public class CheckoutActivity extends AppCompatActivity {
         standardOrderDetails();
     }
 
-    private void setShippingFeeVisibility(int visibility){
+    private void setShippingFeeVisibility(int visibility) {
         shippingFeeTextView.setVisibility(visibility);
         shippingFeePriceTextView.setVisibility(visibility);
         shippingFeeDivider.setVisibility(visibility);
     }
 
-    private void standardOrderDetails(){
+    private void standardOrderDetails() {
         setShippingFeeVisibility(View.GONE);
         subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(cartTotalPrice)));
         totalTextView.setText(getString(R.string.product_price, VNDFormat.format(cartTotalPrice)));
@@ -317,7 +317,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private void shipToAddressSetupDetails() {
         if (cartTotalPrice < 999000) {
             subTotalTextView.setText(getString(R.string.product_price, VNDFormat.format(cartTotalPrice)));
-            shippingFeeTextView.setText(getString(R.string.product_price, VNDFormat.format(SHIPPING_FEE)));
+            shippingFeePriceTextView.setText(getString(R.string.product_price, VNDFormat.format(SHIPPING_FEE)));
             totalTextView.setText(getString(R.string.product_price, VNDFormat.format(cartTotalPrice + SHIPPING_FEE)));
             taxTextView.setText(getString(R.string.product_price, VNDFormat.format((cartTotalPrice + SHIPPING_FEE) * 0.1)));
             totalOrderPrice = (int) ((cartTotalPrice + SHIPPING_FEE) * 1.1);
@@ -330,7 +330,7 @@ public class CheckoutActivity extends AppCompatActivity {
         setShippingFeeVisibility(View.VISIBLE);
     }
 
-    private void setUserDetailsFromPreferences(){
+    private void setUserDetailsFromPreferences() {
         MySharedPreferences sharedPreferences = new MySharedPreferences(this);
         if (!sharedPreferences.getUserAddress().isEmpty()) {
             addressEditText.setText(sharedPreferences.getUserAddress());
@@ -345,7 +345,7 @@ public class CheckoutActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeViews(){
+    private void initializeViews() {
         toolbar = findViewById(R.id.toolbar);
         freeShip = findViewById(R.id.free_shipping_text);
         shipToAddressShippingFeeTextView = findViewById(R.id.ship_to_address_shipping_fee_text);
@@ -390,8 +390,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     setUpOrderItemsRecyclerView();
                     setUserDetailsFromPreferences();
                     setUpListeners();
-                }
-                else{
+                } else {
                     ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Error", "Failed to fetch cart items");
                     errorDialogFragment.show(getSupportFragmentManager(), "error");
                 }

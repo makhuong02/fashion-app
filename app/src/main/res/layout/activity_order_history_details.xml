@@ -417,7 +417,7 @@
 								android:layout_marginTop="@dimen/xxs_spacing"
 								android:textColor="@color/primary_black"
 								android:textSize="14sp"
-								android:text="Delivery date:"
+								android:text="Estimated delivery date:"
 								app:layout_constraintStart_toStartOf="parent"
 								app:layout_constraintTop_toBottomOf="@id/shipping_fee_price_text"
 								/>
@@ -434,7 +434,8 @@
 								/>
 						</androidx.constraintlayout.widget.ConstraintLayout>
 					</com.google.android.material.card.MaterialCardView>
-					
+
+
 					<com.google.android.material.card.MaterialCardView
 						android:id="@+id/payment_method_card_view"
 						android:layout_width="match_parent"

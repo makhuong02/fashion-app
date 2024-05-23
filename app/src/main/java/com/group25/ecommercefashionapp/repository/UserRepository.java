@@ -40,14 +40,13 @@ public class UserRepository {
     public void fetchUserDetails(String token, Context context, Callback<UserProfile> callback) {
         Call<UserProfile> call = apiService.getUserInfo(token);
         // Fetch user details from the server
-       call.enqueue(new Callback<UserProfile>() {
+        call.enqueue(new Callback<UserProfile>() {
             @Override
             public void onResponse(@NonNull Call<UserProfile> call, @NonNull Response<UserProfile> response) {
                 if (response.isSuccessful()) {
                     UserStatus.currentUser = response.body();
                     callback.onResponse(call, response);
-                }
-                else {
+                } else {
 
                     Toast.makeText(context, "Failed to fetch user details", Toast.LENGTH_SHORT).show();
                 }
@@ -199,7 +198,7 @@ public class UserRepository {
         executeVoidCall(callback, call);
     }
 
-    public void getOrders( Callback<List<OrderHistoryItem>> callback) {
+    public void getOrders(Callback<List<OrderHistoryItem>> callback) {
         Call<List<OrderHistoryItem>> call = apiService.getOrders(TokenUtils.bearerToken(UserStatus.access_token.token));
         // Fetch orders from the server
         call.enqueue(new Callback<List<OrderHistoryItem>>() {
@@ -246,9 +245,6 @@ public class UserRepository {
         // Update an order on the server
         executeJsonElementCall(callback, call);
     }
-
-
-
 
     private void executeVoidCall(Callback<Void> callback, Call<Void> call) {
         call.enqueue(new Callback<Void>() {
