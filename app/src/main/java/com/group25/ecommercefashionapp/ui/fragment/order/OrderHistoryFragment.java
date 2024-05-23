@@ -8,10 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
 import com.group25.ecommercefashionapp.R;
@@ -34,16 +36,14 @@ public class OrderHistoryFragment extends Fragment {
     AppCompatButton returnToMembershipButton;
     OrderHistoryItemAdapter adapter;
     List<OrderHistoryItem> orderHistoryList = new ArrayList<>();
+    public SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_order_history, container, false);
 
-        orderCountTextView = view.findViewById(R.id.text_order_history_count);
-        orderHistoryRecyclerView = view.findViewById(R.id.order_history_recycler_view);
-        noOrderHistoryCardView = view.findViewById(R.id.no_order_card_view);
-        returnToMembershipButton = view.findViewById(R.id.return_to_membership_button);
+        initViews(view);
 
         returnToMembershipButton.setOnClickListener(v -> {
             getMainActivityInstance().navController.popBackStack();
@@ -56,6 +56,8 @@ public class OrderHistoryFragment extends Fragment {
         adapter = new OrderHistoryItemAdapter(orderHistoryList, getContext());
         orderHistoryRecyclerView.setAdapter(adapter);
 
+        setUpSwipeRefresh();
+
         fetchOrderHistory();
 
         return view;
@@ -64,7 +66,7 @@ public class OrderHistoryFragment extends Fragment {
     public void fetchOrderHistory() {
         UserRepository.getInstance().getOrders(new Callback<List<OrderHistoryItem>>() {
             @Override
-            public void onResponse(Call<List<OrderHistoryItem>> call, Response<List<OrderHistoryItem>> response) {
+            public void onResponse(@NonNull Call<List<OrderHistoryItem>> call, @NonNull Response<List<OrderHistoryItem>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     orderHistoryList = response.body();
                     updateUI();
@@ -74,7 +76,7 @@ public class OrderHistoryFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<OrderHistoryItem>> call, Throwable throwable) {
+            public void onFailure(@NonNull Call<List<OrderHistoryItem>> call, @NonNull Throwable throwable) {
                 showNoOrderHistory();
             }
         });
@@ -96,5 +98,20 @@ public class OrderHistoryFragment extends Fragment {
         noOrderHistoryCardView.setVisibility(View.VISIBLE);
         orderHistoryRecyclerView.setVisibility(View.GONE);
         orderCountTextView.setText(getString(R.string.text_order_history_count_item, 0));
+    }
+
+    private void setUpSwipeRefresh() {
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            fetchOrderHistory();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+    }
+
+    private void initViews(View view){
+        orderCountTextView = view.findViewById(R.id.text_order_history_count);
+        orderHistoryRecyclerView = view.findViewById(R.id.order_history_recycler_view);
+        noOrderHistoryCardView = view.findViewById(R.id.no_order_card_view);
+        returnToMembershipButton = view.findViewById(R.id.return_to_membership_button);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout);
     }
 }

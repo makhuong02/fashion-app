@@ -78,13 +78,13 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
             long timeDifferenceMillis = currentTimeMillis - orderTimeMillis;
 
             // Hide cancel button if the order is older than 30 minutes
-            if (timeDifferenceMillis > THIRTY_MINUTES_MILLIS) {
+            if (timeDifferenceMillis > THIRTY_MINUTES_MILLIS || item.getOrderStatus().equals("CANCELLED")) {
                 holder.orderCancel.setVisibility(View.GONE);
             } else {
                 // Set click listener for cancel button
                 holder.orderCancel.setOnClickListener(v -> {
                     // Cancel order
-                    CancelOrderBottomSheetFragment cancelOrderBottomSheetFragment = new CancelOrderBottomSheetFragment(holder.orderStatus, item, holder.orderCancel);
+                    CancelOrderBottomSheetFragment cancelOrderBottomSheetFragment = new CancelOrderBottomSheetFragment(this, item, holder.orderCancel);
                     if (context instanceof AppCompatActivity) {
                         cancelOrderBottomSheetFragment.show(((AppCompatActivity) context).getSupportFragmentManager(), cancelOrderBottomSheetFragment.getTag());
                     }
@@ -125,5 +125,9 @@ public class OrderHistoryItemAdapter extends RecyclerView.Adapter<OrderHistoryIt
             orderDetail = itemView.findViewById(R.id.view_details_button);
             orderCancel = itemView.findViewById(R.id.cancel_order_button);
         }
+    }
+
+    public void refreshOrderScreen() {
+        ((AppCompatActivity) context).recreate();
     }
 }

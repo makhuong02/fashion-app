@@ -1,5 +1,8 @@
 package com.group25.ecommercefashionapp.ui.activity;
 
+import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
+import static com.group25.ecommercefashionapp.ui.activity.MapsActivity.getCurrentAddress;
+
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -9,15 +12,21 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.appcompat.widget.Toolbar;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.divider.MaterialDivider;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.group25.ecommercefashionapp.MySharedPreferences;
 import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CheckOutItemAdapter;
@@ -27,16 +36,18 @@ import com.group25.ecommercefashionapp.interfaces.callback.AddressCallback;
 import com.group25.ecommercefashionapp.layoutmanager.GridAutoFitLayoutManager;
 import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
+
 import org.jetbrains.annotations.NotNull;
-import retrofit2.Call;
-import retrofit2.Callback;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
-import static com.group25.ecommercefashionapp.MyApp.getMainActivityInstance;
-import static com.group25.ecommercefashionapp.ui.activity.MapsActivity.getCurrentAddress;
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CheckoutActivity extends AppCompatActivity {
     TextInputEditText firstNameEditText, lastNameEditText, addressEditText, firstNameEditText2, lastNameEditText2;
@@ -177,14 +188,13 @@ public class CheckoutActivity extends AppCompatActivity {
             } else {
                 addShipToAddressOrder();
             }
-            sendNotification();
-            navigateToSuccessActivity();
+
         });
     }
 
     private void sendNotification() {
         String title = "Payment success";
-        String description = "Your order will be delivered soon.";
+        String description = "Your order will reach your hand soon.";
         NotificationDetails notification = new NotificationDetails(this, title, description);
         notification.showNotification((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
     }
@@ -195,27 +205,62 @@ public class CheckoutActivity extends AppCompatActivity {
             cashOnDeliveryCheckBox.requestFocus();
         }
     }
-
     private void addClickAndCollectOrder(){
-//        OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(cartList),
-//                "ChicCloth - 227 Đ. Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh, Việt Nam",
-//                firstNameEditText2.getText().toString(),
-//                lastNameEditText2.getText().toString(),
-//                "",
-//                "Click and Collect",
-//                UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
-//        getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("address", Objects.requireNonNull(addressEditText.getText()).toString());
+        jsonObject.addProperty("classification", "ONLINE");
+        jsonObject.addProperty("deliveryOption", "ON STORE PICKUP");
+        jsonObject.add("items", new Gson().toJsonTree(cartList));
+
+        UserRepository.getInstance().addOrder(jsonObject, new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                sendNotification();
+                navigateToSuccessActivity();
+                removeAllCartItems();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable throwable) {
+                ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Error", "Failed to add order");
+                errorDialogFragment.show(getSupportFragmentManager(), "error");
+            }
+        });
     }
 
     private void addShipToAddressOrder(){
-//        OrderHistoryItem orderHistoryItem = new OrderHistoryItem(userInteraction.shallowCopyCartList(cartList),
-//                "",
-//                firstNameEditText.getText().toString(),
-//                lastNameEditText.getText().toString(),
-//                addressEditText.getText().toString(),
-//                "Ship to Address",
-//                UserStatus.currentUser.getPhoneNumber(), totalOrderPrice);
-//        getMainActivityInstance().userInteraction.addOrder(orderHistoryItem);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("address", Objects.requireNonNull(addressEditText.getText()).toString());
+        jsonObject.addProperty("classification", "ONLINE");
+        jsonObject.addProperty("deliveryOption", "DELIVERY");
+        jsonObject.add("items", new Gson().toJsonTree(cartList));
+
+        UserRepository.getInstance().addOrder(jsonObject, new Callback<JsonElement>() {
+            @Override
+            public void onResponse(@NonNull Call<JsonElement> call, @NonNull Response<JsonElement> response) {
+                sendNotification();
+                navigateToSuccessActivity();
+                removeAllCartItems();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<JsonElement> call, @NonNull Throwable throwable) {
+                ErrorDialogFragment errorDialogFragment = new ErrorDialogFragment("Error", "Failed to add order");
+                errorDialogFragment.show(getSupportFragmentManager(), "error");
+            }
+        });
+    }
+
+    public void removeAllCartItems() {
+        UserRepository.getInstance().removeAllCartItems(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
+            }
+        });
     }
 
     private void validateAddress() {
@@ -248,7 +293,6 @@ public class CheckoutActivity extends AppCompatActivity {
         getMainActivityInstance().navController.navigate(R.id.successActivity, bundle);
         getMainActivityInstance().navController.popBackStack();
         onBackPressed();
-        getMainActivityInstance().userInteraction.clearCart();
     }
 
     private void collectAtStoreSetupDetails() {

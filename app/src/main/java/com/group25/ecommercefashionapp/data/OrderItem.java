@@ -3,10 +3,10 @@ package com.group25.ecommercefashionapp.data;
 import com.google.gson.annotations.SerializedName;
 
 public class OrderItem extends Item{
-    @SerializedName("colorId")
-    private Long colorId;
-    @SerializedName("sizeId")
-    private Long sizeId;
+    @SerializedName("selectedColorId")
+    private Long selectedColorId;
+    @SerializedName("selectedSizeId")
+    private Long selectedSizeId;
     @SerializedName("productId")
     private Long productId;
     @SerializedName("quantity")
@@ -14,14 +14,14 @@ public class OrderItem extends Item{
     @SerializedName("totalPrice")
     private double totalPrice;
 
-    public OrderItem(Long productId, int quantity, double totalPrice, Long colorId, Long sizeId) {
+    public OrderItem(Long productId, int quantity, double totalPrice, Long selectedColorId, Long selectedSizeId) {
         super("");
         this.totalPrice = totalPrice;
         this.id = -1L;
         this.productId = productId;
         this.quantity = quantity;
-        this.colorId = colorId;
-        this.sizeId = sizeId;
+        this.selectedColorId = selectedColorId;
+        this.selectedSizeId = selectedSizeId;
     }
 
     // Getters and setters
@@ -34,11 +34,11 @@ public class OrderItem extends Item{
     public Double getTotalPrice() {
         return totalPrice;
     }
-    public Long getColorId() {
-        return colorId;
+    public Long getSelectedColorId() {
+        return selectedColorId;
     }
-    public Long getSizeId() {
-        return sizeId;
+    public Long getSelectedSizeId() {
+        return selectedSizeId;
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
@@ -48,8 +48,8 @@ public class OrderItem extends Item{
     public String toString() {
         return "OrderItem{" +
                 "productId=" + productId +
-                ", colorId=" + colorId +
-                ", sizeId=" + sizeId +
+                ", selectedColorId=" + selectedColorId +
+                ", selectedSizeId=" + selectedSizeId +
                 ", quantity=" + quantity +
                 ", totalPrice=" + totalPrice +
                 '}';

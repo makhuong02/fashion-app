@@ -14,10 +14,10 @@ import com.group25.ecommercefashionapp.data.OrderHistoryItem;
 import com.group25.ecommercefashionapp.data.Product;
 import com.group25.ecommercefashionapp.data.UserProfile;
 import com.group25.ecommercefashionapp.status.UserStatus;
+import com.group25.ecommercefashionapp.utilities.TokenUtils;
 
 import java.util.List;
 
-import com.group25.ecommercefashionapp.utilities.TokenUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,18 +68,12 @@ public class UserRepository {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(@NonNull Call<Boolean> call, @NonNull Response<Boolean> response) {
-                if (response.isSuccessful()) {
-                    callback.onResponse(call, response);
-                }
-                else {
-                    Toast.makeText(context, "Session expired. Please login again.", Toast.LENGTH_SHORT).show();
-                }
+                callback.onResponse(call, response);
             }
 
             @Override
             public void onFailure(@NonNull Call<Boolean> call, @NonNull Throwable t) {
                 // Handle failure
-                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
                 callback.onFailure(call, t);
             }
         });
@@ -91,18 +85,12 @@ public class UserRepository {
         call.enqueue(new Callback<List<Product>>() {
             @Override
             public void onResponse(@NonNull Call<List<Product>> call, @NonNull Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    callback.onResponse(call, response);
-                }
-                else {
-                    Toast.makeText(context, "Failed to fetch favorite list", Toast.LENGTH_SHORT).show();
-                }
+                callback.onResponse(call, response);
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Product>> call, @NonNull Throwable t) {
                 // Handle failure
-                Toast.makeText(context, "Network error. Please try again later.", Toast.LENGTH_SHORT).show();
                 callback.onFailure(call, t);
             }
         });
@@ -245,16 +233,16 @@ public class UserRepository {
         });
     }
 
-    public void addOrder(JsonObject order, String token, Callback<JsonElement> callback) {
-        Call<JsonElement> call = apiService.addOrder(order, TokenUtils.bearerToken(token));
+    public void addOrder(JsonObject order, Callback<JsonElement> callback) {
+        Call<JsonElement> call = apiService.addOrder(order, TokenUtils.bearerToken(UserStatus.access_token.token));
         // Add an order to the server
         executeJsonElementCall(callback, call);
     }
 
-    public void updateOrder(Long orderId, String orderStatus, String token, Callback<JsonElement> callback) {
+    public void updateOrder(Long orderId, String orderStatus, Callback<JsonElement> callback) {
         JsonObject body = new JsonObject();
         body.addProperty("orderStatus", orderStatus);
-        Call<JsonElement> call = apiService.updateOrder(orderId, body, TokenUtils.bearerToken(token));
+        Call<JsonElement> call = apiService.updateOrder(orderId, body, TokenUtils.bearerToken(UserStatus.access_token.token));
         // Update an order on the server
         executeJsonElementCall(callback, call);
     }

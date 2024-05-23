@@ -54,8 +54,8 @@ public class OrderHistorySummaryItemAdapter extends RecyclerView.Adapter<OrderHi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderItem item = (OrderItem) items.toArray()[position];
         fetchProductFromApi(item.getProductId(), holder);
-        fetchColorFromApi(item.getColorId(), holder);
-        fetchSizeFromApi(item.getSizeId(), holder);
+        fetchColorFromApi(item.getSelectedColorId(), holder);
+        fetchSizeFromApi(item.getSelectedSizeId(), holder);
         holder.productQuantity.setText(String.valueOf(item.getQuantity()));
         holder.productTotalPrice.setText(VNDFormat.format(item.getTotalPrice()));
     }

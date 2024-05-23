@@ -91,7 +91,6 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
                         @Override
                         public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                             if (response.isSuccessful()) {
-                                Log.d("MembershipFragment", "onResponse: " + response.body());
                                 if (response.body() != null && response.body()) {
                                     mainActivity.navController.navigate(R.id.action_membershipBotNav_to_profileSettings);
                                 } else {
@@ -99,7 +98,7 @@ public class MembershipFragment extends Fragment implements OnItemClickListener 
                                 }
                             }
                             else {
-                                Toast.makeText(context, "Failed to validate token", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Session expired. Please login again!", Toast.LENGTH_SHORT).show();
                             }
                         }
 

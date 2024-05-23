@@ -24,7 +24,6 @@ import com.group25.ecommercefashionapp.R;
 import com.group25.ecommercefashionapp.adapter.CartItemAdapter;
 import com.group25.ecommercefashionapp.data.CartItem;
 import com.group25.ecommercefashionapp.data.Item;
-import com.group25.ecommercefashionapp.data.UserInteraction;
 import com.group25.ecommercefashionapp.interfaces.onclicklistener.OnItemClickListener;
 import com.group25.ecommercefashionapp.repository.UserRepository;
 import com.group25.ecommercefashionapp.ui.fragment.dialog.ErrorDialogFragment;
@@ -49,7 +48,6 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     RecyclerView cartRecyclerView;
     TextView itemCounterTextView, subTotalTextView, taxTextView, orderTotalTextView, outOfStockText, footerTotalPriceTextView;
     DecimalFormat VNDFormat;
-    UserInteraction userInteraction = getMainActivityInstance().userInteraction;
     private final DecimalFormatSymbols symbols = new DecimalFormatSymbols();
     private int rotationAngle = 0;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -63,14 +61,6 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fetchCarts();
-
-
-//        for (CartItem item : userInteraction.getCartList()) {
-//            if (productRepository.getProductById(item.getProductId()).getAvailableQuantity() == 0) {
-//                outOfStockText.setVisibility(View.VISIBLE);
-//                break;
-//            }
-//        }
 
     }
 
@@ -245,7 +235,6 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
             public void onResponse(@NotNull Call<List<CartItem>> call, @NotNull retrofit2.Response<List<CartItem>> response) {
                 if (response.isSuccessful()) {
                     cartList = response.body();
-                    userInteraction.setCartList(cartList);
                     if (cartList.isEmpty()) {
                         setupEmptyCartView();
                         return;
@@ -306,5 +295,11 @@ public class CartActivity extends AppCompatActivity implements OnItemClickListen
                 sharedPreferences.saveUserLastName(lastNameEditText2.getText().toString());
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchCarts();
     }
 }
